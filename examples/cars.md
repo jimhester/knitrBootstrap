@@ -1,0 +1,64 @@
+# Cars example #
+from [statmethods.net](http://www.statmethods.net/advgraphs/ggplot2.html)
+
+
+```r
+# ggplot2 examples
+library(ggplot2)
+
+# rm any local mtcars
+rm(mtcars)
+
+# use color brewer as default discrete colors
+scale_colour_discrete <- function(...) scale_color_brewer(palette = "Set1", 
+    ...)
+scale_fill_discrete <- function(...) scale_fill_brewer(palette = "Set1", ...)
+
+# create factors with value labels
+mtcars$gear <- factor(mtcars$gear, levels = c(3, 4, 5), labels = c("3gears", 
+    "4gears", "5gears"))
+mtcars$am <- factor(mtcars$am, levels = c(0, 1), labels = c("Automatic", "Manual"))
+mtcars$cyl <- factor(mtcars$cyl, levels = c(4, 6, 8), labels = c("4cyl", "6cyl", 
+    "8cyl"))
+
+# Kernel density plots for mpg grouped by number of gears (indicated by
+# color)
+qplot(mpg, data = mtcars, geom = "density", fill = gear, alpha = I(0.5), main = "Distribution of Gas Milage", 
+    xlab = "Miles Per Gallon", ylab = "Density")
+```
+
+![plot of chunk cars_plots](figure/cars_plots1.svg) 
+
+```r
+
+# Scatterplot of mpg vs. hp for each combination of gears and cylinders in
+# each facet, transmittion type is represented by shape and color
+qplot(hp, mpg, data = mtcars, shape = am, color = am, facets = gear ~ cyl, size = I(3), 
+    xlab = "Horsepower", ylab = "Miles per Gallon")
+```
+
+![plot of chunk cars_plots](figure/cars_plots2.svg) 
+
+```r
+
+# Separate regressions of mpg on weight for each number of cylinders
+qplot(wt, mpg, data = mtcars, geom = c("point", "smooth"), method = "lm", formula = y ~ 
+    x, color = cyl, main = "Regression of MPG on Weight", xlab = "Weight", ylab = "Miles per Gallon")
+```
+
+![plot of chunk cars_plots](figure/cars_plots3.svg) 
+
+```r
+
+# Boxplots of mpg by number of gears observations (points) are overlayed
+# and jittered
+qplot(gear, mpg, data = mtcars, geom = c("boxplot", "jitter"), fill = gear, 
+    main = "Mileage by Gear Number", xlab = "", ylab = "Miles per Gallon")
+```
+
+![plot of chunk cars_plots](figure/cars_plots4.svg) 
+
+
+Author: [Jim Hester](http://jimhester.com)
+Created: 2013 Mar 20 10:57:07 AM
+Last Modified: 2013 Mar 20 11:28:21 AM
