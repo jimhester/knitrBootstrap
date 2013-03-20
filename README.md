@@ -8,4 +8,4 @@ A collection of files to create standalone bootstrap html reports from knitr mar
 * Images can be zoomed and centered by clicking
 
 ## Examples ##
-[cars](examples/cars.html)
+[cars](http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/cars.html)
