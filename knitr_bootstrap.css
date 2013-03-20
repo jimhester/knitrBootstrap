@@ -30,7 +30,7 @@ label[for=check]{
 }
 
 /* zoom if checked */
-input[type=checkbox]:checked + label{
+input[type=checkbox]:checked + label img{
   position:fixed;
   top:0;
   left:0;
