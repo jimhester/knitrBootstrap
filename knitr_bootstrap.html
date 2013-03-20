@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" media="screen">
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="http://gregfranko.com/jquery.tocify.js/css/jquery.tocify.css">
+
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+<script src="https://raw.github.com/gfranko/jquery.tocify.js/master/src/javascripts/jquery.tocify.min.js"></script>
+<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap.min.js"></script>
+
+<script>
+
+/* run scripts when document is ready */
+$(function() {
+  /* find all code blocks which have a class (not output) and syntax highlight */
+  $('pre code[class]').each(function(i, e) {
+    $(this).parent().before('<div class="toggle text-info">[+/- ' + $(this).attr('class') + ' Code]</div>');
+  });
+
+  /* Add output toggle */
+  $('pre code').not('[class]').addClass('no-highlight').parent().before('<div class="toggle text-success">[+/- Output]</div>');
+  hljs.initHighlighting();
+
+  /* onclick toggle next code block */
+  $('.toggle').click(function() {
+    $(this).next('pre').toggle();
+  });
+
+  /* hide by default if a perl or python script code block */
+  <!--$('code.perl,code.python').parent().hide();-->
+
+  /* wrap images in labels to allow click zooming */
+  $('p img').parent().addClass('figures');
+  $('img').wrap(function(i) {
+    $(this).before('<input id="check-' + i + '", type="checkbox"/>');
+    return('<label for="check-' + i + '"/>"');
+  });
+  /* add bootstrap classes */
+  $('body').wrapInner('<div class="span9" />');
+  $('body').wrapInner('<div class="row-fluid" />');
+  $('body').wrapInner('<div id=main><div class="container-fluid" /></div>');
+  $('.row-fluid').prepend('<div class="span3"><div id="toc"></div></div>');
+
+  /* add table of contents */
+  $('#toc').tocify({'selectors' : 'h1,h2,h3,h4', extendPage: false});
+
+  /* add footer */
+  $('body').wrapInner('<div id="wrap" />');
+  $('body').append('<div id="push" />');
+
+  $('p:contains("Last Modified")').each(function() {
+    p = $(this).detach();
+    p.appendTo("body");
+    p.addClass('muted').attr('id','credit');
+    p.wrap('<div id="footer"><div class="container" /></div>');
+  });
+});
+</script>
