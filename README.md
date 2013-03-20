@@ -1,4 +1,4 @@
-# Knitr_Bootstrap #
+# Knitr Bootstrap #
 
 A collection of files to create standalone bootstrap html reports from knitr markdown.
 
@@ -6,7 +6,7 @@ A collection of files to create standalone bootstrap html reports from knitr mar
 * Output automatically resized to fit the display
 * Code block visibility can be toggled with a mouse click
 * Images can be zoomed and centered by clicking
-* Code blocks automatically highlighted using [isagalaev/highlight.js](https://github.com/isagalaev/highlight.js)
+* Code blocks automatically highlighted using [highlight.js](https://github.com/isagalaev/highlight.js)
 * Automatically wraps code block with div elements to work with bootstrap
 * Can restyle with bootstrap compatible css
 
