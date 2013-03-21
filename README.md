@@ -2,6 +2,16 @@
 
 A collection of files to create standalone bootstrap html reports from knitr markdown.
 
+## Table of Contents
+
+* [Features](#features)
+* [Examples](#examples)
+* [Installation](#installation)
+  * [RStudio](#rstudio)
+  * [Pandoc](#pandoc)
+  * [Vim](#vim)
+
+## Features ##
 * Automatic table of contents constructed from h1-4 tags using [tocify]
 * Output automatically resized to fit the display
 * Code block visibility can be toggled with a mouse click
@@ -15,13 +25,13 @@ A collection of files to create standalone bootstrap html reports from knitr mar
 
 ## Installation ##
 
-### Rstudio ###
+### RStudio ###
 
-Simply source the following code in Rstudio before you knit your reports.
+Simply source the following code in RStudio before you knit your reports.
 See [http://www.rstudio.com/ide/docs/authoring/markdown_custom_rendering]()
 
 *Note this requires my [patch] to the [rstudio/markdown] R package*
-```
+```r
 options(rstudio.markdownToHTML =
   function(inputFile, outputFile) {
     require(markdown)
@@ -32,7 +42,7 @@ options(rstudio.markdownToHTML =
 
 ### Pandoc ###
 if your markdown filename is example.md you can use the header html and css with
-```
+```console
 pandoc -H knitr_bootstrap.html -c knitr_bootstrap.css example.md -o example.html
 ```
 
@@ -41,8 +51,7 @@ pandoc -H knitr_bootstrap.html -c knitr_bootstrap.css example.md -o example.html
 If you are using the [Vim-R-Plugin](https://github.com/vim-scripts/Vim-R-plugin) you can put the following function in your .vimrc to create the file directly with knitr and the markdown package
 
 *Note this requires my [patch] to the [rstudio/markdown] R package*
-
-```
+```vim
 function! RMakeHTML_2()
   update
   call RSetWD();
