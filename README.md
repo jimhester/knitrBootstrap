@@ -21,7 +21,8 @@ A collection of files to create standalone bootstrap html reports from knitr mar
 * Can restyle with bootstrap compatible css
 
 ## Examples ##
-[cars]
+* [cars] - using ggplot2 and the cars dataset
+* [2d_3d] - examples of miscellaneous 2d and interactive 3d plots
 
 ## Installation ##
 
@@ -74,4 +75,5 @@ nnoremap <silent> <Leader>kk :call RMakeHTML_2()<CR>
 [rstudio/markdown]: https://github.com/rstudio/markdown
 [fancybox]: http://fancyapps.com/fancybox
 
+[2d_3d]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/2d_3d.html
 [cars]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/cars.html

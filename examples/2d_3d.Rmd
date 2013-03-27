@@ -1,0 +1,61 @@
+# 2d graphs #
+These 2d examples are both from Winsong Chang's excellent [R Graphics Cookbook](http://www.amazon.com/R-Graphics-Cookbook-Winston-Chang/dp/1449316956)
+## Network Graph Example ##
+```{r 2d_3d_network_data, dev='svg'}
+library(igraph)
+# Specify edges for a directed graph
+gd <-graph(c(1,2, 2,3, 2,4, 1,4, 5,5, 3,6))
+plot(gd)
+# For an undirected graph
+gu <-graph(c(1,2, 2,3, 2,4, 1,4, 5,5, 3,6),directed=FALSE)
+# No labels
+plot(gu,vertex.label=NA)
+```
+## Correlation Matrix Example ##
+### Regular R output ###
+```{r 2d_3d_data}
+#for the dataset
+library(ggplot2)
+mcor <-cor(mtcars)
+# Print mcor and round to 2 digits
+round(mcor,digits=2)
+```
+### HTML table using xtable ###
+```{r 2d_3d_xtable, results='asis'}
+library(xtable)
+print(xtable(mcor), type='html')
+```
+### Correlation plot ###
+```{r 2d_3d_plot, dev='svg', warning=FALSE}
+library(corrplot)
+corrplot(mcor)
+```
+# 3d graphs #
+This example is from [Yihui's response](http://stackoverflow.com/questions/14879210/including-a-interactive-3d-figure-with-knitr) to a stack overflow question.
+
+Need to load the CanvasMatrix library and the hook_webgl code to get 3d graphs to work
+```{r setup}
+knit_hooks$set(webgl = hook_webgl)
+```
+```{html}
+<script src="https://dl.dropbox.com/u/15335397/misc/CanvasMatrix.js"></script>
+```
+<script src="https://dl.dropbox.com/u/15335397/misc/CanvasMatrix.js"></script>
+
+## point 3d graph ##
+```{r 2d_3d_points, dev='svg'}
+x <- sort(rnorm(1000))
+y <- rnorm(1000)
+z <- rnorm(1000) + atan2(x, y)
+plot3d(x, y, z, col = rainbow(1000))
+```
+## spheres 3d graph ##
+```{r 2d_3d_spheres, webgl=TRUE}
+open3d()
+spheres3d(x, y, z, col = rainbow(1000))
+play3d(spin3d(rpm=10), duration=5)
+```
+
+Author: [Jim Hester](http://jimhester.com)
+Created: 2013 Mar 27 10:54:38 PM
+Last Modified: 2013 Mar 27 02:16:33 PM
