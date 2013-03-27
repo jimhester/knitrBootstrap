@@ -8,6 +8,13 @@ library(ggplot2)
 
 # rm any local mtcars
 rm(mtcars)
+```
+
+```
+## Warning: object 'mtcars' not found
+```
+
+```r
 
 # use color brewer as default discrete colors
 scale_colour_discrete <- function(...) scale_color_brewer(palette = "Set1", 

@@ -7,43 +7,25 @@ body {
 }
 
 /* Center the images, set to 45% width */
-.figures {
+.figure {
   text-align: center;
 }
-img {
+.thumbnail {
   height: auto;
   width: 45%;
+  display: inline;
+  cursor: pointer;
+  margin: 1%;
 }
 
 .toggle{
   text-transform: capitalize;
 }
-/* Hide checkboxes */
-input[type=checkbox]{
-  display:none;
-}
-
-/* remove block setting for labels */
-label[for=check]{
-  text-align: center;
-  display:inline;
-}
-
-/* zoom if checked */
-input[type=checkbox]:checked + label img{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  height: auto;
-  width: auto;
-  margin: auto;
-}
 
  /*indent for h4 elements */
-/*.sub-header .sub-header .sub-header .sub-header {*/
-  /*text-indent: 50px;*/
-/*}*/
+.sub-header .sub-header .sub-header .sub-header {
+  text-indent: 50px;
+}
 
 .sub-header{
   display:inline;
@@ -73,6 +55,7 @@ body {
 #push,
 #footer {
     height: 60px;
+    padding-bottom: 40px;
 }
 
 #footer {

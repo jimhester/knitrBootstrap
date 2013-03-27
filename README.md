@@ -14,8 +14,8 @@ A collection of files to create standalone bootstrap html reports from knitr mar
 ## Features ##
 * Automatic table of contents constructed from h1-4 tags using [tocify]
 * Output automatically resized to fit the display
-* Code block visibility can be toggled with a mouse click
-* Images can be zoomed and centered by clicking
+* Code/Output block and plot visibility can be toggled with a mouse click
+* Images are automatically thumbnailed and lightboxed using [fancybox]
 * Code blocks automatically highlighted using [highlight.js]
 * Automatically wraps code block with div elements to work with bootstrap
 * Can restyle with bootstrap compatible css
@@ -72,5 +72,6 @@ nnoremap <silent> <Leader>kk :call RMakeHTML_2()<CR>
 [tocify]: http://gregfranko.com/jquery.tocify.js
 [patch]: https://github.com/rstudio/markdown/pull/23
 [rstudio/markdown]: https://github.com/rstudio/markdown
+[fancybox]: http://fancyapps.com/fancybox
 
 [cars]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/cars.html

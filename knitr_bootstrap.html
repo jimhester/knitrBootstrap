@@ -1,54 +1,102 @@
-<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" media="screen">
+<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" media="screen">
+
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css" media="screen">
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="http://gregfranko.com/jquery.tocify.js/css/jquery.tocify.css">
 
 <script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-<script src="https://raw.github.com/gfranko/jquery.tocify.js/master/src/javascripts/jquery.tocify.min.js"></script>
+<script src="http://gregfranko.com/jquery.tocify.js/js/jquery.tocify.min.js"></script>
 <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap.min.js"></script>
+
+<script src="http://fancyapps.com/fancybox/source/jquery.fancybox.js"></script>
+<link rel="stylesheet" href="http://fancyapps.com/fancybox/source/jquery.fancybox.css">
 
 <script>
 
 /* run scripts when document is ready */
 $(function() {
-  /* find all code blocks which have a class (not output) and syntax highlight */
+  /* find all code blocks which have a class and add toggle */
   $('pre code[class]').each(function(i, e) {
-    $(this).parent().before('<div class="toggle text-info">[+/- ' + $(this).attr('class') + ' Code]</div>');
+    $(this).parent()
+      .before('<button class="btn-mini toggle btn-link">+/- '
+        + $(this).attr('class') + ' Code</button>');
   });
 
-  /* Add output toggle */
-  $('pre code').not('[class]').addClass('no-highlight').parent().before('<div class="toggle text-success">[+/- Output]</div>');
+  /* Add toggle to output blocks and do not syntax highlight */
+  $('pre code').not('[class]').addClass('no-highlight')
+    .parent().before('<button class="btn-mini toggle btn-link">+/- Output</button>');
+
+  /* syntax highlight code blocks*/
   hljs.initHighlighting();
 
   /* onclick toggle next code block */
   $('.toggle').click(function() {
-    $(this).next('pre').toggle();
+    $(this).next('pre').slideToggle();
   });
 
   /* hide by default if a perl or python script code block */
   <!--$('code.perl,code.python').parent().hide();-->
 
-  /* wrap images in labels to allow click zooming */
-  $('p img').parent().addClass('figures');
-  $('img').wrap(function(i) {
-    $(this).before('<input id="check-' + i + '", type="checkbox"/>');
-    return('<label for="check-' + i + '"/>"');
+  /* give images a fancybox and thumbnail class to allow lightbox and thumbnails */
+  $('p img').each(function() {
+    $(this).addClass('fancybox thumbnail');
+    $(this).parent().addClass('figure');
   });
+  $(".fancybox").each( function() {
+    var img = $(this);
+    $(this).fancybox({
+      beforeLoad: function(){
+        img.removeClass('thumbnail');
+      },
+      afterClose: function(){
+        img.addClass('thumbnail');
+        img.css('display', 'inline');
+      },
+    });
+  });
+
+
   /* add bootstrap classes */
-  $('body').wrapInner('<div class="span9" />');
-  $('body').wrapInner('<div class="row-fluid" />');
-  $('body').wrapInner('<div id=main><div class="container-fluid" /></div>');
+  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="span9">');
   $('.row-fluid').prepend('<div class="span3"><div id="toc"></div></div>');
+
+  /* add navbar */
+  $('.container-fluid').prepend(
+'<div class="navbar-fixed-bottom navbar">\
+  <div class="navbar-inner">\
+    <ul class="nav pull-right">\
+      <li><a href="#" id="toggle_code">Toggle Code</a></li>\
+      <li><a href="#" id="toggle_output">Toggle Output</a></li>\
+      <li><a href="#" id="toggle_plot">Toggle Plots</a></li>\
+    </ul>\
+  </div>\
+</div>');
+
+  /* global toggles FIXME explicitly toggle all on/off using global variables */
+  $('#toggle_code').click(function(){
+    $('pre code[class!=no-highlight]').parent().slideToggle();
+  });
+  $('#toggle_output').click(function(){
+    $('pre code[class=no-highlight]').parent().slideToggle();
+  });
+  $('#toggle_plot').click(function(){
+    $('p img').parent().slideToggle();
+  });
 
   /* add table of contents */
   $('#toc').tocify({'selectors' : 'h1,h2,h3,h4', extendPage: false});
 
+  /* style tables */
+  $('table').addClass('table table-striped table-bordered table-hover table-condensed')
+    .wrap('<div style="overflow: auto"/>');
+
   /* add footer */
   $('body').wrapInner('<div id="wrap" />');
   $('body').append('<div id="push" />');
-
   $('p:contains("Last Modified")').each(function() {
     p = $(this).detach();
     p.appendTo("body");
