@@ -19,6 +19,7 @@ A collection of files to create standalone bootstrap html reports from knitr mar
 * Code blocks automatically highlighted using [highlight.js]
 * Automatically wraps code block with div elements to work with bootstrap
 * Can restyle with bootstrap compatible css
+* Completely offline report usiing knitr_bootstrap_standalone.html
 
 ## Examples ##
 
@@ -44,15 +45,9 @@ options(rstudio.markdownToHTML =
 )
 ```
 
-### Pandoc ###
-if your markdown filename is example.md you can use the header html and css with
-```console
-pandoc -H knitr_bootstrap.html -c knitr_bootstrap.css example.md -o example.html
-```
-
 ### Vim ###
 
-If you are using the [Vim-R-Plugin](https://github.com/vim-scripts/Vim-R-plugin) you can put the following function in your .vimrc to create the file directly with knitr and the markdown package
+Using the [Vim-R-Plugin](https://github.com/vim-scripts/Vim-R-plugin) put the following function in your .vimrc to create the file directly with knitr and the markdown package
 
 *Note this requires my [patch] to the [rstudio/markdown] R package*
 ```vim
@@ -70,6 +65,16 @@ endfunction
 
 "bind RMakeHTML_2 to leader kk
 nnoremap <silent> <Leader>kk :call RMakeHTML_2()<CR>
+```
+
+### Pandoc ###
+Pandoc can use the same files, but some things do not quite work due to
+conversion differences between the markdown package and pandoc.  Use at your
+own risk!
+
+If your markdown filename is example.md you can use the header html
+```console
+pandoc -H knitr_bootstrap.html -c knitr_bootstrap.css example.md -o example.html
 ```
 
 [highlight.js]: https://github.com/isagalaev/highlight.js
