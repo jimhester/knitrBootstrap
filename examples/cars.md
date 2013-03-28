@@ -5,6 +5,19 @@ from [statmethods.net](http://www.statmethods.net/advgraphs/ggplot2.html)
 ```r
 # ggplot2 examples
 library(ggplot2)
+```
+
+```
+## Attaching package: 'ggplot2'
+```
+
+```
+## The following object(s) are masked _by_ '.GlobalEnv':
+## 
+## scale_colour_discrete, scale_fill_discrete
+```
+
+```r
 
 # rm any local mtcars
 rm(mtcars)

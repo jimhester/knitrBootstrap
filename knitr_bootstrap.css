@@ -1,6 +1,6 @@
 /* remove left padding on body and container */
 body {
-  margin:0;
+  /*margin:0;*/
 }
 .container-fluid {
   padding-left: 0;
