@@ -23,8 +23,6 @@ A collection of files to create standalone bootstrap html reports from knitr mar
 
 ## Examples ##
 
-*Note the global toggles will not work correctly on these examples, it just an artifact of the htmlpreviw redirect needed to display them on github, they work file as standalone files*
-
 * [cars] - using ggplot2 and the cars dataset
 * [2d_3d] - examples of miscellaneous 2d and interactive 3d plots
 
