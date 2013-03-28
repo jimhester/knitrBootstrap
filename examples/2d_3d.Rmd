@@ -53,9 +53,8 @@ plot3d(x, y, z, col = rainbow(1000))
 ```{r 2d_3d_spheres, webgl=TRUE}
 open3d()
 spheres3d(x, y, z, col = rainbow(1000))
-play3d(spin3d(rpm=10), duration=5)
 ```
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 27 10:54:38 PM
-Last Modified: 2013 Mar 27 02:16:33 PM
+Last Modified: 2013 Mar 28 01:12:21 PM

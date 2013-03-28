@@ -6,18 +6,6 @@ body {
   padding-left: 0;
 }
 
-/* Center the images, set to 45% width */
-.figure {
-  text-align: center;
-}
-.thumbnail {
-  height: auto;
-  width: 45%;
-  display: inline;
-  cursor: pointer;
-  margin: 1%;
-}
-
 .toggle{
   text-transform: capitalize;
 }
