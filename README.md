@@ -25,6 +25,7 @@ A collection of files to create standalone bootstrap html reports from knitr mar
 
 * [cars] - using ggplot2 and the cars dataset
 * [2d_3d] - examples of miscellaneous 2d and interactive 3d plots
+* [maps] - examples of map plots, and holding plots until end of the block
 
 ## Installation ##
 
@@ -83,3 +84,4 @@ pandoc -H knitr_bootstrap.html -c knitr_bootstrap.css example.md -o example.html
 
 [2d_3d]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/2d_3d.html
 [cars]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/cars.html
+[maps]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/maps.html
