@@ -42,10 +42,10 @@ $(function() {
   /* hide by default if a perl or python script code block */
   <!--$('code.perl,code.python').parent().hide();-->
 
-  /* give images a fancybox and thumbnail classes to allow lightbox and thumbnails */
-  $('p img').addClass('fancybox');
-  $('p>img').unwrap().wrap('<ul class="thumbnails" />');
-  $('ul img').wrap('<li class="span4"><a href="#", class="thumbnail"></a></li>');
+  /* give images a fancybox and thumbnail classes to allow lightbox and thumbnails TODO: make fancybox prev next if grouped */
+  $('p').each(function(){
+    $(this).children('img').unwrap().wrapAll('<ul class="thumbnails" />').wrap('<li class="span4"><a href="#", class="thumbnail"></a></li>').addClass('fancybox');
+  });
 
   /* fancybox */
   $(".fancybox").each( function() {

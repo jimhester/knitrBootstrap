@@ -54,10 +54,10 @@ $(function() {
   /* hide by default if a perl or python script code block */
   <!--$('code.perl,code.python').parent().hide();-->
 
-  /* give images a fancybox and thumbnail classes to allow lightbox and thumbnails */
-  $('p img').addClass('fancybox');
-  $('p>img').unwrap().wrap('<ul class="thumbnails" />');
-  $('ul img').wrap('<li class="span4"><a href="#", class="thumbnail"></a></li>');
+  /* give images a fancybox and thumbnail classes to allow lightbox and thumbnails TODO: make fancybox prev next if grouped */
+  $('p').each(function(){
+    $(this).children('img').unwrap().wrapAll('<ul class="thumbnails" />').wrap('<li class="span4"><a href="#", class="thumbnail"></a></li>').addClass('fancybox');
+  });
 
   /* fancybox */
   $(".fancybox").each( function() {
@@ -237,7 +237,7 @@ print(xtable(mcor), type = &quot;html&quot;)
 
 <!-- html table generated in R 2.15.1 by xtable 1.7-0 package -->
 
-<!-- Thu Mar 28 14:38:21 2013 -->
+<!-- Thu Mar 28 15:15:06 2013 -->
 
 <TABLE border=1>
 <TR> <TH>  </TH> <TH> mpg </TH> <TH> cyl </TH> <TH> disp </TH> <TH> hp </TH> <TH> drat </TH> <TH> wt </TH> <TH> qsec </TH> <TH> vs </TH> <TH> am </TH> <TH> gear </TH> <TH> carb </TH>  </TR>
