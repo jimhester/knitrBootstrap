@@ -33,20 +33,20 @@ ggplot(crimes, aes(map_id = state)) + geom_map(aes(fill = Murder), map = states_
     expand_limits(x = states_map$long, y = states_map$lat)
 ```
 
-![plot of chunk maps_arrests](figure/maps_arrests1.svg) 
+![plot of chunk maps_arrests](figure/maps_arrests1.png) 
 
 ```r
 last_plot() + coord_map()
 ```
 
-![plot of chunk maps_arrests](figure/maps_arrests2.svg) 
+![plot of chunk maps_arrests](figure/maps_arrests2.png) 
 
 ```r
 ggplot(crimesm, aes(map_id = state)) + geom_map(aes(fill = value), map = states_map) + 
     expand_limits(x = states_map$long, y = states_map$lat) + facet_wrap(~variable)
 ```
 
-![plot of chunk maps_arrests](figure/maps_arrests3.svg) 
+![plot of chunk maps_arrests](figure/maps_arrests3.png) 
 
 ### Use fig.show='hold' ###
 These are the same plots with fig.show='hold' in the options
@@ -59,8 +59,8 @@ ggplot(crimesm, aes(map_id = state)) + geom_map(aes(fill = value), map = states_
     expand_limits(x = states_map$long, y = states_map$lat) + facet_wrap(~variable)
 ```
 
-![plot of chunk maps_figshow](figure/maps_figshow1.svg) ![plot of chunk maps_figshow](figure/maps_figshow2.svg) ![plot of chunk maps_figshow](figure/maps_figshow3.svg) 
+![plot of chunk maps_figshow](figure/maps_figshow1.png) ![plot of chunk maps_figshow](figure/maps_figshow2.png) ![plot of chunk maps_figshow](figure/maps_figshow3.png) 
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 02:44:48 PM
-Last Modified: 2013 Mar 28 03:18:18 PM
+Last Modified: 2013 Mar 28 03:33:39 PM

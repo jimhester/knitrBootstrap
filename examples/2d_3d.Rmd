@@ -2,7 +2,7 @@
 These 2d examples are both from Winsong Chang's excellent [R Graphics Cookbook](http://www.amazon.com/R-Graphics-Cookbook-Winston-Chang/dp/1449316956)
 ## Correlation Matrix Example ##
 ### Correlation plot ###
-```{r 2d_3d_plot, dev='svg', warning=FALSE}
+```{r 2d_3d_plot, dev='png', warning=FALSE}
 library(corrplot)
 corrplot(mcor)
 ```
@@ -21,7 +21,7 @@ library(xtable)
 print(xtable(mcor), type='html')
 ```
 ## Network Graph Example ##
-```{r 2d_3d_network_data, dev='svg'}
+```{r 2d_3d_network_data, dev='png'}
 library(igraph)
 # Specify edges for a directed graph
 gd <-graph(c(1,2, 2,3, 2,4, 1,4, 5,5, 3,6))
@@ -59,4 +59,4 @@ spheres3d(x, y, z, col = rainbow(1000))
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 27 10:54:38 PM
-Last Modified: 2013 Mar 28 02:28:35 PM
+Last Modified: 2013 Mar 28 03:33:48 PM

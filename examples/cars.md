@@ -44,7 +44,7 @@ qplot(mpg, data = mtcars, geom = "density", fill = gear, alpha = I(0.5), main = 
     xlab = "Miles Per Gallon", ylab = "Density")
 ```
 
-![plot of chunk cars_density](figure/cars_density.svg) 
+![plot of chunk cars_density](figure/cars_density.png) 
 
 ## Scatterplot of mpg vs. hp ##
 for each combination of gears and cylinders in each facet, transmission type is represented by shape and color
@@ -54,7 +54,7 @@ qplot(hp, mpg, data = mtcars, shape = am, color = am, facets = gear ~ cyl, size 
     xlab = "Horsepower", ylab = "Miles per Gallon")
 ```
 
-![plot of chunk cars_scatter](figure/cars_scatter.svg) 
+![plot of chunk cars_scatter](figure/cars_scatter.png) 
 
 
 ## Regressions of mpg on weight ##
@@ -65,7 +65,7 @@ qplot(wt, mpg, data = mtcars, geom = c("point", "smooth"), method = "lm", formul
     x, color = cyl, main = "Regression of MPG on Weight", xlab = "Weight", ylab = "Miles per Gallon")
 ```
 
-![plot of chunk cars_regressions](figure/cars_regressions.svg) 
+![plot of chunk cars_regressions](figure/cars_regressions.png) 
 
 
 ## Boxplots of mpg by number of gears ##
@@ -76,9 +76,9 @@ qplot(gear, mpg, data = mtcars, geom = c("boxplot", "jitter"), fill = gear,
     main = "Mileage by Gear Number", xlab = "", ylab = "Miles per Gallon")
 ```
 
-![plot of chunk cars_boxplots](figure/cars_boxplots.svg) 
+![plot of chunk cars_boxplots](figure/cars_boxplots.png) 
 
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2013 Mar 20 03:30:06 PM
+Last Modified: 2013 Mar 28 03:33:35 PM

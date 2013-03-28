@@ -23,14 +23,14 @@ mtcars$cyl <- factor(mtcars$cyl,levels=c(4,6,8),
 
 ##  Kernel density plots for mpg ##
 grouped by number of gears (indicated by color)
-```{r cars_density, dev='svg', warning=FALSE}
+```{r cars_density, dev='png', warning=FALSE}
 qplot(mpg, data=mtcars, geom="density", fill=gear, alpha=I(.5),
    main="Distribution of Gas Milage", xlab="Miles Per Gallon",
    ylab="Density")
 ```
 ## Scatterplot of mpg vs. hp ##
 for each combination of gears and cylinders in each facet, transmission type is represented by shape and color
-```{r cars_scatter, dev='svg', warning=FALSE}
+```{r cars_scatter, dev='png', warning=FALSE}
 qplot(hp, mpg, data=mtcars, shape=am, color=am,
    facets=gear~cyl, size=I(3),
    xlab="Horsepower", ylab="Miles per Gallon")
@@ -38,7 +38,7 @@ qplot(hp, mpg, data=mtcars, shape=am, color=am,
 
 ## Regressions of mpg on weight ##
 Seperate for each number of cylinders
-```{r cars_regressions, dev='svg', warning=FALSE}
+```{r cars_regressions, dev='png', warning=FALSE}
 qplot(wt, mpg, data=mtcars, geom=c("point", "smooth"),
    method="lm", formula=y~x, color=cyl,
    main="Regression of MPG on Weight",
@@ -47,7 +47,7 @@ qplot(wt, mpg, data=mtcars, geom=c("point", "smooth"),
 
 ## Boxplots of mpg by number of gears ##
 observations (points) are overlayed and jittered
-```{r cars_boxplots, dev='svg', warning=FALSE}
+```{r cars_boxplots, dev='png', warning=FALSE}
 qplot(gear, mpg, data=mtcars, geom=c("boxplot", "jitter"),
    fill=gear, main="Mileage by Gear Number",
    xlab="", ylab="Miles per Gallon")
@@ -55,4 +55,4 @@ qplot(gear, mpg, data=mtcars, geom=c("boxplot", "jitter"),
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2013 Mar 20 03:30:06 PM
+Last Modified: 2013 Mar 28 03:33:35 PM
