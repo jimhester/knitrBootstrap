@@ -1,0 +1,13 @@
+#Put this .RProfile in your project directories to automatically use the
+#files for the styled reports
+
+options(rstudio.markdownToHTML =
+  function(inputFile, outputFile) {
+    require(markdown)
+    markdownToHTML(inputFile, outputFile, 
+                   stylesheet='knitr_bootstrap.css', 
+                   header='knitr_bootstrap.html',
+                   options=c('skip_style', 'base64_images', 'use_xhtml')
+    )
+  }
+)
