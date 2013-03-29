@@ -36,7 +36,9 @@ This example is from [Yihui's response](http://stackoverflow.com/questions/14879
 
 Need to load the CanvasMatrix library and the hook_webgl code to get 3d graphs to work
 ```{r setup}
-knit_hooks$set(webgl = hook_webgl)
+has_X11 = Sys.getenv('DISPLAY') != ""
+if(has_X11)
+  knit_hooks$set(webgl = hook_webgl)
 ```
 ```{html}
 <script src="https://dl.dropbox.com/u/15335397/misc/CanvasMatrix.js"></script>
@@ -44,19 +46,19 @@ knit_hooks$set(webgl = hook_webgl)
 <script src="https://dl.dropbox.com/u/15335397/misc/CanvasMatrix.js"></script>
 
 ## point 3d graph ##
-```{r 2d_3d_points, webgl=TRUE}
+```{r 2d_3d_points, webgl=TRUE, eval=has_X11}
 library(rgl)
 x <- sort(rnorm(1000))
 y <- rnorm(1000)
 z <- rnorm(1000) + atan2(x, y)
-plot3d(x, y, z, col = rainbow(1000))
+  plot3d(x, y, z, col = rainbow(1000))
 ```
 ## spheres 3d graph ##
-```{r 2d_3d_spheres, webgl=TRUE}
+```{r 2d_3d_spheres, webgl=TRUE, eval=has_X11}
 open3d()
 spheres3d(x, y, z, col = rainbow(1000))
 ```
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 27 10:54:38 PM
-Last Modified: 2013 Mar 28 03:33:48 PM
+Last Modified: 2013 Apr 01 08:43:48 AM
