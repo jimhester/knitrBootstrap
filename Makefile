@@ -7,9 +7,7 @@ options=c('skip_style', 'base64_images', 'use_xhtml')
 
 all: $(html)
 
-$(html) : $(stylesheet) $(header)
-
-%.html: %.Rmd
+%.html: %.Rmd $(stylesheet) $(header)
 	echo "setwd('$(dir $<)');require('knitr');knit2html(stylesheet='../$(stylesheet)', header='../$(header)', '$(notdir $<)', output='$(notdir $@)', options=$(options))" > temp
 	R CMD BATCH temp
 	rm temp temp.Rout
