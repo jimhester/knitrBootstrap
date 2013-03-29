@@ -40,7 +40,11 @@ See [http://www.rstudio.com/ide/docs/authoring/markdown_custom_rendering]()
 options(rstudio.markdownToHTML =
   function(inputFile, outputFile) {
     require(markdown)
-    markdownToHTML(inputFile, outputFile, stylesheet='knitr_bootstrap.css', header='knitr_bootstrap.html')
+    markdownToHTML(inputFile, outputFile, 
+      stylesheet='knitr_bootstrap.css', 
+      header='knitr_bootstrap.html',
+      options=c('skip_style', 'base64_images', 'use_xhtml')
+    )
   }
 )
 ```
@@ -53,12 +57,16 @@ Using the [Vim-R-Plugin](https://github.com/vim-scripts/Vim-R-plugin) put the fo
 ```vim
 function! RMakeHTML_2()
   update
-  call RSetWD();
+  call RSetWD()
   let filename = expand("%:r:t")
   "requires my patch to markdownToHTML
-  let rcmd = "require('knitr');knit2html(stylesheet='~/share/knitr_bootstrap.css', header='~/share/knitr_bootstrap.html', '" . filename . ".Rmd', output='" . filename . ".html', options=c('skip_style', 'base64_images', 'use_xhtml'))"
+  let rcmd = "require('knitr');
+        \knit2html(stylesheet='~/share/knitr_bootstrap.css',
+        \header='~/share/knitr_bootstrap.html', '" .  filename . ".Rmd',
+        \output='" . filename . ".html',
+        \options=c('skip_style', 'base64_images', 'use_xhtml'))"
   if g:vimrplugin_openhtml
-      let rcmd = rcmd . '; browseURL("' . filename . '.html")'
+    let rcmd = rcmd . '; browseURL("' . filename . '.html")'
   endif
   call SendCmdToR(rcmd)
 endfunction
