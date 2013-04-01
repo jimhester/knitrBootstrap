@@ -58,7 +58,7 @@ print(xtable(mcor), type = "html")
 ```
 
 <!-- html table generated in R 2.15.1 by xtable 1.7-0 package -->
-<!-- Mon Apr  1 08:45:20 2013 -->
+<!-- Mon Apr  1 15:17:21 2013 -->
 <TABLE border=1>
 <TR> <TH>  </TH> <TH> mpg </TH> <TH> cyl </TH> <TH> disp </TH> <TH> hp </TH> <TH> drat </TH> <TH> wt </TH> <TH> qsec </TH> <TH> vs </TH> <TH> am </TH> <TH> gear </TH> <TH> carb </TH>  </TR>
   <TR> <TD align="right"> mpg </TD> <TD align="right"> 1.00 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.78 </TD> <TD align="right"> 0.68 </TD> <TD align="right"> -0.87 </TD> <TD align="right"> 0.42 </TD> <TD align="right"> 0.66 </TD> <TD align="right"> 0.60 </TD> <TD align="right"> 0.48 </TD> <TD align="right"> -0.55 </TD> </TR>
@@ -4096,6 +4096,30 @@ Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 02:44:48 PM
 Last Modified: 2013 Mar 28 03:33:39 PM
 
+
+# Math expressions #
+[MathJax](http://www.mathjax.org/demos/tex-samples) examples
+
+## simple
+\[\alpha+\beta=\gamma\]
+
+## The Lorenz Equations ##
+\[\begin{aligned}
+\dot{x} &amp; = \sigma(y-x) \\
+\dot{y} &amp; = \rho x - y - xz \\
+\dot{z} &amp; = -\beta z + xy
+\end{aligned} \]
+
+## Coins ##
+The probability of getting \(k\) heads when flipping \(n\) coins is
+\[P(E)   = {n \choose k} p^k (1-p)^{ n-k} \]
+
+## An Identity of Ramanujan ##
+\[ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
+1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}}
+{1+\frac{e^{-8\pi}} {1+\ldots} } } } \]
+
+
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 03:22:28 PM
-Last Modified: 2013 Mar 29 04:57:42 PM
+Last Modified: 2013 Apr 01 02:36:15 PM

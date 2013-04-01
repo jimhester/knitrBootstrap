@@ -13,29 +13,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- jQuery -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/css/smoothness/jquery-ui-1.10.2.custom.min.css">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/css/smoothness/jquery-ui-1.10.2.custom.min.css">
 
 <!-- highlight.js -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/highlight.min.js"></script>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/github.min.css" media="screen">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/highlight.min.js"></script>
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/github.min.css" media="screen">
 
 <!-- bootstrap -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" media="screen">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" media="screen">
 
 <!-- bootstrap-responsive -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap-responsive.min.js"></script>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" media="screen">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap-responsive.min.js"></script>
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" media="screen">
 
 <!-- tocify -->
 <script src="http://gregfranko.com/jquery.tocify.js/js/jquery.tocify.min.js"></script>
 <link rel="stylesheet" href="http://gregfranko.com/jquery.tocify.js/css/jquery.tocify.css">
 
 <!-- fancybox -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.js"></script>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.css">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.js"></script>
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.css">
+
+<!-- Mathjax configuration -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+<!-- Mathjax -->
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 
 <script>
 
@@ -124,12 +141,12 @@ $(function() {
   /* add footer */
   $('body').wrapInner('<div id="wrap" />');
   $('body').append('<div id="push" />');
-  $('p:contains("Last Modified")').each(function() {
-    p = $(this).detach();
-    p.appendTo("body");
-    p.addClass('muted').attr('id','credit');
-    p.wrap('<div id="footer"><div class="container" /></div>');
-  });
+  var p = $('p:contains("Author:")');
+  var last_p = p.filter(':last');
+  p.detach();
+  last_p.appendTo("body");
+  last_p.addClass('muted').attr('id','credit');
+  last_p.wrap('<div id="footer"><div class="container" /></div>');
 });
 </script>
 
@@ -247,7 +264,7 @@ print(xtable(mcor), type = &quot;html&quot;)
 
 <!-- html table generated in R 2.15.1 by xtable 1.7-0 package -->
 
-<!-- Mon Apr  1 08:45:20 2013 -->
+<!-- Mon Apr  1 15:17:21 2013 -->
 
 <TABLE border=1>
 <TR> <TH>  </TH> <TH> mpg </TH> <TH> cyl </TH> <TH> disp </TH> <TH> hp </TH> <TH> drat </TH> <TH> wt </TH> <TH> qsec </TH> <TH> vs </TH> <TH> am </TH> <TH> gear </TH> <TH> carb </TH>  </TR>
@@ -4311,9 +4328,36 @@ ggplot(crimesm, aes(map_id = state)) + geom_map(aes(fill = value), map = states_
 Created: 2013 Mar 28 02:44:48 PM
 Last Modified: 2013 Mar 28 03:33:39 PM</p>
 
+<h1>Math expressions</h1>
+
+<p><a href="http://www.mathjax.org/demos/tex-samples">MathJax</a> examples</p>
+
+<h2>simple</h2>
+
+<p>\[\alpha+\beta=\gamma\]</p>
+
+<h2>The Lorenz Equations</h2>
+
+<p>\[\begin{aligned}
+\dot{x} &amp; = \sigma(y-x) \\
+\dot{y} &amp; = \rho x - y - xz \\
+\dot{z} &amp; = -\beta z + xy
+\end{aligned} \]</p>
+
+<h2>Coins</h2>
+
+<p>The probability of getting \(k\) heads when flipping \(n\) coins is
+\[P(E)   = {n \choose k} p^k (1-p)^{ n-k} \]</p>
+
+<h2>An Identity of Ramanujan</h2>
+
+<p>\[ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
+1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}}
+{1+\frac{e^{-8\pi}} {1+\ldots} } } } \]</p>
+
 <p>Author: <a href="http://jimhester.com">Jim Hester</a>
 Created: 2013 Mar 28 03:22:28 PM
-Last Modified: 2013 Mar 29 04:57:42 PM</p>
+Last Modified: 2013 Apr 01 02:36:15 PM</p>
 
 </body>
 
