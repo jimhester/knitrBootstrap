@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Math expressions</title>
+
+
+
+
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- jQuery -->
@@ -137,3 +149,92 @@ $(function() {
   last_p.wrap('<div id="footer"><div class="container" /></div>');
 });
 </script>
+
+<style type="text/css">
+/* remove left padding on body and container */
+body {
+  /*margin:0;*/
+}
+.container-fluid {
+  padding-left: 0;
+}
+
+.toggle{
+  text-transform: capitalize;
+}
+
+ /*indent for h4 elements */
+.sub-header .sub-header .sub-header .sub-header {
+  text-indent: 50px;
+}
+
+.sub-header{
+  display:inline;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+* {
+  margin:0;
+}
+html,
+body {
+    height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -60px;
+}
+
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+    height: 60px;
+    padding-bottom: 40px;
+}
+
+#footer {
+  text-align: center;
+  background-color: #f5f5f5;
+}
+</style>
+
+</head>
+
+<body>
+<h1>Math expressions</h1>
+
+<p><a href="http://www.mathjax.org/demos/tex-samples">MathJax</a> examples</p>
+
+<h2>simple</h2>
+
+<p>\[\alpha+\beta=\gamma\]</p>
+
+<h2>The Lorenz Equations</h2>
+
+<p>\[\begin{aligned}
+\dot{x} &amp; = \sigma(y-x) \\
+\dot{y} &amp; = \rho x - y - xz \\
+\dot{z} &amp; = -\beta z + xy
+\end{aligned} \]</p>
+
+<h2>Coins</h2>
+
+<p>The probability of getting \(k\) heads when flipping \(n\) coins is
+\[P(E)   = {n \choose k} p^k (1-p)^{ n-k} \]</p>
+
+<h2>An Identity of Ramanujan</h2>
+
+<p>\[ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
+1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}}
+{1+\frac{e^{-8\pi}} {1+\ldots} } } } \]</p>
+
+</body>
+
+</html>

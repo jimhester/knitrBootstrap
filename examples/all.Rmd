@@ -4,6 +4,8 @@
 ```
 ```{r child="maps.Rmd"}
 ```
+```{r child="math.Rmd"}
+```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 03:22:28 PM
-Last Modified: 2013 Mar 29 04:57:42 PM
+Last Modified: 2013 Apr 01 02:36:15 PM

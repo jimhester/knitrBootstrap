@@ -1,0 +1,22 @@
+# Math expressions #
+[MathJax](http://www.mathjax.org/demos/tex-samples) examples
+
+## simple
+\[\alpha+\beta=\gamma\]
+
+## The Lorenz Equations ##
+\[\begin{aligned}
+\dot{x} &amp; = \sigma(y-x) \\
+\dot{y} &amp; = \rho x - y - xz \\
+\dot{z} &amp; = -\beta z + xy
+\end{aligned} \]
+
+## Coins ##
+The probability of getting \(k\) heads when flipping \(n\) coins is
+\[P(E)   = {n \choose k} p^k (1-p)^{ n-k} \]
+
+## An Identity of Ramanujan ##
+\[ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
+1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}}
+{1+\frac{e^{-8\pi}} {1+\ldots} } } } \]
+

@@ -20,12 +20,14 @@ A collection of files to create standalone bootstrap html reports from knitr mar
 * Automatically wraps code block with div elements to work with bootstrap
 * Can restyle with bootstrap compatible css
 * Completely offline report usiing knitr_bootstrap_standalone.html
+* Mathematical equations using [mathjax]
 
 ## Examples ##
 
 * [2d_3d] - examples of miscellaneous 2d and interactive 3d plots
 * [cars] - using ggplot2 and the cars dataset
 * [maps] - examples of map plots, and holding plots until end of the block
+* [math] - examples of MathJax formulas
 * [all] - All examples aggregated together
 
 ## Installation ##
@@ -90,8 +92,10 @@ pandoc -H knitr_bootstrap.html -c knitr_bootstrap.css example.md -o example.html
 [patch]: https://github.com/rstudio/markdown/pull/23
 [rstudio/markdown]: https://github.com/rstudio/markdown
 [fancybox]: http://fancyapps.com/fancybox
+[mathjax]: http://mathjax.org
 
 [2d_3d]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/2d_3d.html
 [all]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/all.html
 [cars]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/cars.html
 [maps]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/maps.html
+[math]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/math.html
