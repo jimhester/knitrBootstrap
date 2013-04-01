@@ -112,11 +112,11 @@ $(function() {
   /* add footer */
   $('body').wrapInner('<div id="wrap" />');
   $('body').append('<div id="push" />');
-  $('p:contains("Last Modified")').each(function() {
-    p = $(this).detach();
-    p.appendTo("body");
-    p.addClass('muted').attr('id','credit');
-    p.wrap('<div id="footer"><div class="container" /></div>');
-  });
+  var p = $('p:contains("Author:")');
+  var last_p = p.filter(':last');
+  p.detach();
+  last_p.appendTo("body");
+  last_p.addClass('muted').attr('id','credit');
+  last_p.wrap('<div id="footer"><div class="container" /></div>');
 });
 </script>
