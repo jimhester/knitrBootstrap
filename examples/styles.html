@@ -254,6 +254,7 @@ $(function() {
     $('.style-switch').click(function(){
       var css = $('link[title=' + $(this).attr('id') + ']');
       $('#style[rel=stylesheet]').attr('href', css.attr('href'));
+      return false;
     });
   }
 );
@@ -322,7 +323,7 @@ print(xtable(mcor), type = &quot;html&quot;)
 
 <!-- html table generated in R 2.15.1 by xtable 1.7-0 package -->
 
-<!-- Fri Apr  5 16:03:10 2013 -->
+<!-- Fri Apr  5 16:09:31 2013 -->
 
 <TABLE border=1>
 <TR> <TH>  </TH> <TH> mpg </TH> <TH> cyl </TH> <TH> disp </TH> <TH> hp </TH> <TH> drat </TH> <TH> wt </TH> <TH> qsec </TH> <TH> vs </TH> <TH> am </TH> <TH> gear </TH> <TH> carb </TH>  </TR>

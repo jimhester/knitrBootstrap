@@ -38,6 +38,7 @@ $(function() {
     $('.style-switch').click(function(){
       var css = $('link[title=' + $(this).attr('id') + ']');
       $('#style[rel=stylesheet]').attr('href', css.attr('href'));
+      return false;
     });
   }
 );
