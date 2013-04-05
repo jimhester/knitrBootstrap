@@ -20,3 +20,6 @@ The probability of getting \(k\) heads when flipping \(n\) coins is
 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}}
 {1+\frac{e^{-8\pi}} {1+\ldots} } } } \]
 
+Author: [Jim Hester](http://jimhester.com)
+Created: 2013 Apr 01 03:27:26 PM
+Last Modified: 2013 Apr 01 03:27:37 PM

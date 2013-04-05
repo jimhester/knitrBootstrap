@@ -18,8 +18,8 @@ A collection of files to create standalone bootstrap html reports from knitr mar
 * Images are automatically thumbnailed and lightboxed using [fancybox]
 * Code blocks automatically highlighted using [highlight.js]
 * Automatically wraps code block with div elements to work with bootstrap
-* Can restyle with bootstrap compatible css
-* Completely offline report usiing knitr_bootstrap_standalone.html
+* Syle with themes from [bootswatch]
+* Completely offline report using knitr_bootstrap_standalone.html
 * Mathematical equations using [mathjax]
 
 ## Examples ##
@@ -29,6 +29,7 @@ A collection of files to create standalone bootstrap html reports from knitr mar
 * [maps] - examples of map plots, and holding plots until end of the block
 * [math] - examples of MathJax formulas
 * [all] - All examples aggregated together
+* [styles] - All examples with a style switcher
 
 ## Installation ##
 
@@ -93,9 +94,12 @@ pandoc -H knitr_bootstrap.html -c knitr_bootstrap.css example.md -o example.html
 [rstudio/markdown]: https://github.com/rstudio/markdown
 [fancybox]: http://fancyapps.com/fancybox
 [mathjax]: http://mathjax.org
+[bootswatch]: http://bootswatch.com
 
 [2d_3d]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/2d_3d.html
 [all]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/all.html
 [cars]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/cars.html
 [maps]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/maps.html
 [math]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/math.html
+[styles]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/styles.html
+
