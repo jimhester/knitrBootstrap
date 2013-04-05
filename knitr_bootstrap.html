@@ -3,7 +3,6 @@
 <!-- jQuery -->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/css/smoothness/jquery-ui-1.10.2.custom.min.css">
 
 <!-- highlight.js -->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/highlight.min.js"></script>
@@ -11,11 +10,10 @@
 
 <!-- bootstrap -->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" media="screen">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" media="screen">
 
 <!-- bootstrap-responsive -->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap-responsive.min.js"></script>
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" media="screen">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" media="screen">
 
 <!-- tocify -->
 <script src="http://gregfranko.com/jquery.tocify.js/js/jquery.tocify.min.js"></script>
@@ -94,7 +92,7 @@ $(function() {
 
   /* add navbar */
   $('.container-fluid').prepend(
-'<div class="navbar-fixed-bottom navbar">\
+'<div id="bottom-navbar" class="navbar-fixed-bottom navbar">\
   <div class="navbar-inner">\
     <ul class="nav pull-right">\
       <li><a href="#" id="toggle_code">Toggle Code</a></li>\
@@ -119,8 +117,11 @@ $(function() {
     return false;
   });
 
+  /* toggle code blocks hidden by default */
+  $('pre code[class!=no-highlight]').parent().toggle();
+
   /* add table of contents */
-  $('#toc').tocify({'selectors' : 'h1,h2,h3,h4', extendPage: false});
+  $('#toc').tocify({extendPage: false, showAndHideOnScroll: false});
 
   /* style tables */
   $('table').addClass('table table-striped table-bordered table-hover table-condensed')
@@ -132,8 +133,72 @@ $(function() {
   var p = $('p:contains("Author:")');
   var last_p = p.filter(':last');
   p.detach();
-  last_p.appendTo("body");
   last_p.addClass('muted').attr('id','credit');
+  last_p.append('<p>styled with <a href="https://github.com/jimhester/knitr_bootstrap">knitr_bootstrap</a></p>');
+  last_p.appendTo("body");
   last_p.wrap('<div id="footer"><div class="container" /></div>');
 });
 </script>
+
+<!-- knitr_bootstrap styles -->
+<style type="text/css">
+
+.container-fluid {
+  padding-left: 0 !important;
+}
+
+.toggle{
+  text-transform: capitalize;
+}
+
+ /*indent for h4 elements */
+.sub-header .sub-header .sub-header .sub-header {
+  text-indent: 50px;
+}
+
+.sub-header{
+  display:inline;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+* {
+  margin:0;
+}
+html,
+body {
+    height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -60px;
+}
+
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+    height: 60px;
+    padding-bottom: 60px;
+}
+
+#footer {
+  text-align: center;
+}
+/* Twitter Bootstrap Override Style */
+.nav-list > li > a, .nav-list .nav-header {
+    margin: 0px !important;
+}
+
+/* Twitter Bootstrap Override Style */
+.nav-list > li > a {
+    padding: 5px !important;
+}
+#toc ul, #toc li {
+  display: block !important;
+</style>
