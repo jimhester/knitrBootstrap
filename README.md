@@ -19,8 +19,8 @@ A collection of files to create standalone bootstrap html reports from knitr mar
 * Code blocks automatically highlighted using [highlight.js]
 * Automatically wraps code block with div elements to work with bootstrap
 * Style with themes from [bootswatch], optionally including all styles and a switcher.
-* Completely offline report using knitr_bootstrap_standalone.html
-* Mathematical equations using [mathjax]
+* Create completely offline reports, including all css, javascript and images
+* Mathematical equations using [mathjax], note this does not work offline
 
 ## Examples ##
 All the examples include a css style switch, so you can try out the included styles.
@@ -46,7 +46,7 @@ options(rstudio.markdownToHTML =
     markdownToHTML(inputFile, outputFile, 
       stylesheet='knitr_bootstrap.css', 
       header='knitr_bootstrap.html',
-      options=c('skip_style', 'base64_images', 'use_xhtml')
+      options=c('base64_images', 'mathjax', 'skip_style', 'use_xhtml')
     )
   }
 )
@@ -67,7 +67,7 @@ function! RMakeHTML_2()
         \knit2html(stylesheet='~/share/knitr_bootstrap.css',
         \header='~/share/knitr_bootstrap.html', '" .  filename . ".Rmd',
         \output='" . filename . ".html',
-        \options=c('skip_style', 'base64_images', 'use_xhtml'))"
+        \options=c('base64_images', 'mathjax', 'skip_style', 'use_xhtml'))"
   if g:vimrplugin_openhtml
     let rcmd = rcmd . '; browseURL("' . filename . '.html")'
   endif

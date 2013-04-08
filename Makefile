@@ -3,13 +3,21 @@ html=$(rmd:.Rmd=.html)
 
 stylesheet=
 header=knitr_bootstrap.html
-options=c('skip_style', 'base64_images', 'use_xhtml')
+header_inline=$(header:.html=_inline.html)
+options=c('skip_style', 'base64_images', 'use_xhtml', 'mathjax')
 
 chooser=knitr_bootstrap_style_toggle.html
 chooser_inline=$(chooser:.html=_inline.html)
-both=$(chooser_inline:.html=_both.html)
+both=$(chooser:.html=_both.html)
 
 style_chooser=
+
+standalone=
+
+ifdef standalone
+	header:=$(header_inline)
+	chooser:=$(chooser_inline)
+endif
 
 ifdef style_chooser
 	header_temp:=$(both)
@@ -17,12 +25,14 @@ else
 	header_temp:=$(header)
 endif
 
-$(both): $(chooser_inline)
-	cat $(header) $(chooser_inline) > $(both)
 
 all: $(html)
 
-$(chooser_inline): $(chooser)
+$(both): $(header) $(chooser)
+	cat $(header) $(chooser) > $(header_temp)
+
+
+%_inline.html: %.html
 	encode.pl $< > $@
 
 %.html: %.Rmd $(stylesheet) $(header_temp)
@@ -31,4 +41,4 @@ $(chooser_inline): $(chooser)
 	-rm $(notdir $@).{R,Rout}
 
 make clean:
-	rm -f examples/*.html examples/*.md $(chooser_inline) $(both)
+	rm -f examples/*.html examples/*.md $(chooser_inline) $(both) $(header_inline)
