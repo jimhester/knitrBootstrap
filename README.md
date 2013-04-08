@@ -18,18 +18,18 @@ A collection of files to create standalone bootstrap html reports from knitr mar
 * Images are automatically thumbnailed and lightboxed using [fancybox]
 * Code blocks automatically highlighted using [highlight.js]
 * Automatically wraps code block with div elements to work with bootstrap
-* Syle with themes from [bootswatch]
+* Style with themes from [bootswatch], optionally including all styles and a switcher.
 * Completely offline report using knitr_bootstrap_standalone.html
 * Mathematical equations using [mathjax]
 
 ## Examples ##
+All the examples include a css style switch, so you can try out the included styles.
 
 * [2d_3d] - examples of miscellaneous 2d and interactive 3d plots
 * [cars] - using ggplot2 and the cars dataset
 * [maps] - examples of map plots, and holding plots until end of the block
 * [math] - examples of MathJax formulas
-* [all] - All examples aggregated together
-* [styles] - All examples with a style switcher
+* [all] - All examples together
 
 ## Installation ##
 
@@ -101,5 +101,3 @@ pandoc -H knitr_bootstrap.html -c knitr_bootstrap.css example.md -o example.html
 [cars]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/cars.html
 [maps]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/maps.html
 [math]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/math.html
-[styles]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/styles.html
-

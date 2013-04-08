@@ -1,25 +1,34 @@
 rmd=$(wildcard examples/*.Rmd)
-html=$(patsubst %.Rmd,%.html,$(rmd))
-styles=$(wildcard styles/*.css)
+html=$(rmd:.Rmd=.html)
 
 stylesheet=
 header=knitr_bootstrap.html
 options=c('skip_style', 'base64_images', 'use_xhtml')
 
-all: $(html) styles
+chooser=knitr_bootstrap_style_toggle.html
+chooser_inline=$(chooser:.html=_inline.html)
+both=$(chooser_inline:.html=_both.html)
 
-%.html: %.Rmd $(stylesheet) $(header)
-	echo "setwd('$(dir $<)');require('knitr');knit2html(stylesheet='../$(stylesheet)', header='../$(header)', '$(notdir $<)', output='$(notdir $@)', options=$(options))" > temp
-	R CMD BATCH temp
-	rm temp temp.Rout
+style_chooser=
 
-styles: knitr_bootstrap_style_toggle.html knitr_bootstrap.html examples/all.Rmd
-	encode.pl knitr_bootstrap_style_toggle.html > knitr_bootstrap_style_toggle_inline.html
-	cat  knitr_bootstrap.html knitr_bootstrap_style_toggle_inline.html > test.html
-	echo "setwd('examples');require('knitr');knit2html(stylesheet='', header='../test.html', 'all.Rmd', output='styles.html', options=$(options))" > temp
-	R CMD BATCH temp
-	rm temp temp.Rout
-	rm test.html
-	
+ifdef style_chooser
+	header_temp:=$(both)
+else
+	header_temp:=$(header)
+endif
+
+$(both): $(chooser_inline)
+	cat $(header) $(chooser_inline) > $(both)
+
+all: $(html)
+
+$(chooser_inline): $(chooser)
+	encode.pl $< > $@
+
+%.html: %.Rmd $(stylesheet) $(header_temp)
+	echo "setwd('$(dir $<)');require('knitr');knit2html(stylesheet='$(CURDIR)/$(stylesheet)', header='$(CURDIR)/$(header_temp)', '$(CURDIR)/$<', output='$(notdir $@)', options=$(options))" > $(notdir $@).R
+	R CMD BATCH $(notdir $@).R
+	-rm $(notdir $@).{R,Rout}
+
 make clean:
-	-rm examples/*.html examples/*.md
+	rm -f examples/*.html examples/*.md $(chooser_inline) $(both)
