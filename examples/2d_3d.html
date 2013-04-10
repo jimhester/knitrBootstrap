@@ -8,9 +8,6 @@
 
 
 
-<!-- MathJax scripts -->
-<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,23 +34,6 @@
 <!-- fancybox -->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.js"></script>
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.css">
-
-<!-- Mathjax configuration -->
-<!--<script type="text/x-mathjax-config">-->
-  <!--MathJax.Hub.Config({-->
-    <!--extensions: ["tex2jax.js"],-->
-    <!--jax: ["input/TeX", "output/HTML-CSS"],-->
-    <!--tex2jax: {-->
-      <!--inlineMath: [ ['$','$'], ["\\(","\\)"] ],-->
-      <!--displayMath: [ ['$$','$$'], ["\\[","\\]"] ],-->
-      <!--processEscapes: true-->
-    <!--},-->
-    <!--"HTML-CSS": { availableFonts: ["TeX"] }-->
-  <!--});-->
-<!--</script>-->
-
-<!--[> Mathjax <]-->
-<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>-->
 
 <script>
 
@@ -107,16 +87,16 @@ $(function() {
 
   /* add navbar */
   $('.container-fluid').prepend(
-'<div id="bottom-navbar" class="navbar-fixed-bottom navbar">\
-  <div class="navbar-inner">\
-    <ul class="nav pull-right">\
-      <li><a href="#" id="toggle_code">Toggle Code</a></li>\
-      <li><a href="#" id="toggle_output">Toggle Output</a></li>\
-      <li><a href="#" id="toggle_plot">Toggle Plots</a></li>\
-    </ul>\
-  </div>\
-</div>'
-);
+    '<div id="bottom-navbar" class="navbar-fixed-bottom navbar">\
+      <div class="navbar-inner">\
+        <ul class="nav pull-right">\
+          <li><a href="#" id="toggle_code">Toggle Code</a></li>\
+          <li><a href="#" id="toggle_output">Toggle Output</a></li>\
+          <li><a href="#" id="toggle_plot">Toggle Plots</a></li>\
+        </ul>\
+      </div>\
+    </div>'
+  );
 
   /* global toggles FIXME explicitly toggle all on/off using global variables */
   $('#toggle_code').click(function(){
@@ -155,24 +135,16 @@ $(function() {
 });
 </script>
 
-<!-- knitr_bootstrap styles -->
 <style type="text/css">
 
+/* Knitr_bootstrap styles
+-------------------------------------------------- */
 .container-fluid {
   padding-left: 0 !important;
 }
 
 .toggle{
   text-transform: capitalize;
-}
-
- /*indent for h4 elements */
-.sub-header .sub-header .sub-header .sub-header {
-  text-indent: 50px;
-}
-
-.sub-header{
-  display:inline;
 }
 
 /* Sticky footer styles
@@ -205,17 +177,34 @@ body {
 #footer {
   text-align: center;
 }
-/* Twitter Bootstrap Override Style */
+
+/* Twitter Bootstrap Overrides */
+/* -------------------------------------------------- */
 .nav-list > li > a, .nav-list .nav-header {
     margin: 0px !important;
 }
-
-/* Twitter Bootstrap Override Style */
 .nav-list > li > a {
     padding: 5px !important;
 }
-#toc ul, #toc li {
-  display: block !important;
+
+/* Tocify */
+/* -------------------------------------------------- */
+
+/* Display h2 headers */
+.sub-header {
+  display: block;
+}
+
+/* Hide the rest */
+.sub-header .sub-header {
+  display: none;
+}
+
+ /* Indent h4 elements */
+.sub-header .sub-header .sub-header .sub-header {
+  text-indent: 50px;
+}
+
 </style>
 <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" id="style" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" id="style" title="default" media="screen">
@@ -327,7 +316,7 @@ print(xtable(mcor), type = &quot;html&quot;)
 
 <!-- html table generated in R 2.15.1 by xtable 1.7-0 package -->
 
-<!-- Mon Apr  8 15:58:24 2013 -->
+<!-- Wed Apr 10 10:02:16 2013 -->
 
 <TABLE border=1>
 <TR> <TH>  </TH> <TH> mpg </TH> <TH> cyl </TH> <TH> disp </TH> <TH> hp </TH> <TH> drat </TH> <TH> wt </TH> <TH> qsec </TH> <TH> vs </TH> <TH> am </TH> <TH> gear </TH> <TH> carb </TH>  </TR>
