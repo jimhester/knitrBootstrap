@@ -5,9 +5,9 @@ use autodie qw(:all);
 ###############################################################################
 # By Jim Hester
 # Created: 2013 Apr 05 02:45:46 PM
-# Last Modified: 2013 Apr 08 03:28:50 PM
+# Last Modified: 2013 Apr 10 08:52:56 AM
 # Title:encode.pl
-# Purpose: Base64 encode all hrefs
+# Purpose: Base64 encode all external links
 ###############################################################################
 # Code to handle help menu and man page
 ###############################################################################
@@ -24,29 +24,44 @@ pod2usage("$0: No files given.") if ( ( @ARGV == 0 ) && ( -t STDIN ) );
 use MIME::Base64;
 use LWP::UserAgent;
 use List::MoreUtils qw(any);
+use File::MimeInfo;
 
 my $ua = LWP::UserAgent->new;
 
-while (my $line = <>) {
+#create search regexp
+my @starts = ('script[^<>]+src=', 'link[^<>]+href=', 'url[(]');
+my $search = '((?:' . join('|', map{ "(?:$_)"} @starts) . q{)["']*)([^#"')]+)(["')])};
 
+while (my $line = <>) {
+  print encode_string($line, $search);
+}
+
+#base64 encode urls or local files recursively
+sub encode_string{
+  my ($string, $search) = @_;
   #if not in our libraries to ignore
-  if ( not $args{ignore} or not any { $line =~ /$_/ } @{ $args{ignore} }){
-    $line =~ s{<(link|script)(.*(?:href|src)=")([^"]*)"}{
-      my $head = $1 eq 'link' ? "<$1$2data:text/css;base64," : "<$1$2data:application/x-javascript;base64,";
-      if( -e $3){
-      my $text = encode_base64(slurp($3), '');
-      "$head$text\"";
-      }
-      elsif(my $response =$ua->get($3)){
-      my $text = encode_base64($response->decoded_content(charset => 'none'), '');
-      "$head$text\"";
-      }
-      else{
-      "<$1$2$3\"";
-      }
-    }eg;
-  }
-  print $line;
+  $string =~ s{$search}{
+    my($start, $url, $end) = ($1, $2, $3);
+
+    #check for local file
+    if(-e $url){
+      my $text = slurp($url);
+      $text = encode_string($text, $search) if $text;
+      my $type = mimetype($url);
+      $url="data:$type;base64," . encode_base64($text, '');
+    }
+    $url =~ s{^//}{http://}g;
+    my $response =$ua->get($url);
+    if($response->is_success){
+      my $text = $response->decoded_content(charset => 'none');
+      $text = encode_string($text, $search) if $text;
+      my $type = $response->content_type();
+      $url="data:$type;base64," . encode_base64($text, '');
+    }
+      "$start$url$end";
+      }eg;
+#}eg;
+  return $string;
 }
 
 sub slurp {
@@ -55,7 +70,6 @@ sub slurp {
   open my $fh, "<", $file;
   return scalar <$fh>;
 }
-
 ###############################################################################
 # Help Documentation
 ###############################################################################
