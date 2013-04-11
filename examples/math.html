@@ -20,23 +20,24 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 
 <!-- highlight.js -->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/highlight.min.js"></script>
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/github.min.css" media="screen">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
 
 <!-- bootstrap -->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" media="screen">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 
 <!-- bootstrap-responsive -->
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" media="screen">
 
 <!-- tocify -->
-<script src="http://gregfranko.com/jquery.tocify.js/js/jquery.tocify.min.js"></script>
 <link rel="stylesheet" href="http://gregfranko.com/jquery.tocify.js/css/jquery.tocify.css">
+<script src="http://gregfranko.com/jquery.tocify.js/js/jquery.tocify.min.js"></script>
 
 <!-- fancybox -->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.js"></script>
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.css">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.js"></script>
 
 <script>
 
@@ -45,17 +46,17 @@ $(function() {
 
   /* find all code blocks which have a class and add toggle */
   $('pre code[class]').each(function(i, e) {
-    $(this).parent()
-      .before('<button class="btn-mini toggle btn-link">+/- '
+    $(this).parent().before('<button class="btn-mini toggle btn-link">+/- '
         + $(this).attr('class') + ' Code</button>');
+    hljs.highlightBlock(e);
   });
 
   /* Add toggle to output blocks and do not syntax highlight */
   $('pre code').not('[class]').addClass('no-highlight')
     .parent().before('<button class="btn-mini toggle btn-link">+/- Output</button>');
 
+
   /* syntax highlight code blocks*/
-  hljs.initHighlighting();
 
   /* onclick toggle next code block */
   $('.toggle').click(function() {
@@ -119,7 +120,7 @@ $(function() {
   $('pre code[class!=no-highlight]').parent().toggle();
 
   /* add table of contents */
-  $('#toc').tocify({extendPage: false, showAndHideOnScroll: false});
+  $('#toc').tocify({extendPage: false});
 
   /* style tables */
   $('table').addClass('table table-striped table-bordered table-hover table-condensed')

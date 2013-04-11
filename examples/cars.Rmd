@@ -4,10 +4,7 @@ from [statmethods.net](http://www.statmethods.net/advgraphs/ggplot2.html)
 ```{r cars_setup}
 # ggplot2 examples
 library(ggplot2)
-
-#rm any local mtcars
 rm(mtcars)
-
 #use color brewer as default discrete colors
 scale_colour_discrete <- function(...) scale_color_brewer(palette="Set1", ...)
 scale_fill_discrete <- function(...) scale_fill_brewer(palette="Set1", ...)
@@ -55,4 +52,4 @@ qplot(gear, mpg, data=mtcars, geom=c("boxplot", "jitter"),
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2013 Apr 08 11:08:15 AM
+Last Modified: 2013 Apr 11 08:13:45 AM

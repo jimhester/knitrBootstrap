@@ -58,7 +58,7 @@ print(xtable(mcor), type = "html")
 ```
 
 <!-- html table generated in R 2.15.1 by xtable 1.7-0 package -->
-<!-- Wed Apr 10 10:02:23 2013 -->
+<!-- Thu Apr 11 10:27:46 2013 -->
 <TABLE border=1>
 <TR> <TH>  </TH> <TH> mpg </TH> <TH> cyl </TH> <TH> disp </TH> <TH> hp </TH> <TH> drat </TH> <TH> wt </TH> <TH> qsec </TH> <TH> vs </TH> <TH> am </TH> <TH> gear </TH> <TH> carb </TH>  </TR>
   <TR> <TD align="right"> mpg </TD> <TD align="right"> 1.00 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.78 </TD> <TD align="right"> 0.68 </TD> <TD align="right"> -0.87 </TD> <TD align="right"> 0.42 </TD> <TD align="right"> 0.66 </TD> <TD align="right"> 0.60 </TD> <TD align="right"> 0.48 </TD> <TD align="right"> -0.55 </TD> </TR>
@@ -3993,8 +3993,6 @@ from [statmethods.net](http://www.statmethods.net/advgraphs/ggplot2.html)
 ```r
 # ggplot2 examples
 library(ggplot2)
-
-# rm any local mtcars
 rm(mtcars)
 ```
 
@@ -4003,7 +4001,6 @@ rm(mtcars)
 ```
 
 ```r
-
 # use color brewer as default discrete colors
 scale_colour_discrete <- function(...) scale_color_brewer(palette = "Set1", 
     ...)
@@ -4063,7 +4060,7 @@ qplot(gear, mpg, data = mtcars, geom = c("boxplot", "jitter"), fill = gear,
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2013 Apr 08 11:08:15 AM
+Last Modified: 2013 Apr 11 08:13:45 AM
 
 
 # Map plots #

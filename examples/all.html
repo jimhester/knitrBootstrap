@@ -20,23 +20,24 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 
 <!-- highlight.js -->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/highlight.min.js"></script>
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/github.min.css" media="screen">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
 
 <!-- bootstrap -->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" media="screen">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 
 <!-- bootstrap-responsive -->
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" media="screen">
 
 <!-- tocify -->
-<script src="http://gregfranko.com/jquery.tocify.js/js/jquery.tocify.min.js"></script>
 <link rel="stylesheet" href="http://gregfranko.com/jquery.tocify.js/css/jquery.tocify.css">
+<script src="http://gregfranko.com/jquery.tocify.js/js/jquery.tocify.min.js"></script>
 
 <!-- fancybox -->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.js"></script>
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.css">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.js"></script>
 
 <script>
 
@@ -45,17 +46,17 @@ $(function() {
 
   /* find all code blocks which have a class and add toggle */
   $('pre code[class]').each(function(i, e) {
-    $(this).parent()
-      .before('<button class="btn-mini toggle btn-link">+/- '
+    $(this).parent().before('<button class="btn-mini toggle btn-link">+/- '
         + $(this).attr('class') + ' Code</button>');
+    hljs.highlightBlock(e);
   });
 
   /* Add toggle to output blocks and do not syntax highlight */
   $('pre code').not('[class]').addClass('no-highlight')
     .parent().before('<button class="btn-mini toggle btn-link">+/- Output</button>');
 
+
   /* syntax highlight code blocks*/
-  hljs.initHighlighting();
 
   /* onclick toggle next code block */
   $('.toggle').click(function() {
@@ -119,7 +120,7 @@ $(function() {
   $('pre code[class!=no-highlight]').parent().toggle();
 
   /* add table of contents */
-  $('#toc').tocify({extendPage: false, showAndHideOnScroll: false});
+  $('#toc').tocify({extendPage: false});
 
   /* style tables */
   $('table').addClass('table table-striped table-bordered table-hover table-condensed')
@@ -319,7 +320,7 @@ print(xtable(mcor), type = &quot;html&quot;)
 
 <!-- html table generated in R 2.15.1 by xtable 1.7-0 package -->
 
-<!-- Wed Apr 10 10:02:23 2013 -->
+<!-- Thu Apr 11 10:27:46 2013 -->
 
 <TABLE border=1>
 <TR> <TH>  </TH> <TH> mpg </TH> <TH> cyl </TH> <TH> disp </TH> <TH> hp </TH> <TH> drat </TH> <TH> wt </TH> <TH> qsec </TH> <TH> vs </TH> <TH> am </TH> <TH> gear </TH> <TH> carb </TH>  </TR>
@@ -4292,16 +4293,13 @@ Last Modified: 2013 Apr 01 08:43:48 AM</p>
 
 <pre><code class="r"># ggplot2 examples
 library(ggplot2)
-
-# rm any local mtcars
 rm(mtcars)
 </code></pre>
 
 <pre><code>## Warning: object &#39;mtcars&#39; not found
 </code></pre>
 
-<pre><code class="r">
-# use color brewer as default discrete colors
+<pre><code class="r"># use color brewer as default discrete colors
 scale_colour_discrete &lt;- function(...) scale_color_brewer(palette = &quot;Set1&quot;, 
     ...)
 scale_fill_discrete &lt;- function(...) scale_fill_brewer(palette = &quot;Set1&quot;, ...)
@@ -4356,7 +4354,7 @@ mtcars$cyl &lt;- factor(mtcars$cyl, levels = c(4, 6, 8), labels = c(&quot;4cyl&q
 
 <p>Author: <a href="http://jimhester.com">Jim Hester</a>
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2013 Apr 08 11:08:15 AM</p>
+Last Modified: 2013 Apr 11 08:13:45 AM</p>
 
 <h1>Map plots</h1>
 
