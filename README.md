@@ -14,12 +14,10 @@ A framework to create bootstrap styled HTML reports from knitr Rmarkdown.
 
 ## Features ##
 * Automatic table of contents constructed from h1-4 tags using [tocify]
-* Output automatically resized to fit the display
-* Code/Output block and plot visibility can be toggled with a mouse click
 * Images are automatically thumbnailed and lightboxed using [fancybox]
-* Code blocks automatically highlighted using [highlight.js]
-* Automatically wraps code block with div elements to work with bootstrap
-* Style with themes from [bootswatch], optionally including all styles and a switcher.
+* Style with themes from [bootswatch], optionally including a style switch.
+* Code blocks automatically highlighted using [highlight.js], optionally including a style switch.
+* Code/Output block and plot visibility can be toggled with a mouse click
 * Create completely offline reports, including all css, javascript and images
 * Mathematical equations using [mathjax], note this does not work offline
 
@@ -46,10 +44,13 @@ make file.html
 #with style chooser
 make style_chooser=1 file.html
 
+#with code style chooser
+make code_style_chooser=1 file.html
+
 #standalone
 make standalone=1 file.html
 
-#with standalone styles !caution! this will be a several MB file
+#with standalone and both style choosers !caution! this will be a several MB file
 make standalone=1 style_chooser=1 file.html
 ```
 

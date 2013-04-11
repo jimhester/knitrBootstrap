@@ -3,28 +3,28 @@ html=$(rmd:.Rmd=.html)
 
 stylesheet=
 header=knitr_bootstrap.html
-header_inline=$(header:.html=_inline.html)
+both=$(header:.html=_both.html)
 options=c('skip_style', 'base64_images', 'use_xhtml', 'mathjax')
 
-chooser=knitr_bootstrap_style_toggle.html
-chooser_inline=$(chooser:.html=_inline.html)
-both=$(chooser:.html=_both.html)
-
+code_style_chooser=
 style_chooser=
-
 standalone=
 
+ifdef style_chooser
+	chooser+=knitr_bootstrap_style_toggle.html
+	header_temp=$(both)
+endif
+ifdef code_style_chooser
+	chooser+=knitr_bootstrap_code_style_toggle.html
+	header_temp=$(both)
+endif
+
 ifdef standalone
+	chooser_inline=$(chooser:.html=_inline.html)
+	header_inline=$(header:.html=_inline.html)
 	header:=$(header_inline)
 	chooser:=$(chooser_inline)
 endif
-
-ifdef style_chooser
-	header_temp:=$(both)
-else
-	header_temp:=$(header)
-endif
-
 
 all: $(html)
 
