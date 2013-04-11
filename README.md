@@ -1,15 +1,16 @@
 # Knitr Bootstrap #
 
-A collection of files to create standalone bootstrap html reports from knitr markdown.
+A framework to create bootstrap styled HTML reports from knitr Rmarkdown.
 
 ## Table of Contents
 
 * [Features](#features)
 * [Examples](#examples)
-* [Installation](#installation)
+* [Usage](#usage)
+  * [Makefile](#makefile)
   * [RStudio](#rstudio)
-  * [Pandoc](#pandoc)
   * [Vim](#vim)
+  * [Pandoc](#pandoc)
 
 ## Features ##
 * Automatic table of contents constructed from h1-4 tags using [tocify]
@@ -31,7 +32,26 @@ All the examples include a css style switch, so you can try out the included sty
 * [math] - examples of MathJax formulas
 * [all] - All examples together
 
-## Installation ##
+## Usage ##
+
+### Makefile ###
+
+You can use the included Makefile to generate html reports from Rmd files from
+the command line.  If you have a file file.Rmd and you want to create file.html use
+
+```bash
+#standard
+make file.html
+
+#with style chooser
+make style_chooser=1 file.html
+
+#standalone
+make standalone=1 file.html
+
+#with standalone styles !caution! this will be a several MB file
+make standalone=1 style_chooser=1 file.html
+```
 
 ### RStudio ###
 
