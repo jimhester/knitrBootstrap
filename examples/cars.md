@@ -78,4 +78,4 @@ qplot(gear, mpg, data = mtcars, geom = c("boxplot", "jitter"), fill = gear,
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2013 Apr 11 08:13:45 AM
+Last Modified: 2013 Apr 17 11:45:06 AM

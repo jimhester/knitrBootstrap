@@ -2,10 +2,12 @@
 ```
 ```{r child="cars.Rmd"}
 ```
+```{r child="illusions.Rmd"}
+```
 ```{r child="maps.Rmd"}
 ```
 ```{r child="math.Rmd"}
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 03:22:28 PM
-Last Modified: 2013 Apr 01 02:36:15 PM
+Last Modified: 2013 Apr 17 11:40:17 AM
