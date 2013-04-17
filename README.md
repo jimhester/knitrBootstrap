@@ -26,6 +26,7 @@ All the examples include a css style switch, so you can try out the included sty
 
 * [2d_3d] - examples of miscellaneous 2d and interactive 3d plots
 * [cars] - using ggplot2 and the cars dataset
+* [illusions] - examples of interesting optical illusions
 * [maps] - examples of map plots, and holding plots until end of the block
 * [math] - examples of MathJax formulas
 * [all] - All examples together
@@ -130,5 +131,6 @@ pandoc -H knitr_bootstrap.html -c knitr_bootstrap.css example.md -o example.html
 [2d_3d]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/2d_3d.html
 [all]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/all.html
 [cars]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/cars.html
+[illusions]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/illusions.html
 [maps]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/maps.html
 [math]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/math.html
