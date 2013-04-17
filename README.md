@@ -32,6 +32,16 @@ All the examples include a css style switch, so you can try out the included sty
 
 ## Usage ##
 
+Using the [Makefile](#makefile), [Rstudio](#rstudio) or [Vim](#vim) methods of
+building the report requires my [patch] to the [rstudio/markdown] package.
+Until(if) it is merged, the easiest thing to do is install my markdown fork
+with [devtools].
+
+```r
+library(devtools)
+install_github(username='jimhester', repo='markdown')
+```
+
 ### Makefile ###
 
 You can use the included Makefile to generate html reports from Rmd files from
@@ -59,7 +69,7 @@ make standalone=1 style_chooser=1 file.html
 Simply source the following code in RStudio before you knit your reports.
 See [http://www.rstudio.com/ide/docs/authoring/markdown_custom_rendering]()
 
-*Note this requires my [patch] to the [rstudio/markdown] R package*
+*Note this requires my [patch] to the [rstudio/markdown] R package, see [Usage](#usage)*
 ```r
 options(rstudio.markdownToHTML =
   function(inputFile, outputFile) {
@@ -77,7 +87,7 @@ options(rstudio.markdownToHTML =
 
 Using the [Vim-R-Plugin](https://github.com/vim-scripts/Vim-R-plugin) put the following function in your .vimrc to create the file directly with knitr and the markdown package
 
-*Note this requires my [patch] to the [rstudio/markdown] R package*
+*Note this requires my [patch] to the [rstudio/markdown] R package, see [Usage](#usage)*
 ```vim
 function! RMakeHTML_2()
   update
