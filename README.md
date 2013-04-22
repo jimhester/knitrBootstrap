@@ -11,6 +11,7 @@ A framework to create bootstrap styled HTML reports from knitr Rmarkdown.
   * [RStudio](#rstudio)
   * [Vim](#vim)
   * [Pandoc](#pandoc)
+* [Styles](#styles)
 
 ## Features ##
 * Automatic table of contents constructed from h1-4 tags using [tocify]
@@ -22,7 +23,7 @@ A framework to create bootstrap styled HTML reports from knitr Rmarkdown.
 * Mathematical equations using [mathjax], note this does not work offline
 
 ## Examples ##
-All the examples include a css style switch, so you can try out the included styles.
+All the examples include a css style switch, so you can try out the various styles from [bootswatch].
 
 * [2d_3d] - examples of miscellaneous 2d and interactive 3d plots
 * [cars] - using ggplot2 and the cars dataset
@@ -115,6 +116,14 @@ If your markdown filename is example.md you can use the header html
 ```console
 pandoc -H knitr_bootstrap.html -c knitr_bootstrap.css example.md -o example.html
 ```
+
+## Styles ##
+
+All of the examples include style toggles for both bootstrap and the code
+highlighting.  If you want to change the default for either of them find the
+alternate stylesheet line in knitr_bootstrap_style_toggle.html or
+knitr_bootstrap_code_style_toggle.html and replace the default css line in
+knitr_bootstrap.html
 
 [highlight.js]: https://github.com/isagalaev/highlight.js
 [tocify]: http://gregfranko.com/jquery.tocify.js
