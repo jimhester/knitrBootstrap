@@ -58,7 +58,7 @@ print(xtable(mcor), type = "html")
 ```
 
 <!-- html table generated in R 2.15.1 by xtable 1.7-0 package -->
-<!-- Wed Apr 17 11:51:15 2013 -->
+<!-- Mon Apr 22 13:53:09 2013 -->
 <TABLE border=1>
 <TR> <TH>  </TH> <TH> mpg </TH> <TH> cyl </TH> <TH> disp </TH> <TH> hp </TH> <TH> drat </TH> <TH> wt </TH> <TH> qsec </TH> <TH> vs </TH> <TH> am </TH> <TH> gear </TH> <TH> carb </TH>  </TR>
   <TR> <TD align="right"> mpg </TD> <TD align="right"> 1.00 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.78 </TD> <TD align="right"> 0.68 </TD> <TD align="right"> -0.87 </TD> <TD align="right"> 0.42 </TD> <TD align="right"> 0.66 </TD> <TD align="right"> 0.60 </TD> <TD align="right"> 0.48 </TD> <TD align="right"> -0.55 </TD> </TR>
