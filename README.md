@@ -34,13 +34,12 @@ All the examples include a css style switch, so you can try out the included sty
 ## Usage ##
 
 Using the [Makefile](#makefile), [Rstudio](#rstudio) or [Vim](#vim) methods of
-building the report requires my [patch] to the [rstudio/markdown] package.
-Until(if) it is merged, the easiest thing to do is install my markdown fork
-with [devtools].
+building the report requires the latest version of the [rstudio/markdown] package.
+You can install it using the [devtools] package.
 
 ```r
 library(devtools)
-install_github(username='jimhester', repo='markdown')
+install_github(username='rstudio', repo='markdown')
 ```
 
 ### Makefile ###
@@ -70,13 +69,12 @@ make standalone=1 style_chooser=1 file.html
 Simply source the following code in RStudio before you knit your reports.
 See [http://www.rstudio.com/ide/docs/authoring/markdown_custom_rendering]()
 
-*Note this requires my [patch] to the [rstudio/markdown] R package, see [Usage](#usage)*
+*Note this requires the latest version of the [rstudio/markdown] R package, see [Usage](#usage)*
 ```r
 options(rstudio.markdownToHTML =
   function(inputFile, outputFile) {
     require(markdown)
     markdownToHTML(inputFile, outputFile, 
-      stylesheet='knitr_bootstrap.css', 
       header='knitr_bootstrap.html',
       options=c('base64_images', 'mathjax', 'skip_style', 'use_xhtml')
     )
@@ -88,16 +86,14 @@ options(rstudio.markdownToHTML =
 
 Using the [Vim-R-Plugin](https://github.com/vim-scripts/Vim-R-plugin) put the following function in your .vimrc to create the file directly with knitr and the markdown package
 
-*Note this requires my [patch] to the [rstudio/markdown] R package, see [Usage](#usage)*
+*Note this requires the latest version of the [rstudio/markdown] R package, see [Usage](#usage)*
 ```vim
 function! RMakeHTML_2()
   update
   call RSetWD()
   let filename = expand("%:r:t")
-  "requires my patch to markdownToHTML
   let rcmd = "require('knitr');
-        \knit2html(stylesheet='~/share/knitr_bootstrap.css',
-        \header='~/share/knitr_bootstrap.html', '" .  filename . ".Rmd',
+        \knit2html(header='~/share/knitr_bootstrap.html', '" .  filename . ".Rmd',
         \output='" . filename . ".html',
         \options=c('base64_images', 'mathjax', 'skip_style', 'use_xhtml'))"
   if g:vimrplugin_openhtml
@@ -122,7 +118,6 @@ pandoc -H knitr_bootstrap.html -c knitr_bootstrap.css example.md -o example.html
 
 [highlight.js]: https://github.com/isagalaev/highlight.js
 [tocify]: http://gregfranko.com/jquery.tocify.js
-[patch]: https://github.com/rstudio/markdown/pull/23
 [rstudio/markdown]: https://github.com/rstudio/markdown
 [fancybox]: http://fancyapps.com/fancybox
 [mathjax]: http://mathjax.org
