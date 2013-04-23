@@ -3,40 +3,23 @@
 These 2d examples are both from Winsong Chang's excellent [R Graphics Cookbook](http://www.amazon.com/R-Graphics-Cookbook-Winston-Chang/dp/1449316956)
 ## Correlation Matrix Example ##
 ### Correlation plot ###
-
-```r
-library(corrplot)
+<div class="chunk" id="2d_3d_plot"><div class="rcode"><div class="source"><pre class="knitr"><code class="r">library(corrplot)
 corrplot(mcor)
-```
-
-![plot of chunk 2d_3d_plot](figure/2d_3d_plot.png) 
+</code></pre></div><div class="rimage default"><img src="figure/2d_3d_plot.png" title="plot of chunk 2d_3d_plot" alt="plot of chunk 2d_3d_plot" class="plot" /></div>
+</div></div>
 
 ### Regular R output ###
-
-```r
-# for the dataset
+<div class="chunk" id="2d_3d_data"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"># for the dataset
 library(ggplot2)
-```
-
-```
-## Attaching package: 'ggplot2'
-```
-
-```
-## The following object(s) are masked _by_ '.GlobalEnv':
+</code></pre></div><div class="message"><pre class="knitr"><code class="r">## Attaching package: 'ggplot2'
+</code></pre></div><div class="message"><pre class="knitr"><code class="r">## The following object(s) are masked _by_ '.GlobalEnv':
 ## 
 ## scale_colour_discrete, scale_fill_discrete
-```
-
-```r
-rm(mtcars)
+</code></pre></div><div class="source"><pre class="knitr"><code class="r">rm(mtcars)
 mcor <- cor(mtcars)
 # Print mcor and round to 2 digits
 round(mcor, digits = 2)
-```
-
-```
-##        mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+</code></pre></div><div class="output"><pre class="knitr"><code class="r">##        mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 ## mpg   1.00 -0.85 -0.85 -0.78  0.68 -0.87  0.42  0.66  0.60  0.48 -0.55
 ## cyl  -0.85  1.00  0.90  0.83 -0.70  0.78 -0.59 -0.81 -0.52 -0.49  0.53
 ## disp -0.85  0.90  1.00  0.79 -0.71  0.89 -0.43 -0.71 -0.59 -0.56  0.39
@@ -48,17 +31,13 @@ round(mcor, digits = 2)
 ## am    0.60 -0.52 -0.59 -0.24  0.71 -0.69 -0.23  0.17  1.00  0.79  0.06
 ## gear  0.48 -0.49 -0.56 -0.13  0.70 -0.58 -0.21  0.21  0.79  1.00  0.27
 ## carb -0.55  0.53  0.39  0.75 -0.09  0.43 -0.66 -0.57  0.06  0.27  1.00
-```
+</code></pre></div></div></div>
 
 ### HTML table using xtable ###
-
-```r
-library(xtable)
+<div class="source"><pre class="knitr"><code class="r">library(xtable)
 print(xtable(mcor), type = "html")
-```
-
-<!-- html table generated in R 2.15.1 by xtable 1.7-0 package -->
-<!-- Mon Apr 22 13:53:09 2013 -->
+</code></pre></div><!-- html table generated in R 2.15.1 by xtable 1.7-0 package -->
+<!-- Tue Apr 23 14:17:20 2013 -->
 <TABLE border=1>
 <TR> <TH>  </TH> <TH> mpg </TH> <TH> cyl </TH> <TH> disp </TH> <TH> hp </TH> <TH> drat </TH> <TH> wt </TH> <TH> qsec </TH> <TH> vs </TH> <TH> am </TH> <TH> gear </TH> <TH> carb </TH>  </TR>
   <TR> <TD align="right"> mpg </TD> <TD align="right"> 1.00 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.78 </TD> <TD align="right"> 0.68 </TD> <TD align="right"> -0.87 </TD> <TD align="right"> 0.42 </TD> <TD align="right"> 0.66 </TD> <TD align="right"> 0.60 </TD> <TD align="right"> 0.48 </TD> <TD align="right"> -0.55 </TD> </TR>
@@ -74,35 +53,27 @@ print(xtable(mcor), type = "html")
   <TR> <TD align="right"> carb </TD> <TD align="right"> -0.55 </TD> <TD align="right"> 0.53 </TD> <TD align="right"> 0.39 </TD> <TD align="right"> 0.75 </TD> <TD align="right"> -0.09 </TD> <TD align="right"> 0.43 </TD> <TD align="right"> -0.66 </TD> <TD align="right"> -0.57 </TD> <TD align="right"> 0.06 </TD> <TD align="right"> 0.27 </TD> <TD align="right"> 1.00 </TD> </TR>
    </TABLE>
 
-## Network Graph Example ##
 
-```r
-library(igraph)
+## Network Graph Example ##
+<div class="chunk" id="2d_3d_network_data"><div class="rcode"><div class="source"><pre class="knitr"><code class="r">library(igraph)
 # Specify edges for a directed graph
 gd <- graph(c(1, 2, 2, 3, 2, 4, 1, 4, 5, 5, 3, 6))
 plot(gd)
-```
-
-![plot of chunk 2d_3d_network_data](figure/2d_3d_network_data1.png) 
-
-```r
-# For an undirected graph
+</code></pre></div><div class="rimage default"><img src="figure/2d_3d_network_data1.png" title="plot of chunk 2d_3d_network_data" alt="plot of chunk 2d_3d_network_data" class="plot" /></div>
+<div class="source"><pre class="knitr"><code class="r"># For an undirected graph
 gu <- graph(c(1, 2, 2, 3, 2, 4, 1, 4, 5, 5, 3, 6), directed = FALSE)
 # No labels
 plot(gu, vertex.label = NA)
-```
-
-![plot of chunk 2d_3d_network_data](figure/2d_3d_network_data2.png) 
+</code></pre></div><div class="rimage default"><img src="figure/2d_3d_network_data2.png" title="plot of chunk 2d_3d_network_data" alt="plot of chunk 2d_3d_network_data" class="plot" /></div>
+</div></div>
 
 # 3d graphs #
 This example is from [Yihui's response](http://stackoverflow.com/questions/14879210/including-a-interactive-3d-figure-with-knitr) to a stack overflow question.
 
 Need to load the CanvasMatrix library and the hook_webgl code to get 3d graphs to work
-
-```r
-has_X11 = Sys.getenv("DISPLAY") != ""
+<div class="chunk" id="setup"><div class="rcode"><div class="source"><pre class="knitr"><code class="r">has_X11 = Sys.getenv("DISPLAY") != ""
 if (has_X11) knit_hooks$set(webgl = hook_webgl)
-```
+</code></pre></div></div></div>
 
 ```{html}
 <script src="https://dl.dropbox.com/u/15335397/misc/CanvasMatrix.js"></script>
@@ -110,16 +81,12 @@ if (has_X11) knit_hooks$set(webgl = hook_webgl)
 <script src="https://dl.dropbox.com/u/15335397/misc/CanvasMatrix.js"></script>
 
 ## point 3d graph ##
-
-```r
-library(rgl)
+<div class="chunk" id="2d_3d_points"><div class="rcode"><div class="source"><pre class="knitr"><code class="r">library(rgl)
 x <- sort(rnorm(1000))
 y <- rnorm(1000)
 z <- rnorm(1000) + atan2(x, y)
 plot3d(x, y, z, col = rainbow(1000))
-```
-
-<script src="CanvasMatrix.js" type="text/javascript"></script>
+</code></pre></div><script src="CanvasMatrix.js" type="text/javascript"></script>
 <canvas id="_2d_3d_pointstextureCanvas" style="display: none;" width="256" height="256">
 <img src="_2d_3d_pointssnapshot.png" alt="_2d_3d_pointssnapshot" width=505/><br>
 	Your browser does not support the HTML5 canvas element.</canvas>
@@ -2403,23 +2370,13 @@ plot3d(x, y, z, col = rainbow(1000))
 <p id="_2d_3d_pointsdebug">
 <img src="_2d_3d_pointssnapshot.png" alt="_2d_3d_pointssnapshot" width=505/><br>
 	You must enable Javascript to view this page properly.</p>
-<script>_2d_3d_pointswebGLStart();</script>
+<script>_2d_3d_pointswebGLStart();</script></div></div>
 
 ## spheres 3d graph ##
-
-```r
-open3d()
-```
-
-```
-## [1] 2
-```
-
-```r
-spheres3d(x, y, z, col = rainbow(1000))
-```
-
-<script src="CanvasMatrix.js" type="text/javascript"></script>
+<div class="chunk" id="2d_3d_spheres"><div class="rcode"><div class="source"><pre class="knitr"><code class="r">open3d()
+</code></pre></div><div class="output"><pre class="knitr"><code class="r">## [1] 2
+</code></pre></div><div class="source"><pre class="knitr"><code class="r">spheres3d(x, y, z, col = rainbow(1000))
+</code></pre></div><script src="CanvasMatrix.js" type="text/javascript"></script>
 <canvas id="_2d_3d_spherestextureCanvas" style="display: none;" width="256" height="256">
 <img src="_2d_3d_spheressnapshot.png" alt="_2d_3d_spheressnapshot" width=505/><br>
 	Your browser does not support the HTML5 canvas element.</canvas>
@@ -3978,7 +3935,7 @@ spheres3d(x, y, z, col = rainbow(1000))
 <p id="_2d_3d_spheresdebug">
 <img src="_2d_3d_spheressnapshot.png" alt="_2d_3d_spheressnapshot" width=505/><br>
 	You must enable Javascript to view this page properly.</p>
-<script>_2d_3d_sphereswebGLStart();</script>
+<script>_2d_3d_sphereswebGLStart();</script></div></div>
 
 
 Author: [Jim Hester](http://jimhester.com)
@@ -3989,78 +3946,54 @@ Last Modified: 2013 Apr 01 08:43:48 AM
 # Cars example #
 from [statmethods.net](http://www.statmethods.net/advgraphs/ggplot2.html)
 
-
-```r
-# ggplot2 examples
-library(ggplot2)
-rm(mtcars)
-```
-
-```
-## Warning: object 'mtcars' not found
-```
-
-```r
-# use color brewer as default discrete colors
-scale_colour_discrete <- function(...) scale_color_brewer(palette = "Set1", 
+<div class="chunk" id="cars_setup"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">render_html</span>()
+<span class="comment"># ggplot2 examples</span>
+<span class="functioncall">library</span>(ggplot2)
+<span class="functioncall">rm</span>(mtcars)
+</code></pre></div><div class="warning"><pre class="knitr"><code class="r">## Warning: object 'mtcars' not found
+</code></pre></div><div class="source"><pre class="knitr"><code class="r"><span class="comment"># use color brewer as default discrete colors</span>
+scale_colour_discrete &lt;- <span class="functioncall"><span class="keyword">function</span></span>(...) <span class="functioncall">scale_color_brewer</span>(palette = <span class="string">"Set1"</span>, 
     ...)
-scale_fill_discrete <- function(...) scale_fill_brewer(palette = "Set1", ...)
+scale_fill_discrete &lt;- <span class="functioncall"><span class="keyword">function</span></span>(...) <span class="functioncall">scale_fill_brewer</span>(palette = <span class="string">"Set1"</span>, ...)
 
-# create factors with value labels
-mtcars$gear <- factor(mtcars$gear, levels = c(3, 4, 5), labels = c("3gears", 
-    "4gears", "5gears"))
-mtcars$am <- factor(mtcars$am, levels = c(0, 1), labels = c("Automatic", "Manual"))
-mtcars$cyl <- factor(mtcars$cyl, levels = c(4, 6, 8), labels = c("4cyl", "6cyl", 
-    "8cyl"))
-```
-
+<span class="comment"># create factors with value labels</span>
+mtcars$gear &lt;- <span class="functioncall">factor</span>(mtcars$gear, levels = <span class="functioncall">c</span>(3, 4, 5), labels = <span class="functioncall">c</span>(<span class="string">"3gears"</span>, 
+    <span class="string">"4gears"</span>, <span class="string">"5gears"</span>))
+mtcars$am &lt;- <span class="functioncall">factor</span>(mtcars$am, levels = <span class="functioncall">c</span>(0, 1), labels = <span class="functioncall">c</span>(<span class="string">"Automatic"</span>, <span class="string">"Manual"</span>))
+mtcars$cyl &lt;- <span class="functioncall">factor</span>(mtcars$cyl, levels = <span class="functioncall">c</span>(4, 6, 8), labels = <span class="functioncall">c</span>(<span class="string">"4cyl"</span>, <span class="string">"6cyl"</span>, 
+    <span class="string">"8cyl"</span>))
+</code></pre></div></div></div>
 
 ##  Kernel density plots for mpg ##
 grouped by number of gears (indicated by color)
-
-```r
-qplot(mpg, data = mtcars, geom = "density", fill = gear, alpha = I(0.5), main = "Distribution of Gas Milage", 
-    xlab = "Miles Per Gallon", ylab = "Density")
-```
-
-![plot of chunk cars_density](figure/cars_density.png) 
+<div class="chunk" id="cars_density"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">qplot</span>(mpg, data = mtcars, geom = <span class="string">"density"</span>, fill = gear, alpha = <span class="functioncall">I</span>(0.5), main = <span class="string">"Distribution of Gas Milage"</span>, 
+    xlab = <span class="string">"Miles Per Gallon"</span>, ylab = <span class="string">"Density"</span>)
+</code></pre></div></div><div class="rimage default"><img src="figure/cars_density.png" title="plot of chunk cars_density" alt="plot of chunk cars_density" class="plot" /></div></div>
 
 ## Scatterplot of mpg vs. hp ##
 for each combination of gears and cylinders in each facet, transmission type is represented by shape and color
-
-```r
-qplot(hp, mpg, data = mtcars, shape = am, color = am, facets = gear ~ cyl, size = I(3), 
-    xlab = "Horsepower", ylab = "Miles per Gallon")
-```
-
-![plot of chunk cars_scatter](figure/cars_scatter.png) 
+<div class="chunk" id="cars_scatter"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">qplot</span>(hp, mpg, data = mtcars, shape = am, color = am, facets = gear ~ cyl, size = <span class="functioncall">I</span>(3), 
+    xlab = <span class="string">"Horsepower"</span>, ylab = <span class="string">"Miles per Gallon"</span>)
+</code></pre></div></div><div class="rimage default"><img src="figure/cars_scatter.png" title="plot of chunk cars_scatter" alt="plot of chunk cars_scatter" class="plot" /></div></div>
 
 
 ## Regressions of mpg on weight ##
 Seperate for each number of cylinders
-
-```r
-qplot(wt, mpg, data = mtcars, geom = c("point", "smooth"), method = "lm", formula = y ~ 
-    x, color = cyl, main = "Regression of MPG on Weight", xlab = "Weight", ylab = "Miles per Gallon")
-```
-
-![plot of chunk cars_regressions](figure/cars_regressions.png) 
+<div class="chunk" id="cars_regressions"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">qplot</span>(wt, mpg, data = mtcars, geom = <span class="functioncall">c</span>(<span class="string">"point"</span>, <span class="string">"smooth"</span>), method = <span class="string">"lm"</span>, formula = y ~ 
+    x, color = cyl, main = <span class="string">"Regression of MPG on Weight"</span>, xlab = <span class="string">"Weight"</span>, ylab = <span class="string">"Miles per Gallon"</span>)
+</code></pre></div></div><div class="rimage default"><img src="figure/cars_regressions.png" title="plot of chunk cars_regressions" alt="plot of chunk cars_regressions" class="plot" /></div></div>
 
 
 ## Boxplots of mpg by number of gears ##
 observations (points) are overlayed and jittered
-
-```r
-qplot(gear, mpg, data = mtcars, geom = c("boxplot", "jitter"), fill = gear, 
-    main = "Mileage by Gear Number", xlab = "", ylab = "Miles per Gallon")
-```
-
-![plot of chunk cars_boxplots](figure/cars_boxplots.png) 
+<div class="chunk" id="cars_boxplots"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">qplot</span>(gear, mpg, data = mtcars, geom = <span class="functioncall">c</span>(<span class="string">"boxplot"</span>, <span class="string">"jitter"</span>), fill = gear, 
+    main = <span class="string">"Mileage by Gear Number"</span>, xlab = <span class="string">""</span>, ylab = <span class="string">"Miles per Gallon"</span>)
+</code></pre></div></div><div class="rimage default"><img src="figure/cars_boxplots.png" title="plot of chunk cars_boxplots" alt="plot of chunk cars_boxplots" class="plot" /></div></div>
 
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2013 Apr 17 11:45:06 AM
+Last Modified: 2013 Apr 22 02:21:28 PM
 
 
 # Illusions #
@@ -4071,175 +4004,135 @@ from [statmethods.net](http://www.statmethods.net/advgraphs/ggplot2.html)
 ## Café wall illusion ##
 All the lines are actually parallel
 
-
-```r
-library(grid)
-rs <- expand.grid(x = seq(0, 1, 1/10), y = seq(0, 1, 1/10))
-grid.rect(rs$x, rs$y, 1/10/2, 1/10/2, gp = gpar(fill = "black", col = NA))
-grid.rect(rs$x + 1/10/4, rs$y + 1/10/2, 1/10/2, 1/10/2, gp = gpar(fill = "black", 
-    col = NA))
-ls <- expand.grid(x = 0:1, y = seq(0, 1, 1/20) - 1/20/2)
-grid.polyline(ls$x, ls$y, id = gl(nrow(ls)/2, 2), gp = gpar(col = "grey50", 
+<div class="chunk" id="illusions_cafe_wall"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">library</span>(grid)
+rs &lt;- <span class="functioncall">expand.grid</span>(x = <span class="functioncall">seq</span>(0, 1, 1/10), y = <span class="functioncall">seq</span>(0, 1, 1/10))
+<span class="functioncall">grid.rect</span>(rs$x, rs$y, 1/10/2, 1/10/2, gp = <span class="functioncall">gpar</span>(fill = <span class="string">"black"</span>, col = <span class="keyword">NA</span>))
+<span class="functioncall">grid.rect</span>(rs$x + 1/10/4, rs$y + 1/10/2, 1/10/2, 1/10/2, gp = <span class="functioncall">gpar</span>(fill = <span class="string">"black"</span>, 
+    col = <span class="keyword">NA</span>))
+ls &lt;- <span class="functioncall">expand.grid</span>(x = 0:1, y = <span class="functioncall">seq</span>(0, 1, 1/20) - 1/20/2)
+<span class="functioncall">grid.polyline</span>(ls$x, ls$y, id = <span class="functioncall">gl</span>(<span class="functioncall">nrow</span>(ls)/2, 2), gp = <span class="functioncall">gpar</span>(col = <span class="string">"grey50"</span>, 
     lwd = 1))
-```
-
-![plot of chunk illusions_cafe_wall](figure/illusions_cafe_wall.png) 
+</code></pre></div></div><div class="rimage default"><img src="figure/illusions_cafe_wall.png" title="plot of chunk illusions_cafe_wall" alt="plot of chunk illusions_cafe_wall" class="plot" /></div></div>
 
 
 ## Ouchi ##
 Move your frame of reference to see the effect.
 
-
-```r
-grid.newpage()
-nx <- 10
-ny <- 30
-rs <- expand.grid(x = seq(0, 1, 1/nx/2), y = seq(0, 1, 1/ny/2))
-grid.rect(rs$x, rs$y, 1/nx/2, 1/ny/2, gp = gpar(col = NA, fill = c("black", 
-    "white")))
-rs <- expand.grid(x = seq(0.25, 0.75, 1/nx/2), y = seq(0.25, 0.75, 1/ny/2))
-grid.rect(rs$y, rs$x, 1/ny/2, 1/nx/2, gp = gpar(col = NA, fill = c("black", 
-    "white")))
-```
-
-![plot of chunk illusions_ouchi](figure/illusions_ouchi.png) 
+<div class="chunk" id="illusions_ouchi"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">grid.newpage</span>()
+nx &lt;- 10
+ny &lt;- 30
+rs &lt;- <span class="functioncall">expand.grid</span>(x = <span class="functioncall">seq</span>(0, 1, 1/nx/2), y = <span class="functioncall">seq</span>(0, 1, 1/ny/2))
+<span class="functioncall">grid.rect</span>(rs$x, rs$y, 1/nx/2, 1/ny/2, gp = <span class="functioncall">gpar</span>(col = <span class="keyword">NA</span>, fill = <span class="functioncall">c</span>(<span class="string">"black"</span>, 
+    <span class="string">"white"</span>)))
+rs &lt;- <span class="functioncall">expand.grid</span>(x = <span class="functioncall">seq</span>(0.25, 0.75, 1/nx/2), y = <span class="functioncall">seq</span>(0.25, 0.75, 1/ny/2))
+<span class="functioncall">grid.rect</span>(rs$y, rs$x, 1/ny/2, 1/nx/2, gp = <span class="functioncall">gpar</span>(col = <span class="keyword">NA</span>, fill = <span class="functioncall">c</span>(<span class="string">"black"</span>, 
+    <span class="string">"white"</span>)))
+</code></pre></div></div><div class="rimage default"><img src="figure/illusions_ouchi.png" title="plot of chunk illusions_ouchi" alt="plot of chunk illusions_ouchi" class="plot" /></div></div>
 
 
 ## Fraser illusion ##
 All the lines are actually parallel
 
-
-```r
-library(plyr)
-grid.newpage()
-n <- 10
-ny <- 8
-L <- 0.01
-c <- seq(0, 1, length = n)
-d <- 1.2 * diff(c)[1]/2
-col <- c("black", "white")
-x <- c(c - d, c, c + d, c)
-y <- rep(c(0, -d, 0, d), each = n)
-w <- c(c - d, c - d + L, c + d, c + d - L)
-z <- c(0, L, 0, -L)
-ys <- seq(0, 1, length = ny)
-grid.rect(gp = gpar(fill = gray(0.5), col = NA))
-l_ply(1:ny, function(i) {
+<div class="chunk" id="illusions_fraser"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">library</span>(plyr)
+<span class="functioncall">grid.newpage</span>()
+n &lt;- 10
+ny &lt;- 8
+L &lt;- 0.01
+c &lt;- <span class="functioncall">seq</span>(0, 1, length = n)
+d &lt;- 1.2 * <span class="functioncall">diff</span>(c)[1]/2
+col &lt;- <span class="functioncall">c</span>(<span class="string">"black"</span>, <span class="string">"white"</span>)
+x &lt;- <span class="functioncall">c</span>(c - d, c, c + d, c)
+y &lt;- <span class="functioncall">rep</span>(<span class="functioncall">c</span>(0, -d, 0, d), each = n)
+w &lt;- <span class="functioncall">c</span>(c - d, c - d + L, c + d, c + d - L)
+z &lt;- <span class="functioncall">c</span>(0, L, 0, -L)
+ys &lt;- <span class="functioncall">seq</span>(0, 1, length = ny)
+<span class="functioncall">grid.rect</span>(gp = <span class="functioncall">gpar</span>(fill = <span class="functioncall">gray</span>(0.5), col = <span class="keyword">NA</span>))
+<span class="functioncall">l_ply</span>(1:ny, <span class="functioncall"><span class="keyword">function</span></span>(i) {
     n
-    if (i%%2 == 0) {
-        co <- rev(col)
-        z <- -z
-    } else {
-        co <- col
+    <span class="functioncall"><span class="keyword">if</span></span> (i%%2 == 0) {
+        co &lt;- <span class="functioncall">rev</span>(col)
+        z &lt;- -z
+    } <span class="keyword">else</span> {
+        co &lt;- col
     }
-    grid.polygon(x, y + ys[i], id = rep(1:n, 4), gp = gpar(fill = co, col = NA))
-    grid.polygon(w, rep(z, each = n) + ys[i], id = rep(1:n, 4), gp = gpar(fill = rev(co), 
-        col = NA))
+    <span class="functioncall">grid.polygon</span>(x, y + ys[i], id = <span class="functioncall">rep</span>(1:n, 4), gp = <span class="functioncall">gpar</span>(fill = co, col = <span class="keyword">NA</span>))
+    <span class="functioncall">grid.polygon</span>(w, <span class="functioncall">rep</span>(z, each = n) + ys[i], id = <span class="functioncall">rep</span>(1:n, 4), gp = <span class="functioncall">gpar</span>(fill = <span class="functioncall">rev</span>(co), 
+        col = <span class="keyword">NA</span>))
 })
-```
-
-![plot of chunk illusions_fraser](figure/illusions_fraser.png) 
+</code></pre></div></div><div class="rimage default"><img src="figure/illusions_fraser.png" title="plot of chunk illusions_fraser" alt="plot of chunk illusions_fraser" class="plot" /></div></div>
 
 
 ## Fraser-Wilcox illusion ##
 
-
-```r
-grid.newpage()
-No <- 3
-wo <- 1/3/2
-po <- seq(0, 1, by = wo)[(1:No) * 2]
-Nc <- 8
-tc <- seq(pi * 11/12, pi * 1/12, len = Nc)
-px <- c(outer(wo * cos(tc), po, `+`))
-wc <- rep(sin(tc), No)
-ag <- rep(1:No, each = Nc)
-dc <- 21
-th <- seq(0, 2 * pi, len = dc)
-grid.rect(gp = gpar(col = NA, fill = "#D2D200"))
-for (y0 in seq(0, 1, len = 10)) {
-    for (i in seq_along(px)) {
-        th <- seq(pi/2, pi/2 + 2 * pi, len = 21)
-        if (ag[i]%%2 == 0) 
-            th <- rev(th)
-        x <- px[i] + 0.5 * 0.04 * cos(th) * wc[i]
-        y <- y0 + 0.04 * sin(th)
-        grid.polygon(x, y, gp = gpar(fill = "#3278FE"))
-        grid.polyline(x[1:((dc + 1)/2)], y[1:((dc + 1)/2)], gp = gpar(lineend = "butt", 
-            lwd = 3, col = gray(0)))
-        grid.polyline(x[-(1:((dc - 1)/2))], y[-(1:((dc - 1)/2))], gp = gpar(lineend = "butt", 
-            lwd = 3, col = gray(1)))
+<div class="chunk" id="illusions_fraser_wilcox"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">grid.newpage</span>()
+No &lt;- 3
+wo &lt;- 1/3/2
+po &lt;- <span class="functioncall">seq</span>(0, 1, by = wo)[(1:No) * 2]
+Nc &lt;- 8
+tc &lt;- <span class="functioncall">seq</span>(<span class="keyword">pi</span> * 11/12, <span class="keyword">pi</span> * 1/12, len = Nc)
+px &lt;- <span class="functioncall">c</span>(<span class="functioncall">outer</span>(wo * <span class="functioncall">cos</span>(tc), po, `+`))
+wc &lt;- <span class="functioncall">rep</span>(<span class="functioncall">sin</span>(tc), No)
+ag &lt;- <span class="functioncall">rep</span>(1:No, each = Nc)
+dc &lt;- 21
+th &lt;- <span class="functioncall">seq</span>(0, 2 * <span class="keyword">pi</span>, len = dc)
+<span class="functioncall">grid.rect</span>(gp = <span class="functioncall">gpar</span>(col = <span class="keyword">NA</span>, fill = <span class="string">"#D2D200"</span>))
+<span class="functioncall"><span class="keyword">for</span></span> (y0 <span class="keyword">in</span> <span class="functioncall">seq</span>(0, 1, len = 10)) {
+    <span class="functioncall"><span class="keyword">for</span></span> (i <span class="keyword">in</span> <span class="functioncall">seq_along</span>(px)) {
+        th &lt;- <span class="functioncall">seq</span>(<span class="keyword">pi</span>/2, <span class="keyword">pi</span>/2 + 2 * <span class="keyword">pi</span>, len = 21)
+        <span class="functioncall"><span class="keyword">if</span></span> (ag[i]%%2 == 0) 
+            th &lt;- <span class="functioncall">rev</span>(th)
+        x &lt;- px[i] + 0.5 * 0.04 * <span class="functioncall">cos</span>(th) * wc[i]
+        y &lt;- y0 + 0.04 * <span class="functioncall">sin</span>(th)
+        <span class="functioncall">grid.polygon</span>(x, y, gp = <span class="functioncall">gpar</span>(fill = <span class="string">"#3278FE"</span>))
+        <span class="functioncall">grid.polyline</span>(x[1:((dc + 1)/2)], y[1:((dc + 1)/2)], gp = <span class="functioncall">gpar</span>(lineend = <span class="string">"butt"</span>, 
+            lwd = 3, col = <span class="functioncall">gray</span>(0)))
+        <span class="functioncall">grid.polyline</span>(x[-(1:((dc - 1)/2))], y[-(1:((dc - 1)/2))], gp = <span class="functioncall">gpar</span>(lineend = <span class="string">"butt"</span>, 
+            lwd = 3, col = <span class="functioncall">gray</span>(1)))
     }
 }
-```
-
-![plot of chunk illusions_fraser_wilcox](figure/illusions_fraser_wilcox.png) 
+</code></pre></div></div><div class="rimage default"><img src="figure/illusions_fraser_wilcox.png" title="plot of chunk illusions_fraser_wilcox" alt="plot of chunk illusions_fraser_wilcox" class="plot" /></div></div>
 
 
 ## Parallel curves ##
 These curves are the same offset apart for every x, even though it looks like they converge.
-
-```r
-x = 1:100
-y = 1/log10(x)
+<div class="chunk" id="illusions_parallel_lines"><div class="rcode"><div class="source"><pre class="knitr"><code class="r">x = 1:100
+y = 1/<span class="functioncall">log10</span>(x)
 y2 = y + 0.2
-plot(x, y, type = "l", ylim = c(0, 1.5))
-lines(x, y2)
-```
-
-![plot of chunk illusions_parallel_lines](figure/illusions_parallel_lines.png) 
+<span class="functioncall">plot</span>(x, y, type = <span class="string">"l"</span>, ylim = <span class="functioncall">c</span>(0, 1.5))
+<span class="functioncall">lines</span>(x, y2)
+</code></pre></div></div><div class="rimage default"><img src="figure/illusions_parallel_lines.png" title="plot of chunk illusions_parallel_lines" alt="plot of chunk illusions_parallel_lines" class="plot" /></div></div>
 
 
 
 # Map plots #
 
 ## USA Arrests ##
-
-```r
-library(ggplot2)
-crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
-library(reshape2)  # for melt
-crimesm <- melt(crimes, id = 1)
-require(maps)
-```
-
-```
-## Loading required package: maps
-```
-
-```r
-states_map <- map_data("state")
-ggplot(crimes, aes(map_id = state)) + geom_map(aes(fill = Murder), map = states_map) + 
-    expand_limits(x = states_map$long, y = states_map$lat)
-```
-
-![plot of chunk maps_arrests](figure/maps_arrests1.png) 
-
-```r
-last_plot() + coord_map()
-```
-
-![plot of chunk maps_arrests](figure/maps_arrests2.png) 
-
-```r
-ggplot(crimesm, aes(map_id = state)) + geom_map(aes(fill = value), map = states_map) + 
-    expand_limits(x = states_map$long, y = states_map$lat) + facet_wrap(~variable)
-```
-
-![plot of chunk maps_arrests](figure/maps_arrests3.png) 
+<div class="chunk" id="maps_arrests"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">library</span>(ggplot2)
+crimes &lt;- <span class="functioncall">data.frame</span>(state = <span class="functioncall">tolower</span>(<span class="functioncall">rownames</span>(USArrests)), USArrests)
+<span class="functioncall">library</span>(reshape2)  # <span class="keyword">for</span> melt
+crimesm &lt;- <span class="functioncall">melt</span>(crimes, id = 1)
+<span class="functioncall">require</span>(maps)
+</code></pre></div><div class="message"><pre class="knitr"><code class="r">## Loading required package: maps
+</code></pre></div><div class="source"><pre class="knitr"><code class="r">states_map &lt;- <span class="functioncall">map_data</span>(<span class="string">"state"</span>)
+<span class="functioncall">ggplot</span>(crimes, <span class="functioncall">aes</span>(map_id = state)) + <span class="functioncall">geom_map</span>(<span class="functioncall">aes</span>(fill = Murder), map = states_map) + 
+    <span class="functioncall">expand_limits</span>(x = states_map$long, y = states_map$lat)
+</code></pre></div></div><div class="rimage default"><img src="figure/maps_arrests1.png" title="plot of chunk maps_arrests" alt="plot of chunk maps_arrests" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr"><code class="r"><span class="functioncall">last_plot</span>() + <span class="functioncall">coord_map</span>()
+</code></pre></div></div><div class="rimage default"><img src="figure/maps_arrests2.png" title="plot of chunk maps_arrests" alt="plot of chunk maps_arrests" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr"><code class="r"><span class="functioncall">ggplot</span>(crimesm, <span class="functioncall">aes</span>(map_id = state)) + <span class="functioncall">geom_map</span>(<span class="functioncall">aes</span>(fill = value), map = states_map) + 
+    <span class="functioncall">expand_limits</span>(x = states_map$long, y = states_map$lat) + <span class="functioncall">facet_wrap</span>(~variable)
+</code></pre></div></div><div class="rimage default"><img src="figure/maps_arrests3.png" title="plot of chunk maps_arrests" alt="plot of chunk maps_arrests" class="plot" /></div></div>
 
 ### Use fig.show='hold' ###
 These are the same plots with fig.show='hold' in the options
-
-```r
-ggplot(crimes, aes(map_id = state)) + geom_map(aes(fill = Murder), map = states_map) + 
-    expand_limits(x = states_map$long, y = states_map$lat)
-last_plot() + coord_map()
-ggplot(crimesm, aes(map_id = state)) + geom_map(aes(fill = value), map = states_map) + 
-    expand_limits(x = states_map$long, y = states_map$lat) + facet_wrap(~variable)
-```
-
-![plot of chunk maps_figshow](figure/maps_figshow1.png) ![plot of chunk maps_figshow](figure/maps_figshow2.png) ![plot of chunk maps_figshow](figure/maps_figshow3.png) 
+<div class="chunk" id="maps_figshow"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">ggplot</span>(crimes, <span class="functioncall">aes</span>(map_id = state)) + <span class="functioncall">geom_map</span>(<span class="functioncall">aes</span>(fill = Murder), map = states_map) + 
+    <span class="functioncall">expand_limits</span>(x = states_map$long, y = states_map$lat)
+<span class="functioncall">last_plot</span>() + <span class="functioncall">coord_map</span>()
+<span class="functioncall">ggplot</span>(crimesm, <span class="functioncall">aes</span>(map_id = state)) + <span class="functioncall">geom_map</span>(<span class="functioncall">aes</span>(fill = value), map = states_map) + 
+    <span class="functioncall">expand_limits</span>(x = states_map$long, y = states_map$lat) + <span class="functioncall">facet_wrap</span>(~variable)
+</code></pre></div></div><div class="rimage default"><img src="figure/maps_figshow1.png" title="plot of chunk maps_figshow" alt="plot of chunk maps_figshow" class="plot" />
+<img src="figure/maps_figshow2.png" title="plot of chunk maps_figshow" alt="plot of chunk maps_figshow" class="plot" />
+<img src="figure/maps_figshow3.png" title="plot of chunk maps_figshow" alt="plot of chunk maps_figshow" class="plot" /></div></div>
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 02:44:48 PM

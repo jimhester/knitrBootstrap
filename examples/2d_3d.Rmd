@@ -1,3 +1,6 @@
+```{r include=FALSE}
+render_html()
+```
 # 2d graphs #
 These 2d examples are both from Winsong Chang's excellent [R Graphics Cookbook](http://www.amazon.com/R-Graphics-Cookbook-Winston-Chang/dp/1449316956)
 ## Correlation Matrix Example ##
@@ -61,4 +64,4 @@ spheres3d(x, y, z, col = rainbow(1000))
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 27 10:54:38 PM
-Last Modified: 2013 Apr 01 08:43:48 AM
+Last Modified: 2013 Apr 23 02:24:13 PM

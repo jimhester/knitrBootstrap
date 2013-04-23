@@ -36,7 +36,7 @@ $(both): $(header) $(chooser)
 	encode.pl $< > $@
 
 %.html: %.Rmd $(stylesheet) $(header_temp)
-	echo "setwd('$(dir $<)');require('knitr');knit2html(stylesheet='$(CURDIR)/$(stylesheet)', header='$(CURDIR)/$(header_temp)', '$(CURDIR)/$<', options=$(options))" > $(notdir $@).R
+	echo "setwd('$(dir $<)');require('knitr');render_html();knit2html(stylesheet='$(CURDIR)/$(stylesheet)', header='$(CURDIR)/$(header_temp)', '$(CURDIR)/$<', options=$(options))" > $(notdir $@).R
 	R CMD BATCH $(notdir $@).R
 	-rm $(notdir $@).{R,Rout}
 

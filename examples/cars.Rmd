@@ -1,7 +1,11 @@
+```{r include=FALSE}
+render_html()
+```
 # Cars example #
 from [statmethods.net](http://www.statmethods.net/advgraphs/ggplot2.html)
 
 ```{r cars_setup}
+render_html()
 # ggplot2 examples
 library(ggplot2)
 rm(mtcars)
@@ -17,7 +21,6 @@ mtcars$am <- factor(mtcars$am,levels=c(0,1),
 mtcars$cyl <- factor(mtcars$cyl,levels=c(4,6,8),
    labels=c("4cyl","6cyl","8cyl"))
 ```
-
 ##  Kernel density plots for mpg ##
 grouped by number of gears (indicated by color)
 ```{r cars_density, dev='png', warning=FALSE}
@@ -52,4 +55,4 @@ qplot(gear, mpg, data=mtcars, geom=c("boxplot", "jitter"),
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2013 Apr 17 11:45:06 AM
+Last Modified: 2013 Apr 23 02:23:28 PM

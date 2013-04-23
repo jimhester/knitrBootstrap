@@ -31,27 +31,31 @@ $(function() {
 
   var thumbsize = "span4";
 
-  /* find all code blocks which have a class and add toggle */
-  $('pre code[class]').each(function(i, e) {
-    $(this).parent().before('<button class="btn-mini toggle btn-link">+/- '
-        + $(this).attr('class') + ' Code</button>');
-    hljs.highlightBlock(e);
+  /* Add div wrapping class to code blocks without them */
+  $('pre code').filter(function(){
+    return $(this).parents('div').length < 1;
+      }).each(function(){
+      var code_class = $(this).hasClass('') ? "output" : "source";
+    $(this).parent().wrap('<div class="' + code_class + '"></div>');
   });
-
-  /* Add toggle to output blocks and do not syntax highlight */
-  $('pre code').not('[class]').addClass('no-highlight')
-    .parent().before('<button class="btn-mini toggle btn-link">+/- Output</button>');
-
+    
+  $('div.output').before('<button class="btn-mini toggle btn-link">+/- Output</button>');
+  /* find all code blocks which have a class and add toggle */
+  $('div.source').each(function() {
+    var code_block = $(this).find('code');
+    $(this).before('<button class="btn-mini toggle btn-link">+/- '
+        + code_block.attr('class') + ' Code</button>');
+      code_block.each(function(i, e) {
+        hljs.highlightBlock(e);
+      });
+  });
 
   /* syntax highlight code blocks*/
 
   /* onclick toggle next code block */
   $('.toggle').click(function() {
-    $(this).next('pre').slideToggle();
+    $(this).next('div').slideToggle();
   });
-
-  /* hide by default if a perl or python script code block */
-  <!--$('code.perl,code.python').parent().hide();-->
 
   /* give images a fancybox and thumbnail classes to allow lightbox and thumbnails TODO: make fancybox prev next if grouped */
   $('p').each(function(){
@@ -91,11 +95,11 @@ $(function() {
 
   /* global toggles FIXME explicitly toggle all on/off using global variables */
   $('#toggle_code').click(function(){
-    $('pre code[class!=no-highlight]').parent().slideToggle();
+    $('div.source').slideToggle();
     return false;
   });
   $('#toggle_output').click(function(){
-    $('pre code[class=no-highlight]').parent().slideToggle();
+    $('div.output').slideToggle();
     return false;
   });
   $('#toggle_plot').click(function(){
@@ -104,7 +108,7 @@ $(function() {
   });
 
   /* toggle code blocks hidden by default */
-  $('pre code[class!=no-highlight]').parent().toggle();
+  $('div.source').toggle();
 
   /* add table of contents */
   $('#toc').tocify({extendPage: false});
@@ -112,6 +116,15 @@ $(function() {
   /* style tables */
   $('table').addClass('table table-striped table-bordered table-hover table-condensed')
     .wrap('<div style="overflow: auto"/>');
+
+  /* if using render_html() hook, make functions links to custom R search */
+  $("span.functioncall").replaceWith(function(){
+
+  /*search in ggplot documentation or inside-r.org */
+    return '<a target="_blank" href="http://www.google.com/search?sourceid=navclient&gfns=1&\
+q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
+    $(this).text() + '">' + $(this).text()+'</a>'
+  });
 
   /* add footer */
   $('body').wrapInner('<div id="wrap" />');

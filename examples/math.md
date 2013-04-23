@@ -1,3 +1,5 @@
+
+
 # Math expressions #
 [MathJax](http://www.mathjax.org/demos/tex-samples) examples
 
@@ -22,4 +24,4 @@ The probability of getting \(k\) heads when flipping \(n\) coins is
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Apr 01 03:27:26 PM
-Last Modified: 2013 Apr 01 03:27:37 PM
+Last Modified: 2013 Apr 23 02:24:32 PM
