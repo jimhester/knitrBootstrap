@@ -1,5 +1,3 @@
-
-
 # Cars example #
 from [statmethods.net](http://www.statmethods.net/advgraphs/ggplot2.html)
 
@@ -53,4 +51,4 @@ observations (points) are overlayed and jittered
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2013 Apr 23 02:23:28 PM
+Last Modified: 2013 Apr 26 11:37:19 AM

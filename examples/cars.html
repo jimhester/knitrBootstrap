@@ -114,8 +114,9 @@ $(function() {
 
   /* give images a fancybox and thumbnail classes to allow lightbox and thumbnails TODO: make fancybox prev next if grouped */
   $('p').each(function(){
-    $(this).children('img').unwrap().wrapAll('<div class="row-fluid"><div class="thumbnails" /></div>').wrap('<a href="#", class="' + thumbsize + ' thumbnail"></a></li>').addClass('fancybox');
+    $(this).find('img').unwrap().wrapAll('<div class="row-fluid"><div class="rimage thumbnails"></div></div>');
   });
+  $('div.rimage').children('img').wrap('<a href="#", class="' + thumbsize + ' thumbnail"></a></li>').addClass('fancybox');
 
   /* fancybox */
   $(".fancybox").each( function() {
@@ -465,7 +466,7 @@ mtcars$cyl &lt;- <span class="functioncall">factor</span>(mtcars$cyl, levels = <
 
 <p>Author: <a href="http://jimhester.com">Jim Hester</a>
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2013 Apr 23 02:23:28 PM</p>
+Last Modified: 2013 Apr 26 11:37:19 AM</p>
 
 </body>
 

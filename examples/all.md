@@ -38,7 +38,7 @@ mcor &lt;- <span class="functioncall">cor</span>(mtcars)
 <div class="source"><pre class="knitr"><code class="r"><span class="functioncall">library</span>(xtable)
 <span class="functioncall">print</span>(<span class="functioncall">xtable</span>(mcor), type = <span class="string">"html"</span>)
 </code></pre></div><!-- html table generated in R 2.15.1 by xtable 1.7-0 package -->
-<!-- Fri Apr 26 11:14:28 2013 -->
+<!-- Fri Apr 26 11:37:34 2013 -->
 <TABLE border=1>
 <TR> <TH>  </TH> <TH> mpg </TH> <TH> cyl </TH> <TH> disp </TH> <TH> hp </TH> <TH> drat </TH> <TH> wt </TH> <TH> qsec </TH> <TH> vs </TH> <TH> am </TH> <TH> gear </TH> <TH> carb </TH>  </TR>
   <TR> <TD align="right"> mpg </TD> <TD align="right"> 1.00 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.78 </TD> <TD align="right"> 0.68 </TD> <TD align="right"> -0.87 </TD> <TD align="right"> 0.42 </TD> <TD align="right"> 0.66 </TD> <TD align="right"> 0.60 </TD> <TD align="right"> 0.48 </TD> <TD align="right"> -0.55 </TD> </TR>
@@ -3943,8 +3943,6 @@ Created: 2013 Mar 27 10:54:38 PM
 Last Modified: 2013 Apr 23 02:24:13 PM
 
 
-
-
 # Cars example #
 from [statmethods.net](http://www.statmethods.net/advgraphs/ggplot2.html)
 
@@ -3995,10 +3993,10 @@ observations (points) are overlayed and jittered
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2013 Apr 23 02:23:28 PM
+Last Modified: 2013 Apr 26 11:37:19 AM
 
 
-#Other Languages
+# Other Languages #
 
 
 ## R
@@ -4154,7 +4152,7 @@ B<encode.pl> Base64 encode all hrefs
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Apr 23 09:05:58 AM
-Last Modified: 2013 Apr 26 11:14:23 AM
+Last Modified: 2013 Apr 26 11:21:00 AM
 
 
 
