@@ -1,3 +1,6 @@
+```{r}
+render_html()
+```
 ```{r child="2d_3d.Rmd"}
 ```
 ```{r child="cars.Rmd"}
@@ -12,4 +15,4 @@
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 03:22:28 PM
-Last Modified: 2013 Apr 26 11:13:18 AM
+Last Modified: 2013 Apr 26 12:02:04 PM

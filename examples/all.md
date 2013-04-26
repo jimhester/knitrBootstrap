@@ -1,3 +1,6 @@
+<div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">render_html</span>()
+</code></pre></div></div></div>
+
 
 
 
@@ -38,7 +41,7 @@ mcor &lt;- <span class="functioncall">cor</span>(mtcars)
 <div class="source"><pre class="knitr"><code class="r"><span class="functioncall">library</span>(xtable)
 <span class="functioncall">print</span>(<span class="functioncall">xtable</span>(mcor), type = <span class="string">"html"</span>)
 </code></pre></div><!-- html table generated in R 2.15.1 by xtable 1.7-0 package -->
-<!-- Fri Apr 26 11:37:34 2013 -->
+<!-- Fri Apr 26 12:02:19 2013 -->
 <TABLE border=1>
 <TR> <TH>  </TH> <TH> mpg </TH> <TH> cyl </TH> <TH> disp </TH> <TH> hp </TH> <TH> drat </TH> <TH> wt </TH> <TH> qsec </TH> <TH> vs </TH> <TH> am </TH> <TH> gear </TH> <TH> carb </TH>  </TR>
   <TR> <TD align="right"> mpg </TD> <TD align="right"> 1.00 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.78 </TD> <TD align="right"> 0.68 </TD> <TD align="right"> -0.87 </TD> <TD align="right"> 0.42 </TD> <TD align="right"> 0.66 </TD> <TD align="right"> 0.60 </TD> <TD align="right"> 0.48 </TD> <TD align="right"> -0.55 </TD> </TR>
@@ -4330,4 +4333,4 @@ Last Modified: 2013 Apr 23 02:24:32 PM
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 03:22:28 PM
-Last Modified: 2013 Apr 26 11:13:18 AM
+Last Modified: 2013 Apr 26 12:02:04 PM

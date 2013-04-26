@@ -117,9 +117,12 @@ $(function() {
 
   /* give images a fancybox and thumbnail classes to allow lightbox and thumbnails TODO: make fancybox prev next if grouped */
   $('p').each(function(){
-    $(this).find('img').unwrap().wrapAll('<div class="row-fluid"><div class="rimage thumbnails"></div></div>');
+    $(this).find('img').unwrap().wrapAll('<div class="rimage default"></div>');
   });
-  $('div.rimage').children('img').wrap('<a href="#", class="' + thumbsize + ' thumbnail"></a></li>').addClass('fancybox');
+  $('div.rimage').each(function(){
+    $(this).addClass("row-fluid thumbnails");
+    $(this).children('img').wrap('<a href="#", class="' + thumbsize + ' thumbnail"></a></li>').addClass('fancybox');
+  });
 
   /* fancybox */
   $(".fancybox").each( function() {

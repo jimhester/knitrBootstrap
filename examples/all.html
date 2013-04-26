@@ -117,9 +117,12 @@ $(function() {
 
   /* give images a fancybox and thumbnail classes to allow lightbox and thumbnails TODO: make fancybox prev next if grouped */
   $('p').each(function(){
-    $(this).find('img').unwrap().wrapAll('<div class="row-fluid"><div class="rimage thumbnails"></div></div>');
+    $(this).find('img').unwrap().wrapAll('<div class="rimage default"></div>');
   });
-  $('div.rimage').children('img').wrap('<a href="#", class="' + thumbsize + ' thumbnail"></a></li>').addClass('fancybox');
+  $('div.rimage').each(function(){
+    $(this).addClass("row-fluid thumbnails");
+    $(this).children('img').wrap('<a href="#", class="' + thumbsize + ' thumbnail"></a></li>').addClass('fancybox');
+  });
 
   /* fancybox */
   $(".fancybox").each( function() {
@@ -410,6 +413,9 @@ $(function() {
 </head>
 
 <body>
+<div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">render_html</span>()
+</code></pre></div></div></div>
+
 <h1>2d graphs</h1>
 
 <p>These 2d examples are both from Winsong Chang&#39;s excellent <a href="http://www.amazon.com/R-Graphics-Cookbook-Winston-Chang/dp/1449316956">R Graphics Cookbook</a></p>
@@ -453,7 +459,7 @@ mcor &lt;- <span class="functioncall">cor</span>(mtcars)
 <div class="source"><pre class="knitr"><code class="r"><span class="functioncall">library</span>(xtable)
 <span class="functioncall">print</span>(<span class="functioncall">xtable</span>(mcor), type = <span class="string">"html"</span>)
 </code></pre></div><!-- html table generated in R 2.15.1 by xtable 1.7-0 package -->
-<!-- Fri Apr 26 11:37:34 2013 -->
+<!-- Fri Apr 26 12:02:19 2013 -->
 <TABLE border=1>
 <TR> <TH>  </TH> <TH> mpg </TH> <TH> cyl </TH> <TH> disp </TH> <TH> hp </TH> <TH> drat </TH> <TH> wt </TH> <TH> qsec </TH> <TH> vs </TH> <TH> am </TH> <TH> gear </TH> <TH> carb </TH>  </TR>
   <TR> <TD align="right"> mpg </TD> <TD align="right"> 1.00 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.78 </TD> <TD align="right"> 0.68 </TD> <TD align="right"> -0.87 </TD> <TD align="right"> 0.42 </TD> <TD align="right"> 0.66 </TD> <TD align="right"> 0.60 </TD> <TD align="right"> 0.48 </TD> <TD align="right"> -0.55 </TD> </TR>
@@ -4760,7 +4766,7 @@ Last Modified: 2013 Apr 23 02:24:32 PM</p>
 
 <p>Author: <a href="http://jimhester.com">Jim Hester</a>
 Created: 2013 Mar 28 03:22:28 PM
-Last Modified: 2013 Apr 26 11:13:18 AM</p>
+Last Modified: 2013 Apr 26 12:02:04 PM</p>
 
 </body>
 
