@@ -1,24 +1,25 @@
 
+
+
 # 2d graphs #
 These 2d examples are both from Winsong Chang's excellent [R Graphics Cookbook](http://www.amazon.com/R-Graphics-Cookbook-Winston-Chang/dp/1449316956)
 ## Correlation Matrix Example ##
 ### Correlation plot ###
-<div class="chunk" id="2d_3d_plot"><div class="rcode"><div class="source"><pre class="knitr"><code class="r">library(corrplot)
-corrplot(mcor)
-</code></pre></div><div class="rimage default"><img src="figure/2d_3d_plot.png" title="plot of chunk 2d_3d_plot" alt="plot of chunk 2d_3d_plot" class="plot" /></div>
-</div></div>
+<div class="chunk" id="2d_3d_plot"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">library</span>(corrplot)
+<span class="functioncall">corrplot</span>(mcor)
+</code></pre></div></div><div class="rimage default"><img src="figure/2d_3d_plot.png" title="plot of chunk 2d_3d_plot" alt="plot of chunk 2d_3d_plot" class="plot" /></div></div>
 
 ### Regular R output ###
-<div class="chunk" id="2d_3d_data"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"># for the dataset
-library(ggplot2)
+<div class="chunk" id="2d_3d_data"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="comment"># <span class="keyword">for</span> the dataset</span>
+<span class="functioncall">library</span>(ggplot2)
 </code></pre></div><div class="message"><pre class="knitr"><code class="r">## Attaching package: 'ggplot2'
 </code></pre></div><div class="message"><pre class="knitr"><code class="r">## The following object(s) are masked _by_ '.GlobalEnv':
 ## 
 ## scale_colour_discrete, scale_fill_discrete
-</code></pre></div><div class="source"><pre class="knitr"><code class="r">rm(mtcars)
-mcor <- cor(mtcars)
-# Print mcor and round to 2 digits
-round(mcor, digits = 2)
+</code></pre></div><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">rm</span>(mtcars)
+mcor &lt;- <span class="functioncall">cor</span>(mtcars)
+<span class="comment"># Print mcor and round to 2 digits</span>
+<span class="functioncall">round</span>(mcor, digits = 2)
 </code></pre></div><div class="output"><pre class="knitr"><code class="r">##        mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 ## mpg   1.00 -0.85 -0.85 -0.78  0.68 -0.87  0.42  0.66  0.60  0.48 -0.55
 ## cyl  -0.85  1.00  0.90  0.83 -0.70  0.78 -0.59 -0.81 -0.52 -0.49  0.53
@@ -34,10 +35,10 @@ round(mcor, digits = 2)
 </code></pre></div></div></div>
 
 ### HTML table using xtable ###
-<div class="source"><pre class="knitr"><code class="r">library(xtable)
-print(xtable(mcor), type = "html")
+<div class="source"><pre class="knitr"><code class="r"><span class="functioncall">library</span>(xtable)
+<span class="functioncall">print</span>(<span class="functioncall">xtable</span>(mcor), type = <span class="string">"html"</span>)
 </code></pre></div><!-- html table generated in R 2.15.1 by xtable 1.7-0 package -->
-<!-- Tue Apr 23 14:17:20 2013 -->
+<!-- Fri Apr 26 11:14:28 2013 -->
 <TABLE border=1>
 <TR> <TH>  </TH> <TH> mpg </TH> <TH> cyl </TH> <TH> disp </TH> <TH> hp </TH> <TH> drat </TH> <TH> wt </TH> <TH> qsec </TH> <TH> vs </TH> <TH> am </TH> <TH> gear </TH> <TH> carb </TH>  </TR>
   <TR> <TD align="right"> mpg </TD> <TD align="right"> 1.00 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.78 </TD> <TD align="right"> 0.68 </TD> <TD align="right"> -0.87 </TD> <TD align="right"> 0.42 </TD> <TD align="right"> 0.66 </TD> <TD align="right"> 0.60 </TD> <TD align="right"> 0.48 </TD> <TD align="right"> -0.55 </TD> </TR>
@@ -55,24 +56,23 @@ print(xtable(mcor), type = "html")
 
 
 ## Network Graph Example ##
-<div class="chunk" id="2d_3d_network_data"><div class="rcode"><div class="source"><pre class="knitr"><code class="r">library(igraph)
-# Specify edges for a directed graph
-gd <- graph(c(1, 2, 2, 3, 2, 4, 1, 4, 5, 5, 3, 6))
-plot(gd)
-</code></pre></div><div class="rimage default"><img src="figure/2d_3d_network_data1.png" title="plot of chunk 2d_3d_network_data" alt="plot of chunk 2d_3d_network_data" class="plot" /></div>
-<div class="source"><pre class="knitr"><code class="r"># For an undirected graph
-gu <- graph(c(1, 2, 2, 3, 2, 4, 1, 4, 5, 5, 3, 6), directed = FALSE)
-# No labels
-plot(gu, vertex.label = NA)
-</code></pre></div><div class="rimage default"><img src="figure/2d_3d_network_data2.png" title="plot of chunk 2d_3d_network_data" alt="plot of chunk 2d_3d_network_data" class="plot" /></div>
-</div></div>
+<div class="chunk" id="2d_3d_network_data"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">library</span>(igraph)
+<span class="comment"># Specify edges <span class="keyword">for</span> a directed graph</span>
+gd &lt;- <span class="functioncall">graph</span>(<span class="functioncall">c</span>(1, 2, 2, 3, 2, 4, 1, 4, 5, 5, 3, 6))
+<span class="functioncall">plot</span>(gd)
+</code></pre></div></div><div class="rimage default"><img src="figure/2d_3d_network_data1.png" title="plot of chunk 2d_3d_network_data" alt="plot of chunk 2d_3d_network_data" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr"><code class="r"><span class="comment"># For an undirected graph</span>
+gu &lt;- <span class="functioncall">graph</span>(<span class="functioncall">c</span>(1, 2, 2, 3, 2, 4, 1, 4, 5, 5, 3, 6), directed = <span class="keyword">FALSE</span>)
+<span class="comment"># No labels</span>
+<span class="functioncall">plot</span>(gu, vertex.label = <span class="keyword">NA</span>)
+</code></pre></div></div><div class="rimage default"><img src="figure/2d_3d_network_data2.png" title="plot of chunk 2d_3d_network_data" alt="plot of chunk 2d_3d_network_data" class="plot" /></div></div>
 
 # 3d graphs #
 This example is from [Yihui's response](http://stackoverflow.com/questions/14879210/including-a-interactive-3d-figure-with-knitr) to a stack overflow question.
 
 Need to load the CanvasMatrix library and the hook_webgl code to get 3d graphs to work
-<div class="chunk" id="setup"><div class="rcode"><div class="source"><pre class="knitr"><code class="r">has_X11 = Sys.getenv("DISPLAY") != ""
-if (has_X11) knit_hooks$set(webgl = hook_webgl)
+<div class="chunk" id="setup"><div class="rcode"><div class="source"><pre class="knitr"><code class="r">has_X11 = <span class="functioncall">Sys.getenv</span>(<span class="string">"DISPLAY"</span>) != <span class="string">""</span>
+<span class="functioncall"><span class="keyword">if</span></span> (has_X11) knit_hooks$<span class="functioncall">set</span>(webgl = hook_webgl)
 </code></pre></div></div></div>
 
 ```{html}
@@ -81,11 +81,11 @@ if (has_X11) knit_hooks$set(webgl = hook_webgl)
 <script src="https://dl.dropbox.com/u/15335397/misc/CanvasMatrix.js"></script>
 
 ## point 3d graph ##
-<div class="chunk" id="2d_3d_points"><div class="rcode"><div class="source"><pre class="knitr"><code class="r">library(rgl)
-x <- sort(rnorm(1000))
-y <- rnorm(1000)
-z <- rnorm(1000) + atan2(x, y)
-plot3d(x, y, z, col = rainbow(1000))
+<div class="chunk" id="2d_3d_points"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">library</span>(rgl)
+x &lt;- <span class="functioncall">sort</span>(<span class="functioncall">rnorm</span>(1000))
+y &lt;- <span class="functioncall">rnorm</span>(1000)
+z &lt;- <span class="functioncall">rnorm</span>(1000) + <span class="functioncall">atan2</span>(x, y)
+<span class="functioncall">plot3d</span>(x, y, z, col = <span class="functioncall">rainbow</span>(1000))
 </code></pre></div><script src="CanvasMatrix.js" type="text/javascript"></script>
 <canvas id="_2d_3d_pointstextureCanvas" style="display: none;" width="256" height="256">
 <img src="_2d_3d_pointssnapshot.png" alt="_2d_3d_pointssnapshot" width=505/><br>
@@ -2373,9 +2373,9 @@ plot3d(x, y, z, col = rainbow(1000))
 <script>_2d_3d_pointswebGLStart();</script></div></div>
 
 ## spheres 3d graph ##
-<div class="chunk" id="2d_3d_spheres"><div class="rcode"><div class="source"><pre class="knitr"><code class="r">open3d()
+<div class="chunk" id="2d_3d_spheres"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">open3d</span>()
 </code></pre></div><div class="output"><pre class="knitr"><code class="r">## [1] 2
-</code></pre></div><div class="source"><pre class="knitr"><code class="r">spheres3d(x, y, z, col = rainbow(1000))
+</code></pre></div><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">spheres3d</span>(x, y, z, col = <span class="functioncall">rainbow</span>(1000))
 </code></pre></div><script src="CanvasMatrix.js" type="text/javascript"></script>
 <canvas id="_2d_3d_spherestextureCanvas" style="display: none;" width="256" height="256">
 <img src="_2d_3d_spheressnapshot.png" alt="_2d_3d_spheressnapshot" width=505/><br>
@@ -3940,7 +3940,9 @@ plot3d(x, y, z, col = rainbow(1000))
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 27 10:54:38 PM
-Last Modified: 2013 Apr 01 08:43:48 AM
+Last Modified: 2013 Apr 23 02:24:13 PM
+
+
 
 
 # Cars example #
@@ -3993,7 +3995,168 @@ observations (points) are overlayed and jittered
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2013 Apr 22 02:21:28 PM
+Last Modified: 2013 Apr 23 02:23:28 PM
+
+
+#Other Languages
+
+
+## R
+<div class="chunk" id="engines_r"><div class="rcode"><div class="source"><pre class="knitr"><code class="r"><span class="functioncall">print</span>(<span class="string">"hello world"</span>)
+</code></pre></div><div class="output"><pre class="knitr"><code class="r">## [1] "hello world"
+</code></pre></div></div></div>
+
+## Bash
+<div class="chunk" id="engines_bash"><div class="rcode"><div class="source"><pre class="knitr"><code class="bash">echo "hello world"
+</code></pre></div>
+<div class="output"><pre class="knitr"><code class="bash">## hello world
+</code></pre></div></div></div>
+
+## Perl
+<div class="chunk" id="engines_perl"><div class="rcode"><div class="source"><pre class="knitr"><code class="perl">print "hello world\n";
+</code></pre></div>
+<div class="output"><pre class="knitr"><code class="perl">## hello world
+</code></pre></div></div></div>
+
+
+
+<div class="chunk" id="encode"><div class="rcode"><div class="source"><pre class="knitr"><code class="perl">#!/usr/bin/env perl
+use warnings;
+use strict;
+use autodie qw(:all);
+###############################################################################
+# By Jim Hester
+# Created: 2013 Apr 05 02:45:46 PM
+# Last Modified: 2013 Apr 10 09:13:41 AM
+# Title:encode.pl
+# Purpose: Base64 encode all external links
+###############################################################################
+# Code to handle help menu and man page
+###############################################################################
+use Getopt::Long;
+use Pod::Usage;
+my %args = ( ignore => ['mathjax'] );
+GetOptions( \%args, 'ignore=s@', 'help|?', 'man' ) or pod2usage(2);
+pod2usage(2) if exists $args{help};
+pod2usage( -verbose => 2 ) if exists $args{man};
+pod2usage("$0: No files given.") if ( ( @ARGV == 0 ) && ( -t STDIN ) );
+###############################################################################
+# encode.pl
+###############################################################################
+use MIME::Base64;
+use LWP::UserAgent;
+use List::MoreUtils qw(any);
+use File::MimeInfo;
+
+my $ua = LWP::UserAgent->new;
+
+#create search regexp
+my @starts = ( 'script[^<>]+src=', 'link[^<>]+href=', 'url[(]' );
+my $search =
+  '((?:' . join( '|', map {"(?:$_)"} @starts ) . q{)["']*)([^#"')]+)(["')])};
+
+while ( my $line = <> ) {
+  print encode_string( $line, $search );
+}
+
+#base64 encode urls or local files recursively
+sub encode_string {
+  my ( $string, $search, $parent_url ) = @_;
+
+  #if not in our libraries to ignore
+  $string =~ s{$search}{
+    my($start, $url, $end) = ($1, $2, $3);
+
+    #check for local file
+    if(-e $url){
+    my $text = slurp($url);
+    $text = encode_string($text, $search) if $text;
+    my $type = mimetype($url);
+    $url="data:$type;base64," . encode_base64($text, '');
+    }
+    $url =~ s{^//}{http://}g;
+    my $response =$ua->get($url);
+
+    #try appending the parent url to make an absolute url
+    if ( not $response->is_success and defined $parent_url ) {
+      my ($base) = $parent_url =~ m{(.+/)};
+      $response = $ua->get($base.$url);
+    }
+    if($response->is_success){
+      my $text = $response->decoded_content(charset => 'none');
+      $text = encode_string($text, $search, $url) if $text;
+      my $type = $response->content_type();
+      $url="data:$type;base64," . encode_base64($text, '');
+    }
+    "$start$url$end";
+  }eg;
+
+  #}eg;
+  return $string;
+}
+
+sub slurp {
+  my $file = shift;
+  local $/ = undef;
+  open my $fh, "<", $file;
+  return scalar <$fh>;
+}
+###############################################################################
+# Help Documentation
+###############################################################################
+
+=head1 NAME
+
+encode.pl - Base64 encode all hrefs
+
+=head1 VERSION
+
+0.0.1
+
+=head1 USAGE
+
+Options:
+      -help
+      -man               for more info
+
+=head1 OPTIONS
+
+=over
+
+=item B<-help>
+
+Print a brief help message and exits.
+
+=item B<-man>
+
+Prints the manual page and exits.
+
+=back
+
+=head1 DESCRIPTION
+
+B<encode.pl> Base64 encode all hrefs
+
+=cut
+</code></pre></div></div></div>
+
+## Ruby
+<div class="chunk" id="engines_ruby"><div class="rcode"><div class="source"><pre class="knitr"><code class="ruby">puts "hello world"
+</code></pre></div>
+<div class="output"><pre class="knitr"><code class="ruby">## hello world
+</code></pre></div></div></div>
+
+## Python
+<div class="chunk" id="engines_python"><div class="rcode"><div class="source"><pre class="knitr"><code class="python">print "hello world"
+</code></pre></div>
+<div class="output"><pre class="knitr"><code class="python">## hello world
+</code></pre></div></div></div>
+
+Author: [Jim Hester](http://jimhester.com)
+Created: 2013 Apr 23 09:05:58 AM
+Last Modified: 2013 Apr 26 11:14:23 AM
+
+
 
 
 # Illusions #
@@ -4139,6 +4302,8 @@ Created: 2013 Mar 28 02:44:48 PM
 Last Modified: 2013 Mar 28 03:33:39 PM
 
 
+
+
 # Math expressions #
 [MathJax](http://www.mathjax.org/demos/tex-samples) examples
 
@@ -4163,8 +4328,8 @@ The probability of getting \(k\) heads when flipping \(n\) coins is
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Apr 01 03:27:26 PM
-Last Modified: 2013 Apr 01 03:27:37 PM
+Last Modified: 2013 Apr 23 02:24:32 PM
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 03:22:28 PM
-Last Modified: 2013 Apr 17 11:40:17 AM
+Last Modified: 2013 Apr 26 11:13:18 AM

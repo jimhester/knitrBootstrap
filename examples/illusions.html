@@ -45,32 +45,71 @@
 /* run scripts when document is ready */
 $(function() {
 
+  /* size of thumbnails */
   var thumbsize = "span4";
 
+  /* included languages */
+  var languages = {};
+
   /* Add div wrapping class to code blocks without them */
-  $('pre code').filter(function(){
-    return $(this).parents('div').length < 1;
-      }).each(function(){
-      var code_class = $(this).hasClass('') ? "output" : "source";
-    $(this).parent().wrap('<div class="' + code_class + '"></div>');
+  $('pre code').each(function(){
+
+    var block_type, code_type;
+    /* output block */
+    if($(this).hasClass('')){
+      block_type = "output";
+      code_type = "";
+    }
+    /* source code block */
+    else{
+      block_type = "source";
+      code_type = $(this).attr('class');
+    }
+    /* no wrapping div, not using render_html(), so add to wrap */
+    if($(this).closest('div').length < 1){
+      $(this).parent().wrap('<div class="' + [block_type, code_type].join(" ") + '"></div>');
+    }
+    /* just add code type to the parent div */
+    else{
+      $(this).closest('div').addClass(code_type);
+    }
   });
-    
-  $('div.output').before('<button class="btn-mini toggle btn-link">+/- Output</button>');
-  /* find all code blocks which have a class and add toggle */
-  $('div.source').each(function() {
-    var code_block = $(this).find('code');
-    $(this).before('<button class="btn-mini toggle btn-link">+/- '
-        + code_block.attr('class') + ' Code</button>');
+
+  /* style tables, set them as output*/
+  $('table').addClass('table table-striped table-bordered table-hover table-condensed')
+    .wrap('<div class="output", style="overflow: auto"/>');
+
+  /* find all code or output blocks which have a class and add toggle */
+  $('div.source, div.output').each(function() {
+    var button = $('<button class="btn-mini btn-link btn toggle " data-toggle="button">+/- </button>');
+
+    /* code block */
+    if($(this).hasClass('source')){
+      var code_block = $(this).find('code');
+      var lang_type = code_block.attr('class');
+      button.text(button.text() + lang_type + ' Code');
+      button.addClass('source ' + lang_type);
+      languages[lang_type]=1;
       code_block.each(function(i, e) {
         hljs.highlightBlock(e);
       });
+    }
+
+    /* output block */
+    else {
+      button.text(button.text() + 'Output');
+      button.addClass('output active');
+    }
+    $(this).before(button);
   });
 
   /* syntax highlight code blocks*/
 
   /* onclick toggle next code block */
   $('.toggle').click(function() {
+    $(this).button('toggle');
     $(this).next('div').slideToggle();
+    return false;
   });
 
   /* give images a fancybox and thumbnail classes to allow lightbox and thumbnails TODO: make fancybox prev next if grouped */
@@ -96,30 +135,42 @@ $(function() {
   $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="span9">');
   $('.container-fluid >.row-fluid').prepend('<div class="span3"><div id="toc"></div></div>');
 
+  create_language_links = function(){
+    var text='';
+    for(language in languages){
+      text += '<li><a href="#" class="source toggle_global btn-link btn" type="source.' + language + '">' + language + '</a></li>\n';
+    }
+    return text;
+  }
+
   /* add navbar */
   $('.container-fluid').prepend(
     '<div id="bottom-navbar" class="navbar-fixed-bottom navbar">\
       <div class="navbar-inner">\
-        <ul class="nav pull-right">\
-          <li><a href="#" id="toggle_code">Toggle Code</a></li>\
-          <li><a href="#" id="toggle_output">Toggle Output</a></li>\
-          <li><a href="#" id="toggle_plot">Toggle Plots</a></li>\
-        </ul>\
+        <div class="pull-right">\
+          <span class="navbar-text">Toggle</span>\
+          <div class="btn-group dropup" data-toggle="button-checkbox">\
+            <button type="source" class="toggle_global btn">Code</button>\
+            <button class="btn dropdown-toggle" data-toggle="dropdown">\
+              <span class="caret"></span>\
+            </button>\
+            <ul class="dropdown-menu pull-right">' 
+              + create_language_links() + 
+            '</div>\
+            <button type="output" class="toggle_global btn active">Output</button>\
+            <button type="thumbnails" class="toggle_global btn active">Plots</button>\
+          </div>\
+        </div>\
       </div>\
     </div>'
   );
 
   /* global toggles FIXME explicitly toggle all on/off using global variables */
-  $('#toggle_code').click(function(){
-    $('div.source').slideToggle();
-    return false;
-  });
-  $('#toggle_output').click(function(){
-    $('div.output').slideToggle();
-    return false;
-  });
-  $('#toggle_plot').click(function(){
-    $('img').closest('div').slideToggle();
+  $('.toggle_global').click(function(){
+    $(this).button('toggle');
+    var type = $(this).attr('type');
+    $('.' + type).button('toggle');
+    $('div.' + type).slideToggle();
     return false;
   });
 
@@ -129,14 +180,10 @@ $(function() {
   /* add table of contents */
   $('#toc').tocify({extendPage: false});
 
-  /* style tables */
-  $('table').addClass('table table-striped table-bordered table-hover table-condensed')
-    .wrap('<div style="overflow: auto"/>');
-
   /* if using render_html() hook, make functions links to custom R search */
+  /*search in ggplot documentation or inside-r.org */
   $("span.functioncall").replaceWith(function(){
 
-  /*search in ggplot documentation or inside-r.org */
     return '<a target="_blank" href="http://www.google.com/search?sourceid=navclient&gfns=1&\
 q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
     $(this).text() + '">' + $(this).text()+'</a>'
@@ -164,6 +211,10 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
 }
 
 .toggle{
+  text-transform: capitalize;
+}
+
+.toggle_global{
   text-transform: capitalize;
 }
 

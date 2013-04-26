@@ -19,6 +19,8 @@ A framework to create bootstrap styled HTML reports from knitr Rmarkdown.
 * Style with themes from [bootswatch], optionally including a style switch.
 * Code blocks automatically highlighted using [highlight.js], optionally including a style switch.
 * Code/Output block and plot visibility can be toggled with a mouse click
+  * Globally
+  * Per language
 * Create completely offline reports, including all css, javascript and images
 * Mathematical equations using [mathjax], note this does not work offline
 
