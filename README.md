@@ -27,6 +27,7 @@ All the examples include a css style switch, so you can try out the various styl
 
 * [2d_3d] - examples of miscellaneous 2d and interactive 3d plots
 * [cars] - using ggplot2 and the cars dataset
+* [engines] - using other language engines
 * [illusions] - examples of interesting optical illusions
 * [maps] - examples of map plots, and holding plots until end of the block
 * [math] - examples of MathJax formulas
