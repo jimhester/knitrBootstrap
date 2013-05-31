@@ -33,7 +33,7 @@ $(both): $(header) $(chooser)
 
 
 %_inline.html: %.html
-	encode.pl $< > $@
+	exec/encode.pl $< > $@
 
 %.html: %.Rmd $(stylesheet) $(header_temp)
 	echo "setwd('$(dir $<)');require('knitr');knit2html(stylesheet='$(CURDIR)/$(stylesheet)', header='$(CURDIR)/$(header_temp)', '$(CURDIR)/$<', options=$(options))" > $(notdir $@).R
