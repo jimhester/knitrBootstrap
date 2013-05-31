@@ -41,7 +41,7 @@ mcor &lt;- <span class="functioncall">cor</span>(mtcars)
 <div class="source"><pre class="knitr"><code class="r"><span class="functioncall">library</span>(xtable)
 <span class="functioncall">print</span>(<span class="functioncall">xtable</span>(mcor), type = <span class="string">"html"</span>)
 </code></pre></div><!-- html table generated in R 2.15.1 by xtable 1.7-0 package -->
-<!-- Fri Apr 26 12:02:19 2013 -->
+<!-- Fri May 31 15:48:36 2013 -->
 <TABLE border=1>
 <TR> <TH>  </TH> <TH> mpg </TH> <TH> cyl </TH> <TH> disp </TH> <TH> hp </TH> <TH> drat </TH> <TH> wt </TH> <TH> qsec </TH> <TH> vs </TH> <TH> am </TH> <TH> gear </TH> <TH> carb </TH>  </TR>
   <TR> <TD align="right"> mpg </TD> <TD align="right"> 1.00 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.85 </TD> <TD align="right"> -0.78 </TD> <TD align="right"> 0.68 </TD> <TD align="right"> -0.87 </TD> <TD align="right"> 0.42 </TD> <TD align="right"> 0.66 </TD> <TD align="right"> 0.60 </TD> <TD align="right"> 0.48 </TD> <TD align="right"> -0.55 </TD> </TR>
@@ -4019,127 +4019,11 @@ Last Modified: 2013 Apr 26 11:37:19 AM
 <div class="output"><pre class="knitr"><code class="perl">## hello world
 </code></pre></div></div></div>
 
-
-
-<div class="chunk" id="encode"><div class="rcode"><div class="source"><pre class="knitr"><code class="perl">#!/usr/bin/env perl
-use warnings;
-use strict;
-use autodie qw(:all);
-###############################################################################
-# By Jim Hester
-# Created: 2013 Apr 05 02:45:46 PM
-# Last Modified: 2013 Apr 10 09:13:41 AM
-# Title:encode.pl
-# Purpose: Base64 encode all external links
-###############################################################################
-# Code to handle help menu and man page
-###############################################################################
-use Getopt::Long;
-use Pod::Usage;
-my %args = ( ignore => ['mathjax'] );
-GetOptions( \%args, 'ignore=s@', 'help|?', 'man' ) or pod2usage(2);
-pod2usage(2) if exists $args{help};
-pod2usage( -verbose => 2 ) if exists $args{man};
-pod2usage("$0: No files given.") if ( ( @ARGV == 0 ) && ( -t STDIN ) );
-###############################################################################
-# encode.pl
-###############################################################################
-use MIME::Base64;
-use LWP::UserAgent;
-use List::MoreUtils qw(any);
-use File::MimeInfo;
-
-my $ua = LWP::UserAgent->new;
-
-#create search regexp
-my @starts = ( 'script[^<>]+src=', 'link[^<>]+href=', 'url[(]' );
-my $search =
-  '((?:' . join( '|', map {"(?:$_)"} @starts ) . q{)["']*)([^#"')]+)(["')])};
-
-while ( my $line = <> ) {
-  print encode_string( $line, $search );
-}
-
-#base64 encode urls or local files recursively
-sub encode_string {
-  my ( $string, $search, $parent_url ) = @_;
-
-  #if not in our libraries to ignore
-  $string =~ s{$search}{
-    my($start, $url, $end) = ($1, $2, $3);
-
-    #check for local file
-    if(-e $url){
-    my $text = slurp($url);
-    $text = encode_string($text, $search) if $text;
-    my $type = mimetype($url);
-    $url="data:$type;base64," . encode_base64($text, '');
-    }
-    $url =~ s{^//}{http://}g;
-    my $response =$ua->get($url);
-
-    #try appending the parent url to make an absolute url
-    if ( not $response->is_success and defined $parent_url ) {
-      my ($base) = $parent_url =~ m{(.+/)};
-      $response = $ua->get($base.$url);
-    }
-    if($response->is_success){
-      my $text = $response->decoded_content(charset => 'none');
-      $text = encode_string($text, $search, $url) if $text;
-      my $type = $response->content_type();
-      $url="data:$type;base64," . encode_base64($text, '');
-    }
-    "$start$url$end";
-  }eg;
-
-  #}eg;
-  return $string;
-}
-
-sub slurp {
-  my $file = shift;
-  local $/ = undef;
-  open my $fh, "<", $file;
-  return scalar <$fh>;
-}
-###############################################################################
-# Help Documentation
-###############################################################################
-
-=head1 NAME
-
-encode.pl - Base64 encode all hrefs
-
-=head1 VERSION
-
-0.0.1
-
-=head1 USAGE
-
-Options:
-      -help
-      -man               for more info
-
-=head1 OPTIONS
-
-=over
-
-=item B<-help>
-
-Print a brief help message and exits.
-
-=item B<-man>
-
-Prints the manual page and exits.
-
-=back
-
-=head1 DESCRIPTION
-
-B<encode.pl> Base64 encode all hrefs
-
-=cut
+<div class="chunk" id="unnamed-chunk-10"><div class="rcode"><div class="warning"><pre class="knitr"><code class="r">## Warning: cannot open file '../encode.pl': No such file or directory
+</code></pre></div><div class="error"><pre class="knitr"><code class="r">## Error: cannot open the connection
 </code></pre></div></div></div>
+
+<div class="chunk" id="encode"><div class="rcode"><div class="source"><pre class="knitr"><code class="perl"></code></pre></div></div></div>
 
 ## Ruby
 <div class="chunk" id="engines_ruby"><div class="rcode"><div class="source"><pre class="knitr"><code class="ruby">puts "hello world"
