@@ -1,3 +1,0 @@
-\documentclass{article}
-\begin{document}
-\end{document}

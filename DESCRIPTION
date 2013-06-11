@@ -13,6 +13,7 @@ Suggests:
     testthat,
     roxygen2,
 License: GPL-3
+VignetteBuilder: knitr
 Packaged: 2013-06-03 13:51:16 UTC; hesterj
 Collate:
     'knit_bootstrap.R'
