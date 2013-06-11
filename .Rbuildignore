@@ -1,0 +1,4 @@
+\.gitignore
+^\.git$
+inst/doc/*\.md
+Makefile
