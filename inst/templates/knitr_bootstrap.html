@@ -35,6 +35,9 @@ $(function() {
   /* included languages */
   var languages = {};
 
+  /* Using render_html, so add in code block */
+  $('pre.knitr').wrapInner('<code></code>');
+
   /* Add div wrapping class to code blocks without them */
   $('pre code').each(function(){
 
@@ -47,15 +50,10 @@ $(function() {
     /* source code block */
     else{
       block_type = "source";
-      code_type = $(this).attr('class');
     }
     /* no wrapping div, not using render_html(), so add to wrap */
     if($(this).closest('div').length < 1){
-      $(this).parent().wrap('<div class="' + [block_type, code_type].join(" ") + '"></div>');
-    }
-    /* just add code type to the parent div */
-    else{
-      $(this).closest('div').addClass(code_type);
+      $(this).parent().wrap('<div class="' + block_type + '"></div>');
     }
   });
 
@@ -70,6 +68,7 @@ $(function() {
     /* code block */
     if($(this).hasClass('source')){
       var code_block = $(this).find('code');
+      code_block.removeClass('knitr');
       var lang_type = code_block.attr('class');
       button.text(button.text() + lang_type + ' Code');
       button.addClass('source ' + lang_type);
