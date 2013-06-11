@@ -3,8 +3,9 @@
 %\VignetteIndexEntry{Knitr engines example}
 -->
 # Other Languages #
+Syntax examples taken from (http://softwaremaniacs.org/media/soft/highlight/test.html)[]
 ```{r include=FALSE}
-render_html()
+library(knitr);render_html()
 ```
 ## R
 ```{r engines_r}
@@ -12,25 +13,106 @@ print('hello world')
 ```
 ## Bash
 ```{r engines_bash, engine='bash'}
-echo "hello world"
+#!/bin/bash
+
+###### BEGIN CONFIG
+ACCEPTED_HOSTS="/root/.hag_accepted.conf"
+BE_VERBOSE=false
+###### END CONFIG
+
+if [ "$UID" -ne 0 ]
+then
+ echo "Superuser rights is required"
+ echo 'Printing the # sign'
+ exit 2
+fi
+
+if test $# -eq 0
+then
+elif test [ $1 == 'start' ]
+else
+fi
+
+genApacheConf(){
+ if [[ "$2" = "www" ]]
+ then
+  full_domain=$1
+ else
+  full_domain=$2.$1
+ fi
+ host_root="${APACHE_HOME_DIR}$1/$2"
+ echo -e "# Host $1/$2 :"
+}
 ```
 ## Perl
 ```{r engines_perl, engine='perl'}
-print "hello world\n";
-```
-```{r, echo=F, cache=FALSE}
-read_chunk('../exec/encode.pl', labels = 'encode')
-```
-```{r encode, engine='perl', eval=FALSE, cache=FALSE}
+# loads object
+sub load
+{
+  my $flds = $c->db_load($id,@_) || do {
+    Carp::carp "Can`t load (class: $c, id: $id): '$!'"; return undef
+  };
+  my $o = $c->_perl_new();
+  $id12 = $id / 24 / 3600;
+  $o->{'ID'} = $id12 + 123;
+  #$o->{'SHCUT'} = $flds->{'SHCUT'};
+  my $p = $o->props;
+  my $vt;
+  $string =~ m/^sought_text$/;
+  $items = split //, 'abc';
+  for my $key (keys %$p)
+  {
+    if(${$vt.'::property'}) {
+      $o->{$key . '_real'} = $flds->{$key};
+      tie $o->{$key}, 'CMSBuilder::Property', $o, $key;
+    }
+  }
+  $o->save if delete $o->{'_save_after_load'};
+  return $o;
+}
+
+=head1 NAME
+POD till the end of file
 ```
 ## Ruby
 ```{r engines_ruby, engine='ruby'}
-puts "hello world"
+class A < B; def self.create(object = User) object end end
+class Zebra; def inspect; "X#{2 + self.object_id}" end end
+
+module ABC::DEF
+  include Comparable
+
+  # @param test
+  # @return [String] nothing
+  def foo(test)
+    Thread.new do |blockvar|
+      ABC::DEF.reverse(:a_symbol, :'a symbol', :<=>, 'test' + test)
+    end.join
+  end
+
+  def [](index) self[index] end
+  def ==(other) other == self end
+end
+
+anIdentifier = an_identifier
+Constant = 1
+render action: :new
 ```
 ## Python
 ```{r engines_python, engine='python'}
-print "hello world"
+@requires_authorization
+def somefunc(param1='', param2=0):
+    r'''A docstring'''
+    if param1 > param2: # interesting
+            print 'Gre\'ater'
+        return (param2 - param1 + 1) or None
+
+        class SomeClass:
+            pass
+
+        >>> message = '''interpreter
+        ... prompt'''
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Apr 23 09:05:58 AM
-Last Modified: 2013 Jun 11 02:47:55 PM
+Last Modified: 2013 Jun 11 03:19:43 PM

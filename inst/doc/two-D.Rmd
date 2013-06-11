@@ -4,15 +4,7 @@
 -->
 
 ```{r include=FALSE}
-render_html()
-```
-# 2d graphs #
-These 2d examples are both from Winsong Chang's excellent [R Graphics Cookbook](http://www.amazon.com/R-Graphics-Cookbook-Winston-Chang/dp/1449316956)
-## Correlation Matrix Example ##
-### Correlation plot ###
-```{r 2d_plot, dev='png', warning=FALSE}
-library(corrplot)
-corrplot(mcor)
+library(knitr);render_html()
 ```
 ### Regular R output ###
 ```{r 2d_data}
@@ -27,6 +19,14 @@ round(mcor,digits=2)
 library(xtable)
 print(xtable(mcor), type='html')
 ```
+# 2d graphs #
+These 2d examples are both from Winsong Chang's excellent [R Graphics Cookbook](http://www.amazon.com/R-Graphics-Cookbook-Winston-Chang/dp/1449316956)
+## Correlation Matrix Example ##
+### Correlation plot ###
+```{r 2d_plot, dev='png', warning=FALSE}
+library(corrplot)
+corrplot(mcor)
+```
 ## Network Graph Example ##
 ```{r 2d_network_data, dev='png'}
 library(igraph)
@@ -40,4 +40,4 @@ plot(gu,vertex.label=NA)
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 27 10:54:38 PM
-Last Modified: 2013 Jun 11 02:37:13 PM
+Last Modified: 2013 Jun 11 03:08:55 PM

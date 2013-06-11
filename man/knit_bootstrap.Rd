@@ -4,7 +4,7 @@
 \usage{
   knit_bootstrap(infile, boot_style = NULL,
     code_style = NULL, chooser = NULL,
-    markdown_options = c("skip_style", "base_64_images", "use_xhtml"),
+    markdown_options = c("mathjax", "base64_images", "use_xhtml"),
     graphics = getOption("menu.graphics"), ...)
 }
 \arguments{
@@ -24,12 +24,15 @@
   \item{graphics}{what graphics to use for the menus, only
   applicable if code_style or boot_style are true.}
 
+  \item{markdown_options}{passed to markdownToHTML,
+  defaults to mathjax, base64_images and use_xhtml.}
+
   \item{...}{additional arguments which are passed to
   knit2html}
 }
 \description{
-  This function includes the knitr_bootstrap html headers
-  to wrap the knitr output in bootstrap styled html.
+  This function includes the knitrBootstrap html headers to
+  wrap the knitr output in bootstrap styled html.
 }
 \examples{
 writeLines(c("# hello markdown", '```{r hello-random, echo=TRUE}', 'rnorm(5)', '```'), 'test.Rmd')

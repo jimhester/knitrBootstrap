@@ -4,7 +4,7 @@
 -->
 
 ```{r include=FALSE}
-render_html()
+library(knitr);render_html()
 ```
 # Illusions #
 The R implementations for these are from Kohske Takahashi[(@kohske)](https://twitter.com/kohske).

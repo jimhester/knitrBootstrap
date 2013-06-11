@@ -2,13 +2,12 @@
 %\VignetteEngine{knitr}
 %\VignetteIndexEntry{All examples}
 -->
-
 ```{r}
-render_html()
+library(knitr);render_html()
 ```
-```{r child="2d.Rmd"}
+```{r child="two-D.Rmd"}
 ```
-```{r child="3d.Rmd"}
+```{r child="three-D.Rmd"}
 ```
 ```{r child="cars.Rmd"}
 ```
@@ -22,4 +21,4 @@ render_html()
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 03:22:28 PM
-Last Modified: 2013 Jun 11 02:57:22 PM
+Last Modified: 2013 Jun 11 03:22:26 PM

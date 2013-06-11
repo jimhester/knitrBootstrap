@@ -14,6 +14,9 @@
 #'        "code" adds the bootstrap code chooser.
 #' @param graphics what graphics to use for the menus, only applicable if
 #'        code_style or boot_style are true.
+#' @param markdown_options passed to markdownToHTML, defaults to mathjax,
+#'        base64_images and use_xhtml.
+
 #' @param ... additional arguments which are passed to knit2html
 #' @export
 #' @examples
