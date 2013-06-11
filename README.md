@@ -39,13 +39,11 @@ All the examples include a css style switch, so you can try out the various styl
 
 ## Installation ##
 
-[knitrBootstrap] requires a very current [rstudio/markdown] package.  You can
-install both [knitrBootstrap] and [rstudio/markdown] with the [devtools]
-package.
+[knitrBootstrap] requires the [rstudio/markdown] package (`>= 0.5.5`). You can
+install [knitrBootstrap] with the [devtools] package.
 
 ```r
 library(devtools)
-install_github(username='rstudio', repo='markdown')
 install_github(username='jimhester', repo='knitrBootstrap')
 ```
 ## Usage ##
