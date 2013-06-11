@@ -6,7 +6,9 @@ A framework to create bootstrap styled HTML reports from knitr Rmarkdown.
 
 * [Features](#features)
 * [Examples](#examples)
+* [Installation](#installation)
 * [Usage](#usage)
+  * [R](#Rfunction)
   * [Makefile](#makefile)
   * [RStudio](#rstudio)
   * [Vim](#vim)
@@ -35,15 +37,24 @@ All the examples include a css style switch, so you can try out the various styl
 * [math] - examples of MathJax formulas
 * [all] - All examples together
 
-## Usage ##
+## Installation ##
 
-Using the [Makefile](#makefile), [Rstudio](#rstudio) or [Vim](#vim) methods of
-building the report requires the latest version of the [rstudio/markdown] package.
-You can install it using the [devtools] package.
+[knitrBootstrap] requires a very current [rstudio/markdown] package.  You can
+install both [knitrBootstrap] and [rstudio/markdown] with the [devtools]
+package.
 
 ```r
 library(devtools)
 install_github(username='rstudio', repo='markdown')
+install_github(username='jimhester', repo='knitrBootstrap')
+```
+## Usage ##
+
+Reports can be built within [R](#Rfunction), a [Makefile](#makefile), by [Rstudio](#rstudio) or with [Vim](#vim).
+### R ###
+```r
+library(knitrBootstrap)
+knit_bootstrap('file.Rmd')
 ```
 
 ### Makefile ###
@@ -55,33 +66,30 @@ the command line.  If you have a file file.Rmd and you want to create file.html 
 #standard
 make file.html
 
-#with style chooser
-make style_chooser=1 file.html
+#with bootstrap style chooser
+make CHOOSER=c('boot') file.html
 
 #with code style chooser
-make code_style_chooser=1 file.html
+make CHOOSER=c('code') file.html
+
+#with both
+make CHOOSER=c('boot', 'code') file.html
 
 #standalone
-make standalone=1 file.html
-
-#with standalone and both style choosers !caution! this will be a several MB file
-make standalone=1 style_chooser=1 file.html
+make file.html
+make file_inline.html
 ```
 
 ### RStudio ###
 
 Simply source the following code in RStudio before you knit your reports.
-See [http://www.rstudio.com/ide/docs/authoring/markdown_custom_rendering]()
+See [http://www.rstudio.com/ide/docs/authoring/markdown_custom_rendering]() for more information.
 
-*Note this requires the latest version of the [rstudio/markdown] R package, see [Usage](#usage)*
 ```r
 options(rstudio.markdownToHTML =
   function(inputFile, outputFile) {
-    require(markdown)
-    markdownToHTML(inputFile, outputFile, 
-      header='knitr_bootstrap.html',
-      options=c('base64_images', 'mathjax', 'skip_style', 'use_xhtml')
-    )
+    require(knitrBootstrap)
+    knit_bootstrap(input=inputFile, outfile=outputFile)
   }
 )
 ```
@@ -96,11 +104,8 @@ function! RMakeHTML_2()
   update
   call RSetWD()
   let filename = expand("%:r:t")
-  let rcmd = "require('knitr');
-    \knit2html(
-      \header='~/share/knitr_bootstrap.html', '" .  filename . ".Rmd',
-      \options=c('skip_style', 'base64_images', 'use_xhtml')
-    \)"
+  let rcmd = "require('knitrBootstrap');
+    \knit_bootstrap(" . filename ")"
   if g:vimrplugin_openhtml
     let rcmd = rcmd . '; browseURL("' . filename . '.html")'
   endif
@@ -113,33 +118,32 @@ nnoremap <silent> <Leader>kk :call RMakeHTML_2()<CR>
 
 ### Pandoc ###
 Pandoc can use the same files, but some things do not quite work due to
-conversion differences between the markdown package and pandoc.  Use at your
-own risk!
+markdown conversion differences between the markdown package and pandoc.  Use
+at your own risk!
 
 If your markdown filename is example.md you can use the header html
 ```console
-pandoc -H knitr_bootstrap.html -c knitr_bootstrap.css example.md -o example.html
+pandoc -H knitr_bootstrap.html example.md -o example.html
 ```
 
 ## Styles ##
 
 All of the examples include style toggles for both bootstrap and the code
-highlighting.  If you want to change the default for either of them find the
-alternate stylesheet line in knitr_bootstrap_style_toggle.html or
-knitr_bootstrap_code_style_toggle.html and replace the default css line in
-knitr_bootstrap.html
+highlighting.  The knit_bootstrap function has boot_style and code_style
+arguments if you want to use an alternative style by default.
 
 [highlight.js]: https://github.com/isagalaev/highlight.js
 [tocify]: http://gregfranko.com/jquery.tocify.js
 [rstudio/markdown]: https://github.com/rstudio/markdown
+[knitrBootstrap]: https://github.com/jimhester/knitrBootstrap
 [fancybox]: http://fancyapps.com/fancybox
 [mathjax]: http://mathjax.org
 [bootswatch]: http://bootswatch.com
 
-[2d_3d]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/2d_3d.html
-[all]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/all.html
-[cars]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/cars.html
-[engines]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/engines.html
-[illusions]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/illusions.html
-[maps]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/maps.html
-[math]: http://htmlpreview.github.com/?https://github.com/jimhester/knitr_bootstrap/blob/master/examples/math.html
+[2d_3d]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/examples/2d_3d.html
+[all]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/examples/all.html
+[cars]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/examples/cars.html
+[engines]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/examples/engines.html
+[illusions]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/examples/illusions.html
+[maps]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/examples/maps.html
+[math]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/examples/math.html

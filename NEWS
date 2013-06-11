@@ -1,0 +1,9 @@
+knitrBootstrap 0.6
+==================
+
+* change to using package layout so framework can be bundled as an R package.
+
+* implement knit_bootstrap function so external makefiles are no longer
+  necessary to change styles or include the style choosers.
+
+* fix pre code issue with render_markdown in newer versions of knitr

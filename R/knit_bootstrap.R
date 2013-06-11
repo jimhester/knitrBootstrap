@@ -1,4 +1,46 @@
-#TODO make windows compatible, will be a pain, need to remove perl compatibilities
+#TODO make encode windows compatible, will be a pain, need to remove perl dependencies, maybe best as an extension to markdown package rather than here.
+
+#' knit a Rmd file and wrap it in bootstrap styles
+#'
+#' This function includes the knitrBootstrap html headers to wrap the knitr
+#' output in bootstrap styled html.
+#'
+#' @param infile Rmd input file to knit
+#' @param boot_style the bootstrap style to use, if NULL uses the default, if
+#'        TRUE a menu is shown with the available styles.
+#' @param code_style the highlight.js code style to use, if NULL uses the default, if
+#'        TRUE a menu is shown with the available styles.
+#' @param chooser if "boot", adds a bootstrap style chooser to the html, if
+#'        "code" adds the bootstrap code chooser.
+#' @param graphics what graphics to use for the menus, only applicable if
+#'        code_style or boot_style are true.
+#' @param ... additional arguments which are passed to knit2html
+#' @export
+#' @examples
+#' writeLines(c("# hello markdown", '```{r hello-random, echo=TRUE}', 'rnorm(5)', '```'), 'test.Rmd')
+#' knit_bootstrap('test.Rmd', boot_style='Amelia', code_style='Dark', chooser=c('boot','code'))
+#' if(interactive()) browseURL('test.html')
+knit_bootstrap <-
+  function(infile, boot_style=NULL, code_style=NULL, chooser=NULL,
+           markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
+           graphics = getOption("menu.graphics"), ...){
+  header = create_header(boot_style, code_style, chooser, graphics)
+
+  require(markdown)
+  require(knitr)
+  knit2html(
+    infile,
+    header=header,
+    stylesheet='',
+    options=markdown_options,
+    ...
+  )
+}
+
+style_url="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/$style/bootstrap.min.css"
+link_pattern='<link rel="stylesheet".*href="'
+default_boot_style='http://yandex.st/highlightjs/7.3/styles/vs.min.css'
+default_code_style='http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css'
 
 get_style <- function(style, style_type, title, graphics = getOption("menu.graphics")){
   style = if(!is.null(style) && style %in% names(style_type)){
@@ -13,24 +55,11 @@ get_style <- function(style, style_type, title, graphics = getOption("menu.graph
   return(style)
 }
 
-knit_bootstrap <- function(infile, style=NULL, code_style=NULL, chooser=NULL, markdown_options=c('skip_style', 'base_64_images', 'use_xhtml'), graphics = getOption("menu.graphics"), ...){
-  #TODO modify header
-  header = create_header(chooser, style, code_style, graphics)
+create_header <-
+  function(boot_style=NULL, code_style=NULL, chooser=c('boot', 'code'),
+           graphics = getOption("menu.graphics")){
 
-  require(markdown)
-  require(knitr)
-  knit2html(
-    infile,
-    header=header,
-    options=markdown_options
-  )
-}
-
-style_url="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/$style/bootstrap.min.css"
-
-create_header <- function(chooser=c('style', 'code'), style=NULL, code_style=NULL, graphics = getOption("menu.graphics")){
-
-  style=get_style(style, styles, 'Bootstrap Style', graphics)
+  boot_style=get_style(boot_style, boot_styles, 'Bootstrap Style', graphics)
   code_style=get_style(code_style, code_styles, 'Code Block Style', graphics)
 
   package_root = system.file(package='knitrBootstrap')
@@ -38,12 +67,18 @@ create_header <- function(chooser=c('style', 'code'), style=NULL, code_style=NUL
 
   header_lines = file_lines(header)
 
-  header_lines = gsub('(<link rel="stylesheet".*href=")(http://yandex.st/highlightjs/7.3/styles/vs.min.css)"', paste('\\1', style, '"', sep=''), header_lines)
+  #update bootstrap style
+  header_lines =
+    gsub(paste('(', link_pattern, ')(', default_boot_style, ')', sep=''),
+         paste('\\1', boot_style, '"', sep=''), header_lines)
 
-  header_lines = gsub('(<link rel="stylesheet".*href=")(http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css)"', paste('\\1', code_style, '"', sep=''), header_lines)
+  #update code style
+  header_lines =
+    gsub(paste('(', link_pattern, ')(', default_code_style, ')', sep=''),
+         paste('\\1', code_style, '"', sep=''), header_lines)
 
   chooser = match.arg(chooser, several.ok=TRUE)
-  filenames = if('style' %in% chooser){
+  filenames = if('boot' %in% chooser){
     paste(package_root, 'templates/knitr_bootstrap_style_toggle.html', sep='/')
   }
   filenames = if('code' %in% chooser){
@@ -52,7 +87,7 @@ create_header <- function(chooser=c('style', 'code'), style=NULL, code_style=NUL
 
   outfile = paste(package_root, 'tmp/knitr_bootstrap_full.html', sep='/')
 
-  cat(paste(header_lines, append_files(filenames, outfile), sep='\n'), file=outfile)
+  cat(paste(header_lines, append_files(filenames, outfile), sep='\n'), '\n', file=outfile)
   outfile
 }
 
@@ -65,11 +100,7 @@ file_lines <- function(file){
   paste(readLines(file), collapse='\n')
 }
 
-styles = c("default", "amelia", "cerulean", "cosmo", "cyborg", "journal",
-           "readable", "simplex", "slate", "spacelab", "spruce", "superhero",
-           "united")
-
-styles = c(
+boot_styles = c(
   'Default'='http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css',
   'Amelia'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/amelia/bootstrap.min.css',
   'Cerulean'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cerulean/bootstrap.min.css',

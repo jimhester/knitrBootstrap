@@ -1,0 +1,18 @@
+Package: knitrBootstrap
+Version: 0.6
+Date: 2013-6-13
+Maintainer: Jim Hester <james.f.hester@gmail.com>
+Author: Jim Hester
+Title: Knitr Bootstrap framework.
+Description: A framework to create bootstrap styled HTML reports from knitr
+    Rmarkdown.
+Depends:
+    R (>= 2.11.1),
+    knitr
+Suggests:
+    testthat,
+    roxygen2,
+License: GPL-3
+Packaged: 2013-06-03 13:51:16 UTC; hesterj
+Collate:
+    'knit_bootstrap.R'
