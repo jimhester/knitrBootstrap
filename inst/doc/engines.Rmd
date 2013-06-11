@@ -1,3 +1,7 @@
+<!--
+%\VignetteEngine{knitr}
+%\VignetteIndexEntry{Knitr engines example}
+-->
 # Other Languages #
 ```{r include=FALSE}
 render_html()
@@ -15,7 +19,7 @@ echo "hello world"
 print "hello world\n";
 ```
 ```{r, echo=F, cache=FALSE}
-read_chunk('../encode.pl', labels = 'encode')
+read_chunk('../exec/encode.pl', labels = 'encode')
 ```
 ```{r encode, engine='perl', eval=FALSE, cache=FALSE}
 ```
@@ -29,4 +33,4 @@ print "hello world"
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Apr 23 09:05:58 AM
-Last Modified: 2013 Apr 26 11:21:00 AM
+Last Modified: 2013 Jun 11 02:47:55 PM

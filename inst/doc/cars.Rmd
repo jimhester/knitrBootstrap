@@ -1,15 +1,22 @@
+<!--
+%\VignetteEngine{knitr}
+%\VignetteIndexEntry{Cars example}
+-->
 # Cars example #
 from [statmethods.net](http://www.statmethods.net/advgraphs/ggplot2.html)
 
-```{r cars_setup}
+```{r, include=F}
 render_html()
+```
+
+```{r cars_setup}
 # ggplot2 examples
 library(ggplot2)
-rm(mtcars)
 #use color brewer as default discrete colors
 scale_colour_discrete <- function(...) scale_color_brewer(palette="Set1", ...)
 scale_fill_discrete <- function(...) scale_fill_brewer(palette="Set1", ...)
 
+data('mtcars')
 # create factors with value labels
 mtcars$gear <- factor(mtcars$gear,levels=c(3,4,5),
      labels=c("3gears","4gears","5gears"))
@@ -17,6 +24,7 @@ mtcars$am <- factor(mtcars$am,levels=c(0,1),
      labels=c("Automatic","Manual"))
 mtcars$cyl <- factor(mtcars$cyl,levels=c(4,6,8),
    labels=c("4cyl","6cyl","8cyl"))
+head(mtcars)
 ```
 ##  Kernel density plots for mpg ##
 grouped by number of gears (indicated by color)
@@ -34,7 +42,7 @@ qplot(hp, mpg, data=mtcars, shape=am, color=am,
 ```
 
 ## Regressions of mpg on weight ##
-Seperate for each number of cylinders
+Separate for each number of cylinders
 ```{r cars_regressions, dev='png', warning=FALSE}
 qplot(wt, mpg, data=mtcars, geom=c("point", "smooth"),
    method="lm", formula=y~x, color=cyl,
@@ -52,4 +60,4 @@ qplot(gear, mpg, data=mtcars, geom=c("boxplot", "jitter"),
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2013 Apr 26 11:37:19 AM
+Last Modified: 2013 Jun 11 02:40:12 PM

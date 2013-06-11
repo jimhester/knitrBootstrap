@@ -1,4 +1,12 @@
+<!--
+%\VignetteEngine{knitr}
+%\VignetteIndexEntry{Map examples}
+-->
 # Map plots #
+
+```{r, include=F}
+render_html()
+```
 
 ## USA Arrests ##
 ```{r maps_arrests, dev='png', warning=FALSE}
@@ -21,4 +29,4 @@ ggplot(crimesm, aes(map_id = state)) + geom_map(aes(fill = value), map = states_
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 02:44:48 PM
-Last Modified: 2013 Mar 28 03:33:39 PM
+Last Modified: 2013 Jun 11 02:40:31 PM

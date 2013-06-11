@@ -1,3 +1,8 @@
+<!--
+%\VignetteEngine{knitr}
+%\VignetteIndexEntry{Illusions example}
+-->
+
 ```{r include=FALSE}
 render_html()
 ```
