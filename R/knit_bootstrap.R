@@ -88,7 +88,7 @@ create_header <-
     c(filenames, paste(package_root, 'templates/knitr_bootstrap_code_style_toggle.html', sep='/'))
   }
 
-  outfile = paste(package_root, 'tmp/knitr_bootstrap_full.html', sep='/')
+  outfile = paste(tempdir(), 'knitr_bootstrap_full.html', sep='/')
 
   cat(paste(header_lines, append_files(filenames, outfile), sep='\n'), '\n', file=outfile)
   outfile
