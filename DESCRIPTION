@@ -8,7 +8,8 @@ Description: A framework to create bootstrap styled HTML reports from knitr
     Rmarkdown.
 Depends:
     R (>= 2.11.1),
-    knitr
+    knitr,
+    markdown (>= 0.5.5)
 Suggests:
     testthat,
     roxygen2,
