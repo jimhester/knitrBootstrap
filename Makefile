@@ -1,4 +1,5 @@
-RMD=$(wildcard inst/doc/*.Rmd)
+RMD=$(wildcard inst/doc/*.Rmd) $(wildcard inst/examples/*.Rmd)
+
 HTML=$(RMD:.Rmd=.html)
 
 CHOOSER=c('boot', 'code')

@@ -21,4 +21,4 @@ library(knitr);render_html()
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 03:22:28 PM
-Last Modified: 2013 Jun 11 03:22:26 PM
+Last Modified: 2013 Jun 12 02:58:27 PM

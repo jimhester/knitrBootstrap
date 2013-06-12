@@ -20,18 +20,18 @@ if(has_X11)
 <script src="https://dl.dropbox.com/u/15335397/misc/CanvasMatrix.js"></script>
 
 ## point 3d graph ##
-```{r 2d_3d_points, webgl=TRUE, eval=has_X11}
+```{r 3d_points, webgl=TRUE, eval=has_X11}
 x <- sort(rnorm(1000))
 y <- rnorm(1000)
 z <- rnorm(1000) + atan2(x, y)
-  #plot3d(x, y, z, col = rainbow(1000))
+plot3d(x, y, z, col = rainbow(1000))
 ```
 ## spheres 3d graph ##
-```{r 2d_3d_spheres, webgl=TRUE, eval=has_X11}
-#open3d()
-#spheres3d(x, y, z, col = rainbow(1000))
+```{r 3d_spheres, webgl=TRUE, eval=has_X11}
+open3d()
+spheres3d(x, y, z, col = rainbow(1000))
 ```
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 27 10:54:38 PM
-Last Modified: 2013 Jun 11 03:13:35 PM
+Last Modified: 2013 Jun 12 02:40:33 PM

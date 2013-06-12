@@ -1,6 +1,7 @@
 <!--
 %\VignetteEngine{knitr}
 %\VignetteIndexEntry{Illusions example}
+%\VignetteDepends{grid, plyr}
 -->
 
 ```{r include=FALSE}
@@ -11,7 +12,7 @@ The R implementations for these are from Kohske Takahashi[(@kohske)](https://twi
 See http://rpubs.com/kohske/R-de-illusion
 from [statmethods.net](http://www.statmethods.net/advgraphs/ggplot2.html)
 
-## Café wall illusion ##
+## Cafe wall illusion ##
 All the lines are actually parallel
 
 ```{r illusions_cafe_wall}

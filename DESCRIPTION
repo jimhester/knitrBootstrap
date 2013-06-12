@@ -13,6 +13,13 @@ Depends:
 Suggests:
     testthat,
     roxygen2,
+    corrplot,
+    ggplot2,
+    igraph,
+    maps,
+    plyr,
+    reshape2,
+    xtable
 License: GPL-3
 URL: https://github.com/hesterj/knitrBootstrap
 BugReports: https://github.com/hesterj/knitrBootstrap/issues

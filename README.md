@@ -138,12 +138,13 @@ arguments if you want to use an alternative style by default.
 [fancybox]: http://fancyapps.com/fancybox
 [mathjax]: http://mathjax.org
 [bootswatch]: http://bootswatch.com
+[devtools]: https://github.com/hadley/devtools
 
 [2d]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/two-D.html
-[3d]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/three-D.html
-[all]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/all.html
+[3d]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/examples/three-D.html
+[all]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/examples/all.html
 [cars]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/cars.html
-[engines]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/engines.html
+[engines]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/examples/engines.html
 [illusions]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/illusions.html
 [maps]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/maps.html
 [math]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/math.html

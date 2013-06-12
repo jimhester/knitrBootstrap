@@ -1,6 +1,7 @@
 <!--
 %\VignetteEngine{knitr}
 %\VignetteIndexEntry{Map examples}
+%\VignetteDepends{ggplot2, reshape2, maps}
 -->
 # Map plots #
 
@@ -14,7 +15,7 @@ library(ggplot2)
 crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
 library(reshape2) # for melt
 crimesm <- melt(crimes, id = 1)
-require(maps)
+library(maps)
 states_map <- map_data("state")
 ggplot(crimes, aes(map_id = state)) + geom_map(aes(fill = Murder), map = states_map) + expand_limits(x = states_map$long, y = states_map$lat)
 last_plot() + coord_map()
@@ -29,4 +30,4 @@ ggplot(crimesm, aes(map_id = state)) + geom_map(aes(fill = value), map = states_
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 02:44:48 PM
-Last Modified: 2013 Jun 11 03:10:12 PM
+Last Modified: 2013 Jun 12 02:40:10 PM
