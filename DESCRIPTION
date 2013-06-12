@@ -1,6 +1,6 @@
 Package: knitrBootstrap
 Version: 0.6
-Date: 2013-6-13
+Date: 2013-6-12
 Maintainer: Jim Hester <james.f.hester@gmail.com>
 Author: Jim Hester
 Title: Knitr Bootstrap framework.
@@ -14,6 +14,8 @@ Suggests:
     testthat,
     roxygen2,
 License: GPL-3
+URL: https://github.com/hesterj/knitrBootstrap
+BugReports: https://github.com/hesterj/knitrBootstrap/issues
 VignetteBuilder: knitr
 Packaged: 2013-06-03 13:51:16 UTC; hesterj
 Collate:
