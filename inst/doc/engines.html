@@ -52,24 +52,32 @@ $(function() {
   var languages = {};
 
   /* Using render_html, so add in code block */
-  $('pre.knitr').wrapInner('<code></code>');
+  $('pre.knitr').each(function(){
+    $(this).removeClass('knitr');
+    $(this).wrapInner('<code class=' + $(this).attr('class') + '></code>');
+  });
 
   /* Add div wrapping class to code blocks without them */
   $('pre code').each(function(){
 
     var block_type, code_type;
     /* output block */
-    if($(this).hasClass('')){
-      block_type = "output";
-      code_type = "";
+    if($(this).hasClass('source')){
+      block_type = "source";
+      code_type = $(this).attr('class');
     }
     /* source code block */
     else{
-      block_type = "source";
+      block_type = "output";
+      code_type = "";
     }
     /* no wrapping div, not using render_html(), so add to wrap */
     if($(this).closest('div').length < 1){
-      $(this).parent().wrap('<div class="' + block_type + '"></div>');
+      $(this).parent().wrap('<div class="' + [block_type, code_type].join(" ") + '"></div>');
+    }
+    /* just add code type to the parent div */
+    else{
+      $(this).closest('div').addClass(code_type);
     }
   });
 
@@ -84,7 +92,6 @@ $(function() {
     /* code block */
     if($(this).hasClass('source')){
       var code_block = $(this).find('code');
-      code_block.removeClass('knitr');
       var lang_type = code_block.attr('class');
       button.text(button.text() + lang_type + ' Code');
       button.addClass('source ' + lang_type);
@@ -110,6 +117,10 @@ $(function() {
     $(this).next('div').slideToggle();
     return false;
   });
+
+
+  /* toggle code blocks hidden by default */
+  $('div.source').toggle();
 
   /* give images a fancybox and thumbnail classes to allow lightbox and thumbnails TODO: make fancybox prev next if grouped */
   $('p').each(function(){
@@ -176,9 +187,6 @@ $(function() {
     $('div.' + type).slideToggle();
     return false;
   });
-
-  /* toggle code blocks hidden by default */
-  $('div.source').toggle();
 
   /* add table of contents */
   $('#toc').tocify({extendPage: false});
@@ -412,12 +420,78 @@ $(function() {
 
 <h1>Other Languages</h1>
 
-<p>Syntax examples taken from (<a href="http://softwaremaniacs.org/media/soft/highlight/test.html)%5B%5D">http://softwaremaniacs.org/media/soft/highlight/test.html)[]</a></p>
+<p>Syntax examples taken from <a href="">http://softwaremaniacs.org/media/soft/highlight/test.html</a></p>
 
 <h2>R</h2>
 
-<div class="chunk" id="engines_r"><div class="rcode"><div class="source"><pre class="knitr r"><span class="functioncall">print</span>(<span class="string">"hello world"</span>)
-</pre></div><div class="output"><pre class="knitr r">## [1] "hello world"
+<div class="chunk" id="engines_r"><div class="rcode"><div class="source"><pre class="knitr r"><span class="functioncall">library</span>(ggplot2)
+
+centre &lt;- <span class="functioncall"><span class="keyword">function</span></span>(x, type, ...) {
+  <span class="functioncall">switch</span>(type,
+         mean = <span class="functioncall">mean</span>(x),
+         median = <span class="functioncall">median</span>(x),
+         trimmed = <span class="functioncall">mean</span>(x, trim = .1))
+}
+
+myVar1
+myVar.2
+data$x
+foo <span class="string">"bar"</span> baz
+# test <span class="string">"test"</span>
+<span class="string">"test # test"</span>
+
+(123) (1) (10) (0.1) (.2) (1e-7)
+(1.2e+7) (2e) (3e+10) (0x0) (0xa)
+(0xabcdef1234567890) (123L) (1L)
+(0x10L) (10000000L) (1e6L) (1.1L)
+(1e-3L) (4123.381E-10i)
+(3.) (3.E10) <span class="comment"># BUG: .E10 should be part of number</span>
+
+<span class="comment"># Numbers <span class="keyword">in</span> some different contexts</span>
+1L
+0x40
+.234
+3.
+1L + 30
+<span class="functioncall">plot</span>(cars, xlim=20)
+<span class="functioncall">plot</span>(cars, xlim=0x20)
+foo&lt;-30
+my.data.3 &lt;- <span class="functioncall">read</span>() # not a number
+<span class="functioncall">c</span>(1,2,3)
+1%%2
+
+"this is a quote that spans
+multiple lines
+\"
+
+is this still a quote? it should be.
+<span class="comment"># even still!</span>
+
+" # now we're done.
+
+'same for
+single quotes <span class="comment">#'</span>
+
+<span class="comment"># keywords</span>
+NULL, <span class="keyword">NA</span>, <span class="keyword">TRUE</span>, <span class="keyword">FALSE</span>, <span class="keyword">Inf</span>, <span class="keyword">NaN</span>, <span class="keyword">NA_integer_</span>,
+NA_real_, <span class="keyword">NA_character_</span>, <span class="keyword">NA_complex_</span>, <span class="keyword">function</span>,
+while, <span class="keyword">repeat</span>, <span class="keyword">for</span>, <span class="keyword">if</span>, <span class="keyword">in</span>, <span class="keyword">else</span>, <span class="keyword">next</span>, <span class="keyword">break</span>,
+..., ..1, ..2
+
+<span class="comment"># not keywords</span>
+the quick brown fox jumped over the lazy dogs
+null na true false inf nan na_integer_ na_real_
+na_character_ na_complex_ Function While Repeat
+For If In Else Next Break .. .... <span class="string">"<span class="keyword">NULL</span>"</span> `<span class="keyword">NULL</span>` <span class="string">'<span class="keyword">NULL</span>'</span>
+
+<span class="comment"># operators</span>
++, -, *, /, %%, ^, &gt;, &gt;=, &lt;, &lt;=, ==, !=, !, &amp;, |, ~,
+-&gt;, &lt;-, &lt;&lt;-, $, :, ::
+
+<span class="comment"># infix operator</span>
+foo %union% bar
+%<span class="string">"test"</span>%
+`<span class="string">"test"</span>`
 </pre></div></div></div>
 
 <h2>Bash</h2>
@@ -528,7 +602,7 @@ def somefunc(param1='', param2=0):
 
 <p>Author: <a href="http://jimhester.com">Jim Hester</a>
 Created: 2013 Apr 23 09:05:58 AM
-Last Modified: 2013 Jun 12 10:56:56 AM</p>
+Last Modified: 2013 Jun 12 11:36:40 AM</p>
 
 </body>
 
