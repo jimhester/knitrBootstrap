@@ -138,10 +138,10 @@ arguments if you want to use an alternative style by default.
 [mathjax]: http://mathjax.org
 [bootswatch]: http://bootswatch.com
 
-[2d_3d]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/examples/2d_3d.html
-[all]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/examples/all.html
-[cars]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/examples/cars.html
-[engines]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/examples/engines.html
-[illusions]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/examples/illusions.html
-[maps]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/examples/maps.html
-[math]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/examples/math.html
+[2d_3d]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/2d_3d.html
+[all]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/all.html
+[cars]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/cars.html
+[engines]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/engines.html
+[illusions]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/illusions.html
+[maps]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/maps.html
+[math]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/math.html

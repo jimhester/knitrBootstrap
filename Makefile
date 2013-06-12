@@ -14,4 +14,4 @@ all: $(HTML)
 	Rscript -e "setwd('$(dir $<)');require('knitrBootstrap');knit_bootstrap('$(notdir $^)', chooser=$(CHOOSER), boot_style=$(BOOT_STYLE), code_style=$(CODE_STYLE))"
 
 make clean:
-	rm -f examples/*.html examples/*.md
+	rm -f inst/doc/*.html inst/doc/*.md
