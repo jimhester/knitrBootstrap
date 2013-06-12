@@ -4,13 +4,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>Math expressions</title>
+<title>3d graphs</title>
 
 
 
-<!-- MathJax scripts -->
-<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 
 
 <style type="text/css">
@@ -410,39 +407,40 @@ $(function() {
 <body>
 <!--
 %\VignetteEngine{knitr}
-%\VignetteIndexEntry{Math expressions example}
+%\VignetteIndexEntry{3D Graphs}
 -->
 
-<h1>Math expressions</h1>
+<h1>3d graphs</h1>
 
-<p><a href="http://www.mathjax.org/demos/tex-samples">MathJax</a> examples</p>
+<p>This example is from <a href="http://stackoverflow.com/questions/14879210/including-a-interactive-3d-figure-with-knitr">Yihui&#39;s response</a> to a stack overflow question.</p>
 
-<h2>simple</h2>
+<p>Need to load the CanvasMatrix library and the hook_webgl code to get 3d graphs to work</p>
 
-<p>\[\alpha+\beta=\gamma\]</p>
+<div class="chunk" id="setup"><div class="rcode"><div class="source"><pre class="knitr r">has_X11 = <span class="functioncall">Sys.getenv</span>(<span class="string">"DISPLAY"</span>) != <span class="string">""</span>
+<span class="functioncall"><span class="keyword">if</span></span> (has_X11) knit_hooks$<span class="functioncall">set</span>(webgl = hook_webgl)
+</pre></div></div></div>
 
-<h2>The Lorenz Equations</h2>
+<pre><code class="html">&lt;script src=&quot;https://dl.dropbox.com/u/15335397/misc/CanvasMatrix.js&quot;&gt;&lt;/script&gt;
+</code></pre>
 
-<p>\[\begin{aligned}
-\dot{x} &amp; = \sigma(y-x) \\
-\dot{y} &amp; = \rho x - y - xz \\
-\dot{z} &amp; = -\beta z + xy
-\end{aligned} \]</p>
+<script src="https://dl.dropbox.com/u/15335397/misc/CanvasMatrix.js"></script>
 
-<h2>Coins</h2>
+<h2>point 3d graph</h2>
 
-<p>The probability of getting \(k\) heads when flipping \(n\) coins is
-\[P(E)   = {n \choose k} p^k (1-p)^{ n-k} \]</p>
+<div class="chunk" id="2d_3d_points"><div class="rcode"><div class="source"><pre class="knitr r">x &lt;- <span class="functioncall">sort</span>(<span class="functioncall">rnorm</span>(1000))
+y &lt;- <span class="functioncall">rnorm</span>(1000)
+z &lt;- <span class="functioncall">rnorm</span>(1000) + <span class="functioncall">atan2</span>(x, y)
+# <span class="functioncall">plot3d</span>(x, y, z, col = <span class="functioncall">rainbow</span>(1000))
+</pre></div></div></div>
 
-<h2>An Identity of Ramanujan</h2>
+<h2>spheres 3d graph</h2>
 
-<p>\[ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
-1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}}
-{1+\frac{e^{-8\pi}} {1+\ldots} } } } \]</p>
+<div class="chunk" id="2d_3d_spheres"><div class="rcode"><div class="source"><pre class="knitr r"># <span class="functioncall">open3d</span>() <span class="functioncall">spheres3d</span>(x, y, z, col = <span class="functioncall">rainbow</span>(1000))
+</pre></div></div></div>
 
 <p>Author: <a href="http://jimhester.com">Jim Hester</a>
-Created: 2013 Apr 01 03:27:26 PM
-Last Modified: 2013 Jun 11 03:10:29 PM</p>
+Created: 2013 Mar 27 10:54:38 PM
+Last Modified: 2013 Jun 11 03:13:35 PM</p>
 
 </body>
 
