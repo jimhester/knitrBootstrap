@@ -12,7 +12,7 @@ library(knitr);render_html()
 print('hello world')
 ```
 ## Bash
-```{r engines_bash, engine='bash'}
+```{r engines_bash, eval=FALSE, engine='bash'}
 #!/bin/bash
 
 ###### BEGIN CONFIG
@@ -45,7 +45,7 @@ genApacheConf(){
 }
 ```
 ## Perl
-```{r engines_perl, engine='perl'}
+```{r engines_perl, eval=FALSE, engine='perl'}
 # loads object
 sub load
 {
@@ -75,7 +75,7 @@ sub load
 POD till the end of file
 ```
 ## Ruby
-```{r engines_ruby, engine='ruby'}
+```{r engines_ruby, eval=FALSE, engine='ruby'}
 class A < B; def self.create(object = User) object end end
 class Zebra; def inspect; "X#{2 + self.object_id}" end end
 
@@ -99,7 +99,7 @@ Constant = 1
 render action: :new
 ```
 ## Python
-```{r engines_python, engine='python'}
+```{r engines_python, eval=FALSE, engine='python'}
 @requires_authorization
 def somefunc(param1='', param2=0):
     r'''A docstring'''
@@ -115,4 +115,4 @@ def somefunc(param1='', param2=0):
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Apr 23 09:05:58 AM
-Last Modified: 2013 Jun 11 03:19:43 PM
+Last Modified: 2013 Jun 12 10:56:56 AM
