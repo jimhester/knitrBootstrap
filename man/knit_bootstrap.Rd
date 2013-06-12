@@ -2,10 +2,12 @@
 \alias{knit_bootstrap}
 \title{knit a Rmd file and wrap it in bootstrap styles}
 \usage{
-  knit_bootstrap(infile, boot_style = NULL,
+  knit_bootstrap(input, output = NULL, boot_style = NULL,
     code_style = NULL, chooser = NULL,
     markdown_options = c("mathjax", "base64_images", "use_xhtml"),
-    graphics = getOption("menu.graphics"), ...)
+    ..., envir = parent.frame(), text = NULL,
+    quiet = FALSE, encoding = getOption("encoding"),
+    graphics = getOption("menu.graphics"))
 }
 \arguments{
   \item{infile}{Rmd input file to knit}
@@ -27,8 +29,21 @@
   \item{markdown_options}{passed to markdownToHTML,
   defaults to mathjax, base64_images and use_xhtml.}
 
-  \item{...}{additional arguments which are passed to
-  knit2html}
+  \item{text}{a character vector as an alternative way to
+  provide the input file}
+
+  \item{quiet}{whether to suppress the progress bar and
+  messages}
+
+  \item{envir}{the environment in which the code chunks are
+  to be evaluated (can use \code{\link{new.env}()} to
+  guarantee an empty new environment)}
+
+  \item{encoding}{the encoding of the input file; see
+  \code{\link{file}}}
+
+  \item{...}{options passed to
+  \code{\link[markdown]{markdownToHTML}}}
 }
 \description{
   This function includes the knitrBootstrap html headers to
@@ -38,5 +53,9 @@
 writeLines(c("# hello markdown", '```{r hello-random, echo=TRUE}', 'rnorm(5)', '```'), 'test.Rmd')
 knit_bootstrap('test.Rmd', boot_style='Amelia', code_style='Dark', chooser=c('boot','code'))
 if(interactive()) browseURL('test.html')
+}
+\seealso{
+  \code{\link{knit}},
+  \code{\link[markdown]{markdownToHTML}}
 }
 

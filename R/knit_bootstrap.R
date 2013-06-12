@@ -16,28 +16,39 @@
 #'        code_style or boot_style are true.
 #' @param markdown_options passed to markdownToHTML, defaults to mathjax,
 #'        base64_images and use_xhtml.
-
-#' @param ... additional arguments which are passed to knit2html
+#' @param text a character vector as an alternative way to provide the input
+#'   file
+#' @param quiet whether to suppress the progress bar and messages
+#' @param envir the environment in which the code chunks are to be evaluated
+#'   (can use \code{\link{new.env}()} to guarantee an empty new environment)
+#' @param encoding the encoding of the input file; see \code{\link{file}}
+#' @param ... options passed to \code{\link[markdown]{markdownToHTML}}
+#' @export
+#' @seealso \code{\link{knit}}, \code{\link[markdown]{markdownToHTML}}
 #' @export
 #' @examples
 #' writeLines(c("# hello markdown", '```{r hello-random, echo=TRUE}', 'rnorm(5)', '```'), 'test.Rmd')
 #' knit_bootstrap('test.Rmd', boot_style='Amelia', code_style='Dark', chooser=c('boot','code'))
 #' if(interactive()) browseURL('test.html')
-knit_bootstrap <-
-  function(infile, boot_style=NULL, code_style=NULL, chooser=NULL,
+knit_bootstrap =
+  function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
            markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
-           graphics = getOption("menu.graphics"), ...){
+           ..., envir = parent.frame(), text = NULL,
+           quiet = FALSE, encoding = getOption('encoding'), graphics = getOption("menu.graphics")) {
   header = create_header(boot_style, code_style, chooser, graphics)
 
   require(markdown)
   require(knitr)
-  knit2html(
-    infile,
-    header=header,
-    stylesheet='',
-    options=markdown_options,
-    ...
-  )
+  if(is.null(output))
+    output <- sub_ext(input, 'html')
+
+  out = knit(input, NULL, text = text, envir = envir, encoding = encoding, quiet = quiet)
+  if (is.null(text)) {
+    markdown::markdownToHTML(out, header=header, stylesheet='',
+      options=markdown_options, output = output, ...)
+    invisible(output)
+  } else markdown::markdownToHTML(text = out, header=header, stylesheet='',
+           options=markdown_options, output = output, ...)
 }
 
 style_url="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/$style/bootstrap.min.css"
@@ -101,6 +112,13 @@ append_files <- function(files, output){
 file_lines <- function(file){
   stopifnot(file.exists(file))
   paste(readLines(file), collapse='\n')
+}
+
+# substitute extension, from knitr
+sans_ext = tools::file_path_sans_ext
+sub_ext = function(x, ext) {
+  if (grepl('\\.([[:alnum:]]+)$', x)) x = sans_ext(x)
+  paste(x, ext, sep = '.')
 }
 
 boot_styles = c(
