@@ -62,14 +62,14 @@ $(function() {
 
     var block_type, code_type;
     /* output block */
-    if($(this).hasClass('source')){
-      block_type = "source";
-      code_type = $(this).attr('class');
+    if($(this).hasClass('')){
+      block_type = "output";
+      code_type = "testing";
     }
     /* source code block */
     else{
-      block_type = "output";
-      code_type = "";
+      block_type = "source";
+      code_type = $(this).attr('class');
     }
     /* no wrapping div, not using render_html(), so add to wrap */
     if($(this).closest('div').length < 1){
