@@ -19,8 +19,8 @@ Suggests:
     maps,
     plyr,
     reshape2,
-    xtable
-License: GPL-3
+    xtable,
+License: GPL-2
 URL: https://github.com/hesterj/knitrBootstrap
 BugReports: https://github.com/hesterj/knitrBootstrap/issues
 VignetteBuilder: knitr
