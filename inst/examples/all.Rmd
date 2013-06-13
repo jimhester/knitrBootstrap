@@ -5,20 +5,18 @@
 ```{r}
 library(knitr);render_html()
 ```
-```{r child="two-D.Rmd"}
+```{r child="../doc/two-D.Rmd"}
 ```
-```{r child="three-D.Rmd"}
-```
-```{r child="cars.Rmd"}
+```{r child="../doc/cars.Rmd"}
 ```
 ```{r child="engines.Rmd"}
 ```
-```{r child="illusions.Rmd"}
+```{r child="../doc/illusions.Rmd"}
 ```
-```{r child="maps.Rmd"}
+```{r child="../doc/maps.Rmd"}
 ```
-```{r child="math.Rmd"}
+```{r child="../doc/math.Rmd"}
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 03:22:28 PM
-Last Modified: 2013 Jun 12 02:58:27 PM
+Last Modified: 2013 Jun 13 11:42:00 AM

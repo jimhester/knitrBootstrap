@@ -30,7 +30,6 @@ A framework to create bootstrap styled HTML reports from knitr Rmarkdown.
 All the examples include a css style switch, so you can try out the various styles from [bootswatch].
 
 * [2d] - examples of miscellaneous 2d
-* [3d] - examples of interactive 3d plots
 * [cars] - using ggplot2 and the cars dataset
 * [engines] - using other language engines
 * [illusions] - examples of interesting optical illusions
@@ -141,7 +140,6 @@ arguments if you want to use an alternative style by default.
 [devtools]: https://github.com/hadley/devtools
 
 [2d]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/two-D.html
-[3d]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/examples/three-D.html
 [all]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/examples/all.html
 [cars]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/cars.html
 [engines]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/examples/engines.html
