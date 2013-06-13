@@ -11,7 +11,9 @@ $(function() {
   /* Using render_html, so add in code block */
   $('pre.knitr').each(function(){
     $(this).removeClass('knitr');
-    $(this).wrapInner('<code class=' + $(this).attr('class') + '></code>');
+    if($(this).find('code').length < 1){
+      $(this).wrapInner('<code class=' + $(this).attr('class') + '></code>');
+    }
   });
 
   /* Add div wrapping class to code blocks without them */
@@ -21,7 +23,7 @@ $(function() {
     /* output block */
     if($(this).hasClass('')){
       block_type = "output";
-      code_type = "testing";
+      code_type = "";
     }
     /* source code block */
     else{
