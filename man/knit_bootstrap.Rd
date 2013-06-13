@@ -10,7 +10,10 @@
     graphics = getOption("menu.graphics"))
 }
 \arguments{
-  \item{infile}{Rmd input file to knit}
+  \item{input}{Rmd input file to knit}
+
+  \item{output}{html output file created, if NULL uses the
+  input filename with the extension changed to .html}
 
   \item{boot_style}{the bootstrap style to use, if NULL
   uses the default, if TRUE a menu is shown with the

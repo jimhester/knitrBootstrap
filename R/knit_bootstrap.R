@@ -5,7 +5,9 @@
 #' This function includes the knitrBootstrap html headers to wrap the knitr
 #' output in bootstrap styled html.
 #'
-#' @param infile Rmd input file to knit
+#' @param input Rmd input file to knit
+#' @param output html output file created, if NULL uses the input filename with
+#'        the extension changed to .html
 #' @param boot_style the bootstrap style to use, if NULL uses the default, if
 #'        TRUE a menu is shown with the available styles.
 #' @param code_style the highlight.js code style to use, if NULL uses the default, if
