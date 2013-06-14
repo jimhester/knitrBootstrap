@@ -39,6 +39,10 @@
 <!-- fancybox -->
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.css">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.js"></script>
+
+<!-- meny -->
+<script src="http://lab.hakim.se/meny/js/meny.min.js"></script>
+<!--<link rel="stylesheet" href="http://lab.hakim.se/meny/css/demo.css">-->
 <script>
 /* run scripts when document is ready */
 $(function() {
@@ -53,7 +57,9 @@ $(function() {
   /* Using render_html, so add in code block */
   $('pre.knitr').each(function(){
     $(this).removeClass('knitr');
-    $(this).wrapInner('<code class=' + $(this).attr('class') + '></code>');
+    if($(this).find('code').length < 1){
+      $(this).wrapInner('<code class=' + $(this).attr('class') + '></code>');
+    }
   });
 
   /* Add div wrapping class to code blocks without them */
@@ -63,7 +69,7 @@ $(function() {
     /* output block */
     if($(this).hasClass('')){
       block_type = "output";
-      code_type = "testing";
+      code_type = "";
     }
     /* source code block */
     else{
@@ -132,16 +138,31 @@ $(function() {
 
   /* fancybox */
   $(".fancybox").each( function() {
+    var img = $(this);
     $(this).fancybox({
       afterClose: function(){
-        $(this).css('display', 'block');
+        img.css('display', 'block');
       }
     });
   });
 
   /* add bootstrap classes */
-  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="span9">');
-  $('.container-fluid >.row-fluid').prepend('<div class="span3"><div id="toc"></div></div>');
+  /*$('body').wrapInner('<div class="contents container-fluid"><div class="row-fluid"><div class="span12">');*/
+  $('body').prepend('<div id="toc" class="meny"></div><div class="meny-arrow"></div>');
+  /* add table of contents */
+  $('#toc').tocify({extendPage: false});
+
+  $('#toc').addClass('meny').siblings().wrapAll('<div class="contents container-fluid row-fluid span12">');
+
+  /*add meny*/
+  var meny = Meny.create({
+      menuElement: document.querySelector( '.meny' ),
+      contentsElement: document.querySelector( '.contents' ),
+      position: 'left',
+      height: 200,
+      width: 260
+  });
+
 
   var create_language_links = function(){
     var text='';
@@ -184,9 +205,6 @@ $(function() {
     $('div.' + type).slideToggle();
     return false;
   });
-
-  /* add table of contents */
-  $('#toc').tocify({extendPage: false});
 
   /* if using render_html() hook, make functions links to custom R search */
   /*search in ggplot documentation or inside-r.org */
@@ -283,6 +301,56 @@ body {
  /* Indent h4 elements */
 .sub-header .sub-header .sub-header .sub-header {
   text-indent: 50px;
+}
+/*Meny*/
+
+/**
+ * Hint graphic that appears while menu is inactive
+ */
+.meny-arrow {
+  position: absolute;
+  z-index: 10;
+
+  border: 10px solid transparent;
+
+  -webkit-transition: opacity 0.4s ease 0.4s; 
+  -moz-transition: opacity 0.4s ease 0.4s; 
+  -ms-transition: opacity 0.4s ease 0.4s; 
+  -o-transition: opacity 0.4s ease 0.4s; 
+  transition: opacity 0.4s ease 0.4s;
+}
+.meny-left .meny-arrow {
+  left: 14px;
+  top: 50%;
+  margin-top: -16px;
+  border-left: 16px solid #333;
+}
+.meny-right .meny-arrow {
+  right: 14px;
+  top: 50%;
+  margin-top: -16px;
+  border-right: 16px solid #333;
+}
+.meny-top .meny-arrow {
+  left: 50%;
+  top: 14px;
+  margin-left: -16px;
+  border-top: 16px solid #333;
+}
+.meny-bottom .meny-arrow {
+  left: 50%;
+  bottom: 14px;
+  margin-left: -16px;
+  border-bottom: 16px solid #333;
+}
+.meny-active .meny-arrow {
+  opacity: 0;
+
+  -webkit-transition: opacity 0.2s ease; 
+  -moz-transition: opacity 0.2s ease; 
+  -ms-transition: opacity 0.2s ease; 
+  -o-transition: opacity 0.2s ease; 
+  transition: opacity 0.2s ease;
 }
 </style>
 <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" id="style" media="screen">
@@ -486,7 +554,9 @@ For If In Else Next Break .. .... <span class="string">"<span class="keyword">NU
 foo %union% bar
 %<span class="string">"test"</span>%
 `<span class="string">"test"</span>`
-</pre></div></div></div>
+</pre></div>
+
+<p></div></div></p>
 
 <h2>Bash</h2>
 
@@ -520,7 +590,9 @@ genApacheConf(){
  host_root="${APACHE_HOME_DIR}$1/$2"
  echo -e "# Host $1/$2 :"
 }
-</pre></div></div></div>
+</pre></div>
+
+<p></div></div></p>
 
 <h2>Perl</h2>
 
@@ -551,7 +623,9 @@ sub load
 
 =head1 NAME
 POD till the end of file
-</pre></div></div></div>
+</pre></div>
+
+<p></div></div></p>
 
 <h2>Ruby</h2>
 
@@ -576,7 +650,9 @@ end
 anIdentifier = an_identifier
 Constant = 1
 render action: :new
-</pre></div></div></div>
+</pre></div>
+
+<p></div></div></p>
 
 <h2>Python</h2>
 
@@ -592,7 +668,9 @@ def somefunc(param1='', param2=0):
 
         >>> message = '''interpreter
         ... prompt'''
-</pre></div></div></div>
+</pre></div>
+
+<p></div></div></p>
 
 <p>Author: <a href="http://jimhester.com">Jim Hester</a>
 Created: 2013 Apr 23 09:05:58 AM

@@ -101,8 +101,22 @@ $(function() {
   });
 
   /* add bootstrap classes */
-  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="span9">');
-  $('.container-fluid >.row-fluid').prepend('<div class="span3"><div id="toc"></div></div>');
+  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="span12 contents">');
+  $('.container-fluid >.row-fluid').prepend('<div id="toc" class="meny" /><div class="meny-arrow" />');
+
+  /* add table of contents */
+  $('#toc').tocify({extendPage: false});
+
+  $('#toc').addClass('meny');
+
+  /*add meny*/
+  var meny = Meny.create({
+      menuElement: document.querySelector( '.meny' ),
+      contentsElement: document.querySelector( '.contents' ),
+      position: 'left',
+      width: 260
+  });
+
 
   var create_language_links = function(){
     var text='';
@@ -145,9 +159,6 @@ $(function() {
     $('div.' + type).slideToggle();
     return false;
   });
-
-  /* add table of contents */
-  $('#toc').tocify({extendPage: false});
 
   /* if using render_html() hook, make functions links to custom R search */
   /*search in ggplot documentation or inside-r.org */
