@@ -92,9 +92,10 @@ $(function() {
 
   /* fancybox */
   $(".fancybox").each( function() {
+    var img = $(this);
     $(this).fancybox({
       afterClose: function(){
-        $(this).css('display', 'block');
+        img.css('display', 'block');
       }
     });
   });

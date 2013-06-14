@@ -2,6 +2,7 @@
 %\VignetteEngine{knitr}
 %\VignetteIndexEntry{All examples}
 -->
+# All examples #
 ```{r}
 library(knitr);render_html()
 ```
@@ -19,4 +20,4 @@ library(knitr);render_html()
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 03:22:28 PM
-Last Modified: 2013 Jun 13 11:42:00 AM
+Last Modified: 2013 Jun 13 12:08:51 PM

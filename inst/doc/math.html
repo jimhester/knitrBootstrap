@@ -42,17 +42,16 @@
 <!-- fancybox -->
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.css">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.js"></script>
-
 <script>
-
 /* run scripts when document is ready */
 $(function() {
+  "use strict";
 
   /* size of thumbnails */
   var thumbsize = "span4";
 
   /* included languages */
-  var languages = {};
+  var languages = [];
 
   /* Using render_html, so add in code block */
   $('pre.knitr').each(function(){
@@ -136,15 +135,10 @@ $(function() {
 
   /* fancybox */
   $(".fancybox").each( function() {
-    var img = $(this);
     $(this).fancybox({
-      beforeLoad: function(){
-        <!--img.removeClass('thumbnail');-->
-      },
       afterClose: function(){
-        <!--img.addClass('thumbnail');-->
-        img.css('display', 'block');
-      },
+        $(this).css('display', 'block');
+      }
     });
   });
 
@@ -152,10 +146,13 @@ $(function() {
   $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="span9">');
   $('.container-fluid >.row-fluid').prepend('<div class="span3"><div id="toc"></div></div>');
 
-  create_language_links = function(){
+  var create_language_links = function(){
     var text='';
+    var language;
     for(language in languages){
-      text += '<li><a href="#" class="source toggle_global btn-link btn" type="source.' + language + '">' + language + '</a></li>\n';
+      if(languages.hasOwnProperty(language)){
+        text += '<li><a href="#" class="source toggle_global btn-link btn" type="source.' + language + '">' + language + '</a></li>\n';
+      }
     }
     return text;
   }
@@ -171,8 +168,8 @@ $(function() {
             <button class="btn dropdown-toggle" data-toggle="dropdown">\
               <span class="caret"></span>\
             </button>\
-            <ul class="dropdown-menu pull-right">' 
-              + create_language_links() + 
+            <ul class="dropdown-menu pull-right">'
+              + create_language_links() +
             '</div>\
             <button type="output" class="toggle_global btn active">Output</button>\
             <button type="thumbnails" class="toggle_global btn active">Plots</button>\
@@ -215,9 +212,7 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
   last_p.wrap('<div id="footer"><div class="container" /></div>');
 });
 </script>
-
-<style type="text/css">
-
+<style>
 /* Knitr_bootstrap styles
 -------------------------------------------------- */
 .container-fluid {
@@ -292,7 +287,6 @@ body {
 .sub-header .sub-header .sub-header .sub-header {
   text-indent: 50px;
 }
-
 </style>
 <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" id="style" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" title="Default" media="screen">
