@@ -2,6 +2,7 @@
 -------------------------------------------------- */
 .container-fluid {
   padding-left: 0 !important;
+  margin-right: 20px;
 }
 
 .toggle{
@@ -32,83 +33,33 @@ body {
     height: auto !important;
     height: 100%;
     /* Negative indent footer by it's height */
-    margin: 0 auto -60px;
+    margin: 0 auto -40px;
 }
 
 /* Set the fixed height of the footer here */
 #push,
 #footer {
-    height: 60px;
-    padding-bottom: 60px;
+    height: 40px;
+    padding-bottom: 40px;
 }
 
 #footer {
   text-align: center;
 }
 
-/* Twitter Bootstrap Overrides */
-/* -------------------------------------------------- */
-.nav-list > li > a, .nav-list .nav-header {
-    margin: 0px !important;
-}
-.nav-list > li > a {
-    padding: 5px !important;
-}
-
 /* Tocify */
 /* -------------------------------------------------- */
 
-/* Display h2 headers */
-.sub-header {
-  display: block;
+/* Top level subheader elements.  These are the first nested items underneath a header element. */
+.header li {
+  font-size: 20px;
 }
 
-/* Hide the rest */
-.sub-header .sub-header {
-  display: none;
+/* Makes the font smaller for all subheader elements. */
+.sub-header li {
+    font-size: 12px;
 }
 
- /* Indent h4 elements */
-.sub-header .sub-header .sub-header .sub-header {
-  text-indent: 50px;
-}
-/*Meny*/
 .meny {
-  /*display: none important!;*/
-  /*padding-right: 20px important!;*/
-  /*overflow: auto important!;*/
-  /*margin-left: 0px important!;*/
-  /*border: 0px important!;*/
-  /*border-radius: 0px important!;*/
-}
-
-/**
- * Hint graphic that appears while menu is inactive
- */
-.meny-arrow {
-  position: absolute;
-  z-index: 10;
-
-  border: 10px solid transparent;
-
-  -webkit-transition: opacity 0.4s ease 0.4s; 
-  -moz-transition: opacity 0.4s ease 0.4s; 
-  -ms-transition: opacity 0.4s ease 0.4s; 
-  -o-transition: opacity 0.4s ease 0.4s; 
-  transition: opacity 0.4s ease 0.4s;
-}
-.meny-left .meny-arrow {
-  left: 14px;
-  top: 50%;
-  margin-top: -16px;
-  border-left: 16px solid #333;
-}
-.meny-active .meny-arrow {
-  opacity: 0;
-
-  -webkit-transition: opacity 0.2s ease; 
-  -moz-transition: opacity 0.2s ease; 
-  -ms-transition: opacity 0.2s ease; 
-  -o-transition: opacity 0.2s ease; 
-  transition: opacity 0.2s ease;
+  height: 100%;
 }

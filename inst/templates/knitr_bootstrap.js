@@ -102,7 +102,7 @@ $(function() {
 
   /* add bootstrap classes */
   $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="span12 contents">');
-  $('.container-fluid >.row-fluid').prepend('<div id="toc" class="meny" /><div class="meny-arrow" />');
+  $('.container-fluid >.row-fluid').prepend('<div class="meny"><div id="toc", class="well" /></div><div class="meny-arrow" />');
 
   /* add table of contents */
   $('#toc').tocify({extendPage: false});
