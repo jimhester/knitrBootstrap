@@ -2,7 +2,10 @@
 -------------------------------------------------- */
 .container-fluid {
   padding-left: 0 !important;
-  margin-right: 40px;
+  overflow-x: hidden;
+}
+.row-fluid {
+  margin-left: 0%;
 }
 
 .toggle{
@@ -25,6 +28,7 @@ html,
 body {
     height: 100%;
     /* The html and body elements cannot have any padding or margin. */
+    /*overflow-x: hidden;*/
 }
 
 /* Wrapper for page content to push down footer */
@@ -66,8 +70,9 @@ body {
 
 .meny {
   height: 100%;
-  /*padding-right: 20px;*/
 }
+
 .contents {
-  padding: 0px 0px;
+  padding-left: 2%;
+  margin-left: 0px !important;
 }
