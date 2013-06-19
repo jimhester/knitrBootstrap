@@ -57,6 +57,7 @@ body {
 #toc {
   padding 0px;
   margin: 0px;
+  border-radius: 0px;
 }
 /* Top level subheader elements.  These are the first nested items underneath a header element. */
 .header li {
@@ -75,4 +76,8 @@ body {
 .contents {
   padding-left: 2%;
   margin-left: 0px !important;
+}
+
+.navbar-inner {
+  padding-right: 10px;
 }
