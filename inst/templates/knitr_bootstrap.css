@@ -2,7 +2,7 @@
 -------------------------------------------------- */
 .container-fluid {
   padding-left: 0 !important;
-  margin-right: 20px;
+  margin-right: 40px;
 }
 
 .toggle{
@@ -33,7 +33,7 @@ body {
     height: auto !important;
     height: 100%;
     /* Negative indent footer by it's height */
-    margin: 0 auto -40px;
+    margin-bottom: 0 auto -40px;
 }
 
 /* Set the fixed height of the footer here */
@@ -50,6 +50,10 @@ body {
 /* Tocify */
 /* -------------------------------------------------- */
 
+#toc {
+  padding 0px;
+  margin: 0px;
+}
 /* Top level subheader elements.  These are the first nested items underneath a header element. */
 .header li {
   font-size: 20px;
@@ -62,4 +66,8 @@ body {
 
 .meny {
   height: 100%;
+  /*padding-right: 20px;*/
+}
+.contents {
+  padding: 0px 0px;
 }
