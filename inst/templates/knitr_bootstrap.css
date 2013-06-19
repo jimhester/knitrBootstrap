@@ -2,13 +2,17 @@
 -------------------------------------------------- */
 .container-fluid {
   padding-left: 0 !important;
+  overflow-x: hidden;
+}
+.row-fluid {
+  margin-left: 0%;
 }
 
 .toggle{
   text-transform: capitalize;
 }
 
-.toggle_global{
+.toggle-global{
   text-transform: capitalize;
 }
 
@@ -24,6 +28,7 @@ html,
 body {
     height: 100%;
     /* The html and body elements cannot have any padding or margin. */
+    /*overflow-x: hidden;*/
 }
 
 /* Wrapper for page content to push down footer */
@@ -32,43 +37,47 @@ body {
     height: auto !important;
     height: 100%;
     /* Negative indent footer by it's height */
-    margin: 0 auto -60px;
+    margin-bottom: 0 auto -40px;
 }
 
 /* Set the fixed height of the footer here */
 #push,
 #footer {
-    height: 60px;
-    padding-bottom: 60px;
+    height: 40px;
+    padding-bottom: 40px;
 }
 
 #footer {
   text-align: center;
 }
 
-/* Twitter Bootstrap Overrides */
-/* -------------------------------------------------- */
-.nav-list > li > a, .nav-list .nav-header {
-    margin: 0px !important;
-}
-.nav-list > li > a {
-    padding: 5px !important;
-}
-
 /* Tocify */
 /* -------------------------------------------------- */
 
-/* Display h2 headers */
-.sub-header {
-  display: block;
+#toc {
+  padding 0px;
+  margin: 0px;
+  border-radius: 0px;
+}
+/* Top level subheader elements.  These are the first nested items underneath a header element. */
+.header li {
+  font-size: 20px;
 }
 
-/* Hide the rest */
-.sub-header .sub-header {
-  display: none;
+/* Makes the font smaller for all subheader elements. */
+.sub-header li {
+    font-size: 12px;
 }
 
- /* Indent h4 elements */
-.sub-header .sub-header .sub-header .sub-header {
-  text-indent: 50px;
+.meny {
+  height: 100%;
+}
+
+.contents {
+  padding-left: 2%;
+  margin-left: 0px !important;
+}
+
+.navbar-inner {
+  padding-right: 10px;
 }

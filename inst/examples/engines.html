@@ -21,24 +21,28 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 
 <!-- highlight.js -->
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css"">
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css"">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/highlight.min.js"></script>
 <script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
 
 <!-- bootstrap -->
-<link rel="stylesheet" type="text/css" href="http://yandex.st/highlightjs/7.3/styles/default.min.css"" id="style" media="screen">
+<link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css"" id="style" media="screen">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 
 <!-- bootstrap-responsive -->
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" media="screen">
 
 <!-- tocify -->
-<link rel="stylesheet" href="http://gregfranko.com/jquery.tocify.js/css/jquery.tocify.css">
+<!--<link rel="stylesheet" href="http://gregfranko.com/jquery.tocify.js/css/jquery.tocify.css">-->
 <script src="http://gregfranko.com/jquery.tocify.js/js/jquery.tocify.min.js"></script>
 
 <!-- fancybox -->
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.css">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.js"></script>
+
+<!-- meny -->
+<script src="http://lab.hakim.se/meny/js/meny.min.js"></script>
+<!--<link rel="stylesheet" href="http://lab.hakim.se/meny/css/demo.css">-->
 <script>
 /* run scripts when document is ready */
 $(function() {
@@ -53,7 +57,9 @@ $(function() {
   /* Using render_html, so add in code block */
   $('pre.knitr').each(function(){
     $(this).removeClass('knitr');
-    $(this).wrapInner('<code class=' + $(this).attr('class') + '></code>');
+    if($(this).find('code').length < 1){
+      $(this).wrapInner('<code class=' + $(this).attr('class') + '></code>');
+    }
   });
 
   /* Add div wrapping class to code blocks without them */
@@ -63,7 +69,7 @@ $(function() {
     /* output block */
     if($(this).hasClass('')){
       block_type = "output";
-      code_type = "testing";
+      code_type = "";
     }
     /* source code block */
     else{
@@ -132,23 +138,38 @@ $(function() {
 
   /* fancybox */
   $(".fancybox").each( function() {
+    var img = $(this);
     $(this).fancybox({
       afterClose: function(){
-        $(this).css('display', 'block');
+        img.css('display', 'block');
       }
     });
   });
 
   /* add bootstrap classes */
-  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="span9">');
-  $('.container-fluid >.row-fluid').prepend('<div class="span3"><div id="toc"></div></div>');
+  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="span12 contents">');
+  $('.container-fluid >.row-fluid').prepend('<div class="meny"><div id="toc", class="well" /></div><div class="meny-arrow" />');
+
+  /* add table of contents */
+  $('#toc').tocify({extendPage: false});
+
+  $('#toc').addClass('meny');
+
+  /*add meny*/
+  var meny = Meny.create({
+      menuElement: document.querySelector( '.meny' ),
+      contentsElement: document.querySelector( '.contents' ),
+      position: 'left',
+      width: 260
+  });
+
 
   var create_language_links = function(){
     var text='';
     var language;
     for(language in languages){
       if(languages.hasOwnProperty(language)){
-        text += '<li><a href="#" class="source toggle_global btn-link btn" type="source.' + language + '">' + language + '</a></li>\n';
+        text += '<li><a href="#" class="source toggle-global btn-link btn" type="source.' + language + '">' + language + '</a></li>\n';
       }
     }
     return text;
@@ -161,15 +182,15 @@ $(function() {
         <div class="pull-right">\
           <span class="navbar-text">Toggle</span>\
           <div class="btn-group dropup" data-toggle="button-checkbox">\
-            <button type="source" class="toggle_global btn">Code</button>\
+            <button type="source" class="toggle-global btn">Code</button>\
             <button class="btn dropdown-toggle" data-toggle="dropdown">\
               <span class="caret"></span>\
             </button>\
             <ul class="dropdown-menu pull-right">'
               + create_language_links() +
             '</div>\
-            <button type="output" class="toggle_global btn active">Output</button>\
-            <button type="thumbnails" class="toggle_global btn active">Plots</button>\
+            <button type="output" class="toggle-global btn active">Output</button>\
+            <button type="thumbnails" class="toggle-global btn active">Plots</button>\
           </div>\
         </div>\
       </div>\
@@ -177,16 +198,13 @@ $(function() {
   );
 
   /* global toggles FIXME explicitly toggle all on/off using global variables */
-  $('.toggle_global').click(function(){
+  $('.toggle-global').click(function(){
     $(this).button('toggle');
     var type = $(this).attr('type');
     $('.' + type).button('toggle');
     $('div.' + type).slideToggle();
     return false;
   });
-
-  /* add table of contents */
-  $('#toc').tocify({extendPage: false});
 
   /* if using render_html() hook, make functions links to custom R search */
   /*search in ggplot documentation or inside-r.org */
@@ -214,13 +232,17 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
 -------------------------------------------------- */
 .container-fluid {
   padding-left: 0 !important;
+  overflow-x: hidden;
+}
+.row-fluid {
+  margin-left: 0%;
 }
 
 .toggle{
   text-transform: capitalize;
 }
 
-.toggle_global{
+.toggle-global{
   text-transform: capitalize;
 }
 
@@ -236,6 +258,7 @@ html,
 body {
     height: 100%;
     /* The html and body elements cannot have any padding or margin. */
+    /*overflow-x: hidden;*/
 }
 
 /* Wrapper for page content to push down footer */
@@ -244,45 +267,49 @@ body {
     height: auto !important;
     height: 100%;
     /* Negative indent footer by it's height */
-    margin: 0 auto -60px;
+    margin-bottom: 0 auto -40px;
 }
 
 /* Set the fixed height of the footer here */
 #push,
 #footer {
-    height: 60px;
-    padding-bottom: 60px;
+    height: 40px;
+    padding-bottom: 40px;
 }
 
 #footer {
   text-align: center;
 }
 
-/* Twitter Bootstrap Overrides */
-/* -------------------------------------------------- */
-.nav-list > li > a, .nav-list .nav-header {
-    margin: 0px !important;
-}
-.nav-list > li > a {
-    padding: 5px !important;
-}
-
 /* Tocify */
 /* -------------------------------------------------- */
 
-/* Display h2 headers */
-.sub-header {
-  display: block;
+#toc {
+  padding 0px;
+  margin: 0px;
+  border-radius: 0px;
+}
+/* Top level subheader elements.  These are the first nested items underneath a header element. */
+.header li {
+  font-size: 20px;
 }
 
-/* Hide the rest */
-.sub-header .sub-header {
-  display: none;
+/* Makes the font smaller for all subheader elements. */
+.sub-header li {
+    font-size: 12px;
 }
 
- /* Indent h4 elements */
-.sub-header .sub-header .sub-header .sub-header {
-  text-indent: 50px;
+.meny {
+  height: 100%;
+}
+
+.contents {
+  padding-left: 2%;
+  margin-left: 0px !important;
+}
+
+.navbar-inner {
+  padding-right: 10px;
 }
 </style>
 <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" id="style" media="screen">
@@ -486,7 +513,9 @@ For If In Else Next Break .. .... <span class="string">"<span class="keyword">NU
 foo %union% bar
 %<span class="string">"test"</span>%
 `<span class="string">"test"</span>`
-</pre></div></div></div>
+</pre></div>
+
+<p></div></div></p>
 
 <h2>Bash</h2>
 
@@ -520,7 +549,9 @@ genApacheConf(){
  host_root="${APACHE_HOME_DIR}$1/$2"
  echo -e "# Host $1/$2 :"
 }
-</pre></div></div></div>
+</pre></div>
+
+<p></div></div></p>
 
 <h2>Perl</h2>
 
@@ -551,7 +582,9 @@ sub load
 
 =head1 NAME
 POD till the end of file
-</pre></div></div></div>
+</pre></div>
+
+<p></div></div></p>
 
 <h2>Ruby</h2>
 
@@ -576,7 +609,9 @@ end
 anIdentifier = an_identifier
 Constant = 1
 render action: :new
-</pre></div></div></div>
+</pre></div>
+
+<p></div></div></p>
 
 <h2>Python</h2>
 
@@ -592,7 +627,9 @@ def somefunc(param1='', param2=0):
 
         >>> message = '''interpreter
         ... prompt'''
-</pre></div></div></div>
+</pre></div>
+
+<p></div></div></p>
 
 <p>Author: <a href="http://jimhester.com">Jim Hester</a>
 Created: 2013 Apr 23 09:05:58 AM

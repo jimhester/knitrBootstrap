@@ -101,15 +101,29 @@ $(function() {
   });
 
   /* add bootstrap classes */
-  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="span9">');
-  $('.container-fluid >.row-fluid').prepend('<div class="span3"><div id="toc"></div></div>');
+  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="span12 contents">');
+  $('.container-fluid >.row-fluid').prepend('<div class="meny"><div id="toc", class="well" /></div><div class="meny-arrow" />');
+
+  /* add table of contents */
+  $('#toc').tocify({extendPage: false});
+
+  $('#toc').addClass('meny');
+
+  /*add meny*/
+  var meny = Meny.create({
+      menuElement: document.querySelector( '.meny' ),
+      contentsElement: document.querySelector( '.contents' ),
+      position: 'left',
+      width: 260
+  });
+
 
   var create_language_links = function(){
     var text='';
     var language;
     for(language in languages){
       if(languages.hasOwnProperty(language)){
-        text += '<li><a href="#" class="source toggle_global btn-link btn" type="source.' + language + '">' + language + '</a></li>\n';
+        text += '<li><a href="#" class="source toggle-global btn-link btn" type="source.' + language + '">' + language + '</a></li>\n';
       }
     }
     return text;
@@ -122,15 +136,15 @@ $(function() {
         <div class="pull-right">\
           <span class="navbar-text">Toggle</span>\
           <div class="btn-group dropup" data-toggle="button-checkbox">\
-            <button type="source" class="toggle_global btn">Code</button>\
+            <button type="source" class="toggle-global btn">Code</button>\
             <button class="btn dropdown-toggle" data-toggle="dropdown">\
               <span class="caret"></span>\
             </button>\
             <ul class="dropdown-menu pull-right">'
               + create_language_links() +
             '</div>\
-            <button type="output" class="toggle_global btn active">Output</button>\
-            <button type="thumbnails" class="toggle_global btn active">Plots</button>\
+            <button type="output" class="toggle-global btn active">Output</button>\
+            <button type="thumbnails" class="toggle-global btn active">Plots</button>\
           </div>\
         </div>\
       </div>\
@@ -138,16 +152,13 @@ $(function() {
   );
 
   /* global toggles FIXME explicitly toggle all on/off using global variables */
-  $('.toggle_global').click(function(){
+  $('.toggle-global').click(function(){
     $(this).button('toggle');
     var type = $(this).attr('type');
     $('.' + type).button('toggle');
     $('div.' + type).slideToggle();
     return false;
   });
-
-  /* add table of contents */
-  $('#toc').tocify({extendPage: false});
 
   /* if using render_html() hook, make functions links to custom R search */
   /*search in ggplot documentation or inside-r.org */

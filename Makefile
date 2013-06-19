@@ -12,7 +12,7 @@ all: inst/templates/knitr_bootstrap.html $(HTML)
 
 inst/examples/all.html: $(RMD) $(BASE)
 
-$(BASE): $(filter-out $(BASE), $(wildcard inst/templates/*))
+$(BASE): $(filter-out $(BASE), $(wildcard inst/templates/*)) $(wildcard R/*.R)
 	(cat inst/templates/knitr_bootstrap_includes.html;\
   exec/wrap.pl '<script>' '</script>' inst/templates/knitr_bootstrap.js;\
   exec/wrap.pl '<style>' '</style>' inst/templates/knitr_bootstrap.css\

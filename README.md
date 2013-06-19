@@ -96,14 +96,13 @@ options(rstudio.markdownToHTML =
 
 Using the [Vim-R-Plugin](https://github.com/vim-scripts/Vim-R-plugin) put the following function in your .vimrc to create the file directly with knitr and the markdown package
 
-*Note this requires the latest version of the [rstudio/markdown] R package, see [Usage](#usage)*
 ```vim
 function! RMakeHTML_2()
   update
   call RSetWD()
   let filename = expand("%:r:t")
   let rcmd = "require('knitrBootstrap');
-    \knit_bootstrap(" . filename ")"
+    \knit_bootstrap(\"" . filename . ".Rmd\")"
   if g:vimrplugin_openhtml
     let rcmd = rcmd . '; browseURL("' . filename . '.html")'
   endif
