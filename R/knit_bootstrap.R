@@ -55,8 +55,8 @@ knit_bootstrap =
 
 style_url="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/$style/bootstrap.min.css"
 link_pattern='<link rel="stylesheet".*href="'
-default_boot_style='http://yandex.st/highlightjs/7.3/styles/vs.min.css'
-default_code_style='http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css'
+default_boot_style='http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css'
+default_code_style='http://yandex.st/highlightjs/7.3/styles/vs.min.css'
 
 get_style <- function(style, style_type, title, graphics = getOption("menu.graphics")){
   style = if(!is.null(style) && style %in% names(style_type)){
