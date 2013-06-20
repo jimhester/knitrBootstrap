@@ -10,7 +10,8 @@ library(knitr);render_html()
 ```
 
 ## USA Arrests ##
-```{r maps_arrests, dev='png', warning=FALSE}
+examples from [http://docs.ggplot2.org/current/geom_map.html](http://docs.ggplot2.org/current/geom_map.html)
+```{r maps_arrests, dev='png', fig.show='hold', warning=FALSE}
 library(ggplot2)
 crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
 library(reshape2) # for melt
@@ -20,14 +21,10 @@ states_map <- map_data("state")
 ggplot(crimes, aes(map_id = state)) + geom_map(aes(fill = Murder), map = states_map) + expand_limits(x = states_map$long, y = states_map$lat)
 last_plot() + coord_map()
 ggplot(crimesm, aes(map_id = state)) + geom_map(aes(fill = value), map = states_map) + expand_limits(x = states_map$long, y = states_map$lat) + facet_wrap( ~ variable)
-```
-### Use fig.show='hold' ###
-These are the same plots with fig.show='hold' in the options
-```{r maps_figshow, dev='png', fig.show='hold', warning=FALSE}
-ggplot(crimes, aes(map_id = state)) + geom_map(aes(fill = Murder), map = states_map) + expand_limits(x = states_map$long, y = states_map$lat)
-last_plot() + coord_map()
-ggplot(crimesm, aes(map_id = state)) + geom_map(aes(fill = value), map = states_map) + expand_limits(x = states_map$long, y = states_map$lat) + facet_wrap( ~ variable)
+great_lakes_states = c('michigan', 'illinois', 'ohio', 'wisconsin', 'indiana')
+great_lakes_map = subset(states_map, region %in% great_lakes_states)
+ggplot(subset(crimesm, state %in% great_lakes_states), aes(map_id = state)) + geom_map(aes(fill = value), map = great_lakes_map) + expand_limits(x=great_lakes_map$long, y=great_lakes_map$lat) + facet_wrap( ~ variable)
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 02:44:48 PM
-Last Modified: 2013 Jun 12 02:40:10 PM
+Last Modified: 2013 Jun 20 09:51:53 AM
