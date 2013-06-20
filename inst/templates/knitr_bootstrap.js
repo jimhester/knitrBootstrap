@@ -3,7 +3,7 @@ $(function() {
   "use strict";
 
   /* size of thumbnails */
-  var thumbsize = "span4";
+  var thumbsize = "span5";
 
   /* included languages */
   var languages = [];

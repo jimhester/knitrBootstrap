@@ -33,7 +33,7 @@ $(function() {
   "use strict";
 
   /* size of thumbnails */
-  var thumbsize = "span4";
+  var thumbsize = "span5";
 
   /* included languages */
   var languages = [];
@@ -232,6 +232,11 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
 
 .thumbnails { text-align:center; }
 .thumbnails > .thumbnail { display: inline-block !important; float: none !important; }
+
+/*fix for boostrap#3494*/
+.row-fluid.thumbnails .span5.thumbnail:nth-child(6n+1) { margin-left: 0px; }
+.row-fluid.thumbnails .span5.thumbnail:nth-child(4n+1) { margin-left: 0px; }
+.row-fluid.thumbnails .span5.thumbnail:nth-child(2n+1) { margin-left: 0px; }
 
 /* Sticky footer styles
 -------------------------------------------------- */
