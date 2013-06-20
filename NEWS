@@ -1,6 +1,7 @@
 knitrBootstrap 0.6
 ==================
 
+* Use meny to style the table of contents
 * change to using package layout so framework can be bundled as an R package.
 
 * implement knit_bootstrap function so external makefiles are no longer

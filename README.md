@@ -1,5 +1,5 @@
-# Knitr Bootstrap #
 
+# Knitr Bootstrap #
 A framework to create bootstrap styled HTML reports from knitr Rmarkdown.
 
 ## Table of Contents
@@ -16,7 +16,7 @@ A framework to create bootstrap styled HTML reports from knitr Rmarkdown.
 * [Styles](#styles)
 
 ## Features ##
-* Automatic table of contents constructed from h1-4 tags using [tocify]
+* Automatic table of contents constructed from h1-4 tags using [tocify] and styled with [meny].
 * Images are automatically centered, thumbnailed and lightboxed using [fancybox]
 * Style with themes from [bootswatch], optionally including a style switch.
 * Code blocks automatically highlighted using [highlight.js], optionally including a style switch.
@@ -145,3 +145,4 @@ arguments if you want to use an alternative style by default.
 [illusions]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/illusions.html
 [maps]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/maps.html
 [math]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/math.html
+[meny]: http://lab.hakim.se/meny/
