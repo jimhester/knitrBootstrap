@@ -2,7 +2,7 @@
 -------------------------------------------------- */
 .container-fluid {
   padding-left: 0 !important;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 .row-fluid {
   margin-left: 0%;

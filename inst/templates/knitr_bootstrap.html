@@ -117,7 +117,7 @@ $(function() {
   });
   $('div.rimage').each(function(){
     $(this).addClass("row-fluid thumbnails");
-    $(this).children('img').wrap('<a href="#", class="' + thumbsize + ' thumbnail"></a></li>').addClass('fancybox');
+    $(this).children('img').wrap('<a href="#" class="' + thumbsize + ' thumbnail"></a></li>').addClass('fancybox');
   });
 
   /* fancybox */
@@ -216,7 +216,7 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
 -------------------------------------------------- */
 .container-fluid {
   padding-left: 0 !important;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 .row-fluid {
   margin-left: 0%;
