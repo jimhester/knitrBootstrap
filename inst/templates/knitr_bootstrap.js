@@ -87,7 +87,7 @@ $(function() {
   });
   $('div.rimage').each(function(){
     $(this).addClass("row-fluid thumbnails");
-    $(this).children('img').wrap('<a href="#", class="' + thumbsize + ' thumbnail"></a></li>').addClass('fancybox');
+    $(this).children('img').wrap('<a href="#" class="' + thumbsize + ' thumbnail"></a></li>').addClass('fancybox');
   });
 
   /* fancybox */
