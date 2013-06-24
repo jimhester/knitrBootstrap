@@ -54,9 +54,9 @@ knit_bootstrap =
 }
 
 style_url="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/$style/bootstrap.min.css"
-link_pattern='<link rel="stylesheet".*href="'
+link_pattern='<link[^\n\r]+rel="stylesheet"[^\n\r]+href="'
 default_boot_style='http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css'
-default_code_style='http://yandex.st/highlightjs/7.3/styles/vs.min.css'
+default_code_style='http://yandex.st/highlightjs/7.3/styles/default.min.css'
 
 get_style <- function(style, style_type, title, graphics = getOption("menu.graphics")){
   style = if(!is.null(style) && style %in% names(style_type)){
@@ -83,16 +83,6 @@ create_header <-
 
   header_lines = file_lines(header)
 
-  #update bootstrap style
-  header_lines =
-    gsub(paste('(', link_pattern, ')(', default_boot_style, ')', sep=''),
-         paste('\\1', boot_style, '"', sep=''), header_lines)
-
-  #update code style
-  header_lines =
-    gsub(paste('(', link_pattern, ')(', default_code_style, ')', sep=''),
-         paste('\\1', code_style, '"', sep=''), header_lines)
-
   chooser = match.arg(chooser, several.ok=TRUE)
   filenames = if('boot' %in% chooser){
     paste(package_root, 'templates/knitr_bootstrap_style_toggle.html', sep='/')
@@ -101,9 +91,21 @@ create_header <-
     c(filenames, paste(package_root, 'templates/knitr_bootstrap_code_style_toggle.html', sep='/'))
   }
 
+  output_lines = paste(header_lines, append_files(filenames, outfile), sep='\n')
+
+  #update bootstrap style
+  output_lines =
+    gsub(paste('(', link_pattern, ')(', default_boot_style, ')', sep=''),
+         paste('\\1', boot_style, '"', sep=''), output_lines)
+
+  #update code style
+  output_lines =
+    gsub(paste('(', link_pattern, ')(', default_code_style, ')', sep=''),
+         paste('\\1', code_style, '"', sep=''), output_lines)
+
   outfile = paste(tempdir(), 'knitr_bootstrap_full.html', sep='/')
 
-  cat(paste(header_lines, append_files(filenames, outfile), sep='\n'), '\n', file=outfile)
+  cat(output_lines, '\n', file=outfile)
   outfile
 }
 
@@ -130,6 +132,7 @@ boot_styles = c(
   'Cosmo'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cosmo/bootstrap.min.css',
   'Cyborg'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cyborg/bootstrap.min.css',
   'Journal'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/journal/bootstrap.min.css',
+  'Flatly'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/flatly/bootstrap.min.css',
   'Readable'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/readable/bootstrap.min.css',
   'Simplex'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/simplex/bootstrap.min.css',
   'Slate'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/slate/bootstrap.min.css',
