@@ -52,7 +52,7 @@ $(function() {
   "use strict";
 
   /* size of thumbnails */
-  var thumbsize = "span5";
+  var thumbsize = "span3";
 
   /* included languages */
   var languages = [];
@@ -313,6 +313,7 @@ body {
 
 .contents {
   padding-left: 40px;
+  padding-top: 10px;
   margin-left: 0px !important;
 }
 
@@ -332,25 +333,7 @@ body {
     left: 14px;
     top: 50%;
     margin-top: -16px;
-    border-left: 16px solid #333;
-  }
-  .meny-right .meny-arrow {
-    right: 14px;
-    top: 50%;
-    margin-top: -16px;
-    border-right: 16px solid #333;
-  }
-  .meny-top .meny-arrow {
-    left: 50%;
-    top: 14px;
-    margin-left: -16px;
-    border-top: 16px solid #333;
-  }
-  .meny-bottom .meny-arrow {
-    left: 50%;
-    bottom: 14px;
-    margin-left: -16px;
-    border-bottom: 16px solid #333;
+    border-left: 16px solid #AAA;
   }
   .meny-active .meny-arrow {
     opacity: 0;
@@ -372,6 +355,7 @@ body {
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cerulean/bootstrap.min.css" title="Cerulean" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cosmo/bootstrap.min.css" title="Cosmo" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cyborg/bootstrap.min.css" title="Cyborg" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/flatly/bootstrap.min.css" title="Flatly" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/journal/bootstrap.min.css" title="Journal" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/readable/bootstrap.min.css" title="Readable" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/simplex/bootstrap.min.css" title="Simplex" media="screen">
@@ -388,19 +372,20 @@ $(function() {
       <li class="dropdown">\
         <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">Bootstrap Style</a>\
         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">\
-          <li><a class="style-switch" title="Default" href="#">default</a></li>\
-          <li><a class="style-switch" title="Amelia" href="#">amelia</a></li>\
-          <li><a class="style-switch" title="Cerulean" href="#">cerulean</a></li>\
-          <li><a class="style-switch" title="Cosmo" href="#">cosmo</a></li>\
-          <li><a class="style-switch" title="Cyborg" href="#">cyborg</a></li>\
-          <li><a class="style-switch" title="Journal" href="#">journal</a></li>\
-          <li><a class="style-switch" title="Readable" href="#">readable</a></li>\
-          <li><a class="style-switch" title="Simplex" href="#">simplex</a></li>\
-          <li><a class="style-switch" title="Slate" href="#">slate</a></li>\
-          <li><a class="style-switch" title="Spacelab" href="#">spacelab</a></li>\
-          <li><a class="style-switch" title="Spruce" href="#">spruce</a></li>\
-          <li><a class="style-switch" title="Superhero" href="#">superhero</a></li>\
-          <li><a class="style-switch" title="United" href="#">united</a></li>\
+          <li><a class="style-switch" title="Default" href="#"   >Default</a>    </li> \
+          <li><a class="style-switch" title="Amelia" href="#"    >Amelia</a>     </li> \
+          <li><a class="style-switch" title="Cerulean" href="#"  >Cerulean</a>   </li> \
+          <li><a class="style-switch" title="Cosmo" href="#"     >Cosmo</a>      </li> \
+          <li><a class="style-switch" title="Cyborg" href="#"    >Cyborg</a>     </li> \
+          <li><a class="style-switch" title="Flatly" href="#"    >Flatly</a>     </li> \
+          <li><a class="style-switch" title="Journal" href="#"   >Journal</a>    </li> \
+          <li><a class="style-switch" title="Readable" href="#"  >Readable</a>   </li> \
+          <li><a class="style-switch" title="Simplex" href="#"   >Simplex</a>    </li> \
+          <li><a class="style-switch" title="Slate" href="#"     >Slate</a>      </li> \
+          <li><a class="style-switch" title="Spacelab" href="#"  >Spacelab</a>   </li> \
+          <li><a class="style-switch" title="Spruce" href="#"    >Spruce</a>     </li> \
+          <li><a class="style-switch" title="Superhero" href="#" >Superhero</a>  </li> \
+          <li><a class="style-switch" title="United" href="#"    >United</a>     </li> \
         </ul>\
       </li>\
     </ul>');
