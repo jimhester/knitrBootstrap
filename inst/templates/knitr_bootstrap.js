@@ -42,11 +42,11 @@ $(function() {
 
   /* style tables, set them as output*/
   $('table').addClass('table table-striped table-bordered table-hover table-condensed')
-    .wrap('<div class="output", style="overflow: auto"/>');
+    .wrap('<div class="output" style="overflow: auto"/>');
 
   /* find all code or output blocks which have a class and add toggle */
   $('div.source, div.output').each(function() {
-    var button = $('<button class="btn-mini btn-link btn toggle " data-toggle="button">+/- </button>');
+    var button = $('<button class="btn-mini btn-link btn toggle" data-toggle="button">+/- </button>');
 
     /* code block */
     if($(this).hasClass('source')){
@@ -54,7 +54,7 @@ $(function() {
       var lang_type = code_block.attr('class');
       button.text(button.text() + lang_type + ' Code');
       button.addClass('source ' + lang_type);
-      languages[lang_type]=1;
+      languages[lang_type]=0;
       code_block.each(function(i, e) {
         hljs.highlightBlock(e);
       });
@@ -102,7 +102,7 @@ $(function() {
 
   /* add bootstrap classes */
   $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="span12 contents">');
-  $('.container-fluid >.row-fluid').prepend('<div class="meny"><div id="toc", class="well" /></div><div class="meny-arrow" />');
+  $('.container-fluid >.row-fluid').prepend('<div class="meny"><div id="toc" class="well" /></div><div class="meny-arrow" />');
 
   /* add table of contents */
   $('#toc').tocify({extendPage: false});
