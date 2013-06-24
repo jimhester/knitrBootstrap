@@ -99,25 +99,7 @@ body {
     left: 14px;
     top: 50%;
     margin-top: -16px;
-    border-left: 16px solid #333;
-  }
-  .meny-right .meny-arrow {
-    right: 14px;
-    top: 50%;
-    margin-top: -16px;
-    border-right: 16px solid #333;
-  }
-  .meny-top .meny-arrow {
-    left: 50%;
-    top: 14px;
-    margin-left: -16px;
-    border-top: 16px solid #333;
-  }
-  .meny-bottom .meny-arrow {
-    left: 50%;
-    bottom: 14px;
-    margin-left: -16px;
-    border-bottom: 16px solid #333;
+    border-left: 16px solid #AAA;
   }
   .meny-active .meny-arrow {
     opacity: 0;
