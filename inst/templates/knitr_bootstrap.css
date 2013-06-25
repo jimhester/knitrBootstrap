@@ -4,7 +4,7 @@
   padding-left: 0;
   overflow: hidden;
 }
-.row-fluid {
+.meny-left.row-fluid {
   margin-left: 0%;
 }
 
@@ -15,9 +15,6 @@
 .toggle-global{
   text-transform: capitalize;
 }
-
-.thumbnails { text-align:center; }
-.thumbnails > .thumbnail { display: inline-block !important; float: none !important; }
 
 /*fix for boostrap#3494*/
 .row-fluid.thumbnails .span5.thumbnail:nth-child(6n+1) { margin-left: 0px; }
@@ -42,14 +39,13 @@ body {
     height: auto !important;
     height: 100%;
     /* Negative indent footer by it's height */
-    margin-bottom: 0 auto -40px;
+    margin: 0 auto -120px;
 }
 
 /* Set the fixed height of the footer here */
 #push,
 #footer {
-    height: 40px;
-    padding-bottom: 40px;
+    height: 120px;
 }
 
 #footer {
@@ -63,6 +59,7 @@ body {
   padding 0px;
   margin: 0px;
   border-radius: 0px;
+  height:100%
 }
 /* Top level subheader elements.  These are the first nested items underneath a header element. */
 .header li {
@@ -76,12 +73,6 @@ body {
 
 .meny {
   height: 100%;
-}
-
-.contents {
-  padding-left: 40px;
-  padding-top: 10px;
-  margin-left: 0px !important;
 }
 
 .meny-arrow {
@@ -112,6 +103,6 @@ body {
             transition: opacity 0.2s ease;
   }
 
-.navbar-inner {
-  padding-right: 10px;
+.navbar-inner > .pull-right {
+  padding-right: 20px;
 }

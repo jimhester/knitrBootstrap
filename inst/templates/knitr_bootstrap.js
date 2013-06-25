@@ -96,27 +96,12 @@ $(function() {
     $(this).fancybox({
       afterClose: function(){
         img.css('display', 'block');
-      }
+      },
     });
   });
 
   /* add bootstrap classes */
-  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="span12 contents">');
-  $('.container-fluid >.row-fluid').prepend('<div class="meny"><div id="toc" class="well" /></div><div class="meny-arrow" />');
-
-  /* add table of contents */
-  $('#toc').tocify({extendPage: false});
-
-  $('#toc').addClass('meny');
-
-  /*add meny*/
-  var meny = Meny.create({
-      menuElement: document.querySelector( '.meny' ),
-      contentsElement: document.querySelector( '.contents' ),
-      position: 'left',
-      width: 260
-  });
-
+  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="contents span12"><div class="offset2 span8">');
 
   var create_language_links = function(){
     var text='';
@@ -130,7 +115,7 @@ $(function() {
   }
 
   /* add navbar */
-  $('.container-fluid').prepend(
+  $('.container-fluid').append(
     '<div id="bottom-navbar" class="navbar-fixed-bottom navbar">\
       <div class="navbar-inner">\
         <div class="pull-right">\
@@ -171,7 +156,7 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
 
   /* add footer */
   $('body').wrapInner('<div id="wrap" />');
-  $('body').append('<div id="push" />');
+  $('#wrap').append('<div id="push" />');
   var p = $('p:contains("Author:")');
   var last_p = p.filter(':last');
   p.detach();
@@ -179,4 +164,22 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
   last_p.append('<p>styled with <a href="https://github.com/jimhester/knitr_bootstrap">knitr_bootstrap</a></p>');
   last_p.appendTo("body");
   last_p.wrap('<div id="footer"><div class="container" /></div>');
+
+
+  $('.container-fluid > .row-fluid').append('<div class="meny"><div id="toc" class="well" /></div><div class="meny-arrow" />');
+
+  /* add table of contents */
+  $('#toc').tocify({extendPage: false});
+
+  $('#toc').addClass('meny');
+
+  /*add meny*/
+  var meny = Meny.create({
+      menuElement: document.querySelector( '.meny' ),
+      contentsElement: document.querySelector( '.contents' ),
+      position: 'left',
+      width: 260
+  });
+
+
 });

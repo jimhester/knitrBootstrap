@@ -145,27 +145,12 @@ $(function() {
     $(this).fancybox({
       afterClose: function(){
         img.css('display', 'block');
-      }
+      },
     });
   });
 
   /* add bootstrap classes */
-  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="span12 contents">');
-  $('.container-fluid >.row-fluid').prepend('<div class="meny"><div id="toc" class="well" /></div><div class="meny-arrow" />');
-
-  /* add table of contents */
-  $('#toc').tocify({extendPage: false});
-
-  $('#toc').addClass('meny');
-
-  /*add meny*/
-  var meny = Meny.create({
-      menuElement: document.querySelector( '.meny' ),
-      contentsElement: document.querySelector( '.contents' ),
-      position: 'left',
-      width: 260
-  });
-
+  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="contents span12"><div class="offset2 span8">');
 
   var create_language_links = function(){
     var text='';
@@ -179,7 +164,7 @@ $(function() {
   }
 
   /* add navbar */
-  $('.container-fluid').prepend(
+  $('.container-fluid').append(
     '<div id="bottom-navbar" class="navbar-fixed-bottom navbar">\
       <div class="navbar-inner">\
         <div class="pull-right">\
@@ -220,7 +205,7 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
 
   /* add footer */
   $('body').wrapInner('<div id="wrap" />');
-  $('body').append('<div id="push" />');
+  $('#wrap').append('<div id="push" />');
   var p = $('p:contains("Author:")');
   var last_p = p.filter(':last');
   p.detach();
@@ -228,6 +213,24 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
   last_p.append('<p>styled with <a href="https://github.com/jimhester/knitr_bootstrap">knitr_bootstrap</a></p>');
   last_p.appendTo("body");
   last_p.wrap('<div id="footer"><div class="container" /></div>');
+
+
+  $('.container-fluid > .row-fluid').append('<div class="meny"><div id="toc" class="well" /></div><div class="meny-arrow" />');
+
+  /* add table of contents */
+  $('#toc').tocify({extendPage: false});
+
+  $('#toc').addClass('meny');
+
+  /*add meny*/
+  var meny = Meny.create({
+      menuElement: document.querySelector( '.meny' ),
+      contentsElement: document.querySelector( '.contents' ),
+      position: 'left',
+      width: 260
+  });
+
+
 });
 </script>
 <style>
@@ -237,7 +240,7 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
   padding-left: 0;
   overflow: hidden;
 }
-.row-fluid {
+.meny-left.row-fluid {
   margin-left: 0%;
 }
 
@@ -248,9 +251,6 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
 .toggle-global{
   text-transform: capitalize;
 }
-
-.thumbnails { text-align:center; }
-.thumbnails > .thumbnail { display: inline-block !important; float: none !important; }
 
 /*fix for boostrap#3494*/
 .row-fluid.thumbnails .span5.thumbnail:nth-child(6n+1) { margin-left: 0px; }
@@ -275,14 +275,13 @@ body {
     height: auto !important;
     height: 100%;
     /* Negative indent footer by it's height */
-    margin-bottom: 0 auto -40px;
+    margin: 0 auto -120px;
 }
 
 /* Set the fixed height of the footer here */
 #push,
 #footer {
-    height: 40px;
-    padding-bottom: 40px;
+    height: 120px;
 }
 
 #footer {
@@ -296,6 +295,7 @@ body {
   padding 0px;
   margin: 0px;
   border-radius: 0px;
+  height:100%
 }
 /* Top level subheader elements.  These are the first nested items underneath a header element. */
 .header li {
@@ -309,12 +309,6 @@ body {
 
 .meny {
   height: 100%;
-}
-
-.contents {
-  padding-left: 40px;
-  padding-top: 10px;
-  margin-left: 0px !important;
 }
 
 .meny-arrow {
@@ -345,11 +339,11 @@ body {
             transition: opacity 0.2s ease;
   }
 
-.navbar-inner {
-  padding-right: 10px;
+.navbar-inner > .pull-right {
+  padding-right: 20px;
 }
 </style>
-<link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" id="style" media="screen">
+<link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css"" id="style" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" title="Default" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/amelia/bootstrap.min.css" title="Amelia" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cerulean/bootstrap.min.css" title="Cerulean" media="screen">
@@ -397,7 +391,7 @@ $(function() {
   }
 );
 </script>
-<link id="code-style" rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/vs.min.css">
+<link id="code-style" rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css"">
 <link rel="alternate stylesheet" title="Default" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
 <link rel="alternate stylesheet" title="Dark" href="http://yandex.st/highlightjs/7.3/styles/dark.min.css">
 <link rel="alternate stylesheet" title="FAR" href="http://yandex.st/highlightjs/7.3/styles/far.min.css">
