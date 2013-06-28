@@ -1,6 +1,8 @@
 \.gitignore
 ^\.git$
-inst/doc/*.\.md
-inst/doc/*.\.png
-inst/doc/*.\.js
+inst/doc/.*\.md
+inst/examples/.*\.md
+.*\.png
+.*\.js
+exec/customize.pl
 Makefile
