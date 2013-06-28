@@ -17,6 +17,8 @@ Suggests:
     ggplot2,
     igraph,
     maps,
+    mapproj,
+    maptools,
     plyr,
     reshape2,
     xtable,
