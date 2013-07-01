@@ -1,3 +1,13 @@
+knitrBootstrap 0.6.1
+====================
+
+* split knit_bootstrap into two functions, knit_bootstrap_Rmd and
+  knit_bootstrap_md, to put the bootstrap styles around a R markdown and
+  knitted markdown file respectively.  This allows knit_bootstrap_md to be used as
+  a drop in replacement for markdownToHTML.  Previous behavior of
+  knit_bootstrap function is unchanged.
+
+* fix #9, wrong url in DESCRIPTION
 knitrBootstrap 0.6
 ==================
 

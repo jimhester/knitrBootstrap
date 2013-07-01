@@ -38,7 +38,6 @@ All the examples include a css style switch, so you can try out the various styl
 * [all] - All examples together
 
 ## Installation ##
-*NOTE: [knitrBootstrap] requires the [rstudio/markdown] package (`>= 0.5.5`).*
 You can install the latest released version from CRAN.
 
 ```r
@@ -52,7 +51,7 @@ install_github(username='jimhester', repo='knitrBootstrap')
 ```
 ## Usage ##
 
-Reports can be built within [R](#Rfunction), a [Makefile](#makefile), by [Rstudio](#rstudio) or with [Vim](#vim).
+Reports can be built within [R](#Rfunction), a [Makefile](#makefile), by [RStudio](#rstudio) or with [Vim](#vim).
 ### R ###
 ```r
 library(knitrBootstrap)
@@ -91,7 +90,7 @@ See [http://www.rstudio.com/ide/docs/authoring/markdown_custom_rendering]() for 
 options(rstudio.markdownToHTML =
   function(inputFile, outputFile) {
     require(knitrBootstrap)
-    knit_bootstrap(input=inputFile, outfile=outputFile)
+    knit_bootstrap_md(input=inputFile, output=outputFile)
   }
 )
 ```

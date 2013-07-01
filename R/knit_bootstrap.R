@@ -2,54 +2,78 @@
 
 #' knit a Rmd file and wrap it in bootstrap styles
 #'
-#' This function includes the knitrBootstrap html headers to wrap the knitr
-#' output in bootstrap styled html.
+#' This function includes the knitrBootstrap HTML headers to wrap the knitr
+#' output in bootstrap styled HTML.
 #'
-#' @param input Rmd input file to knit
-#' @param output html output file created, if NULL uses the input filename with
+#' @inheritParams knit_bootstrap_md
+#' @param input Rmd input file to knit into HTML
+#' @param output HTML output file created, if NULL uses the input filename with
 #'        the extension changed to .html
-#' @param boot_style the bootstrap style to use, if NULL uses the default, if
-#'        TRUE a menu is shown with the available styles.
-#' @param code_style the highlight.js code style to use, if NULL uses the default, if
-#'        TRUE a menu is shown with the available styles.
-#' @param chooser if "boot", adds a bootstrap style chooser to the html, if
-#'        "code" adds the bootstrap code chooser.
-#' @param graphics what graphics to use for the menus, only applicable if
-#'        code_style or boot_style are true.
-#' @param markdown_options passed to markdownToHTML, defaults to mathjax,
-#'        base64_images and use_xhtml.
-#' @param text a character vector as an alternative way to provide the input
-#'   file
 #' @param quiet whether to suppress the progress bar and messages
 #' @param envir the environment in which the code chunks are to be evaluated
 #'   (can use \code{\link{new.env}()} to guarantee an empty new environment)
 #' @param encoding the encoding of the input file; see \code{\link{file}}
-#' @param ... options passed to \code{\link[markdown]{markdownToHTML}}
-#' @export
-#' @seealso \code{\link{knit}}, \code{\link[markdown]{markdownToHTML}}
-#' @export
+#' @seealso \code{\link{knit_bootstrap_md}} \code{\link{knit}}, \code{\link[markdown]{markdownToHTML}}
+#' @aliases knit_bootstrap knit_bootstrap_Rmd
+#' @export knit_bootstrap knit_bootstrap_Rmd
 #' @examples
 #' writeLines(c("# hello markdown", '```{r hello-random, echo=TRUE}', 'rnorm(5)', '```'), 'test.Rmd')
 #' knit_bootstrap('test.Rmd', boot_style='Amelia', code_style='Dark', chooser=c('boot','code'))
 #' if(interactive()) browseURL('test.html')
+
 knit_bootstrap =
   function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
            markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
            ..., envir = parent.frame(), text = NULL,
            quiet = FALSE, encoding = getOption('encoding'), graphics = getOption("menu.graphics")) {
-  header = create_header(boot_style, code_style, chooser, graphics)
 
-  require(markdown)
+  md_file = knit(input, NULL, text = text, envir = envir, encoding = encoding, quiet = quiet)
+
+  knit_bootstrap_md(md_file, output, boot_style=boot_style,
+                    code_style=code_style, chooser=chooser, markdown_options =
+                    markdown_options, ..., graphics=graphics)
+}
+
+knit_bootstrap_Rmd = knit_bootstrap
+
+#' knit a md file and wrap it in bootstrap styles
+#'
+#' This function includes the knitrBootstrap HTML headers to wrap the knitr
+#' output in bootstrap styled HTML.
+#' @param input md input file to be converted to HTML'
+#' @param output HTML output file created, if NULL uses the input filename with
+#'        the extension changed to .html
+#' @param text a character vector as an alternative way to provide the input
+#'   file
+#' @param boot_style the bootstrap style to use, if NULL uses the default, if
+#'        TRUE a menu is shown with the available styles.
+#' @param code_style the highlight.js code style to use, if NULL uses the default, if
+#'        TRUE a menu is shown with the available styles.
+#' @param chooser if "boot", adds a bootstrap style chooser to the HTML, if
+#'        "code" adds the bootstrap code chooser.
+#' @param graphics what graphics to use for the menus, only applicable if
+#'        code_style or boot_style are true.
+#' @param markdown_options passed to markdownToHTML, defaults to mathjax,
+#'        base64_images and use_xhtml.
+#' @param ... options passed to \code{\link[markdown]{markdownToHTML}}
+#' @export knit_bootstrap_md
+#' @seealso \code{\link{knit_bootstrap}} \code{\link{knit}}, \code{\link[markdown]{markdownToHTML}}
+
+knit_bootstrap_md = function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
+           text = NULL, markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
+           graphics = getOption("menu.graphics"), ...) {
+
   require(knitr)
+  header = create_header(boot_style, code_style, chooser, graphics)
+  require(markdown)
   if(is.null(output))
     output <- sub_ext(input, 'html')
 
-  out = knit(input, NULL, text = text, envir = envir, encoding = encoding, quiet = quiet)
   if (is.null(text)) {
-    markdown::markdownToHTML(out, header=header, stylesheet='',
+    markdown::markdownToHTML(input, header=header, stylesheet='',
       options=markdown_options, output = output, ...)
     invisible(output)
-  } else markdown::markdownToHTML(text = out, header=header, stylesheet='',
+  } else markdown::markdownToHTML(text = input, header=header, stylesheet='',
            options=markdown_options, output = output, ...)
 }
 
