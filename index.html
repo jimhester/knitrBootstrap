@@ -7,37 +7,38 @@
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
+    <script src="javascripts/main.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
   </head>
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/jimhester/knitrBootstrap">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/jimhester/knitrBootstrap/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/jimhester/knitrBootstrap/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
+
+      <header>
+        <h1>Knitrbootstrap</h1>
+        <p>A framework to create bootstrap styled HTML reports from knitr Rmarkdown.</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/jimhester/knitrBootstrap" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/jimhester/knitrBootstrap/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/jimhester/knitrBootstrap/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
 
     <div class="wrapper">
-
+      <nav>
+        <ul></ul>
+      </nav>
       <section>
-        <div id="title">
-          <h1>Knitrbootstrap</h1>
-          <p>A framework to create bootstrap styled HTML reports from knitr Rmarkdown.</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/jimhester">jimhester</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
-        </div>
-
         <h1>
 <a name="knitr-bootstrap" class="anchor" href="#knitr-bootstrap"><span class="octicon octicon-link"></span></a>Knitr Bootstrap</h1>
 
@@ -103,8 +104,12 @@
 </ul><h2>
 <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 
-<p><a href="https://github.com/jimhester/knitrBootstrap">knitrBootstrap</a> requires the <a href="https://github.com/rstudio/markdown">rstudio/markdown</a> package (<code>&gt;= 0.5.5</code>). You can
-install <a href="https://github.com/jimhester/knitrBootstrap">knitrBootstrap</a> with the <a href="https://github.com/hadley/devtools">devtools</a> package.</p>
+<p>You can install the latest released version from CRAN.</p>
+
+<div class="highlight"><pre><span class="c">install.packages('knitrBootstrap')</span>
+</pre></div>
+
+<p>If you want to install the latest development version use the <a href="https://github.com/hadley/devtools">devtools</a> package.</p>
 
 <div class="highlight"><pre><span class="c">library(devtools)</span>
 <span class="c">install_github(username='jimhester', repo='knitrBootstrap')</span>
@@ -113,7 +118,7 @@ install <a href="https://github.com/jimhester/knitrBootstrap">knitrBootstrap</a>
 <h2>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<p>Reports can be built within <a href="#Rfunction">R</a>, a <a href="#makefile">Makefile</a>, by <a href="#rstudio">Rstudio</a> or with <a href="#vim">Vim</a>.</p>
+<p>Reports can be built within <a href="#Rfunction">R</a>, a <a href="#makefile">Makefile</a>, by <a href="#rstudio">RStudio</a> or with <a href="#vim">Vim</a>.</p>
 
 <h3>
 <a name="r" class="anchor" href="#r"><span class="octicon octicon-link"></span></a>R</h3>
@@ -154,7 +159,7 @@ See <a href="">http://www.rstudio.com/ide/docs/authoring/markdown_custom_renderi
 <div class="highlight"><pre><span class="c">options(rstudio.markdownToHTML =</span>
 <span class="c">  function(inputFile, outputFile) {</span>
 <span class="c">    require(knitrBootstrap)</span>
-<span class="c">    knit_bootstrap(input=inputFile, outfile=outputFile)</span>
+<span class="c">    knit_bootstrap_md(input=inputFile, output=outputFile)</span>
 <span class="c">  }</span>
 <span class="c">)</span>
 </pre></div>
@@ -199,7 +204,10 @@ at your own risk!</p>
 highlighting.  The knit_bootstrap function has boot_style and code_style
 arguments if you want to use an alternative style by default.</p>
       </section>
-
+      <footer>
+        <p>Project maintained by <a href="https://github.com/jimhester">jimhester</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
+      </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
               <script type="text/javascript">
