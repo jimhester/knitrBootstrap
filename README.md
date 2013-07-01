@@ -38,10 +38,14 @@ All the examples include a css style switch, so you can try out the various styl
 * [all] - All examples together
 
 ## Installation ##
+*NOTE: [knitrBootstrap] requires the [rstudio/markdown] package (`>= 0.5.5`).*
+You can install the latest released version from CRAN.
 
-[knitrBootstrap] requires the [rstudio/markdown] package (`>= 0.5.5`). You can
-install [knitrBootstrap] with the [devtools] package.
+```r
+install.packages('knitrBootstrap')
+```
 
+If you want to install the latest development version use the [devtools] package.
 ```r
 library(devtools)
 install_github(username='jimhester', repo='knitrBootstrap')
@@ -132,7 +136,7 @@ arguments if you want to use an alternative style by default.
 [highlight.js]: https://github.com/isagalaev/highlight.js
 [tocify]: http://gregfranko.com/jquery.tocify.js
 [rstudio/markdown]: https://github.com/rstudio/markdown
-[knitrBootstrap]: https://github.com/jimhester/knitrBootstrap
+[knitrBootstrap]: https://jimhester.github.io/knitrBootstrap
 [fancybox]: http://fancyapps.com/fancybox
 [mathjax]: http://mathjax.org
 [bootswatch]: http://bootswatch.com
