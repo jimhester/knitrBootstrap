@@ -1,0 +1,217 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Knitrbootstrap by jimhester</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/jimhester/knitrBootstrap">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/jimhester/knitrBootstrap/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/jimhester/knitrBootstrap/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Knitrbootstrap</h1>
+          <p>A framework to create bootstrap styled HTML reports from knitr Rmarkdown.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/jimhester">jimhester</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a name="knitr-bootstrap" class="anchor" href="#knitr-bootstrap"><span class="octicon octicon-link"></span></a>Knitr Bootstrap</h1>
+
+<p>A framework to create bootstrap styled HTML reports from knitr Rmarkdown.</p>
+
+<h2>
+<a name="table-of-contents" class="anchor" href="#table-of-contents"><span class="octicon octicon-link"></span></a>Table of Contents</h2>
+
+<ul>
+<li><a href="#features">Features</a></li>
+<li><a href="#examples">Examples</a></li>
+<li><a href="#installation">Installation</a></li>
+<li>
+<a href="#usage">Usage</a>
+
+<ul>
+<li><a href="#Rfunction">R</a></li>
+<li><a href="#makefile">Makefile</a></li>
+<li><a href="#rstudio">RStudio</a></li>
+<li><a href="#vim">Vim</a></li>
+<li><a href="#pandoc">Pandoc</a></li>
+</ul>
+</li>
+<li><a href="#styles">Styles</a></li>
+</ul><h2>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>Automatic table of contents constructed from h1-4 tags using <a href="http://gregfranko.com/jquery.tocify.js">tocify</a> and styled with <a href="http://lab.hakim.se/meny/">meny</a>.</li>
+<li>Images are automatically centered, thumbnailed and lightboxed using <a href="http://fancyapps.com/fancybox">fancybox</a>
+</li>
+<li>Style with themes from <a href="http://bootswatch.com">bootswatch</a>, optionally including a style switch.</li>
+<li>Code blocks automatically highlighted using <a href="https://github.com/isagalaev/highlight.js">highlight.js</a>, optionally including a style switch.</li>
+<li>Code/Output block and plot visibility can be toggled with a mouse click
+
+<ul>
+<li>Globally</li>
+<li>Per language</li>
+</ul>
+</li>
+<li>Create completely offline reports, including all css, javascript and images</li>
+<li>Mathematical equations using <a href="http://mathjax.org">mathjax</a>, note this does not work offline</li>
+</ul><h2>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+<p>All the examples include a css style switch, so you can try out the various styles from <a href="http://bootswatch.com">bootswatch</a>.</p>
+
+<ul>
+<li>
+<a href="http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/two-D.html">2d</a> - examples of miscellaneous 2d</li>
+<li>
+<a href="http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/cars.html">cars</a> - using ggplot2 and the cars dataset</li>
+<li>
+<a href="http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/examples/engines.html">engines</a> - using other language engines</li>
+<li>
+<a href="http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/illusions.html">illusions</a> - examples of interesting optical illusions</li>
+<li>
+<a href="http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/maps.html">maps</a> - examples of map plots, and holding plots until end of the block</li>
+<li>
+<a href="http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/math.html">math</a> - examples of MathJax formulas</li>
+<li>
+<a href="http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/examples/all.html">all</a> - All examples together</li>
+</ul><h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p><a href="https://github.com/jimhester/knitrBootstrap">knitrBootstrap</a> requires the <a href="https://github.com/rstudio/markdown">rstudio/markdown</a> package (<code>&gt;= 0.5.5</code>). You can
+install <a href="https://github.com/jimhester/knitrBootstrap">knitrBootstrap</a> with the <a href="https://github.com/hadley/devtools">devtools</a> package.</p>
+
+<div class="highlight"><pre><span class="c">library(devtools)</span>
+<span class="c">install_github(username='jimhester', repo='knitrBootstrap')</span>
+</pre></div>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Reports can be built within <a href="#Rfunction">R</a>, a <a href="#makefile">Makefile</a>, by <a href="#rstudio">Rstudio</a> or with <a href="#vim">Vim</a>.</p>
+
+<h3>
+<a name="r" class="anchor" href="#r"><span class="octicon octicon-link"></span></a>R</h3>
+
+<div class="highlight"><pre><span class="c">library(knitrBootstrap)</span>
+<span class="c">knit_bootstrap('file.Rmd')</span>
+</pre></div>
+
+<h3>
+<a name="makefile" class="anchor" href="#makefile"><span class="octicon octicon-link"></span></a>Makefile</h3>
+
+<p>You can use the included Makefile to generate html reports from Rmd files from
+the command line.  If you have a file file.Rmd and you want to create file.html use</p>
+
+<div class="highlight"><pre><span class="c">#standard</span>
+make file.html
+
+<span class="c">#with bootstrap style chooser</span>
+make <span class="nv">CHOOSER</span><span class="o">=</span>c<span class="o">(</span><span class="s1">'boot'</span><span class="o">)</span> file.html
+
+<span class="c">#with code style chooser</span>
+make <span class="nv">CHOOSER</span><span class="o">=</span>c<span class="o">(</span><span class="s1">'code'</span><span class="o">)</span> file.html
+
+<span class="c">#with both</span>
+make <span class="nv">CHOOSER</span><span class="o">=</span>c<span class="o">(</span><span class="s1">'boot'</span>, <span class="s1">'code'</span><span class="o">)</span> file.html
+
+<span class="c">#standalone</span>
+make file.html
+make file_inline.html
+</pre></div>
+
+<h3>
+<a name="rstudio" class="anchor" href="#rstudio"><span class="octicon octicon-link"></span></a>RStudio</h3>
+
+<p>Simply source the following code in RStudio before you knit your reports.
+See <a href="">http://www.rstudio.com/ide/docs/authoring/markdown_custom_rendering</a> for more information.</p>
+
+<div class="highlight"><pre><span class="c">options(rstudio.markdownToHTML =</span>
+<span class="c">  function(inputFile, outputFile) {</span>
+<span class="c">    require(knitrBootstrap)</span>
+<span class="c">    knit_bootstrap(input=inputFile, outfile=outputFile)</span>
+<span class="c">  }</span>
+<span class="c">)</span>
+</pre></div>
+
+<h3>
+<a name="vim" class="anchor" href="#vim"><span class="octicon octicon-link"></span></a>Vim</h3>
+
+<p>Using the <a href="https://github.com/vim-scripts/Vim-R-plugin">Vim-R-Plugin</a> put the following function in your .vimrc to create the file directly with knitr and the markdown package</p>
+
+<div class="highlight"><pre><span class="k">function</span><span class="p">!</span> RMakeHTML_2<span class="p">()</span>
+  <span class="k">update</span>
+  <span class="k">call</span> RSetWD<span class="p">()</span>
+  <span class="k">let</span> <span class="k">filename</span> <span class="p">=</span> expand<span class="p">(</span><span class="s2">"%:r:t"</span><span class="p">)</span>
+  <span class="k">let</span> rcmd <span class="p">=</span> <span class="c">"require('knitrBootstrap');</span>
+    \knit_bootstrap<span class="p">(</span>\<span class="s2">""</span> . <span class="k">filename</span> . <span class="s2">".Rmd\")"</span>
+  <span class="k">if</span> <span class="k">g</span>:vimrplugin_openhtml
+    <span class="k">let</span> rcmd <span class="p">=</span> rcmd . <span class="s1">'; browseURL("'</span> . <span class="k">filename</span> . <span class="s1">'.html")'</span>
+  <span class="k">endif</span>
+  <span class="k">call</span> SendCmdToR<span class="p">(</span>rcmd<span class="p">)</span>
+<span class="k">endfunction</span>
+
+<span class="c">"bind RMakeHTML_2 to leader kk</span>
+<span class="nb">nnoremap</span> <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>Leader<span class="p">&gt;</span>kk :<span class="k">call</span> RMakeHTML_2<span class="p">()&lt;</span>CR<span class="p">&gt;</span>
+</pre></div>
+
+<h3>
+<a name="pandoc" class="anchor" href="#pandoc"><span class="octicon octicon-link"></span></a>Pandoc</h3>
+
+<p>Pandoc can use the same files, but some things do not quite work due to
+markdown conversion differences between the markdown package and pandoc.  Use
+at your own risk!</p>
+
+<p>If your markdown filename is example.md you can use the header html</p>
+
+<div class="highlight"><pre><span class="go">pandoc -H knitr_bootstrap.html example.md -o example.html</span>
+</pre></div>
+
+<h2>
+<a name="styles" class="anchor" href="#styles"><span class="octicon octicon-link"></span></a>Styles</h2>
+
+<p>All of the examples include style toggles for both bootstrap and the code
+highlighting.  The knit_bootstrap function has boot_style and code_style
+arguments if you want to use an alternative style by default.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-42147227-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
