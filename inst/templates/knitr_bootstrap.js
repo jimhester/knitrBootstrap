@@ -165,7 +165,6 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
   last_p.appendTo("body");
   last_p.wrap('<div id="footer"><div class="container" /></div>');
 
-
   $('.container-fluid > .row-fluid').append('<div class="meny"><div id="toc" class="well" /></div><div class="meny-arrow" />');
 
   /* add table of contents */
@@ -181,5 +180,7 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
       width: 260
   });
 
+  /* remove paragraphs with no content */
+  $('p:empty').remove();
 
 });
