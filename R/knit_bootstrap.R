@@ -94,7 +94,7 @@ function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
 #'        code chooser.
 #' @param graphics what graphics to use for the menus, only applicable if
 #'        code_style or boot_style are true.
-#' @export bootstrap_html
+#' @export bootstrap_HTML
 
 bootstrap_HTML = function(input, output = NULL, boot_style=NULL,
                           code_style=NULL, chooser=NULL,

@@ -211,7 +211,6 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
   last_p.appendTo("body");
   last_p.wrap('<div id="footer"><div class="container" /></div>');
 
-
   $('.container-fluid > .row-fluid').append('<div class="meny"><div id="toc" class="well" /></div><div class="meny-arrow" />');
 
   /* add table of contents */
@@ -227,6 +226,8 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
       width: 260
   });
 
+  /* remove paragraphs with no content */
+  $('p:empty').remove();
 
 });
 </script>
@@ -340,6 +341,7 @@ body {
   padding-right: 20px;
 }
 </style>
+
 <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css"" id="style" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" title="Default" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/amelia/bootstrap.min.css" title="Amelia" media="screen">
@@ -388,6 +390,7 @@ $(function() {
   }
 );
 </script>
+
 <link id="code-style" rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css"">
 <link rel="alternate stylesheet" title="Default" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
 <link rel="alternate stylesheet" title="Dark" href="http://yandex.st/highlightjs/7.3/styles/dark.min.css">
@@ -459,7 +462,8 @@ $(function() {
       return false;
     });
 });
-</script> 
+</script>
+ 
 
 </head>
 
