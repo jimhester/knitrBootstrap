@@ -1,11 +1,10 @@
-#TODO make encode windows compatible, will be a pain, need to remove perl dependencies, maybe best as an extension to markdown package rather than here.
-
 #' knit a Rmd file and wrap it in bootstrap styles
 #'
 #' This function includes the knitrBootstrap HTML headers to wrap the knitr
 #' output in bootstrap styled HTML.
 #'
 #' @inheritParams knit_bootstrap_md
+#' @inheritParams bootstrap_HTML
 #' @param input Rmd input file to knit into HTML
 #' @param output HTML output file created, if NULL uses the input filename with
 #'        the extension changed to .html
@@ -25,13 +24,18 @@ knit_bootstrap =
   function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
            markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
            ..., envir = parent.frame(), text = NULL,
-           quiet = FALSE, encoding = getOption('encoding'), graphics = getOption("menu.graphics")) {
+           quiet = FALSE, encoding = getOption('encoding'),
+           graphics = getOption("menu.graphics")) {
 
-  md_file = knit(input, NULL, text = text, envir = envir, encoding = encoding, quiet = quiet)
+  md_file =
+    knit(input, NULL, text = text, envir = envir,
+         encoding = encoding, quiet = quiet)
 
   knit_bootstrap_md(md_file, output, boot_style=boot_style,
-                    code_style=code_style, chooser=chooser, markdown_options =
-                    markdown_options, ..., graphics=graphics)
+                    code_style=code_style, chooser=chooser,
+                    markdown_options = markdown_options,
+                    ..., graphics=graphics)
+  invisible(output)
 }
 
 knit_bootstrap_Rmd = knit_bootstrap
@@ -45,23 +49,18 @@ knit_bootstrap_Rmd = knit_bootstrap
 #'        the extension changed to .html
 #' @param text a character vector as an alternative way to provide the input
 #'   file
-#' @param boot_style the bootstrap style to use, if NULL uses the default, if
-#'        TRUE a menu is shown with the available styles.
-#' @param code_style the highlight.js code style to use, if NULL uses the default, if
-#'        TRUE a menu is shown with the available styles.
-#' @param chooser if "boot", adds a bootstrap style chooser to the HTML, if
-#'        "code" adds the bootstrap code chooser.
-#' @param graphics what graphics to use for the menus, only applicable if
-#'        code_style or boot_style are true.
+#' @inheritParams bootstrap_HTML
 #' @param markdown_options passed to markdownToHTML, defaults to mathjax,
 #'        base64_images and use_xhtml.
 #' @param ... options passed to \code{\link[markdown]{markdownToHTML}}
 #' @export knit_bootstrap_md
 #' @seealso \code{\link{knit_bootstrap}} \code{\link{knit}}, \code{\link[markdown]{markdownToHTML}}
 
-knit_bootstrap_md = function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
-           text = NULL, markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
-           graphics = getOption("menu.graphics"), ...) {
+knit_bootstrap_md =
+function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
+         text = NULL,
+         markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
+         graphics = getOption("menu.graphics"), ...) {
 
   require(knitr)
   header = create_header(boot_style, code_style, chooser, graphics)
@@ -72,10 +71,61 @@ knit_bootstrap_md = function(input, output = NULL, boot_style=NULL, code_style=N
   if (is.null(text)) {
     markdown::markdownToHTML(input, header=header, stylesheet='',
       options=markdown_options, output = output, ...)
-    invisible(output)
-  } else markdown::markdownToHTML(text = input, header=header, stylesheet='',
+  }
+  else {
+    markdown::markdownToHTML(text = input, header=header, stylesheet='',
            options=markdown_options, output = output, ...)
+  }
+  invisible(output)
 }
+
+#' Add the knitrBootstrap html header to an HTML file produced by knitr.
+#'
+#' This function includes the knitrBootstrap HTML headers to wrap the knitr
+#' output in bootstrap styled HTML.
+#' @param input html filename to be wrapped with Bootstrap.
+#' @param output html filename to output.
+#' @param boot_style the bootstrap style to use if character, if NULL uses the
+#'        default, if TRUE a menu is shown with the available styles.
+#' @param code_style the highlight.js code style to use if character, if NULL
+#'        uses the defaults, if TRUE a menu is shown with the available styles.
+#' @param chooser a character vector, if contains "boot", adds a bootstrap
+#'        style chooser to the HTML, if contains "code" adds the bootstrap
+#'        code chooser.
+#' @param graphics what graphics to use for the menus, only applicable if
+#'        code_style or boot_style are true.
+#' @export bootstrap_html
+
+bootstrap_HTML = function(input, output = NULL, boot_style=NULL,
+                          code_style=NULL, chooser=NULL,
+                          graphics = getOption("menu.graphics")) {
+  if(is.null(output))
+    output <- sub_ext(input, 'html')
+  stopifnot(input != output)
+
+  header_lines =
+    create_header(boot_style, code_style, chooser, graphics, no_file=TRUE)
+
+  lines = file_lines(input)
+
+  #bit of a hack, check if substitute happened based on string length
+  input_length = nchar(lines)
+
+  #add header to file at the end of the header
+  lines =
+    sub('</head>', paste(escape(header_lines), '</head>', collapse='\n'), lines)
+
+  #add header before the body if no header found
+  if(nchar(lines) == input_length)
+    lines =
+      sub('<body>',
+          paste('<head>', escape(header_lines), '</head><body>', collapse='\n')
+          , lines)
+
+  cat(lines, '\n', file=output)
+  output
+}
+
 
 style_url="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/$style/bootstrap.min.css"
 link_pattern='<link[^\n\r]+rel="stylesheet"[^\n\r]+href="'
@@ -97,7 +147,7 @@ get_style <- function(style, style_type, title, graphics = getOption("menu.graph
 
 create_header <-
   function(boot_style=NULL, code_style=NULL, chooser=c('boot', 'code'),
-           graphics = getOption("menu.graphics")){
+           graphics = getOption("menu.graphics"), no_file=FALSE){
 
   boot_style=get_style(boot_style, boot_styles, 'Bootstrap Style', graphics)
   code_style=get_style(code_style, code_styles, 'Code Block Style', graphics)
@@ -112,7 +162,9 @@ create_header <-
     paste(package_root, 'templates/knitr_bootstrap_style_toggle.html', sep='/')
   }
   filenames = if('code' %in% chooser){
-    c(filenames, paste(package_root, 'templates/knitr_bootstrap_code_style_toggle.html', sep='/'))
+    c(filenames, paste(package_root,
+                       'templates/knitr_bootstrap_code_style_toggle.html',
+                       sep='/'))
   }
 
   output_lines = paste(header_lines, append_files(filenames, outfile), sep='\n')
@@ -127,10 +179,13 @@ create_header <-
     gsub(paste('(', link_pattern, ')(', default_code_style, ')', sep=''),
          paste('\\1', code_style, '"', sep=''), output_lines)
 
+  if(no_file)
+    return(output_lines)
+
   outfile = paste(tempdir(), 'knitr_bootstrap_full.html', sep='/')
 
   cat(output_lines, '\n', file=outfile)
-  outfile
+  invisible(outfile)
 }
 
 append_files <- function(files, output){
@@ -139,7 +194,7 @@ append_files <- function(files, output){
 
 file_lines <- function(file){
   stopifnot(file.exists(file))
-  paste(readLines(file), collapse='\n')
+  readChar(file, 10e6)
 }
 
 # substitute extension, from knitr
@@ -148,6 +203,9 @@ sub_ext = function(x, ext) {
   if (grepl('\\.([[:alnum:]]+)$', x)) x = sans_ext(x)
   paste(x, ext, sep = '.')
 }
+
+#escape already escape strings
+escape = function(string) gsub("([\"$`\\])", "\\\\\\1", string)
 
 boot_styles = c(
   'Default'='http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css',

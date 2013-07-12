@@ -1,3 +1,4 @@
+export(bootstrap_html)
 export(knit_bootstrap)
 export(knit_bootstrap_Rmd)
 export(knit_bootstrap_md)
