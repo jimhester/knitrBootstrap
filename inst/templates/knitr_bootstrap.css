@@ -1,13 +1,8 @@
-/* Knitr_bootstrap styles
--------------------------------------------------- */
+/* Knitr_bootstrap styles */
 #wrap .container-fluid {
   padding-left: 0;
   overflow: hidden;
 }
-.meny-left.row-fluid {
-  margin-left: 0%;
-}
-
 .toggle{
   text-transform: capitalize;
 }
@@ -21,8 +16,7 @@
 .row-fluid.thumbnails .span5.thumbnail:nth-child(4n+1) { margin-left: 0px; }
 .row-fluid.thumbnails .span5.thumbnail:nth-child(2n+1) { margin-left: 0px; }
 
-/* Sticky footer styles
--------------------------------------------------- */
+/* Sticky footer styles */
 * {
   margin:0;
 }
@@ -53,7 +47,6 @@ body {
 }
 
 /* Tocify */
-/* -------------------------------------------------- */
 
 #toc {
   padding 0px;
@@ -74,6 +67,11 @@ body {
 .meny {
   height: 100%;
 }
+
+.meny-left.row-fluid {
+  margin-left: 0%;
+}
+
 
 .meny-arrow {
   position: absolute;

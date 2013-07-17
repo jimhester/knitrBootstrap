@@ -68,8 +68,6 @@ $(function() {
     $(this).before(button);
   });
 
-  /* syntax highlight code blocks*/
-
   /* onclick toggle next code block */
   $('.toggle').click(function() {
     $(this).button('toggle');
@@ -81,22 +79,25 @@ $(function() {
   /* toggle code blocks hidden by default */
   $('div.source').toggle();
 
-  /* give images a fancybox and thumbnail classes to allow lightbox and thumbnails TODO: make fancybox prev next if grouped */
+  /* give images a lightbox and thumbnail classes to allow lightbox and thumbnails TODO: make gallery if graphs are grouped */
   $('p').each(function(){
     $(this).find('img').unwrap().wrapAll('<div class="rimage default"></div>');
   });
   $('div.rimage').each(function(){
     $(this).addClass("row-fluid thumbnails");
-    $(this).children('img').wrap('<a href="#" class="' + thumbsize + ' thumbnail"></a></li>').addClass('fancybox');
+    $(this).children('img').wrap('<a href="#" class="mfp-image ' + thumbsize + ' thumbnail"></a></li>');
   });
 
-  /* fancybox */
-  $(".fancybox").each( function() {
-    var img = $(this);
-    $(this).fancybox({
-      afterClose: function(){
-        img.css('display', 'block');
-      },
+  /* Magnific Popup */
+  $(".thumbnail").each(function(){
+    $(this).magnificPopup({
+      disableOn: 768,
+      closeOnContentClick: true,
+
+      type: 'image',
+      items: {
+        src: $(this).find('img').attr('src'),
+      }
     });
   });
 
@@ -148,7 +149,6 @@ $(function() {
   /* if using render_html() hook, make functions links to custom R search */
   /*search in ggplot documentation or inside-r.org */
   $("span.functioncall").replaceWith(function(){
-
     return '<a target="_blank" href="http://www.google.com/search?sourceid=navclient&gfns=1&\
 q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
     $(this).text() + '">' + $(this).text()+'</a>'

@@ -17,7 +17,7 @@ $(BASE): $(filter-out $(BASE), $(wildcard inst/templates/*)) $(wildcard R/*.R)
   exec/wrap.pl '<script>' '</script>' inst/templates/knitr_bootstrap.js;\
   exec/wrap.pl '<style>' '</style>' inst/templates/knitr_bootstrap.css\
 ) > $@
-	Rscript -e 'library(devtools);install(".")'
+	Rscript -e 'library(devtools);install(".", quick=T)'
 
 %_inline.html: %.html $(BASE)
 	exec/encode.pl $< > $@

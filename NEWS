@@ -1,3 +1,13 @@
+knitrBootstrap 0.7.0
+====================
+
+* use magnific popup to do lightbox rather than fancybox.
+
+knitrBootstrap 0.6.5
+====================
+
+* implement boostrap_html to apply the html header to any arbitrary html file.
+
 knitrBootstrap 0.6.1
 ====================
 

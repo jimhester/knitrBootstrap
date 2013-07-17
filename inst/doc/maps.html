@@ -36,13 +36,12 @@
 <!--<link rel="stylesheet" href="http://gregfranko.com/jquery.tocify.js/css/jquery.tocify.css">-->
 <script src="http://gregfranko.com/jquery.tocify.js/js/jquery.tocify.min.js"></script>
 
-<!-- fancybox -->
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.css">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.js"></script>
+<!-- Manific Popup -->
+<script src="http://dimsemenov.com/plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+<link rel="stylesheet" href="http://dimsemenov.com/plugins/magnific-popup/dist/magnific-popup.css">
 
 <!-- meny -->
 <script src="http://lab.hakim.se/meny/js/meny.min.js"></script>
-<!--<link rel="stylesheet" href="http://lab.hakim.se/meny/css/demo.css">-->
 <script>
 /* run scripts when document is ready */
 $(function() {
@@ -127,22 +126,25 @@ $(function() {
   /* toggle code blocks hidden by default */
   $('div.source').toggle();
 
-  /* give images a fancybox and thumbnail classes to allow lightbox and thumbnails TODO: make fancybox prev next if grouped */
+  /* give images a lightbox and thumbnail classes to allow lightbox and thumbnails TODO: make gallery if graphs are grouped */
   $('p').each(function(){
     $(this).find('img').unwrap().wrapAll('<div class="rimage default"></div>');
   });
   $('div.rimage').each(function(){
     $(this).addClass("row-fluid thumbnails");
-    $(this).children('img').wrap('<a href="#" class="' + thumbsize + ' thumbnail"></a></li>').addClass('fancybox');
+    $(this).children('img').wrap('<a href="#" class="mfp-image ' + thumbsize + ' thumbnail"></a></li>');
   });
 
-  /* fancybox */
-  $(".fancybox").each( function() {
-    var img = $(this);
-    $(this).fancybox({
-      afterClose: function(){
-        img.css('display', 'block');
-      },
+  /* Magnific Popup */
+  $(".thumbnail").each(function(){
+    $(this).magnificPopup({
+      disableOn: 768,
+      closeOnContentClick: true,
+
+      type: 'image',
+      items: {
+        src: $(this).find('img').attr('src'),
+      }
     });
   });
 
