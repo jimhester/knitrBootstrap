@@ -7,7 +7,7 @@ Title: Knitr Bootstrap framework.
 Description: A framework to create bootstrap styled HTML reports from knitr
     Rmarkdown and RHTML.
 Depends:
-    R (>= 2.11.1),
+    R (>= 3.0.0),
     knitr (>= 1.2),
     markdown (>= 0.5.5)
 Suggests:

@@ -17,7 +17,6 @@
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" media="screen">
 
 <!-- tocify -->
-<!--<link rel="stylesheet" href="http://gregfranko.com/jquery.tocify.js/css/jquery.tocify.css">-->
 <script src="http://gregfranko.com/jquery.tocify.js/js/jquery.tocify.min.js"></script>
 
 <!-- Manific Popup -->
@@ -96,8 +95,6 @@ $(function() {
     }
     $(this).before(button);
   });
-
-  /* syntax highlight code blocks*/
 
   /* onclick toggle next code block */
   $('.toggle').click(function() {
@@ -180,7 +177,6 @@ $(function() {
   /* if using render_html() hook, make functions links to custom R search */
   /*search in ggplot documentation or inside-r.org */
   $("span.functioncall").replaceWith(function(){
-
     return '<a target="_blank" href="http://www.google.com/search?sourceid=navclient&gfns=1&\
 q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
     $(this).text() + '">' + $(this).text()+'</a>'
@@ -218,16 +214,11 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
 });
 </script>
 <style>
-/* Knitr_bootstrap styles
--------------------------------------------------- */
+/* Knitr_bootstrap styles */
 #wrap .container-fluid {
   padding-left: 0;
   overflow: hidden;
 }
-.meny-left.row-fluid {
-  margin-left: 0%;
-}
-
 .toggle{
   text-transform: capitalize;
 }
@@ -241,8 +232,7 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
 .row-fluid.thumbnails .span5.thumbnail:nth-child(4n+1) { margin-left: 0px; }
 .row-fluid.thumbnails .span5.thumbnail:nth-child(2n+1) { margin-left: 0px; }
 
-/* Sticky footer styles
--------------------------------------------------- */
+/* Sticky footer styles */
 * {
   margin:0;
 }
@@ -273,7 +263,6 @@ body {
 }
 
 /* Tocify */
-/* -------------------------------------------------- */
 
 #toc {
   padding 0px;
@@ -294,6 +283,11 @@ body {
 .meny {
   height: 100%;
 }
+
+.meny-left.row-fluid {
+  margin-left: 0%;
+}
+
 
 .meny-arrow {
   position: absolute;
