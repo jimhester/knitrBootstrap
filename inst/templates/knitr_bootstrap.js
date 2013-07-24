@@ -155,15 +155,15 @@ $(function() {
   });
 
   /* add footer */
-  $('body').wrapInner('<div id="wrap" />');
+  $('.contents').wrapInner('<div id="wrap" />');
   $('#wrap').append('<div id="push" />');
   var p = $('p:contains("Author:")');
   var last_p = p.filter(':last');
   p.detach();
   last_p.addClass('muted').attr('id','credit');
-  last_p.append('<p>styled with <a href="https://github.com/jimhester/knitr_bootstrap">knitr_bootstrap</a></p>');
-  last_p.appendTo("body");
-  last_p.wrap('<div id="footer"><div class="container" /></div>');
+  last_p.append('<p>styled with <a href="https://github.com/jimhester/knitrBootstrap">knitrBootstrap</a></p>');
+  last_p.appendTo(".contents");
+  last_p.wrap('<div id="footer">');
 
   $('.container-fluid > .row-fluid').prepend('<div id="toc" class="well"/></div>');
 
