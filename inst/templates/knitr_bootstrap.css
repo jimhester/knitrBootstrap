@@ -1,5 +1,5 @@
 /* Knitr_bootstrap styles */
-#wrap .container-fluid {
+body > .container-fluid {
   overflow: hidden;
 }
 .toggle{
