@@ -110,7 +110,7 @@ $(function() {
     var language;
     for(language in languages){
       if(languages.hasOwnProperty(language)){
-        text += '<li><button class="toggle-global btn-link btn source ' + language + '" type="source.' + language + '">' + language + '</button></li>\n';
+        text += '<li><button style="width: 100%;" class="toggle-global btn-link btn source ' + language + '" type="source.' + language + '">' + language + '</button></li>\n';
       }
     }
     return text;
