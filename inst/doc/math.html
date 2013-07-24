@@ -36,7 +36,6 @@
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" media="screen">
 
 <!-- tocify -->
-<!--<link rel="stylesheet" href="http://gregfranko.com/jquery.tocify.js/css/jquery.tocify.css">-->
 <script src="http://gregfranko.com/jquery.tocify.js/js/jquery.tocify.min.js"></script>
 
 <!-- Manific Popup -->
@@ -45,13 +44,19 @@
 
 <!-- meny -->
 <script src="http://lab.hakim.se/meny/js/meny.min.js"></script>
+
 <script>
 /* run scripts when document is ready */
 $(function() {
   "use strict";
 
+  /* type of toc navigation */
+  var nav = "offscreen";
+
   /* size of thumbnails */
   var thumbsize = "span3";
+
+  var show_code = false;
 
   /* included languages */
   var languages = [];
@@ -116,18 +121,12 @@ $(function() {
     $(this).before(button);
   });
 
-  /* syntax highlight code blocks*/
-
   /* onclick toggle next code block */
   $('.toggle').click(function() {
     $(this).button('toggle');
     $(this).next('div').slideToggle();
     return false;
   });
-
-
-  /* toggle code blocks hidden by default */
-  $('div.source').toggle();
 
   /* give images a lightbox and thumbnail classes to allow lightbox and thumbnails TODO: make gallery if graphs are grouped */
   $('p').each(function(){
@@ -152,14 +151,14 @@ $(function() {
   });
 
   /* add bootstrap classes */
-  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="contents span12"><div class="offset2 span8">');
+  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="contents">');
 
   var create_language_links = function(){
     var text='';
     var language;
     for(language in languages){
       if(languages.hasOwnProperty(language)){
-        text += '<li><a href="#" class="source toggle-global btn-link btn" type="source.' + language + '">' + language + '</a></li>\n';
+        text += '<li><button style="width: 100%;" class="toggle-global btn-link btn source ' + language + '" type="source.' + language + '">' + language + '</button></li>\n';
       }
     }
     return text;
@@ -172,14 +171,14 @@ $(function() {
         <div class="pull-right">\
           <span class="navbar-text">Toggle</span>\
           <div class="btn-group dropup" data-toggle="button-checkbox">\
-            <button type="source" class="toggle-global btn">Code</button>\
+            <button type="source" class="source toggle-global btn">Code</button>\
             <button class="btn dropdown-toggle" data-toggle="dropdown">\
               <span class="caret"></span>\
             </button>\
             <ul class="dropdown-menu pull-right">'
               + create_language_links() +
             '</div>\
-            <button type="output" class="toggle-global btn active">Output</button>\
+            <button type="output" class="output toggle-global btn active">Output</button>\
             <button type="thumbnails" class="toggle-global btn active">Plots</button>\
           </div>\
         </div>\
@@ -189,7 +188,6 @@ $(function() {
 
   /* global toggles FIXME explicitly toggle all on/off using global variables */
   $('.toggle-global').click(function(){
-    $(this).button('toggle');
     var type = $(this).attr('type');
     $('.' + type).button('toggle');
     $('div.' + type).slideToggle();
@@ -199,54 +197,63 @@ $(function() {
   /* if using render_html() hook, make functions links to custom R search */
   /*search in ggplot documentation or inside-r.org */
   $("span.functioncall").replaceWith(function(){
-
     return '<a target="_blank" href="http://www.google.com/search?sourceid=navclient&gfns=1&\
-q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
+      q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
     $(this).text() + '">' + $(this).text()+'</a>'
   });
 
   /* add footer */
-  $('body').wrapInner('<div id="wrap" />');
+  $('.contents').wrapInner('<div id="wrap" />');
   $('#wrap').append('<div id="push" />');
   var p = $('p:contains("Author:")');
   var last_p = p.filter(':last');
   p.detach();
   last_p.addClass('muted').attr('id','credit');
-  last_p.append('<p>styled with <a href="https://github.com/jimhester/knitr_bootstrap">knitr_bootstrap</a></p>');
-  last_p.appendTo("body");
-  last_p.wrap('<div id="footer"><div class="container" /></div>');
+  last_p.append('<p>styled with <a href="https://github.com/jimhester/knitrBootstrap">knitrBootstrap</a></p>');
+  last_p.appendTo(".contents");
+  last_p.wrap('<div id="footer">');
 
-  $('.container-fluid > .row-fluid').append('<div class="meny"><div id="toc" class="well" /></div><div class="meny-arrow" />');
+  $('.container-fluid > .row-fluid').prepend('<div id="toc" class="well"/></div>');
 
-  /* add table of contents */
+  if(nav == 'offscreen'){
+    $('.contents').addClass('span12').wrapInner('<div class="offset2 span8">');
+    $('#toc').after('<div class="meny-arrow">');
+    var meny = Meny.create({
+        menuElement: document.querySelector( '#toc' ),
+        contentsElement: document.querySelector( '.contents' ),
+        position: 'left',
+        width: 260
+    });
+  }
+  else {
+    $('#toc').addClass('span3');
+    $('.contents').addClass('offset3 span8');
+  }
+
+  /* table of contents */
   $('#toc').tocify({extendPage: false});
 
-  $('#toc').addClass('meny');
-
-  /*add meny*/
-  var meny = Meny.create({
-      menuElement: document.querySelector( '.meny' ),
-      contentsElement: document.querySelector( '.contents' ),
-      position: 'left',
-      width: 260
-  });
+  /* toggle code blocks hidden by default */
+  if(show_code){
+    /* toggle source bottons pressed */
+    $('.source').filter(":button").addClass('active');
+  }
+  else {
+    /* hide code blocks */
+    $('div.source').toggle();
+  }
 
   /* remove paragraphs with no content */
   $('p:empty').remove();
 
 });
+
 </script>
 <style>
-/* Knitr_bootstrap styles
--------------------------------------------------- */
+/* Knitr_bootstrap styles */
 #wrap .container-fluid {
-  padding-left: 0;
   overflow: hidden;
 }
-.meny-left.row-fluid {
-  margin-left: 0%;
-}
-
 .toggle{
   text-transform: capitalize;
 }
@@ -255,13 +262,15 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
   text-transform: capitalize;
 }
 
-/*fix for boostrap#3494*/
-.row-fluid.thumbnails .span5.thumbnail:nth-child(6n+1) { margin-left: 0px; }
-.row-fluid.thumbnails .span5.thumbnail:nth-child(4n+1) { margin-left: 0px; }
-.row-fluid.thumbnails .span5.thumbnail:nth-child(2n+1) { margin-left: 0px; }
+/*fix for bootstrap#3494*/
+.row-fluid .thumbnails .span2:nth-child(6n+1),
+.row-fluid .thumbnails .span3:nth-child(4n+1),
+.row-fluid .thumbnails .span4:nth-child(3n+1),
+.row-fluid .thumbnails .span6:nth-child(2n+1) {
+  margin-left: 0;
+}
 
-/* Sticky footer styles
--------------------------------------------------- */
+/* Sticky footer styles */
 * {
   margin:0;
 }
@@ -269,7 +278,6 @@ html,
 body {
     height: 100%;
     /* The html and body elements cannot have any padding or margin. */
-    /*overflow-x: hidden;*/
 }
 
 /* Wrapper for page content to push down footer */
@@ -292,13 +300,19 @@ body {
 }
 
 /* Tocify */
-/* -------------------------------------------------- */
 
 #toc {
-  padding 0px;
-  margin: 0px;
+  margin-left: -20px;
   border-radius: 0px;
-  height:100%
+  height:100%;
+  padding: 9px;
+  position: fixed;
+}
+@media (max-width: 767px) {
+  #toc {
+    width: auto;
+    position: static;
+  }
 }
 /* Top level subheader elements.  These are the first nested items underneath a header element. */
 .header li {
@@ -307,11 +321,11 @@ body {
 
 /* Makes the font smaller for all subheader elements. */
 .sub-header li {
-    font-size: 12px;
+  font-size: 12px;
 }
 
-.meny {
-  height: 100%;
+.meny-left .contents.span12 {
+  margin-left: 0;
 }
 
 .meny-arrow {
@@ -320,10 +334,10 @@ body {
 
   border: 10px solid transparent;
 
-  -webkit-transition: opacity 0.4s ease 0.4s; 
-     -moz-transition: opacity 0.4s ease 0.4s; 
-      -ms-transition: opacity 0.4s ease 0.4s; 
-       -o-transition: opacity 0.4s ease 0.4s; 
+  -webkit-transition: opacity 0.4s ease 0.4s;
+     -moz-transition: opacity 0.4s ease 0.4s;
+      -ms-transition: opacity 0.4s ease 0.4s;
+       -o-transition: opacity 0.4s ease 0.4s;
           transition: opacity 0.4s ease 0.4s;
 }
   .meny-left .meny-arrow {
@@ -335,18 +349,18 @@ body {
   .meny-active .meny-arrow {
     opacity: 0;
 
-    -webkit-transition: opacity 0.2s ease; 
-       -moz-transition: opacity 0.2s ease; 
-        -ms-transition: opacity 0.2s ease; 
-         -o-transition: opacity 0.2s ease; 
+    -webkit-transition: opacity 0.2s ease;
+       -moz-transition: opacity 0.2s ease;
+        -ms-transition: opacity 0.2s ease;
+         -o-transition: opacity 0.2s ease;
             transition: opacity 0.2s ease;
   }
 
 .navbar-inner > .pull-right {
   padding-right: 20px;
 }
-</style>
 
+</style>
 <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css"" id="style" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" title="Default" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/amelia/bootstrap.min.css" title="Amelia" media="screen">
