@@ -5,31 +5,36 @@ HTML=$(RMD:.Rmd=.html)
 CHOOSER=c('boot', 'code')
 BOOT_STYLE=NULL
 CODE_STYLE=NULL
+NAV_TYPE='offscreen'
+THUMBSIZE='span3'
+SHOW_CODE=FALSE
 
-BASE=inst/templates/knitr_bootstrap.html
+R_package=inst/templates/R_package
 
-all: inst/templates/knitr_bootstrap.html $(HTML)
+BASE=$(filter-out $(R_package), $(wildcard inst/templates/*)) $(wildcard R/*.R)
 
-inst/examples/all.html: $(RMD) $(BASE)
+all: $(HTML) $(R_package)
 
-$(BASE): $(filter-out $(BASE), $(wildcard inst/templates/*)) $(wildcard R/*.R)
-	(cat inst/templates/knitr_bootstrap_includes.html;\
-  exec/wrap.pl '<script>' '</script>' inst/templates/knitr_bootstrap.js;\
-  exec/wrap.pl '<style>' '</style>' inst/templates/knitr_bootstrap.css\
-) > $@
+$(R_package): $(BASE)
 	Rscript -e 'library(devtools);install(".", quick=T)'
+	touch $(R_package)
 
-%_inline.html: %.html $(BASE)
+inst/examples/all.html: $(RMD) $(R_package)
+
+%_inline.html: %.html $(R_package)
 	exec/encode.pl $< > $@
 
-%.html: %.Rmd $(BASE)
+%.html: %.Rmd $(R_package)
 	Rscript -e "\
     setwd('$(dir $<)');\
     require('knitrBootstrap');\
     knit_bootstrap('$(notdir $<)',\
       chooser=$(CHOOSER),\
       boot_style=$(BOOT_STYLE),\
-      code_style=$(CODE_STYLE)\
+      code_style=$(CODE_STYLE),\
+      nav_type=$(NAV_TYPE),\
+      thumbsize=$(THUMBSIZE),\
+      show_code=$(SHOW_CODE)\
     )"
 
 make clean:

@@ -4,7 +4,7 @@
 #' output in bootstrap styled HTML.
 #'
 #' @inheritParams knit_bootstrap_md
-#' @inheritParams bootstrap_HTML
+#' @inheritParams create_header
 #' @param input Rmd input file to knit into HTML
 #' @param output HTML output file created, if NULL uses the input filename with
 #'        the extension changed to .html
@@ -22,6 +22,9 @@
 
 knit_bootstrap =
   function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
+           nav_type=c('offscreen', 'onscreen'),
+           thumbsize=c('span3', 'span4', 'span5', 'span6', 'span7', 'span8', 'span2', 'span1'),
+           show_code=FALSE,
            markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
            ..., envir = parent.frame(), text = NULL,
            quiet = FALSE, encoding = getOption('encoding'),
@@ -34,6 +37,7 @@ knit_bootstrap =
   knit_bootstrap_md(md_file, output, boot_style=boot_style,
                     code_style=code_style, chooser=chooser,
                     markdown_options = markdown_options,
+                    nav_type=nav_type, thumbsize=thumbsize, show_code=show_code,
                     ..., graphics=graphics)
   invisible(output)
 }
@@ -49,7 +53,7 @@ knit_bootstrap_Rmd = knit_bootstrap
 #'        the extension changed to .html
 #' @param text a character vector as an alternative way to provide the input
 #'   file
-#' @inheritParams bootstrap_HTML
+#' @inheritParams create_header
 #' @param markdown_options passed to markdownToHTML, defaults to mathjax,
 #'        base64_images and use_xhtml.
 #' @param ... options passed to \code{\link[markdown]{markdownToHTML}}
@@ -59,11 +63,16 @@ knit_bootstrap_Rmd = knit_bootstrap
 knit_bootstrap_md =
 function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
          text = NULL,
+         nav_type=c('offscreen', 'onscreen'),
+         thumbsize=c('span3', 'span4', 'span5', 'span6', 'span7', 'span8', 'span2', 'span1'),
+         show_code=FALSE,
          markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
          graphics = getOption("menu.graphics"), ...) {
 
   require(knitr)
-  header = create_header(boot_style, code_style, chooser, graphics)
+  header = create_header(boot_style=boot_style, code_style=code_style,
+                         chooser=chooser, nav_type=nav_type, thumbsize=thumbsize, show_code=show_code, graphics=graphics)
+
   require(markdown)
   if(is.null(output))
     output <- sub_ext(input, 'html')
@@ -85,26 +94,22 @@ function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
 #' output in bootstrap styled HTML.
 #' @param input html filename to be wrapped with Bootstrap.
 #' @param output html filename to output.
-#' @param boot_style the bootstrap style to use if character, if NULL uses the
-#'        default, if TRUE a menu is shown with the available styles.
-#' @param code_style the highlight.js code style to use if character, if NULL
-#'        uses the defaults, if TRUE a menu is shown with the available styles.
-#' @param chooser a character vector, if contains "boot", adds a bootstrap
-#'        style chooser to the HTML, if contains "code" adds the bootstrap
-#'        code chooser.
-#' @param graphics what graphics to use for the menus, only applicable if
-#'        code_style or boot_style are true.
+#' @inheritParams create_header
 #' @export bootstrap_HTML
 
 bootstrap_HTML = function(input, output = NULL, boot_style=NULL,
                           code_style=NULL, chooser=NULL,
+                          nav_type=c('offscreen', 'onscreen'),
+                          thumbsize=c('span3', 'span4', 'span5', 'span6', 'span7', 'span8', 'span2', 'span1'),
+                          show_code=FALSE,
                           graphics = getOption("menu.graphics")) {
   if(is.null(output))
     output <- sub_ext(input, 'html')
   stopifnot(input != output)
 
-  header_lines =
-    create_header(boot_style, code_style, chooser, graphics, no_file=TRUE)
+  header = create_header(boot_style=boot_style, code_style=code_style,
+                         chooser=chooser, nav_type=nav_type, thumbsize=thumbsize, show_code=show_code,
+                         graphics=graphics, no_file=TRUE)
 
   lines = file_lines(input)
 
@@ -131,6 +136,9 @@ style_url="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/$style/bootstrap.min.
 link_pattern='<link[^\n\r]+rel="stylesheet"[^\n\r]+href="'
 default_boot_style='http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css'
 default_code_style='http://yandex.st/highlightjs/7.3/styles/default.min.css'
+nav_pattern='nav = "[^"]+"'
+thumb_pattern='thumbsize = "[^"]+"'
+show_code_pattern='show_code = [^;]+;'
 
 get_style <- function(style, style_type, title, graphics = getOption("menu.graphics")){
   style = if(!is.null(style) && style %in% names(style_type)){
@@ -145,54 +153,89 @@ get_style <- function(style, style_type, title, graphics = getOption("menu.graph
   return(style)
 }
 
+#' Create the html header based on the options given
+#' @param boot_style the bootstrap style to use if character, if NULL uses the
+#'        default, if TRUE a menu is shown with the available styles.
+#' @param code_style the highlight.js code style to use if character, if NULL
+#'        uses the defaults, if TRUE a menu is shown with the available styles.
+#' @param chooser a character vector, if contains "boot", adds a bootstrap
+#'        style chooser to the HTML, if contains "code" adds the bootstrap
+#'        code chooser.
+#' @param nav_type either offscreen to use a dynamic offscreen navigation menu, or
+#'        onscreen to use a fixed onscreen navigation menu.
+#' @param thumbsize size of thumbnails in bootstrap spans.
+#' @param show_code show code blocks by default.
+#' @param graphics what graphics to use for the menus, only applicable if
+#'        code_style or boot_style are true.
+#' @export create_header
+
 create_header <-
   function(boot_style=NULL, code_style=NULL, chooser=c('boot', 'code'),
+           nav_type=c('offscreen', 'onscreen'),
+           thumbsize=c('span3', 'span4', 'span5', 'span6', 'span7', 'span8', 'span2', 'span1'),
+           show_code=FALSE,
            graphics = getOption("menu.graphics"), no_file=FALSE){
 
   boot_style=get_style(boot_style, boot_styles, 'Bootstrap Style', graphics)
   code_style=get_style(code_style, code_styles, 'Code Block Style', graphics)
 
-  package_root = system.file(package='knitrBootstrap')
-  header = paste(package_root, 'templates/knitr_bootstrap.html', sep='/')
-
-  header_lines = file_lines(header)
+  includes = read_package_file('templates/knitr_bootstrap_includes.html')
+  javascript = read_package_file('templates/knitr_bootstrap.js')
+  css = read_package_file('templates/knitr_bootstrap.css')
 
   chooser = match.arg(chooser, several.ok=TRUE)
-  filenames = if('boot' %in% chooser){
-    paste(package_root, 'templates/knitr_bootstrap_style_toggle.html', sep='/')
+  boot_toggle = if('boot' %in% chooser){
+    read_package_file('templates/knitr_bootstrap_style_toggle.html')
   }
-  filenames = if('code' %in% chooser){
-    c(filenames, paste(package_root,
-                       'templates/knitr_bootstrap_code_style_toggle.html',
-                       sep='/'))
+  code_toggle = if('code' %in% chooser){
+    read_package_file('templates/knitr_bootstrap_code_style_toggle.html')
   }
 
-  output_lines = paste(header_lines, append_files(filenames, outfile), sep='\n')
+  nav_type= match.arg(nav_type)
+  javascript = sub(nav_pattern, paste('nav = "', nav_type, '"', sep=''), javascript)
+
+  thumbsize=match.arg(thumbsize)
+  javascript = sub(thumb_pattern, paste('thumbsize = "', thumbsize, '"', sep=''), javascript)
+
+  if(is.logical(show_code) && show_code)
+    javascript = sub(show_code_pattern, 'show_code = true;', javascript)
+
+  output = paste(includes,
+                 '<script>', javascript, '</script>',
+                 '<style>', css, '</style>',
+                 boot_toggle,
+                 code_toggle,
+                 sep='\n')
 
   #update bootstrap style
-  output_lines =
+  output =
     gsub(paste('(', link_pattern, ')(', default_boot_style, ')', sep=''),
-         paste('\\1', boot_style, '"', sep=''), output_lines)
+         paste('\\1', boot_style, '"', sep=''), output)
 
   #update code style
-  output_lines =
+  output =
     gsub(paste('(', link_pattern, ')(', default_code_style, ')', sep=''),
-         paste('\\1', code_style, '"', sep=''), output_lines)
+         paste('\\1', code_style, '"', sep=''), output)
 
   if(no_file)
-    return(output_lines)
+    return(output)
 
   outfile = paste(tempdir(), 'knitr_bootstrap_full.html', sep='/')
 
-  cat(output_lines, '\n', file=outfile)
+  cat(output, '\n', file=outfile)
   invisible(outfile)
 }
 
-append_files <- function(files, output){
-  paste(mapply(file_lines, files), collapse='\n')
+append_files <- function(files){
+  paste(mapply(read_package_file, files), collapse='\n')
 }
 
-file_lines <- function(file){
+read_package_file <- function(path){
+  location = paste(system.file(package='knitrBootstrap'), path, sep='/')
+  read_file(location)
+}
+
+read_file <- function(file){
   stopifnot(file.exists(file))
   readChar(file, 10e6)
 }

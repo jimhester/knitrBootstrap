@@ -2,8 +2,13 @@
 $(function() {
   "use strict";
 
+  /* type of toc navigation */
+  var nav = "offscreen";
+
   /* size of thumbnails */
   var thumbsize = "span3";
+
+  var show_code = false;
 
   /* included languages */
   var languages = [];
@@ -75,10 +80,6 @@ $(function() {
     return false;
   });
 
-
-  /* toggle code blocks hidden by default */
-  $('div.source').toggle();
-
   /* give images a lightbox and thumbnail classes to allow lightbox and thumbnails TODO: make gallery if graphs are grouped */
   $('p').each(function(){
     $(this).find('img').unwrap().wrapAll('<div class="rimage default"></div>');
@@ -102,14 +103,14 @@ $(function() {
   });
 
   /* add bootstrap classes */
-  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="contents span12"><div class="offset2 span8">');
+  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="contents">');
 
   var create_language_links = function(){
     var text='';
     var language;
     for(language in languages){
       if(languages.hasOwnProperty(language)){
-        text += '<li><a href="#" class="source toggle-global btn-link btn" type="source.' + language + '">' + language + '</a></li>\n';
+        text += '<li><button class="toggle-global btn-link btn source ' + language + '" type="source.' + language + '">' + language + '</button></li>\n';
       }
     }
     return text;
@@ -122,14 +123,14 @@ $(function() {
         <div class="pull-right">\
           <span class="navbar-text">Toggle</span>\
           <div class="btn-group dropup" data-toggle="button-checkbox">\
-            <button type="source" class="toggle-global btn">Code</button>\
+            <button type="source" class="source toggle-global btn">Code</button>\
             <button class="btn dropdown-toggle" data-toggle="dropdown">\
               <span class="caret"></span>\
             </button>\
             <ul class="dropdown-menu pull-right">'
               + create_language_links() +
             '</div>\
-            <button type="output" class="toggle-global btn active">Output</button>\
+            <button type="output" class="output toggle-global btn active">Output</button>\
             <button type="thumbnails" class="toggle-global btn active">Plots</button>\
           </div>\
         </div>\
@@ -139,7 +140,6 @@ $(function() {
 
   /* global toggles FIXME explicitly toggle all on/off using global variables */
   $('.toggle-global').click(function(){
-    $(this).button('toggle');
     var type = $(this).attr('type');
     $('.' + type).button('toggle');
     $('div.' + type).slideToggle();
@@ -150,7 +150,7 @@ $(function() {
   /*search in ggplot documentation or inside-r.org */
   $("span.functioncall").replaceWith(function(){
     return '<a target="_blank" href="http://www.google.com/search?sourceid=navclient&gfns=1&\
-q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
+      q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
     $(this).text() + '">' + $(this).text()+'</a>'
   });
 
@@ -165,20 +165,35 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
   last_p.appendTo("body");
   last_p.wrap('<div id="footer"><div class="container" /></div>');
 
-  $('.container-fluid > .row-fluid').append('<div class="meny"><div id="toc" class="well" /></div><div class="meny-arrow" />');
+  $('.container-fluid > .row-fluid').prepend('<div id="toc" class="well"/></div>');
 
-  /* add table of contents */
+  if(nav == 'offscreen'){
+    $('.contents').addClass('span12').wrapInner('<div class="offset2 span8">');
+    $('#toc').after('<div class="meny-arrow">');
+    var meny = Meny.create({
+        menuElement: document.querySelector( '#toc' ),
+        contentsElement: document.querySelector( '.contents' ),
+        position: 'left',
+        width: 260
+    });
+  }
+  else {
+    $('#toc').addClass('span3');
+    $('.contents').addClass('offset3 span8');
+  }
+
+  /* table of contents */
   $('#toc').tocify({extendPage: false});
 
-  $('#toc').addClass('meny');
-
-  /*add meny*/
-  var meny = Meny.create({
-      menuElement: document.querySelector( '.meny' ),
-      contentsElement: document.querySelector( '.contents' ),
-      position: 'left',
-      width: 260
-  });
+  /* toggle code blocks hidden by default */
+  if(show_code){
+    /* toggle source bottons pressed */
+    $('.source').filter(":button").addClass('active');
+  }
+  else {
+    /* hide code blocks */
+    $('div.source').toggle();
+  }
 
   /* remove paragraphs with no content */
   $('p:empty').remove();

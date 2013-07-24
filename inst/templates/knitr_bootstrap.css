@@ -1,6 +1,5 @@
 /* Knitr_bootstrap styles */
 #wrap .container-fluid {
-  padding-left: 0;
   overflow: hidden;
 }
 .toggle{
@@ -11,10 +10,13 @@
   text-transform: capitalize;
 }
 
-/*fix for boostrap#3494*/
-.row-fluid.thumbnails .span5.thumbnail:nth-child(6n+1) { margin-left: 0px; }
-.row-fluid.thumbnails .span5.thumbnail:nth-child(4n+1) { margin-left: 0px; }
-.row-fluid.thumbnails .span5.thumbnail:nth-child(2n+1) { margin-left: 0px; }
+/*fix for bootstrap#3494*/
+.row-fluid .thumbnails .span2:nth-child(6n+1),
+.row-fluid .thumbnails .span3:nth-child(4n+1),
+.row-fluid .thumbnails .span4:nth-child(3n+1),
+.row-fluid .thumbnails .span6:nth-child(2n+1) {
+  margin-left: 0;
+}
 
 /* Sticky footer styles */
 * {
@@ -24,7 +26,6 @@ html,
 body {
     height: 100%;
     /* The html and body elements cannot have any padding or margin. */
-    /*overflow-x: hidden;*/
 }
 
 /* Wrapper for page content to push down footer */
@@ -49,10 +50,17 @@ body {
 /* Tocify */
 
 #toc {
-  padding 0px;
-  margin: 0px;
+  margin-left: -20px;
   border-radius: 0px;
-  height:100%
+  height:100%;
+  padding: 9px;
+  position: fixed;
+}
+@media (max-width: 767px) {
+  #toc {
+    width: auto;
+    position: static;
+  }
 }
 /* Top level subheader elements.  These are the first nested items underneath a header element. */
 .header li {
@@ -61,17 +69,12 @@ body {
 
 /* Makes the font smaller for all subheader elements. */
 .sub-header li {
-    font-size: 12px;
+  font-size: 12px;
 }
 
-.meny {
-  height: 100%;
+.meny-left .contents.span12 {
+  margin-left: 0;
 }
-
-.meny-left.row-fluid {
-  margin-left: 0%;
-}
-
 
 .meny-arrow {
   position: absolute;
@@ -79,10 +82,10 @@ body {
 
   border: 10px solid transparent;
 
-  -webkit-transition: opacity 0.4s ease 0.4s; 
-     -moz-transition: opacity 0.4s ease 0.4s; 
-      -ms-transition: opacity 0.4s ease 0.4s; 
-       -o-transition: opacity 0.4s ease 0.4s; 
+  -webkit-transition: opacity 0.4s ease 0.4s;
+     -moz-transition: opacity 0.4s ease 0.4s;
+      -ms-transition: opacity 0.4s ease 0.4s;
+       -o-transition: opacity 0.4s ease 0.4s;
           transition: opacity 0.4s ease 0.4s;
 }
   .meny-left .meny-arrow {
@@ -94,10 +97,10 @@ body {
   .meny-active .meny-arrow {
     opacity: 0;
 
-    -webkit-transition: opacity 0.2s ease; 
-       -moz-transition: opacity 0.2s ease; 
-        -ms-transition: opacity 0.2s ease; 
-         -o-transition: opacity 0.2s ease; 
+    -webkit-transition: opacity 0.2s ease;
+       -moz-transition: opacity 0.2s ease;
+        -ms-transition: opacity 0.2s ease;
+         -o-transition: opacity 0.2s ease;
             transition: opacity 0.2s ease;
   }
 
