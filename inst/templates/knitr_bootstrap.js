@@ -155,30 +155,32 @@ $(function() {
   });
 
   /* add footer */
-  $('.contents').wrapInner('<div id="wrap" />');
+  $('body').wrapInner('<div id="wrap" />');
   $('#wrap').append('<div id="push" />');
   var p = $('p:contains("Author:")');
   var last_p = p.filter(':last');
   p.detach();
   last_p.addClass('muted').attr('id','credit');
   last_p.append('<p>styled with <a href="https://github.com/jimhester/knitrBootstrap">knitrBootstrap</a></p>');
-  last_p.appendTo(".contents");
+  last_p.appendTo("body");
   last_p.wrap('<div id="footer">');
 
   $('.container-fluid > .row-fluid').prepend('<div id="toc" class="well"/></div>');
 
   if(nav == 'offscreen'){
+    $('#toc').wrap('<div class="meny">');
     $('.contents').addClass('span12').wrapInner('<div class="offset2 span8">');
-    $('#toc').after('<div class="meny-arrow">');
+    $('.meny').after('<div class="meny-arrow">');
+
     var meny = Meny.create({
-        menuElement: document.querySelector( '#toc' ),
+        menuElement: document.querySelector( '.meny' ),
         contentsElement: document.querySelector( '.contents' ),
         position: 'left',
         width: 260
     });
   }
   else {
-    $('#toc').addClass('span3');
+    $('#toc').css({ "padding-bottom": "36000px", "margin-bottom": "-36000px"}).addClass('span3');
     $('.contents').addClass('offset3 span8');
   }
 
