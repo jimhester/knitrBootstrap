@@ -141,14 +141,14 @@ thumb_pattern='thumbsize = "[^"]+"'
 show_code_pattern='show_code = [^;]+;'
 
 get_style <- function(style, style_type, title, graphics = getOption("menu.graphics")){
-  style = if(!is.null(style) && style %in% names(style_type)){
-    style_type[style]
+  style = if(is.null(style)){
+    style_type[1]
   }
   else if(!is.null(style) && style == TRUE){
     style_type[menu(names(style_type), graphics, title)]
   }
   else {
-    style_type[1]
+    style_type[match.arg(tolower(style), names(style_type))]
   }
   return(style)
 }
@@ -170,7 +170,7 @@ get_style <- function(style, style_type, title, graphics = getOption("menu.graph
 #' @export create_header
 
 create_header <-
-  function(boot_style=NULL, code_style=NULL, chooser=c('boot', 'code'),
+  function(boot_style=NULL, code_style=NULL, chooser=NULL,
            nav_type=c('offscreen', 'onscreen'),
            thumbsize=c('span3', 'span4', 'span5', 'span6', 'span7', 'span8', 'span2', 'span1'),
            show_code=FALSE,
@@ -183,7 +183,7 @@ create_header <-
   javascript = read_package_file('templates/knitr_bootstrap.js')
   css = read_package_file('templates/knitr_bootstrap.css')
 
-  chooser = match.arg(chooser, several.ok=TRUE)
+  chooser = match.arg(chooser, choices=c(NA, 'boot', 'code'), several.ok=TRUE)
   boot_toggle = if('boot' %in% chooser){
     read_package_file('templates/knitr_bootstrap_style_toggle.html')
   }
@@ -251,47 +251,47 @@ sub_ext = function(x, ext) {
 escape = function(string) gsub("([\"$`\\])", "\\\\\\1", string)
 
 boot_styles = c(
-  'Default'='http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css',
-  'Amelia'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/amelia/bootstrap.min.css',
-  'Cerulean'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cerulean/bootstrap.min.css',
-  'Cosmo'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cosmo/bootstrap.min.css',
-  'Cyborg'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cyborg/bootstrap.min.css',
-  'Journal'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/journal/bootstrap.min.css',
-  'Flatly'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/flatly/bootstrap.min.css',
-  'Readable'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/readable/bootstrap.min.css',
-  'Simplex'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/simplex/bootstrap.min.css',
-  'Slate'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/slate/bootstrap.min.css',
-  'Spacelab'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/spacelab/bootstrap.min.css',
-  'Spruce'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/spruce/bootstrap.min.css',
-  'Superhero'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/superhero/bootstrap.min.css',
-  'United'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/united/bootstrap.min.css'
+  'default'='http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css',
+  'amelia'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/amelia/bootstrap.min.css',
+  'cerulean'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cerulean/bootstrap.min.css',
+  'cosmo'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cosmo/bootstrap.min.css',
+  'cyborg'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cyborg/bootstrap.min.css',
+  'journal'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/journal/bootstrap.min.css',
+  'flatly'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/flatly/bootstrap.min.css',
+  'readable'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/readable/bootstrap.min.css',
+  'simplex'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/simplex/bootstrap.min.css',
+  'slate'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/slate/bootstrap.min.css',
+  'spacelab'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/spacelab/bootstrap.min.css',
+  'spruce'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/spruce/bootstrap.min.css',
+  'superhero'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/superhero/bootstrap.min.css',
+  'united'='http://netdna.bootstrapcdn.com/bootswatch/2.3.1/united/bootstrap.min.css'
 )
 
 code_styles = c(
-  'Default'='http://yandex.st/highlightjs/7.3/styles/default.min.css',
-  'Dark'='http://yandex.st/highlightjs/7.3/styles/dark.min.css',
-  'FAR'='http://yandex.st/highlightjs/7.3/styles/far.min.css',
-  'IDEA'='http://yandex.st/highlightjs/7.3/styles/idea.min.css',
-  'Sunburst'='http://yandex.st/highlightjs/7.3/styles/sunburst.min.css',
-  'Zenburn'='http://yandex.st/highlightjs/7.3/styles/zenburn.min.css',
-  'Visual Studio'='http://yandex.st/highlightjs/7.3/styles/vs.min.css',
-  'Ascetic'='http://yandex.st/highlightjs/7.3/styles/ascetic.min.css',
-  'Magula'='http://yandex.st/highlightjs/7.3/styles/magula.min.css',
-  'GitHub'='http://yandex.st/highlightjs/7.3/styles/github.min.css',
-  'Google Code'='http://yandex.st/highlightjs/7.3/styles/googlecode.min.css',
-  'Brown Paper'='http://yandex.st/highlightjs/7.3/styles/brown_paper.min.css',
-  'School Book'='http://yandex.st/highlightjs/7.3/styles/school_book.min.css',
-  'IR Black'='http://yandex.st/highlightjs/7.3/styles/ir_black.min.css',
-  'Solarized - Dark'='http://yandex.st/highlightjs/7.3/styles/solarized_dark.min.css',
-  'Solarized - Light'='http://yandex.st/highlightjs/7.3/styles/solarized_light.min.css',
-  'Arta'='http://yandex.st/highlightjs/7.3/styles/arta.min.css',
-  'Monokai'='http://yandex.st/highlightjs/7.3/styles/monokai.min.css',
-  'XCode'='http://yandex.st/highlightjs/7.3/styles/xcode.min.css',
-  'Pojoaque'='http://yandex.st/highlightjs/7.3/styles/pojoaque.min.css',
-  'Rainbow'='http://yandex.st/highlightjs/7.3/styles/rainbow.min.css',
-  'Tomorrow'='http://yandex.st/highlightjs/7.3/styles/tomorrow.min.css',
-  'Tomorrow Night'='http://yandex.st/highlightjs/7.3/styles/tomorrow-night.min.css',
-  'Tomorrow Night Bright'='http://yandex.st/highlightjs/7.3/styles/tomorrow-night-bright.min.css',
-  'Tomorrow Night Blue'='http://yandex.st/highlightjs/7.3/styles/tomorrow-night-blue.min.css',
-  'Tomorrow Night Eighties'='http://yandex.st/highlightjs/7.3/styles/tomorrow-night-eighties.min.css'
+  'default'='http://yandex.st/highlightjs/7.3/styles/default.min.css',
+  'dark'='http://yandex.st/highlightjs/7.3/styles/dark.min.css',
+  'far'='http://yandex.st/highlightjs/7.3/styles/far.min.css',
+  'idea'='http://yandex.st/highlightjs/7.3/styles/idea.min.css',
+  'sunburst'='http://yandex.st/highlightjs/7.3/styles/sunburst.min.css',
+  'zenburn'='http://yandex.st/highlightjs/7.3/styles/zenburn.min.css',
+  'visual studio'='http://yandex.st/highlightjs/7.3/styles/vs.min.css',
+  'ascetic'='http://yandex.st/highlightjs/7.3/styles/ascetic.min.css',
+  'magula'='http://yandex.st/highlightjs/7.3/styles/magula.min.css',
+  'github'='http://yandex.st/highlightjs/7.3/styles/github.min.css',
+  'google code'='http://yandex.st/highlightjs/7.3/styles/googlecode.min.css',
+  'brown paper'='http://yandex.st/highlightjs/7.3/styles/brown_paper.min.css',
+  'school book'='http://yandex.st/highlightjs/7.3/styles/school_book.min.css',
+  'ir black'='http://yandex.st/highlightjs/7.3/styles/ir_black.min.css',
+  'solarized - dark'='http://yandex.st/highlightjs/7.3/styles/solarized_dark.min.css',
+  'solarized - light'='http://yandex.st/highlightjs/7.3/styles/solarized_light.min.css',
+  'arta'='http://yandex.st/highlightjs/7.3/styles/arta.min.css',
+  'monokai'='http://yandex.st/highlightjs/7.3/styles/monokai.min.css',
+  'xcode'='http://yandex.st/highlightjs/7.3/styles/xcode.min.css',
+  'pojoaque'='http://yandex.st/highlightjs/7.3/styles/pojoaque.min.css',
+  'rainbow'='http://yandex.st/highlightjs/7.3/styles/rainbow.min.css',
+  'tomorrow'='http://yandex.st/highlightjs/7.3/styles/tomorrow.min.css',
+  'tomorrow night'='http://yandex.st/highlightjs/7.3/styles/tomorrow-night.min.css',
+  'tomorrow night bright'='http://yandex.st/highlightjs/7.3/styles/tomorrow-night-bright.min.css',
+  'tomorrow night blue'='http://yandex.st/highlightjs/7.3/styles/tomorrow-night-blue.min.css',
+  'tomorrow night eighties'='http://yandex.st/highlightjs/7.3/styles/tomorrow-night-eighties.min.css'
 )
