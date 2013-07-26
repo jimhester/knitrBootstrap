@@ -200,30 +200,32 @@ $(function() {
   });
 
   /* add footer */
-  $('.contents').wrapInner('<div id="wrap" />');
+  $('body').wrapInner('<div id="wrap" />');
   $('#wrap').append('<div id="push" />');
   var p = $('p:contains("Author:")');
   var last_p = p.filter(':last');
   p.detach();
   last_p.addClass('muted').attr('id','credit');
   last_p.append('<p>styled with <a href="https://github.com/jimhester/knitrBootstrap">knitrBootstrap</a></p>');
-  last_p.appendTo(".contents");
+  last_p.appendTo("body");
   last_p.wrap('<div id="footer">');
 
   $('.container-fluid > .row-fluid').prepend('<div id="toc" class="well"/></div>');
 
   if(nav == 'offscreen'){
+    $('#toc').wrap('<div class="meny">');
     $('.contents').addClass('span12').wrapInner('<div class="offset2 span8">');
-    $('#toc').after('<div class="meny-arrow">');
+    $('.meny').after('<div class="meny-arrow">');
+
     var meny = Meny.create({
-        menuElement: document.querySelector( '#toc' ),
+        menuElement: document.querySelector( '.meny' ),
         contentsElement: document.querySelector( '.contents' ),
         position: 'left',
         width: 260
     });
   }
   else {
-    $('#toc').addClass('span3');
+    $('#toc').css({ "padding-bottom": "36000px", "margin-bottom": "-36000px"}).addClass('span3');
     $('.contents').addClass('offset3 span8');
   }
 
@@ -249,6 +251,7 @@ $(function() {
 <style>
 /* Knitr_bootstrap styles */
 #wrap .container-fluid {
+  padding: 0;
   overflow: hidden;
 }
 .toggle{
@@ -259,13 +262,10 @@ $(function() {
   text-transform: capitalize;
 }
 
-/*fix for bootstrap#3494*/
-.row-fluid .thumbnails .span2:nth-child(6n+1),
-.row-fluid .thumbnails .span3:nth-child(4n+1),
-.row-fluid .thumbnails .span4:nth-child(3n+1),
-.row-fluid .thumbnails .span6:nth-child(2n+1) {
-  margin-left: 0;
-}
+/*fix for boostrap#3494*/
+.row-fluid.thumbnails .span5.thumbnail:nth-child(6n+1) { margin-left: 0px; }
+.row-fluid.thumbnails .span5.thumbnail:nth-child(4n+1) { margin-left: 0px; }
+.row-fluid.thumbnails .span5.thumbnail:nth-child(2n+1) { margin-left: 0px; }
 
 /* Sticky footer styles */
 * {
@@ -274,7 +274,9 @@ $(function() {
 html,
 body {
     height: 100%;
+    padding:0 !important;
     /* The html and body elements cannot have any padding or margin. */
+    /*overflow-x: hidden;*/
 }
 
 /* Wrapper for page content to push down footer */
@@ -299,17 +301,12 @@ body {
 /* Tocify */
 
 #toc {
-  margin-left: -20px;
   border-radius: 0px;
   height:100%;
   padding: 9px;
+  margin-right: -10px;
   position: fixed;
-}
-@media (max-width: 767px) {
-  #toc {
-    width: auto;
-    position: static;
-  }
+  width: 240px;
 }
 /* Top level subheader elements.  These are the first nested items underneath a header element. */
 .header li {
@@ -318,12 +315,17 @@ body {
 
 /* Makes the font smaller for all subheader elements. */
 .sub-header li {
-  font-size: 12px;
+    font-size: 12px;
 }
 
-.meny-left .contents.span12 {
-  margin-left: 0;
+.meny {
+  height: 100%;
 }
+
+.meny-left.row-fluid {
+  margin-left: 0%;
+}
+
 
 .meny-arrow {
   position: absolute;
@@ -331,10 +333,10 @@ body {
 
   border: 10px solid transparent;
 
-  -webkit-transition: opacity 0.4s ease 0.4s;
-     -moz-transition: opacity 0.4s ease 0.4s;
-      -ms-transition: opacity 0.4s ease 0.4s;
-       -o-transition: opacity 0.4s ease 0.4s;
+  -webkit-transition: opacity 0.4s ease 0.4s; 
+     -moz-transition: opacity 0.4s ease 0.4s; 
+      -ms-transition: opacity 0.4s ease 0.4s; 
+       -o-transition: opacity 0.4s ease 0.4s; 
           transition: opacity 0.4s ease 0.4s;
 }
   .meny-left .meny-arrow {
@@ -346,15 +348,22 @@ body {
   .meny-active .meny-arrow {
     opacity: 0;
 
-    -webkit-transition: opacity 0.2s ease;
-       -moz-transition: opacity 0.2s ease;
-        -ms-transition: opacity 0.2s ease;
-         -o-transition: opacity 0.2s ease;
+    -webkit-transition: opacity 0.2s ease; 
+       -moz-transition: opacity 0.2s ease; 
+        -ms-transition: opacity 0.2s ease; 
+         -o-transition: opacity 0.2s ease; 
             transition: opacity 0.2s ease;
   }
 
+.row-fluid > div.contents.span12 {
+  margin-left: 0;
+}
 .navbar-inner > .pull-right {
   padding-right: 20px;
+}
+
+.mfp-figure:after {
+  background: white;
 }
 
 </style>
