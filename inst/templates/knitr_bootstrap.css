@@ -110,3 +110,7 @@ body {
 .navbar-inner > .pull-right {
   padding-right: 20px;
 }
+
+.mfp-figure:after {
+  background: white;
+}
