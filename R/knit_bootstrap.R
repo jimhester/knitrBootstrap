@@ -133,7 +133,7 @@ bootstrap_HTML = function(input, output = NULL, boot_style=NULL,
 
 
 style_url="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/$style/bootstrap.min.css"
-link_pattern='<link[^\n\r]+rel="stylesheet"[^\n\r]+href="'
+link_pattern='<link[^\n\r]+rel="stylesheet"[^\n\r]+href='
 default_boot_style='http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css'
 default_code_style='http://yandex.st/highlightjs/7.3/styles/default.min.css'
 nav_pattern='nav = "[^"]+"'
@@ -209,13 +209,13 @@ create_header <-
 
   #update bootstrap style
   output =
-    gsub(paste('(', link_pattern, ')(', default_boot_style, ')', sep=''),
-         paste('\\1', boot_style, '"', sep=''), output)
+    gsub(paste('(', link_pattern, ')("', default_boot_style, ')"', sep=''),
+         paste('\\1', boot_style, sep=''), output)
 
   #update code style
   output =
-    gsub(paste('(', link_pattern, ')(', default_code_style, ')', sep=''),
-         paste('\\1', code_style, '"', sep=''), output)
+    gsub(paste('(', link_pattern, ')"(', default_code_style, ')"', sep=''),
+         paste('\\1', '"', code_style, '"', sep=''), output)
 
   if(no_file)
     return(output)
