@@ -110,7 +110,7 @@ bootstrap_HTML = function(input, output = NULL, boot_style=NULL,
 
   header = create_header(boot_style=boot_style, code_style=code_style,
                          chooser=chooser, nav_type=nav_type, thumbsize=thumbsize, show_code=show_code,
-                         graphics=graphics, no_file=TRUE)
+                         graphics=graphics, outfile=FALSE)
 
   lines = read_file(input)
 
@@ -168,8 +168,9 @@ get_style <- function(style, style_type, title, graphics = getOption("menu.graph
 #' @param show_code show code blocks by default.
 #' @param graphics what graphics to use for the menus, only applicable if
 #'        code_style or boot_style are true.
-#' @param no_file do not create a file and write to it, just return the header
-#'        as a character
+#' @param outfile if NULL, write the output file in a temporary directory, if a
+#'        character write it to that location, if FALSE, return the header as a
+#'        character.
 
 #' @export create_header
 
@@ -178,7 +179,7 @@ create_header <-
            nav_type=c('offscreen', 'onscreen'),
            thumbsize=c('span3', 'span4', 'span5', 'span6', 'span7', 'span8', 'span2', 'span1'),
            show_code=FALSE,
-           graphics = getOption("menu.graphics"), no_file=FALSE){
+           graphics = getOption("menu.graphics"), outfile=NULL){
 
   boot_style=get_style(boot_style, boot_styles, 'Bootstrap Style', graphics)
   code_style=get_style(code_style, code_styles, 'Code Block Style', graphics)
@@ -221,10 +222,11 @@ create_header <-
     gsub(paste('(', link_pattern, ')"(', default_code_style, ')"', sep=''),
          paste('\\1', '"', code_style, '"', sep=''), output)
 
-  if(no_file)
+  if(is.logical(outfile) && outfile == FALSE)
     return(output)
 
-  outfile = paste(tempdir(), 'knitr_bootstrap_full.html', sep='/')
+  if(is.null(outfile))
+    outfile = paste(tempdir(), 'knitr_bootstrap_full.html', sep='/')
 
   cat(output, '\n', file=outfile)
   invisible(outfile)

@@ -6,7 +6,7 @@
     chooser = NULL, nav_type = c("offscreen", "onscreen"),
     thumbsize = c("span3", "span4", "span5", "span6", "span7", "span8", "span2", "span1"),
     show_code = FALSE,
-    graphics = getOption("menu.graphics"), no_file = FALSE)
+    graphics = getOption("menu.graphics"), outfile = NULL)
 }
 \arguments{
   \item{boot_style}{the bootstrap style to use if
@@ -32,8 +32,9 @@
   \item{graphics}{what graphics to use for the menus, only
   applicable if code_style or boot_style are true.}
 
-  \item{no_file}{do not create a file and write to it, just
-  return the header as a character}
+  \item{outfile}{if NULL, write the output file in a
+  temporary directory, if a character write it to that
+  location, if FALSE, return the header as a character.}
 }
 \description{
   Create the html header based on the options given
