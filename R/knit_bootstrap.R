@@ -105,26 +105,27 @@ bootstrap_HTML = function(input, output = NULL, boot_style=NULL,
                           graphics = getOption("menu.graphics")) {
   if(is.null(output))
     output <- sub_ext(input, 'html')
-  stopifnot(input != output)
+  if(input == output)
+    stop('input cannot be the same as output:', input, ' ', output)
 
   header = create_header(boot_style=boot_style, code_style=code_style,
                          chooser=chooser, nav_type=nav_type, thumbsize=thumbsize, show_code=show_code,
                          graphics=graphics, no_file=TRUE)
 
-  lines = file_lines(input)
+  lines = read_file(input)
 
   #bit of a hack, check if substitute happened based on string length
   input_length = nchar(lines)
 
   #add header to file at the end of the header
   lines =
-    sub('</head>', paste(escape(header_lines), '</head>', collapse='\n'), lines)
+    sub('</head>', paste(escape(header), '</head>', collapse='\n'), lines)
 
   #add header before the body if no header found
   if(nchar(lines) == input_length)
     lines =
       sub('<body>',
-          paste('<head>', escape(header_lines), '</head><body>', collapse='\n')
+          paste('<head>', escape(header), '</head><body>', collapse='\n')
           , lines)
 
   cat(lines, '\n', file=output)
@@ -167,6 +168,9 @@ get_style <- function(style, style_type, title, graphics = getOption("menu.graph
 #' @param show_code show code blocks by default.
 #' @param graphics what graphics to use for the menus, only applicable if
 #'        code_style or boot_style are true.
+#' @param no_file do not create a file and write to it, just return the header
+#'        as a character
+
 #' @export create_header
 
 create_header <-
@@ -236,7 +240,8 @@ read_package_file <- function(path){
 }
 
 read_file <- function(file){
-  stopifnot(file.exists(file))
+  if(!file.exists(file))
+    stop('file: ', file, ' does not exist')
   readChar(file, 10e6)
 }
 

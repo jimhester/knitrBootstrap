@@ -3,6 +3,6 @@
 inst/doc/.*\.md
 inst/examples/.*\.md
 .*\.png
-.*\.js
+.*CanvasMatrix.js
 exec/customize.pl
 Makefile
