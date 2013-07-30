@@ -6,3 +6,4 @@ inst/examples/.*\.md
 .*CanvasMatrix.js
 exec/customize.pl
 Makefile
+.*R_package
