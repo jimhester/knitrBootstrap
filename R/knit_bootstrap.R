@@ -24,7 +24,7 @@ knit_bootstrap =
   function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
            nav_type=c('offscreen', 'onscreen'),
            thumbsize=c('span3', 'span4', 'span5', 'span6', 'span7', 'span8', 'span2', 'span1'),
-           show_code=FALSE,
+           show_code=FALSE, show_output=TRUE, show_plot=TRUE,
            markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
            ..., envir = parent.frame(), text = NULL,
            quiet = FALSE, encoding = getOption('encoding'),
@@ -37,7 +37,8 @@ knit_bootstrap =
   knit_bootstrap_md(md_file, output, boot_style=boot_style,
                     code_style=code_style, chooser=chooser,
                     markdown_options = markdown_options,
-                    nav_type=nav_type, thumbsize=thumbsize, show_code=show_code,
+                    nav_type=nav_type, thumbsize=thumbsize,
+                    show_code=show_code, show_output=show_output, show_plot=show_plot,
                     ..., graphics=graphics)
   invisible(output)
 }
@@ -65,13 +66,16 @@ function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
          text = NULL,
          nav_type=c('offscreen', 'onscreen'),
          thumbsize=c('span3', 'span4', 'span5', 'span6', 'span7', 'span8', 'span2', 'span1'),
-         show_code=FALSE,
+         show_code=FALSE, show_output=TRUE, show_plot=TRUE,
          markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
          graphics = getOption("menu.graphics"), ...) {
 
   require(knitr)
   header = create_header(boot_style=boot_style, code_style=code_style,
-                         chooser=chooser, nav_type=nav_type, thumbsize=thumbsize, show_code=show_code, graphics=graphics)
+                         chooser=chooser, nav_type=nav_type,
+                         thumbsize=thumbsize, 
+                         show_code=show_code, show_output=show_output, show_plot=show_plot,
+                         graphics=graphics)
 
   require(markdown)
   if(is.null(output))
@@ -101,7 +105,7 @@ bootstrap_HTML = function(input, output = NULL, boot_style=NULL,
                           code_style=NULL, chooser=NULL,
                           nav_type=c('offscreen', 'onscreen'),
                           thumbsize=c('span3', 'span4', 'span5', 'span6', 'span7', 'span8', 'span2', 'span1'),
-                          show_code=FALSE,
+                          show_code=FALSE, show_output=TRUE, show_plot=TRUE,
                           graphics = getOption("menu.graphics")) {
   if(is.null(output))
     output <- sub_ext(input, 'html')
@@ -109,7 +113,8 @@ bootstrap_HTML = function(input, output = NULL, boot_style=NULL,
     stop('input cannot be the same as output:', input, ' ', output)
 
   header = create_header(boot_style=boot_style, code_style=code_style,
-                         chooser=chooser, nav_type=nav_type, thumbsize=thumbsize, show_code=show_code,
+                         chooser=chooser, nav_type=nav_type, thumbsize=thumbsize,
+                         show_code=show_code, show_output=show_output, show_plot=show_plot,
                          graphics=graphics, outfile=FALSE)
 
   lines = read_file(input)
@@ -140,6 +145,8 @@ default_code_style='http://yandex.st/highlightjs/7.3/styles/default.min.css'
 nav_pattern='nav = "[^"]+"'
 thumb_pattern='thumbsize = "[^"]+"'
 show_code_pattern='show_code = [^;]+;'
+show_plot_pattern='show_plot = [^;]+;'
+show_output_pattern='show_output = [^;]+;'
 
 get_style <- function(style, style_type, title, graphics = getOption("menu.graphics")){
   style = if(is.null(style)){
@@ -178,7 +185,7 @@ create_header <-
   function(boot_style=NULL, code_style=NULL, chooser=NULL,
            nav_type=c('offscreen', 'onscreen'),
            thumbsize=c('span3', 'span4', 'span5', 'span6', 'span7', 'span8', 'span2', 'span1'),
-           show_code=FALSE,
+           show_code=FALSE, show_output=TRUE, show_plot=TRUE,
            graphics = getOption("menu.graphics"), outfile=NULL){
 
   boot_style=get_style(boot_style, boot_styles, 'Bootstrap Style', graphics)
@@ -202,8 +209,23 @@ create_header <-
   thumbsize=match.arg(thumbsize)
   javascript = sub(thumb_pattern, paste('thumbsize = "', thumbsize, '"', sep=''), javascript)
 
-  if(is.logical(show_code) && show_code)
-    javascript = sub(show_code_pattern, 'show_code = true;', javascript)
+  if(is.logical(show_code))
+    javascript = sub(show_code_pattern, paste('show_code = ', ifelse(show_code,
+                                                                     'true',
+                                                                     'false'),
+                                              ';'), javascript)
+
+  if(is.logical(show_output))
+    javascript = sub(show_output_pattern, paste('show_output = ', ifelse(show_output,
+                                                                     'true',
+                                                                     'false'),
+                                              ';'), javascript)
+
+  if(is.logical(show_plot))
+    javascript = sub(show_plot_pattern, paste('show_plot = ', ifelse(show_plot,
+                                                                     'true',
+                                                                     'false'),
+                                              ';'), javascript)
 
   output = paste(includes,
                  '<script>', javascript, '</script>',

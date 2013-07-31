@@ -8,12 +8,16 @@ CODE_STYLE=NULL
 NAV_TYPE='offscreen'
 THUMBSIZE='span3'
 SHOW_CODE=FALSE
+SHOW_OUTPUT=TRUE
+SHOW_PLOT=TRUE
 
 R_package=inst/templates/R_package
 
 BASE=$(filter-out $(R_package), $(wildcard inst/templates/*)) $(wildcard R/*.R)
 
-all: $(HTML) $(R_package)
+all: $(HTML) install
+
+install: $(R_package)
 
 $(R_package): $(BASE)
 	Rscript -e 'library(devtools);install(".", quick=T)'
@@ -34,7 +38,9 @@ inst/examples/all.html: $(RMD) $(R_package)
       code_style=$(CODE_STYLE),\
       nav_type=$(NAV_TYPE),\
       thumbsize=$(THUMBSIZE),\
-      show_code=$(SHOW_CODE)\
+      show_code=$(SHOW_CODE),\
+      show_output=$(SHOW_OUTPUT),\
+      show_plot=$(SHOW_PLOT),\
     )"
 
 make clean:

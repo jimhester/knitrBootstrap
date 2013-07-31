@@ -107,6 +107,9 @@ body {
 .row-fluid > div.contents.span12 {
   margin-left: 0;
 }
+button.thumbnails {
+  margin-left:0px;
+}
 .navbar-inner > .pull-right {
   padding-right: 20px;
 }

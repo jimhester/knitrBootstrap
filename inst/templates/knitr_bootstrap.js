@@ -10,6 +10,10 @@ $(function() {
 
   var show_code = false;
 
+  var show_output = true;
+
+  var show_plot = true;
+
   /* included languages */
   var languages = [];
 
@@ -68,7 +72,7 @@ $(function() {
     /* output block */
     else {
       button.text(button.text() + 'Output');
-      button.addClass('output active');
+      button.addClass('output');
     }
     $(this).before(button);
   });
@@ -130,8 +134,8 @@ $(function() {
             <ul class="dropdown-menu pull-right">'
               + create_language_links() +
             '</div>\
-            <button type="output" class="output toggle-global btn active">Output</button>\
-            <button type="thumbnails" class="toggle-global btn active">Plots</button>\
+            <button type="output" class="output toggle-global btn">Output</button>\
+            <button type="thumbnails" class="thumbnails toggle-global btn">Plots</button>\
           </div>\
         </div>\
       </div>\
@@ -189,12 +193,30 @@ $(function() {
 
   /* toggle code blocks hidden by default */
   if(show_code){
-    /* toggle source bottons pressed */
+    /* toggle source buttons pressed */
     $('.source').filter(":button").addClass('active');
   }
   else {
     /* hide code blocks */
     $('div.source').toggle();
+  }
+
+  if(show_output){
+    /* toggle output buttons pressed */
+    $('.output').filter(":button").addClass('active');
+  }
+  else {
+    /* hide output blocks */
+    $('div.output').toggle();
+  }
+
+  if(show_plot){
+    /* toggle output buttons pressed */
+    $('.thumbnails').filter(":button").addClass('active');
+  }
+  else {
+    /* hide output blocks */
+    $('div.thumbnails').toggle();
   }
 
   /* remove paragraphs with no content */

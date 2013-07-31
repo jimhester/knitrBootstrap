@@ -6,7 +6,8 @@
     boot_style = NULL, code_style = NULL, chooser = NULL,
     text = NULL, nav_type = c("offscreen", "onscreen"),
     thumbsize = c("span3", "span4", "span5", "span6", "span7", "span8", "span2", "span1"),
-    show_code = FALSE,
+    show_code = FALSE, show_output = TRUE,
+    show_plot = TRUE,
     markdown_options = c("mathjax", "base64_images", "use_xhtml"),
     graphics = getOption("menu.graphics"), ...)
 }
