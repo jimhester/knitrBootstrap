@@ -154,7 +154,7 @@ $(function() {
   /*search in ggplot documentation or inside-r.org */
   $("span.functioncall").replaceWith(function(){
     return '<a target="_blank" href="http://www.google.com/search?sourceid=navclient&gfns=1&\
-      q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
+q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
     $(this).text() + '">' + $(this).text()+'</a>'
   });
 
