@@ -1,23 +1,25 @@
-<link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" id="style" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" title="Default" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/amelia/bootstrap.min.css" title="Amelia" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cerulean/bootstrap.min.css" title="Cerulean" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cosmo/bootstrap.min.css" title="Cosmo" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cyborg/bootstrap.min.css" title="Cyborg" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/flatly/bootstrap.min.css" title="Flatly" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/journal/bootstrap.min.css" title="Journal" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/readable/bootstrap.min.css" title="Readable" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/simplex/bootstrap.min.css" title="Simplex" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/slate/bootstrap.min.css" title="Slate" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/spacelab/bootstrap.min.css" title="Spacelab" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/spruce/bootstrap.min.css" title="Spruce" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/superhero/bootstrap.min.css" title="Superhero" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/united/bootstrap.min.css" title="United" media="screen">
+<link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" title='Default' id='style'>
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/amelia/bootstrap.min.css" title="Amelia" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css" title="Cerulean" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/cosmo/bootstrap.min.css" title="Cosmo" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/cyborg/bootstrap.min.css" title="Cyborg" media="screen">
+<!--<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/flatly/bootstrap.min.css" title="Flatly" media="screen">-->
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/journal/bootstrap.min.css" title="Journal" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/readable/bootstrap.min.css" title="Readable" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/simplex/bootstrap.min.css" title="Simplex" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/slate/bootstrap.min.css" title="Slate" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" title="Spacelab" media="screen">
+<!--<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/spruce/bootstrap.min.css" title="Spruce" media="screen">-->
+<!--<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/superhero/bootstrap.min.css" title="Superhero" media="screen">-->
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/united/bootstrap.min.css" title="United" media="screen">
 
+          <!--<li><a class="style-switch" title="Flatly" href="#"    >Flatly</a>     </li> \-->
+          <!--<li><a class="style-switch" title="Superhero" href="#" >Superhero</a>  </li> \-->
+          <!--<li><a class="style-switch" title="Spruce" href="#"    >Spruce</a>     </li> \-->
 <script>
 $(function() {
-    $('#bottom-navbar').find('.navbar-inner').append(
-    '<ul class="nav">\
+    $('#bottom-navbar').append(
+    '<ul class="nav navbar-nav">\
       <li class="dropdown">\
         <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">Bootstrap Style</a>\
         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">\
@@ -26,14 +28,11 @@ $(function() {
           <li><a class="style-switch" title="Cerulean" href="#"  >Cerulean</a>   </li> \
           <li><a class="style-switch" title="Cosmo" href="#"     >Cosmo</a>      </li> \
           <li><a class="style-switch" title="Cyborg" href="#"    >Cyborg</a>     </li> \
-          <li><a class="style-switch" title="Flatly" href="#"    >Flatly</a>     </li> \
           <li><a class="style-switch" title="Journal" href="#"   >Journal</a>    </li> \
           <li><a class="style-switch" title="Readable" href="#"  >Readable</a>   </li> \
           <li><a class="style-switch" title="Simplex" href="#"   >Simplex</a>    </li> \
           <li><a class="style-switch" title="Slate" href="#"     >Slate</a>      </li> \
           <li><a class="style-switch" title="Spacelab" href="#"  >Spacelab</a>   </li> \
-          <li><a class="style-switch" title="Spruce" href="#"    >Spruce</a>     </li> \
-          <li><a class="style-switch" title="Superhero" href="#" >Superhero</a>  </li> \
           <li><a class="style-switch" title="United" href="#"    >United</a>     </li> \
         </ul>\
       </li>\

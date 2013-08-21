@@ -6,7 +6,7 @@ $(function() {
   var nav = "offscreen";
 
   /* size of thumbnails */
-  var thumbsize = "span3";
+  var thumbsize = "col-md-3";
 
   var show_code = false;
 
@@ -49,13 +49,13 @@ $(function() {
     }
   });
 
-  /* style tables, set them as output*/
-  $('table').addClass('table table-striped table-bordered table-hover table-condensed')
-    .wrap('<div class="output" style="overflow: auto"/>');
+  /* style tables */
+  $('table').addClass('table table-striped table-bordered table-hover table-condensed');
+    //.wrap('<div class="output" style="overflow: auto"/>');
 
   /* find all code or output blocks which have a class and add toggle */
   $('div.source, div.output').each(function() {
-    var button = $('<button class="btn-mini btn-link btn toggle" data-toggle="button">+/- </button>');
+    var button = $('<div class="panel-heading toggle"><h5 class="panel-title">+/- </h5></div>');
 
     /* code block */
     if($(this).hasClass('source')){
@@ -67,20 +67,23 @@ $(function() {
       code_block.each(function(i, e) {
         hljs.highlightBlock(e);
       });
+      $(this).addClass('panel panel-primary');
     }
 
     /* output block */
     else {
       button.text(button.text() + 'Output');
       button.addClass('output');
+      $(this).addClass('panel panel-success');
     }
-    $(this).before(button);
+    button.wrap('<div class="panel-heading toggle">');
+    $(this).prepend(button);
   });
 
   /* onclick toggle next code block */
   $('.toggle').click(function() {
     $(this).button('toggle');
-    $(this).next('div').slideToggle();
+    $(this).next('pre').slideToggle();
     return false;
   });
 
@@ -89,8 +92,13 @@ $(function() {
     $(this).find('img').unwrap().wrapAll('<div class="rimage default"></div>');
   });
   $('div.rimage').each(function(){
-    $(this).addClass("row-fluid thumbnails");
-    $(this).children('img').wrap('<a href="#" class="mfp-image ' + thumbsize + ' thumbnail"></a></li>');
+    $(this).addClass("row thumbnails");
+    $(this).children('img').wrap('<a href="#" class="media-object pull-left mfp-image ' + thumbsize + ' thumbnail"></a>');
+    var rcode = $(this).prev('.rcode');
+    rcode.addClass('media');
+    rcode.find('.source').addClass('media-body');
+    var imgs = $(this).children('a').detach();
+    rcode.prepend(imgs);
   });
 
   /* Magnific Popup */
@@ -107,7 +115,7 @@ $(function() {
   });
 
   /* add bootstrap classes */
-  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="contents">');
+  $('body').wrapInner('<div class="container"><div class="row"><div class="contents">');
 
   var create_language_links = function(){
     var text='';
@@ -121,14 +129,13 @@ $(function() {
   }
 
   /* add navbar */
-  $('.container-fluid').append(
-    '<div id="bottom-navbar" class="navbar-fixed-bottom navbar">\
-      <div class="navbar-inner">\
+  $('.container').append(
+    '<div id="bottom-navbar" class="navbar-fixed-bottom navbar navbar-default">\
         <div class="pull-right">\
-          <span class="navbar-text">Toggle</span>\
+          <p class="navbar-text">Toggle</p>\
           <div class="btn-group dropup" data-toggle="button-checkbox">\
-            <button type="source" class="source toggle-global btn">Code</button>\
-            <button class="btn dropdown-toggle" data-toggle="dropdown">\
+            <button type="source" class="source toggle-global btn navbar-btn">Code</button>\
+            <button class="btn navbar-btn dropdown-toggle" data-toggle="dropdown">\
               <span class="caret"></span>\
             </button>\
             <ul class="dropdown-menu pull-right">'
@@ -146,7 +153,7 @@ $(function() {
   $('.toggle-global').click(function(){
     var type = $(this).attr('type');
     $('.' + type).button('toggle');
-    $('div.' + type).slideToggle();
+    $('div.' + type + ' pre').slideToggle();
     return false;
   });
 
@@ -169,11 +176,11 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
   last_p.appendTo("body");
   last_p.wrap('<div id="footer">');
 
-  $('.container-fluid > .row-fluid').prepend('<div id="toc" class="well"/></div>');
+  $('.container > .row').prepend('<div class="col-md-3"><div id="toc" class="well sidebar affix hidden-print"/></div>');
 
   if(nav == 'offscreen'){
     $('#toc').wrap('<div class="meny">');
-    $('.contents').addClass('span12').wrapInner('<div class="offset2 span8">');
+    $('.contents').addClass('col-md-12').wrapInner('<div class="col-md-offset-2">');
     $('.meny').after('<div class="meny-arrow">');
 
     var meny = Meny.create({
@@ -184,8 +191,7 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
     });
   }
   else {
-    $('#toc').css({ "padding-bottom": "36000px", "margin-bottom": "-36000px"}).addClass('span3');
-    $('.contents').addClass('offset3 span8');
+    $('.contents').addClass('col-md-offset-3 col-md-8');
   }
 
   /* table of contents */
@@ -198,7 +204,7 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
   }
   else {
     /* hide code blocks */
-    $('div.source').toggle();
+    $('div.source pre').toggle();
   }
 
   if(show_output){

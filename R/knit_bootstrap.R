@@ -23,7 +23,7 @@
 knit_bootstrap =
   function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
            nav_type=c('offscreen', 'onscreen'),
-           thumbsize=c('span3', 'span4', 'span5', 'span6', 'span7', 'span8', 'span2', 'span1'),
+           thumbsize=c('col-md-3','col-md-1','col-md-2','col-md-4','col-md-5','col-md-6','col-md-7','col-md-8','col-md-9'),
            show_code=FALSE, show_output=TRUE, show_plot=TRUE,
            markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
            ..., envir = parent.frame(), text = NULL,
@@ -65,7 +65,7 @@ knit_bootstrap_md =
 function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
          text = NULL,
          nav_type=c('offscreen', 'onscreen'),
-         thumbsize=c('span3', 'span4', 'span5', 'span6', 'span7', 'span8', 'span2', 'span1'),
+         thumbsize=c('col-md-3','col-md-1','col-md-2','col-md-4','col-md-5','col-md-6','col-md-7','col-md-8','col-md-9'),
          show_code=FALSE, show_output=TRUE, show_plot=TRUE,
          markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
          graphics = getOption("menu.graphics"), ...) {
@@ -104,7 +104,7 @@ function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
 bootstrap_HTML = function(input, output = NULL, boot_style=NULL,
                           code_style=NULL, chooser=NULL,
                           nav_type=c('offscreen', 'onscreen'),
-                          thumbsize=c('span3', 'span4', 'span5', 'span6', 'span7', 'span8', 'span2', 'span1'),
+                          thumbsize=c('col-md-3','col-md-1','col-md-2','col-md-4','col-md-5','col-md-6','col-md-7','col-md-8','col-md-9'),
                           show_code=FALSE, show_output=TRUE, show_plot=TRUE,
                           graphics = getOption("menu.graphics")) {
   if(is.null(output))
@@ -171,7 +171,7 @@ get_style <- function(style, style_type, title, graphics = getOption("menu.graph
 #'        code chooser.
 #' @param nav_type either offscreen to use a dynamic offscreen navigation menu, or
 #'        onscreen to use a fixed onscreen navigation menu.
-#' @param thumbsize size of thumbnails in bootstrap spans.
+#' @param thumbsize size of thumbnails in bootstrap columns.
 #' @param show_code show code blocks by default.
 #' @param graphics what graphics to use for the menus, only applicable if
 #'        code_style or boot_style are true.
@@ -184,7 +184,7 @@ get_style <- function(style, style_type, title, graphics = getOption("menu.graph
 create_header <-
   function(boot_style=NULL, code_style=NULL, chooser=NULL,
            nav_type=c('offscreen', 'onscreen'),
-           thumbsize=c('span3', 'span4', 'span5', 'span6', 'span7', 'span8', 'span2', 'span1'),
+           thumbsize=c('col-md-3','col-md-1','col-md-2','col-md-4','col-md-5','col-md-6','col-md-7','col-md-8','col-md-9'),
            show_code=FALSE, show_output=TRUE, show_plot=TRUE,
            graphics = getOption("menu.graphics"), outfile=NULL){
 
