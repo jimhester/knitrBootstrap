@@ -30,6 +30,7 @@ knit_bootstrap =
            quiet = FALSE, encoding = getOption('encoding'),
            graphics = getOption("menu.graphics")) {
 
+  knitr::render_html()
   md_file =
     knit(input, NULL, text = text, envir = envir,
          encoding = encoding, quiet = quiet)
