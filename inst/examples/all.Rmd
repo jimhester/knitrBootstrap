@@ -15,8 +15,8 @@
 ```
 ```{r child="../doc/math.Rmd"}
 ```
-```{r child="../doc/messages.Rmd"}
+```{r child="messages.Rmd"}
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 03:22:28 PM
-Last Modified: 2013 Aug 22 02:59:05 PM
+Last Modified: 2013 Aug 22 03:15:44 PM
