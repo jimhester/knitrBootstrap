@@ -74,7 +74,7 @@ $(function() {
     $(this).children('img').wrap('<a href="#" class="media-object pull-left mfp-image ' + thumbsize + ' thumbnail"></a>');
     var rcode = $(this).prev('.rcode');
     rcode.addClass('media');
-    rcode.find('.source').addClass('media-body');
+    rcode.find('div').addClass('media-body');
     var imgs = $(this).children('a').detach();
     rcode.prepend(imgs);
   });
