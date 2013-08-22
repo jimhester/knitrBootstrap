@@ -1,0 +1,22 @@
+<!--
+%\VignetteEngine{knitr}
+%\VignetteIndexEntry{Messages}
+-->
+```{r messages_print}
+print('this is a print')
+```
+```{r messages_cat}
+cat('this is a cat\n')
+```
+```{r messages_message}
+message('this is a message')
+```
+```{r messages_error}
+stop('this is an error')
+```
+```{r messages_all}
+print('this is a print')
+cat('this is a cat\n')
+message('this is a message')
+stop('this is an error')
+```

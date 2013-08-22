@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<!-- saved from url=(0014)about:internet -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>Math expressions</title>
+<title>+/- </title>
 
 
 
@@ -23,17 +22,14 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 
-<!-- bootstrap -->
-<link rel="stylesheet" type="text/css" href=http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css id="style" media="screen">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-
-<!-- bootstrap-responsive -->
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" media="screen">
-
 <!-- highlight.js -->
-<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
+<link rel="stylesheet" href="https://yandex.st/highlightjs/7.3/styles/default.min.css">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/highlight.min.js"></script>
 <script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
+
+<!-- bootstrap -->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
 <!-- tocify -->
 <script src="http://gregfranko.com/jquery.tocify.js/js/jquery.tocify.min.js"></script>
@@ -42,21 +38,24 @@
 <script src="http://dimsemenov.com/plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
 <link rel="stylesheet" href="http://dimsemenov.com/plugins/magnific-popup/dist/magnific-popup.css">
 
-<!-- meny -->
-<script src="http://lab.hakim.se/meny/js/meny.min.js"></script>
-
 <script>
 /* run scripts when document is ready */
 $(function() {
   "use strict";
 
+  document.title = $('h1').first().text();
+
   /* type of toc navigation */
   var nav = "offscreen";
 
   /* size of thumbnails */
-  var thumbsize = "span3";
+  var thumbsize = "col-md-3";
 
-  var show_code = false;
+  var show_code =  false ;
+
+  var show_output =  true ;
+
+  var show_figure =  true ;
 
   /* included languages */
   var languages = [];
@@ -69,39 +68,13 @@ $(function() {
     }
   });
 
-  /* Add div wrapping class to code blocks without them */
-  $('pre code').each(function(){
+  /* style tables */
+  $('table').addClass('table table-striped table-bordered table-hover table-condensed');
 
-    var block_type, code_type;
-    /* output block */
-    if($(this).hasClass('')){
-      block_type = "output";
-      code_type = "";
-    }
-    /* source code block */
-    else{
-      block_type = "source";
-      code_type = $(this).attr('class');
-    }
-    /* no wrapping div, not using render_html(), so add to wrap */
-    if($(this).closest('div').length < 1){
-      $(this).parent().wrap('<div class="' + [block_type, code_type].join(" ") + '"></div>');
-    }
-    /* just add code type to the parent div */
-    else{
-      $(this).closest('div').addClass(code_type);
-    }
-  });
+  /* add toggle panel to rcode blocks */
+  $('div.rcode div').each(function() {
+    var button = $('<h5 class="panel-title">+/- </h5>');
 
-  /* style tables, set them as output*/
-  $('table').addClass('table table-striped table-bordered table-hover table-condensed')
-    .wrap('<div class="output" style="overflow: auto"/>');
-
-  /* find all code or output blocks which have a class and add toggle */
-  $('div.source, div.output').each(function() {
-    var button = $('<button class="btn-mini btn-link btn toggle" data-toggle="button">+/- </button>');
-
-    /* code block */
     if($(this).hasClass('source')){
       var code_block = $(this).find('code');
       var lang_type = code_block.attr('class');
@@ -111,21 +84,26 @@ $(function() {
       code_block.each(function(i, e) {
         hljs.highlightBlock(e);
       });
+      $(this).addClass('panel panel-primary ' + lang_type);
     }
-
-    /* output block */
-    else {
+    else if($(this).hasClass('output')){
       button.text(button.text() + 'Output');
-      button.addClass('output active');
+      button.addClass('output');
+      $(this).addClass('panel panel-success');
     }
-    $(this).before(button);
-  });
-
-  /* onclick toggle next code block */
-  $('.toggle').click(function() {
-    $(this).button('toggle');
-    $(this).next('div').slideToggle();
-    return false;
+    else if($(this).hasClass('message')){
+      button.text(button.text() + 'Message');
+      button.addClass('message');
+      $(this).addClass('panel panel-info');
+    } else if($(this).hasClass('error')){
+      button.text(button.text() + 'Error');
+      button.addClass('error');
+      $(this).addClass('panel panel-danger');
+    }
+    else {
+      console.log($(this));
+    }
+    $(this).prepend($('<div class="panel-heading toggle" />').append(button));
   });
 
   /* give images a lightbox and thumbnail classes to allow lightbox and thumbnails TODO: make gallery if graphs are grouped */
@@ -133,8 +111,13 @@ $(function() {
     $(this).find('img').unwrap().wrapAll('<div class="rimage default"></div>');
   });
   $('div.rimage').each(function(){
-    $(this).addClass("row-fluid thumbnails");
-    $(this).children('img').wrap('<a href="#" class="mfp-image ' + thumbsize + ' thumbnail"></a></li>');
+    $(this).addClass("row thumbnails");
+    $(this).children('img').wrap('<a href="#" class="media-object pull-left mfp-image ' + thumbsize + ' thumbnail"></a>');
+    var rcode = $(this).prev('.rcode');
+    rcode.addClass('media');
+    rcode.find('.source').addClass('media-body');
+    var imgs = $(this).children('a').detach();
+    rcode.prepend(imgs);
   });
 
   /* Magnific Popup */
@@ -151,55 +134,93 @@ $(function() {
   });
 
   /* add bootstrap classes */
-  $('body').wrapInner('<div class="container-fluid"><div class="row-fluid"><div class="contents">');
+  $('body').wrapInner('<div class="container"><div class="row"><div class="contents">');
 
   var create_language_links = function(){
     var text='';
     var language;
     for(language in languages){
       if(languages.hasOwnProperty(language)){
-        text += '<li><button style="width: 100%;" class="toggle-global btn-link btn source ' + language + '" type="source.' + language + '">' + language + '</button></li>\n';
+        text += '<li><a href=# class="toggle-global source ' + language + '" type="source.' + language + '">' + language + '</a></li>\n';
       }
     }
     return text;
   }
 
-  /* add navbar */
-  $('.container-fluid').append(
-    '<div id="bottom-navbar" class="navbar-fixed-bottom navbar">\
-      <div class="navbar-inner">\
-        <div class="pull-right">\
-          <span class="navbar-text">Toggle</span>\
-          <div class="btn-group dropup" data-toggle="button-checkbox">\
-            <button type="source" class="source toggle-global btn">Code</button>\
-            <button class="btn dropdown-toggle" data-toggle="dropdown">\
-              <span class="caret"></span>\
-            </button>\
-            <ul class="dropdown-menu pull-right">'
-              + create_language_links() +
-            '</div>\
-            <button type="output" class="output toggle-global btn active">Output</button>\
-            <button type="thumbnails" class="toggle-global btn active">Plots</button>\
-          </div>\
-        </div>\
+  var navbar =
+  '<div class="navbar navbar-fixed-bottom navbar-inverse">\
+    <div class="container">\
+      <div class="navbar-header">\
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">\
+          <span class="icon-bar"></span>\
+          <span class="icon-bar"></span>\
+          <span class="icon-bar"></span>\
+        </button>\
       </div>\
-    </div>'
-  );
+      <div id="bottom-navbar" class="navbar-collapse collapse navbar-responsive-collapse">\
+        <ul class="nav navbar-nav navbar-right">\
+          <li class="nav"><p class="navbar-text">Toggle</p></li>\
+          <li class="dropup">\
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Code <b class="caret"></b></a>\
+            <ul class="dropdown-menu">\
+              <li class="dropdown-header">Languages</li>'
+              + create_language_links() +
+              '<li><a href="#" type="all-source" class="toggle-global">All</a></li>\
+            </ul>\
+          </li>\
+          <li class="dropup">\
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Output <b class="caret"></b></a>\
+            <ul class="dropdown-menu">\
+              <li class="dropdown-header">Type</li>\
+                <li><a href="#" type="output" class="toggle-global">Output</a></li>\
+                <li><a href="#" type="message" class="toggle-global">Message</a></li>\
+                <li><a href="#" type="error" class="toggle-global">Error</a></li>\
+                <li><a href="#" type="all-output" class="toggle-global">All</a></li>\
+            </ul>\
+          </li>\
+          <li><a href="#" class="toggle-figure">Figures</a></li>\
+        </ul>\
+      </div><!-- /.nav-collapse -->\
+    </div><!-- /.container -->\
+  </div>';
+  /* add navbar */
+  $('.container').append(navbar);
 
-  /* global toggles FIXME explicitly toggle all on/off using global variables */
-  $('.toggle-global').click(function(){
-    var type = $(this).attr('type');
-    $('.' + type).button('toggle');
-    $('div.' + type).slideToggle();
+  /* onclick toggle next code block */
+  $('.toggle').click(function() {
+    $(this).next('pre').slideToggle();
     return false;
   });
 
-  /* if using render_html() hook, make functions links to custom R search */
-  /*search in ggplot documentation or inside-r.org */
-  $("span.functioncall").replaceWith(function(){
-    return '<a target="_blank" href="http://www.google.com/search?sourceid=navclient&gfns=1&\
-      q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
-    $(this).text() + '">' + $(this).text()+'</a>'
+  // global toggles FIXME explicitly toggle all on/off using global variables
+  $('.toggle-global').click(function(){
+    var type = $(this).attr('type');
+    if(type == 'all-source'){
+      for(var language in languages){
+        $('li a[type="source.' + language + '"]').click();
+      }
+    }
+    if(type == 'all-output'){
+      $('li a[type=output], li a[type=message], li a[type=error]').click();
+    }
+    else {
+      $('div.' + type).children('pre').slideToggle();
+    }
+    $(this).closest('li').toggleClass('active');
+    return false;
+  });
+  // global toggles figure, this is more complicated than just slideToggle because you have to hide the parent div as well
+  $('.toggle-figure').click(function(){
+    var imgs = $('.thumbnail img');
+    if(imgs.is(":visible")){
+      imgs.hide(400, 'swing', function(){ $(this).parent().toggle(); });
+    }
+    else {
+      imgs.parent().show();
+      imgs.show(400, 'swing');
+    }
+    $(this).closest('li').toggleClass('active');
+    return false;
   });
 
   /* add footer */
@@ -213,36 +234,38 @@ $(function() {
   last_p.appendTo("body");
   last_p.wrap('<div id="footer">');
 
-  $('.container-fluid > .row-fluid').prepend('<div id="toc" class="well"/></div>');
+  $('.container > .row').prepend('<div class="col-md-3"><div id="toc" class="well sidebar sidenav affix hidden-print"/></div>');
 
-  if(nav == 'offscreen'){
-    $('#toc').wrap('<div class="meny">');
-    $('.contents').addClass('span12').wrapInner('<div class="offset2 span8">');
-    $('.meny').after('<div class="meny-arrow">');
-
-    var meny = Meny.create({
-        menuElement: document.querySelector( '.meny' ),
-        contentsElement: document.querySelector( '.contents' ),
-        position: 'left',
-        width: 260
-    });
-  }
-  else {
-    $('#toc').css({ "padding-bottom": "36000px", "margin-bottom": "-36000px"}).addClass('span3');
-    $('.contents').addClass('offset3 span8');
-  }
+  $('.contents').addClass('col-md-offset-3');
 
   /* table of contents */
   $('#toc').tocify({extendPage: false});
 
-  /* toggle code blocks hidden by default */
   if(show_code){
-    /* toggle source bottons pressed */
-    $('.source').filter(":button").addClass('active');
+    /* toggle source buttons pressed */
+    $('a.toggle-global.source').closest('li').addClass('active');
   }
   else {
     /* hide code blocks */
-    $('div.source').toggle();
+    $('div.source pre').hide();
+  }
+
+  if(show_output){
+    /* toggle output buttons pressed */
+    $('li a[type=output], li a[type=message], li a[type=error], li a[type=all-output]').closest('li').addClass('active');
+  }
+  else {
+    /* hide output blocks */
+    $('div.output').hide();
+  }
+
+  if(show_figure){
+    /* toggle figure button pressed */
+    $('li a.toggle-figure').closest('li').addClass('active');
+  }
+  else {
+    /* hide figures */
+    $('.thumbnail').hide();
   }
 
   /* remove paragraphs with no content */
@@ -264,11 +287,6 @@ $(function() {
 .toggle-global{
   text-transform: capitalize;
 }
-
-/*fix for boostrap#3494*/
-.row-fluid.thumbnails .span5.thumbnail:nth-child(6n+1) { margin-left: 0px; }
-.row-fluid.thumbnails .span5.thumbnail:nth-child(4n+1) { margin-left: 0px; }
-.row-fluid.thumbnails .span5.thumbnail:nth-child(2n+1) { margin-left: 0px; }
 
 /* Sticky footer styles */
 * {
@@ -301,16 +319,6 @@ body {
   text-align: center;
 }
 
-/* Tocify */
-
-#toc {
-  border-radius: 0px;
-  height:100%;
-  padding: 9px;
-  margin-right: -10px;
-  position: fixed;
-  width: 240px;
-}
 /* Top level subheader elements.  These are the first nested items underneath a header element. */
 .header li {
   font-size: 20px;
@@ -321,98 +329,160 @@ body {
     font-size: 12px;
 }
 
-.meny {
-  height: 100%;
+button.thumbnails {
+  margin-left:0px;
 }
 
-.meny-left.row-fluid {
-  margin-left: 0%;
+.mfp-image img{
+  background: white;
 }
-
-
-.meny-arrow {
-  position: absolute;
-  z-index: 10;
-
-  border: 10px solid transparent;
-
-  -webkit-transition: opacity 0.4s ease 0.4s; 
-     -moz-transition: opacity 0.4s ease 0.4s; 
-      -ms-transition: opacity 0.4s ease 0.4s; 
-       -o-transition: opacity 0.4s ease 0.4s; 
-          transition: opacity 0.4s ease 0.4s;
-}
-  .meny-left .meny-arrow {
-    left: 14px;
-    top: 50%;
-    margin-top: -16px;
-    border-left: 16px solid #AAA;
-  }
-  .meny-active .meny-arrow {
-    opacity: 0;
-
-    -webkit-transition: opacity 0.2s ease; 
-       -moz-transition: opacity 0.2s ease; 
-        -ms-transition: opacity 0.2s ease; 
-         -o-transition: opacity 0.2s ease; 
-            transition: opacity 0.2s ease;
-  }
-
-.row-fluid > div.contents.span12 {
-  margin-left: 0;
-}
-.navbar-inner > .pull-right {
-  padding-right: 20px;
-}
-
 .mfp-figure:after {
   background: white;
 }
+/*
+ * Side navigation
+ *
+ * Scrollspy and affixed enhanced navigation to highlight sections and secondary
+ * sections of docs content.
+ */
+
+/* By default it's not affixed in mobile views, so undo that */
+.sidebar.affix {
+  position: static;
+}
+
+/* First level of nav */
+.sidenav {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding-top:    10px;
+  padding-bottom: 10px;
+  text-shadow: 0 1px 0;
+  border-radius: 5px;
+}
+
+/* All levels of nav */
+.sidebar .nav > li > a {
+  display: block;
+  /*color: #716b7a;*/
+  padding: 5px 20px;
+}
+.sidebar .nav > li > a:hover,
+.sidebar .nav > li > a:focus {
+  text-decoration: none;
+  border-right: 1px solid;
+}
+.sidebar .nav > .active > a,
+.sidebar .nav > .active:hover > a,
+.sidebar .nav > .active:focus > a {
+  font-weight: bold;
+  background-color: transparent;
+  border-right: 1px solid;
+}
+
+/* Nav: second level (shown on .active) */
+.sidebar .nav .nav {
+  display: none; /* Hide by default, but at >768px, show it */
+  margin-bottom: 8px;
+}
+.sidebar .nav .nav > li > a {
+  padding-top:    3px;
+  padding-bottom: 3px;
+  padding-left: 30px;
+  font-size: 90%;
+}
+
+/* Show and affix the side nav when space allows it */
+@media screen and (min-width: 992px) {
+  .sidebar .nav > .active > ul {
+    display: block;
+  }
+  /* Widen the fixed sidebar */
+  .sidebar.affix,
+  .sidebar.affix-bottom {
+    width: 213px;
+  }
+  .sidebar.affix {
+    position: fixed; /* Undo the static from mobile first approach */
+    top: 30px;
+  }
+  .sidebar.affix-bottom {
+    position: absolute; /* Undo the static from mobile first approach */
+  }
+  .sidebar.affix-bottom .sidenav,
+  .sidebar.affix .sidenav {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+@media screen and (min-width: 1200px) {
+  /* Widen the fixed sidebar again */
+  .sidebar.affix-bottom,
+  .sidebar.affix {
+    width: 263px;
+  }
+}
+
+#toc {
+  padding: 10px 0px;
+  margin:0;
+  border:0;
+}
+
+
+.panel pre {
+  border-radius: 0;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
 
 </style>
-<link rel="stylesheet" type="text/css" href=http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css id="style" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" title="Default" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/amelia/bootstrap.min.css" title="Amelia" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cerulean/bootstrap.min.css" title="Cerulean" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cosmo/bootstrap.min.css" title="Cosmo" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/cyborg/bootstrap.min.css" title="Cyborg" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/flatly/bootstrap.min.css" title="Flatly" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/journal/bootstrap.min.css" title="Journal" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/readable/bootstrap.min.css" title="Readable" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/simplex/bootstrap.min.css" title="Simplex" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/slate/bootstrap.min.css" title="Slate" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/spacelab/bootstrap.min.css" title="Spacelab" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/spruce/bootstrap.min.css" title="Spruce" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/superhero/bootstrap.min.css" title="Superhero" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/united/bootstrap.min.css" title="United" media="screen">
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id='style'>
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" title="Default" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/amelia/bootstrap.min.css" title="Amelia" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" title="Bootstrap" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css" title="Cerulean" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/cosmo/bootstrap.min.css" title="Cosmo" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/cyborg/bootstrap.min.css" title="Cyborg" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/flatly/bootstrap.min.css" title="Flatly" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/journal/bootstrap.min.css" title="Journal" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/readable/bootstrap.min.css" title="Readable" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/simplex/bootstrap.min.css" title="Simplex" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/slate/bootstrap.min.css" title="Slate" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" title="Spacelab" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/united/bootstrap.min.css" title="United" media="screen">
 
+          <!--<li><a class="style-switch" title="Superhero" href="#" >Superhero</a>  </li> \-->
+          <!--<li><a class="style-switch" title="Spruce" href="#"    >Spruce</a>     </li> \-->
 <script>
 $(function() {
-    $('#bottom-navbar').find('.navbar-inner').append(
-    '<ul class="nav">\
-      <li class="dropdown">\
-        <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">Bootstrap Style</a>\
+    $('#bottom-navbar').append(
+    '<ul class="nav navbar-nav navbar-left">\
+      <li class="dropup">\
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Bootstrap Style</a>\
         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">\
-          <li><a class="style-switch" title="Default" href="#"   >Default</a>    </li> \
-          <li><a class="style-switch" title="Amelia" href="#"    >Amelia</a>     </li> \
-          <li><a class="style-switch" title="Cerulean" href="#"  >Cerulean</a>   </li> \
-          <li><a class="style-switch" title="Cosmo" href="#"     >Cosmo</a>      </li> \
-          <li><a class="style-switch" title="Cyborg" href="#"    >Cyborg</a>     </li> \
-          <li><a class="style-switch" title="Flatly" href="#"    >Flatly</a>     </li> \
-          <li><a class="style-switch" title="Journal" href="#"   >Journal</a>    </li> \
-          <li><a class="style-switch" title="Readable" href="#"  >Readable</a>   </li> \
-          <li><a class="style-switch" title="Simplex" href="#"   >Simplex</a>    </li> \
-          <li><a class="style-switch" title="Slate" href="#"     >Slate</a>      </li> \
-          <li><a class="style-switch" title="Spacelab" href="#"  >Spacelab</a>   </li> \
-          <li><a class="style-switch" title="Spruce" href="#"    >Spruce</a>     </li> \
-          <li><a class="style-switch" title="Superhero" href="#" >Superhero</a>  </li> \
-          <li><a class="style-switch" title="United" href="#"    >United</a>     </li> \
+           <li class="active"><a class="style-switch" title="Default" href="#"   >Default</a></li> \
+           <li><a class="style-switch" title="Amelia" href="#"                   >Amelia</a></li> \
+           <li><a class="style-switch" title="Bootstrap" href="#"                >Bootstrap</a></li> \
+           <li><a class="style-switch" title="Cerulean" href="#"                 >Cerulean</a></li> \
+           <li><a class="style-switch" title="Cosmo" href="#"                    >Cosmo</a></li> \
+           <li><a class="style-switch" title="Cyborg" href="#"                   >Cyborg</a></li> \
+           <li><a class="style-switch" title="Flatly" href="#"                   >Flatly</a></li> \
+           <li><a class="style-switch" title="Journal" href="#"                  >Journal</a></li> \
+           <li><a class="style-switch" title="Readable" href="#"                 >Readable</a></li> \
+           <li><a class="style-switch" title="Simplex" href="#"                  >Simplex</a></li> \
+           <li><a class="style-switch" title="Slate" href="#"                    >Slate</a></li> \
+           <li><a class="style-switch" title="Spacelab" href="#"                 >Spacelab</a></li> \
+           <li><a class="style-switch" title="United" href="#"                   >United</a></li> \
         </ul>\
       </li>\
     </ul>');
     $('.style-switch').click(function(){
       var css = $('link[title=' + $(this).attr('title') + ']');
       $('#style[rel=stylesheet]').attr('href', css.attr('href'));
+      $('.style-switch').closest('li').removeClass('active');
+      $(this).closest('li').addClass('active');
       return false;
     });
   }
@@ -420,7 +490,7 @@ $(function() {
 </script>
 
 <link id="code-style" rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
-<link rel="alternate stylesheet" title="Default" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
+<link rel="alternate stylesheet" title="Default-Code" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
 <link rel="alternate stylesheet" title="Dark" href="http://yandex.st/highlightjs/7.3/styles/dark.min.css">
 <link rel="alternate stylesheet" title="FAR" href="http://yandex.st/highlightjs/7.3/styles/far.min.css">
 <link rel="alternate stylesheet" title="IDEA" href="http://yandex.st/highlightjs/7.3/styles/idea.min.css">
@@ -449,44 +519,45 @@ $(function() {
 
 <script>
 $(function() {
-    $('#bottom-navbar').find('.navbar-inner').append(
-    '<ul class="nav">\
+    $('#bottom-navbar').append(
+    '<ul class="nav navbar-nav">\
       <li class="dropdown">\
         <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">Code Style</a>\
         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">\
-          <li><a class="code-style-switch" title="Default" href="#">Default</a></li>\
-          <li><a class="code-style-switch" title="Dark" href="#">Dark</a></li>\
-          <li><a class="code-style-switch" title="FAR" href="#">FAR</a></li>\
-          <li><a class="code-style-switch" title="IDEA" href="#">IDEA</a></li>\
-          <li><a class="code-style-switch" title="Sunburst" href="#">Sunburst</a></li>\
-          <li><a class="code-style-switch" title="Zenburn" href="#">Zenburn</a></li>\
-          <li><a class="code-style-switch" title="Visual Studio" href="#">Visual Studio</a></li>\
-          <li><a class="code-style-switch" title="Ascetic" href="#">Ascetic</a></li>\
-          <li><a class="code-style-switch" title="Magula" href="#">Magula</a></li>\
-          <li><a class="code-style-switch" title="GitHub" href="#">GitHub</a></li>\
-          <li><a class="code-style-switch" title="Google Code" href="#">Google Code</a></li>\
-          <li><a class="code-style-switch" title="Brown Paper" href="#">Brown Paper</a></li>\
-          <li><a class="code-style-switch" title="School Book" href="#">School Book</a></li>\
-          <li><a class="code-style-switch" title="IR Black" href="#">IR Black</a></li>\
-          <li><a class="code-style-switch" title="Solarized - Dark" href="#">Solarized - Dark</a></li>\
-          <li><a class="code-style-switch" title="Solarized - Light" href="#">Solarized - Light</a></li>\
-          <li><a class="code-style-switch" title="Arta" href="#">Arta</a></li>\
-          <li><a class="code-style-switch" title="Monokai" href="#">Monokai</a></li>\
-          <li><a class="code-style-switch" title="XCode" href="#">XCode</a></li>\
-          <li><a class="code-style-switch" title="Pojoaque" href="#">Pojoaque</a></li>\
-          <li><a class="code-style-switch" title="Rainbow" href="#">Rainbow</a></li>\
-          <li><a class="code-style-switch" title="Tomorrow" href="#">Tomorrow</a></li>\
-          <li><a class="code-style-switch" title="Tomorrow Night" href="#">Tomorrow Night</a></li>\
-          <li><a class="code-style-switch" title="Tomorrow Night Bright" href="#">Tomorrow Night Bright</a></li>\
-          <li><a class="code-style-switch" title="Tomorrow Night Blue" href="#">Tomorrow Night Blue</a></li>\
-          <li><a class="code-style-switch" title="Tomorrow Night Eighties" href="#">Tomorrow Night Eighties</a></li>\
+          <li class="active"><a class="code-style-switch" title="Default-Code" href="#">Default</a></li>\
+          <li><a class="code-style-switch" title="Dark" href="#"                       >Dark</a></li>\
+          <li><a class="code-style-switch" title="FAR" href="#"                        >FAR</a></li>\
+          <li><a class="code-style-switch" title="IDEA" href="#"                       >IDEA</a></li>\
+          <li><a class="code-style-switch" title="Sunburst" href="#"                   >Sunburst</a></li>\
+          <li><a class="code-style-switch" title="Zenburn" href="#"                    >Zenburn</a></li>\
+          <li><a class="code-style-switch" title="Visual Studio" href="#"              >Visual Studio</a></li>\
+          <li><a class="code-style-switch" title="Ascetic" href="#"                    >Ascetic</a></li>\
+          <li><a class="code-style-switch" title="Magula" href="#"                     >Magula</a></li>\
+          <li><a class="code-style-switch" title="GitHub" href="#"                     >GitHub</a></li>\
+          <li><a class="code-style-switch" title="Google Code" href="#"                >Google Code</a></li>\
+          <li><a class="code-style-switch" title="Brown Paper" href="#"                >Brown Paper</a></li>\
+          <li><a class="code-style-switch" title="School Book" href="#"                >School Book</a></li>\
+          <li><a class="code-style-switch" title="IR Black" href="#"                   >IR Black</a></li>\
+          <li><a class="code-style-switch" title="Solarized - Dark" href="#"           >Solarized - Dark</a></li>\
+          <li><a class="code-style-switch" title="Solarized - Light" href="#"          >Solarized - Light</a></li>\
+          <li><a class="code-style-switch" title="Arta" href="#"                       >Arta</a></li>\
+          <li><a class="code-style-switch" title="Monokai" href="#"                    >Monokai</a></li>\
+          <li><a class="code-style-switch" title="XCode" href="#"                      >XCode</a></li>\
+          <li><a class="code-style-switch" title="Pojoaque" href="#"                   >Pojoaque</a></li>\
+          <li><a class="code-style-switch" title="Rainbow" href="#"                    >Rainbow</a></li>\
+          <li><a class="code-style-switch" title="Tomorrow" href="#"                   >Tomorrow</a></li>\
+          <li><a class="code-style-switch" title="Tomorrow Night" href="#"             >Tomorrow Night</a></li>\
+          <li><a class="code-style-switch" title="Tomorrow Night Bright" href="#"      >Tomorrow Night Bright</a></li>\
+          <li><a class="code-style-switch" title="Tomorrow Night Blue" href="#"        >Tomorrow Night Blue</a></li>\
+          <li><a class="code-style-switch" title="Tomorrow Night Eighties" href="#"    >Tomorrow Night Eighties</a></li>\
         </ul>\
       </li>\
     </ul>');
     $('.code-style-switch').click(function(){
       var css = $('link[title="' + $(this).attr('title') + '"]');
       $('#code-style[rel=stylesheet]').attr('href', css.attr('href'));
-
+      $('.code-style-switch').closest('li').removeClass('active');
+      $(this).closest('li').addClass('active');
       return false;
     });
 });
@@ -530,7 +601,7 @@ $(function() {
 
 <p>Author: <a href="http://jimhester.com">Jim Hester</a>
 Created: 2013 Apr 01 03:27:26 PM
-Last Modified: 2013 Jun 11 03:10:29 PM</p>
+Last Modified: 2013 Aug 22 02:59:24 PM</p>
 
 </body>
 

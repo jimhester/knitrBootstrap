@@ -566,204 +566,66 @@ $(function() {
 <body>
 <!--
 %\VignetteEngine{knitr}
-%\VignetteIndexEntry{Knitr engines example}
+%\VignetteIndexEntry{Messages}
 -->
 
-<h1>Other Languages</h1>
+<div class="chunk" id="messages_print"><div class="rcode"><div class="source"><pre class="knitr r">print('this is a print')
+</pre></div>
 
-<p>Syntax examples taken from <a href="">http://softwaremaniacs.org/media/soft/highlight/test.html</a></p>
-
-<h2>R</h2>
-
-<div class="chunk" id="engines_r"><div class="rcode"><div class="source"><pre class="knitr r">library(ggplot2)
-
-centre <- function(x, type, ...) {
-  switch(type,
-         mean = mean(x),
-         median = median(x),
-         trimmed = mean(x, trim = .1))
-}
-
-myVar1
-myVar.2
-data$x
-foo "bar" baz
-# test "test"
-"test # test"
-
-(123) (1) (10) (0.1) (.2) (1e-7)
-(1.2e+7) (2e) (3e+10) (0x0) (0xa)
-(0xabcdef1234567890) (123L) (1L)
-(0x10L) (10000000L) (1e6L) (1.1L)
-(1e-3L) (4123.381E-10i)
-(3.) (3.E10) # BUG: .E10 should be part of number
-
-# Numbers in some different contexts
-1L
-0x40
-.234
-3.
-1L + 30
-plot(cars, xlim=20)
-plot(cars, xlim=0x20)
-foo<-30
-my.data.3 <- read() # not a number
-c(1,2,3)
-1%%2
-
-"this is a quote that spans
-multiple lines
-\"
-
-is this still a quote? it should be.
-# even still!
-
-" # now we're done.
-
-'same for
-single quotes #'
-
-# keywords
-NULL, NA, TRUE, FALSE, Inf, NaN, NA_integer_,
-NA_real_, NA_character_, NA_complex_, function,
-while, repeat, for, if, in, else, next, break,
-..., ..1, ..2
-
-# not keywords
-the quick brown fox jumped over the lazy dogs
-null na true false inf nan na_integer_ na_real_
-na_character_ na_complex_ Function While Repeat
-For If In Else Next Break .. .... "NULL" `NULL` 'NULL'
-
-# operators
-+, -, *, /, %%, ^, >, >=, <, <=, ==, !=, !, &, |, ~,
-->, <-, <<-, $, :, ::
-
-# infix operator
-foo %union% bar
-%"test"%
-`"test"`
+<div class="output"><pre class="knitr r">## [1] "this is a print"
 </pre></div>
 
 <p></div></div></p>
 
-<h2>Bash</h2>
+<div class="chunk" id="messages_cat"><div class="rcode"><div class="source"><pre class="knitr r">cat('this is a cat\n')
+</pre></div>
 
-<div class="chunk" id="engines_bash"><div class="rcode"><div class="source"><pre class="knitr bash">#!/bin/bash
-
-###### BEGIN CONFIG
-ACCEPTED_HOSTS="/root/.hag_accepted.conf"
-BE_VERBOSE=false
-###### END CONFIG
-
-if [ "$UID" -ne 0 ]
-then
- echo "Superuser rights is required"
- echo 'Printing the # sign'
- exit 2
-fi
-
-if test $# -eq 0
-then
-elif test [ $1 == 'start' ]
-else
-fi
-
-genApacheConf(){
- if [[ "$2" = "www" ]]
- then
-  full_domain=$1
- else
-  full_domain=$2.$1
- fi
- host_root="${APACHE_HOME_DIR}$1/$2"
- echo -e "# Host $1/$2 :"
-}
+<div class="output"><pre class="knitr r">## this is a cat
 </pre></div>
 
 <p></div></div></p>
 
-<h2>Perl</h2>
+<div class="chunk" id="messages_message"><div class="rcode"><div class="source"><pre class="knitr r">message('this is a message')
+</pre></div>
 
-<div class="chunk" id="engines_perl"><div class="rcode"><div class="source"><pre class="knitr perl"># loads object
-sub load
-{
-  my $flds = $c->db_load($id,@_) || do {
-    Carp::carp "Can`t load (class: $c, id: $id): '$!'"; return undef
-  };
-  my $o = $c->_perl_new();
-  $id12 = $id / 24 / 3600;
-  $o->{'ID'} = $id12 + 123;
-  #$o->{'SHCUT'} = $flds->{'SHCUT'};
-  my $p = $o->props;
-  my $vt;
-  $string =~ m/^sought_text$/;
-  $items = split //, 'abc';
-  for my $key (keys %$p)
-  {
-    if(${$vt.'::property'}) {
-      $o->{$key . '_real'} = $flds->{$key};
-      tie $o->{$key}, 'CMSBuilder::Property', $o, $key;
-    }
-  }
-  $o->save if delete $o->{'_save_after_load'};
-  return $o;
-}
-
-=head1 NAME
-POD till the end of file
+<div class="message"><pre class="knitr r">## this is a message
 </pre></div>
 
 <p></div></div></p>
 
-<h2>Ruby</h2>
+<div class="chunk" id="messages_error"><div class="rcode"><div class="source"><pre class="knitr r">stop('this is an error')
+</pre></div>
 
-<div class="chunk" id="engines_ruby"><div class="rcode"><div class="source"><pre class="knitr ruby">class A < B; def self.create(object = User) object end end
-class Zebra; def inspect; "X#{2 + self.object_id}" end end
-
-module ABC::DEF
-  include Comparable
-
-  # @param test
-  # @return [String] nothing
-  def foo(test)
-    Thread.new do |blockvar|
-      ABC::DEF.reverse(:a_symbol, :'a symbol', :<=>, 'test' + test)
-    end.join
-  end
-
-  def [](index) self[index] end
-  def ==(other) other == self end
-end
-
-anIdentifier = an_identifier
-Constant = 1
-render action: :new
+<div class="error"><pre class="knitr r">## Error: this is an error
 </pre></div>
 
 <p></div></div></p>
 
-<h2>Python</h2>
+<div class="chunk" id="messages_all"><div class="rcode"><div class="source"><pre class="knitr r">print('this is a print')
+</pre></div>
 
-<div class="chunk" id="engines_python"><div class="rcode"><div class="source"><pre class="knitr python">@requires_authorization
-def somefunc(param1='', param2=0):
-    r'''A docstring'''
-    if param1 > param2: # interesting
-            print 'Gre\'ater'
-        return (param2 - param1 + 1) or None
+<div class="output"><pre class="knitr r">## [1] "this is a print"
+</pre></div>
 
-        class SomeClass:
-            pass
+<div class="source"><pre class="knitr r">cat('this is a cat\n')
+</pre></div>
 
-        >>> message = '''interpreter
-        ... prompt'''
+<div class="output"><pre class="knitr r">## this is a cat
+</pre></div>
+
+<div class="source"><pre class="knitr r">message('this is a message')
+</pre></div>
+
+<div class="message"><pre class="knitr r">## this is a message
+</pre></div>
+
+<div class="source"><pre class="knitr r">stop('this is an error')
+</pre></div>
+
+<div class="error"><pre class="knitr r">## Error: this is an error
 </pre></div>
 
 <p></div></div></p>
-
-<p>Author: <a href="http://jimhester.com">Jim Hester</a>
-Created: 2013 Apr 23 09:05:58 AM
-Last Modified: 2013 Aug 22 03:02:20 PM</p>
 
 </body>
 

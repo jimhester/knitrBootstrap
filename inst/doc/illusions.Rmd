@@ -4,9 +4,6 @@
 %\VignetteDepends{grid, plyr}
 -->
 
-```{r include=FALSE}
-library(knitr);render_html()
-```
 # Illusions #
 The R implementations for these are from Kohske Takahashi[(@kohske)](https://twitter.com/kohske).
 See http://rpubs.com/kohske/R-de-illusion

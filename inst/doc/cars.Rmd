@@ -6,10 +6,6 @@
 # Cars example #
 from [statmethods.net](http://www.statmethods.net/advgraphs/ggplot2.html)
 
-```{r, include=F}
-library(knitr);render_html()
-```
-
 ```{r cars_setup}
 # ggplot2 examples
 library(ggplot2)
@@ -61,4 +57,4 @@ qplot(gear, mpg, data=mtcars, geom=c("boxplot", "jitter"),
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2013 Jun 17 03:51:14 PM
+Last Modified: 2013 Aug 22 02:59:42 PM

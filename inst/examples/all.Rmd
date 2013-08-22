@@ -3,9 +3,6 @@
 %\VignetteIndexEntry{All examples}
 -->
 # All examples #
-```{r}
-library(knitr);render_html()
-```
 ```{r child="../doc/two-D.Rmd"}
 ```
 ```{r child="../doc/cars.Rmd"}
@@ -18,6 +15,8 @@ library(knitr);render_html()
 ```
 ```{r child="../doc/math.Rmd"}
 ```
+```{r child="../doc/messages.Rmd"}
+```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 03:22:28 PM
-Last Modified: 2013 Jun 13 12:08:51 PM
+Last Modified: 2013 Aug 22 02:59:05 PM
