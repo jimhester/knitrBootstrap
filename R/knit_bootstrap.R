@@ -170,6 +170,8 @@ get_style <- function(style, style_type, title, graphics = getOption("menu.graph
 #'        code chooser.
 #' @param thumbsize size of thumbnails in bootstrap columns.
 #' @param show_code show code blocks by default.
+#' @param show_output show output blocks by default.
+#' @param show_figure show figures by default.
 #' @param graphics what graphics to use for the menus, only applicable if
 #'        code_style or boot_style are true.
 #' @param outfile if NULL, write the output file in a temporary directory, if a

@@ -31,6 +31,10 @@
 
   \item{show_code}{show code blocks by default.}
 
+  \item{show_output}{show output blocks by default.}
+
+  \item{show_figure}{show figures by default.}
+
   \item{graphics}{what graphics to use for the menus, only
   applicable if code_style or boot_style are true.}
 }
