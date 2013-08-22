@@ -1,5 +1,5 @@
 <link id="code-style" rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
-<link rel="alternate stylesheet" title="Default" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
+<link rel="alternate stylesheet" title="Default-Code" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
 <link rel="alternate stylesheet" title="Dark" href="http://yandex.st/highlightjs/7.3/styles/dark.min.css">
 <link rel="alternate stylesheet" title="FAR" href="http://yandex.st/highlightjs/7.3/styles/far.min.css">
 <link rel="alternate stylesheet" title="IDEA" href="http://yandex.st/highlightjs/7.3/styles/idea.min.css">
@@ -33,39 +33,40 @@ $(function() {
       <li class="dropdown">\
         <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">Code Style</a>\
         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">\
-          <li><a class="code-style-switch" title="Default" href="#">Default</a></li>\
-          <li><a class="code-style-switch" title="Dark" href="#">Dark</a></li>\
-          <li><a class="code-style-switch" title="FAR" href="#">FAR</a></li>\
-          <li><a class="code-style-switch" title="IDEA" href="#">IDEA</a></li>\
-          <li><a class="code-style-switch" title="Sunburst" href="#">Sunburst</a></li>\
-          <li><a class="code-style-switch" title="Zenburn" href="#">Zenburn</a></li>\
-          <li><a class="code-style-switch" title="Visual Studio" href="#">Visual Studio</a></li>\
-          <li><a class="code-style-switch" title="Ascetic" href="#">Ascetic</a></li>\
-          <li><a class="code-style-switch" title="Magula" href="#">Magula</a></li>\
-          <li><a class="code-style-switch" title="GitHub" href="#">GitHub</a></li>\
-          <li><a class="code-style-switch" title="Google Code" href="#">Google Code</a></li>\
-          <li><a class="code-style-switch" title="Brown Paper" href="#">Brown Paper</a></li>\
-          <li><a class="code-style-switch" title="School Book" href="#">School Book</a></li>\
-          <li><a class="code-style-switch" title="IR Black" href="#">IR Black</a></li>\
-          <li><a class="code-style-switch" title="Solarized - Dark" href="#">Solarized - Dark</a></li>\
-          <li><a class="code-style-switch" title="Solarized - Light" href="#">Solarized - Light</a></li>\
-          <li><a class="code-style-switch" title="Arta" href="#">Arta</a></li>\
-          <li><a class="code-style-switch" title="Monokai" href="#">Monokai</a></li>\
-          <li><a class="code-style-switch" title="XCode" href="#">XCode</a></li>\
-          <li><a class="code-style-switch" title="Pojoaque" href="#">Pojoaque</a></li>\
-          <li><a class="code-style-switch" title="Rainbow" href="#">Rainbow</a></li>\
-          <li><a class="code-style-switch" title="Tomorrow" href="#">Tomorrow</a></li>\
-          <li><a class="code-style-switch" title="Tomorrow Night" href="#">Tomorrow Night</a></li>\
-          <li><a class="code-style-switch" title="Tomorrow Night Bright" href="#">Tomorrow Night Bright</a></li>\
-          <li><a class="code-style-switch" title="Tomorrow Night Blue" href="#">Tomorrow Night Blue</a></li>\
-          <li><a class="code-style-switch" title="Tomorrow Night Eighties" href="#">Tomorrow Night Eighties</a></li>\
+          <li class="active"><a class="code-style-switch" title="Default-Code" href="#">Default</a></li>\
+          <li><a class="code-style-switch" title="Dark" href="#"                       >Dark</a></li>\
+          <li><a class="code-style-switch" title="FAR" href="#"                        >FAR</a></li>\
+          <li><a class="code-style-switch" title="IDEA" href="#"                       >IDEA</a></li>\
+          <li><a class="code-style-switch" title="Sunburst" href="#"                   >Sunburst</a></li>\
+          <li><a class="code-style-switch" title="Zenburn" href="#"                    >Zenburn</a></li>\
+          <li><a class="code-style-switch" title="Visual Studio" href="#"              >Visual Studio</a></li>\
+          <li><a class="code-style-switch" title="Ascetic" href="#"                    >Ascetic</a></li>\
+          <li><a class="code-style-switch" title="Magula" href="#"                     >Magula</a></li>\
+          <li><a class="code-style-switch" title="GitHub" href="#"                     >GitHub</a></li>\
+          <li><a class="code-style-switch" title="Google Code" href="#"                >Google Code</a></li>\
+          <li><a class="code-style-switch" title="Brown Paper" href="#"                >Brown Paper</a></li>\
+          <li><a class="code-style-switch" title="School Book" href="#"                >School Book</a></li>\
+          <li><a class="code-style-switch" title="IR Black" href="#"                   >IR Black</a></li>\
+          <li><a class="code-style-switch" title="Solarized - Dark" href="#"           >Solarized - Dark</a></li>\
+          <li><a class="code-style-switch" title="Solarized - Light" href="#"          >Solarized - Light</a></li>\
+          <li><a class="code-style-switch" title="Arta" href="#"                       >Arta</a></li>\
+          <li><a class="code-style-switch" title="Monokai" href="#"                    >Monokai</a></li>\
+          <li><a class="code-style-switch" title="XCode" href="#"                      >XCode</a></li>\
+          <li><a class="code-style-switch" title="Pojoaque" href="#"                   >Pojoaque</a></li>\
+          <li><a class="code-style-switch" title="Rainbow" href="#"                    >Rainbow</a></li>\
+          <li><a class="code-style-switch" title="Tomorrow" href="#"                   >Tomorrow</a></li>\
+          <li><a class="code-style-switch" title="Tomorrow Night" href="#"             >Tomorrow Night</a></li>\
+          <li><a class="code-style-switch" title="Tomorrow Night Bright" href="#"      >Tomorrow Night Bright</a></li>\
+          <li><a class="code-style-switch" title="Tomorrow Night Blue" href="#"        >Tomorrow Night Blue</a></li>\
+          <li><a class="code-style-switch" title="Tomorrow Night Eighties" href="#"    >Tomorrow Night Eighties</a></li>\
         </ul>\
       </li>\
     </ul>');
     $('.code-style-switch').click(function(){
       var css = $('link[title="' + $(this).attr('title') + '"]');
       $('#code-style[rel=stylesheet]').attr('href', css.attr('href'));
-
+      $('.code-style-switch').closest('li').removeClass('active');
+      $(this).closest('li').addClass('active');
       return false;
     });
 });

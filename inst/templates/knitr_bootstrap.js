@@ -2,6 +2,8 @@
 $(function() {
   "use strict";
 
+  document.title = $('h1').first().text();
+
   /* type of toc navigation */
   var nav = "offscreen";
 
@@ -12,7 +14,7 @@ $(function() {
 
   var show_output = true;
 
-  var show_plot = true;
+  var show_figure = true;
 
   /* included languages */
   var languages = [];
@@ -25,39 +27,13 @@ $(function() {
     }
   });
 
-  /* Add div wrapping class to code blocks without them */
-  $('pre code').each(function(){
-
-    var block_type, code_type;
-    /* output block */
-    if($(this).hasClass('')){
-      block_type = "output";
-      code_type = "";
-    }
-    /* source code block */
-    else{
-      block_type = "source";
-      code_type = $(this).attr('class');
-    }
-    /* no wrapping div, not using render_html(), so add to wrap */
-    if($(this).closest('div').length < 1){
-      $(this).parent().wrap('<div class="' + [block_type, code_type].join(" ") + '"></div>');
-    }
-    /* just add code type to the parent div */
-    else{
-      $(this).closest('div').addClass(code_type);
-    }
-  });
-
   /* style tables */
   $('table').addClass('table table-striped table-bordered table-hover table-condensed');
-    //.wrap('<div class="output" style="overflow: auto"/>');
 
-  /* find all code or output blocks which have a class and add toggle */
-  $('div.source, div.output').each(function() {
-    var button = $('<div class="panel-heading toggle"><h5 class="panel-title">+/- </h5></div>');
+  /* add toggle panel to rcode blocks */
+  $('div.rcode div').each(function() {
+    var button = $('<h5 class="panel-title">+/- </h5>');
 
-    /* code block */
     if($(this).hasClass('source')){
       var code_block = $(this).find('code');
       var lang_type = code_block.attr('class');
@@ -67,24 +43,26 @@ $(function() {
       code_block.each(function(i, e) {
         hljs.highlightBlock(e);
       });
-      $(this).addClass('panel panel-primary');
+      $(this).addClass('panel panel-primary ' + lang_type);
     }
-
-    /* output block */
-    else {
+    else if($(this).hasClass('output')){
       button.text(button.text() + 'Output');
       button.addClass('output');
       $(this).addClass('panel panel-success');
     }
-    button.wrap('<div class="panel-heading toggle">');
-    $(this).prepend(button);
-  });
-
-  /* onclick toggle next code block */
-  $('.toggle').click(function() {
-    $(this).button('toggle');
-    $(this).next('pre').slideToggle();
-    return false;
+    else if($(this).hasClass('message')){
+      button.text(button.text() + 'Message');
+      button.addClass('message');
+      $(this).addClass('panel panel-info');
+    } else if($(this).hasClass('error')){
+      button.text(button.text() + 'Error');
+      button.addClass('error');
+      $(this).addClass('panel panel-danger');
+    }
+    else {
+      console.log($(this));
+    }
+    $(this).prepend($('<div class="panel-heading toggle" />').append(button));
   });
 
   /* give images a lightbox and thumbnail classes to allow lightbox and thumbnails TODO: make gallery if graphs are grouped */
@@ -122,47 +100,86 @@ $(function() {
     var language;
     for(language in languages){
       if(languages.hasOwnProperty(language)){
-        text += '<li><button style="width: 100%;" class="toggle-global btn-link btn source ' + language + '" type="source.' + language + '">' + language + '</button></li>\n';
+        text += '<li><a href=# class="toggle-global source ' + language + '" type="source.' + language + '">' + language + '</a></li>\n';
       }
     }
     return text;
   }
 
-  /* add navbar */
-  $('.container').append(
-    '<div id="bottom-navbar" class="navbar-fixed-bottom navbar navbar-default">\
-        <div class="pull-right">\
-          <p class="navbar-text">Toggle</p>\
-          <div class="btn-group dropup" data-toggle="button-checkbox">\
-            <button type="source" class="source toggle-global btn navbar-btn">Code</button>\
-            <button class="btn navbar-btn dropdown-toggle" data-toggle="dropdown">\
-              <span class="caret"></span>\
-            </button>\
-            <ul class="dropdown-menu pull-right">'
-              + create_language_links() +
-            '</div>\
-            <button type="output" class="output toggle-global btn">Output</button>\
-            <button type="thumbnails" class="thumbnails toggle-global btn">Plots</button>\
-          </div>\
-        </div>\
+  var navbar =
+  '<div class="navbar navbar-fixed-bottom navbar-inverse">\
+    <div class="container">\
+      <div class="navbar-header">\
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">\
+          <span class="icon-bar"></span>\
+          <span class="icon-bar"></span>\
+          <span class="icon-bar"></span>\
+        </button>\
       </div>\
-    </div>'
-  );
+      <div id="bottom-navbar" class="navbar-collapse collapse navbar-responsive-collapse">\
+        <ul class="nav navbar-nav navbar-right">\
+          <li class="nav"><p class="navbar-text">Toggle</p></li>\
+          <li class="dropup">\
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Code <b class="caret"></b></a>\
+            <ul class="dropdown-menu">\
+              <li class="dropdown-header">Languages</li>'
+              + create_language_links() +
+              '<li><a href="#" type="all-source" class="toggle-global">All</a></li>\
+            </ul>\
+          </li>\
+          <li class="dropup">\
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Output <b class="caret"></b></a>\
+            <ul class="dropdown-menu">\
+              <li class="dropdown-header">Type</li>\
+                <li><a href="#" type="output" class="toggle-global">Output</a></li>\
+                <li><a href="#" type="message" class="toggle-global">Message</a></li>\
+                <li><a href="#" type="error" class="toggle-global">Error</a></li>\
+                <li><a href="#" type="all-output" class="toggle-global">All</a></li>\
+            </ul>\
+          </li>\
+          <li><a href="#" class="toggle-figure">Figures</a></li>\
+        </ul>\
+      </div><!-- /.nav-collapse -->\
+    </div><!-- /.container -->\
+  </div>';
+  /* add navbar */
+  $('.container').append(navbar);
 
-  /* global toggles FIXME explicitly toggle all on/off using global variables */
-  $('.toggle-global').click(function(){
-    var type = $(this).attr('type');
-    $('.' + type).button('toggle');
-    $('div.' + type + ' pre').slideToggle();
+  /* onclick toggle next code block */
+  $('.toggle').click(function() {
+    $(this).next('pre').slideToggle();
     return false;
   });
 
-  /* if using render_html() hook, make functions links to custom R search */
-  /*search in ggplot documentation or inside-r.org */
-  $("span.functioncall").replaceWith(function(){
-    return '<a target="_blank" href="http://www.google.com/search?sourceid=navclient&gfns=1&\
-q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
-    $(this).text() + '">' + $(this).text()+'</a>'
+  // global toggles FIXME explicitly toggle all on/off using global variables
+  $('.toggle-global').click(function(){
+    var type = $(this).attr('type');
+    if(type == 'all-source'){
+      for(var language in languages){
+        $('li a[type="source.' + language + '"]').click();
+      }
+    }
+    if(type == 'all-output'){
+      $('li a[type=output], li a[type=message], li a[type=error]').click();
+    }
+    else {
+      $('div.' + type).children('pre').slideToggle();
+    }
+    $(this).closest('li').toggleClass('active');
+    return false;
+  });
+  // global toggles figure, this is more complicated than just slideToggle because you have to hide the parent div as well
+  $('.toggle-figure').click(function(){
+    var imgs = $('.thumbnail img');
+    if(imgs.is(":visible")){
+      imgs.hide(400, 'swing', function(){ $(this).parent().toggle(); });
+    }
+    else {
+      imgs.parent().show();
+      imgs.show(400, 'swing');
+    }
+    $(this).closest('li').toggleClass('active');
+    return false;
   });
 
   /* add footer */
@@ -176,53 +193,38 @@ q=site:docs.ggplot2.org/current OR site:inside-r.org ' +
   last_p.appendTo("body");
   last_p.wrap('<div id="footer">');
 
-  $('.container > .row').prepend('<div class="col-md-3"><div id="toc" class="well sidebar affix hidden-print"/></div>');
+  $('.container > .row').prepend('<div class="col-md-3"><div id="toc" class="well sidebar sidenav affix hidden-print"/></div>');
 
-  if(nav == 'offscreen'){
-    $('#toc').wrap('<div class="meny">');
-    $('.contents').addClass('col-md-12').wrapInner('<div class="col-md-offset-2">');
-    $('.meny').after('<div class="meny-arrow">');
-
-    var meny = Meny.create({
-        menuElement: document.querySelector( '.meny' ),
-        contentsElement: document.querySelector( '.contents' ),
-        position: 'left',
-        width: 260
-    });
-  }
-  else {
-    $('.contents').addClass('col-md-offset-3 col-md-8');
-  }
+  $('.contents').addClass('col-md-offset-3');
 
   /* table of contents */
   $('#toc').tocify({extendPage: false});
 
-  /* toggle code blocks hidden by default */
   if(show_code){
     /* toggle source buttons pressed */
-    $('.source').filter(":button").addClass('active');
+    $('a.toggle-global.source').closest('li').addClass('active');
   }
   else {
     /* hide code blocks */
-    $('div.source pre').toggle();
+    $('div.source pre').hide();
   }
 
   if(show_output){
     /* toggle output buttons pressed */
-    $('.output').filter(":button").addClass('active');
+    $('li a[type=output], li a[type=message], li a[type=error], li a[type=all-output]').closest('li').addClass('active');
   }
   else {
     /* hide output blocks */
-    $('div.output').toggle();
+    $('div.output').hide();
   }
 
-  if(show_plot){
-    /* toggle output buttons pressed */
-    $('.thumbnails').filter(":button").addClass('active');
+  if(show_figure){
+    /* toggle figure button pressed */
+    $('li a.toggle-figure').closest('li').addClass('active');
   }
   else {
-    /* hide output blocks */
-    $('div.thumbnails').toggle();
+    /* hide figures */
+    $('.thumbnail').hide();
   }
 
   /* remove paragraphs with no content */

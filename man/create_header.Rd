@@ -3,10 +3,10 @@
 \title{Create the html header based on the options given}
 \usage{
   create_header(boot_style = NULL, code_style = NULL,
-    chooser = NULL, nav_type = c("offscreen", "onscreen"),
-    thumbsize = c("span3", "span4", "span5", "span6", "span7", "span8", "span2", "span1"),
+    chooser = NULL,
+    thumbsize = c("col-md-3", "col-md-1", "col-md-2", "col-md-4", "col-md-5", "col-md-6", "col-md-7", "col-md-8", "col-md-9"),
     show_code = FALSE, show_output = TRUE,
-    show_plot = TRUE,
+    show_figure = TRUE,
     graphics = getOption("menu.graphics"), outfile = NULL)
 }
 \arguments{
@@ -22,11 +22,8 @@
   adds a bootstrap style chooser to the HTML, if contains
   "code" adds the bootstrap code chooser.}
 
-  \item{nav_type}{either offscreen to use a dynamic
-  offscreen navigation menu, or onscreen to use a fixed
-  onscreen navigation menu.}
-
-  \item{thumbsize}{size of thumbnails in bootstrap spans.}
+  \item{thumbsize}{size of thumbnails in bootstrap
+  columns.}
 
   \item{show_code}{show code blocks by default.}
 

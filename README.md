@@ -15,8 +15,8 @@ A framework to create bootstrap styled HTML reports from knitr Rmarkdown.
 * [Styles](#styles)
 
 ## Features ##
-* Automatic table of contents constructed from h1-4 tags using [tocify],
-  configurable both fixed onscreen and offscreen using [meny].
+* Uses bootstrap 3.0, should work for all screen sizes.
+* Automatic table of contents constructed from h1-4 tags using [tocify].
 * Images are automatically centered, thumbnailed and lightboxed using [magnific popup].
 * Style with themes from [bootswatch], optionally including a dynamic style switch.
 * Code blocks automatically highlighted using [highlight.js], optionally including a dynamic style switch.
@@ -56,6 +56,7 @@ Reports can be built within [R](#Rfunction), a [Makefile](#makefile), by [RStudi
 ### R ###
 ```r
 library(knitrBootstrap)
+#defaults only
 knit_bootstrap('file.Rmd')
 ```
 
@@ -149,4 +150,3 @@ arguments if you want to use an alternative style by default.
 [illusions]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/illusions.html
 [maps]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/maps.html
 [math]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/doc/math.html
-[meny]: http://lab.hakim.se/meny/

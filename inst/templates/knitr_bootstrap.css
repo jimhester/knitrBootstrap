@@ -42,16 +42,6 @@ body {
   text-align: center;
 }
 
-/* Tocify */
-
-/*#toc {*/
-  /*border-radius: 0px;*/
-  /*height:100%;*/
-  /*padding: 9px;*/
-  /*margin-right: -10px;*/
-  /*position: fixed;*/
-  /*width: 240px;*/
-/*}*/
 /* Top level subheader elements.  These are the first nested items underneath a header element. */
 .header li {
   font-size: 20px;
@@ -62,50 +52,13 @@ body {
     font-size: 12px;
 }
 
-.meny {
-  height: 100%;
-}
-
-.meny-left.row-fluid {
-  margin-left: 0%;
-}
-
-
-.meny-arrow {
-  position: absolute;
-  z-index: 10;
-
-  border: 10px solid transparent;
-
-  -webkit-transition: opacity 0.4s ease 0.4s; 
-     -moz-transition: opacity 0.4s ease 0.4s; 
-      -ms-transition: opacity 0.4s ease 0.4s; 
-       -o-transition: opacity 0.4s ease 0.4s; 
-          transition: opacity 0.4s ease 0.4s;
-}
-  .meny-left .meny-arrow {
-    left: 14px;
-    top: 50%;
-    margin-top: -16px;
-    border-left: 16px solid #AAA;
-  }
-  .meny-active .meny-arrow {
-    opacity: 0;
-
-    -webkit-transition: opacity 0.2s ease; 
-       -moz-transition: opacity 0.2s ease; 
-        -ms-transition: opacity 0.2s ease; 
-         -o-transition: opacity 0.2s ease; 
-            transition: opacity 0.2s ease;
-  }
-
 button.thumbnails {
   margin-left:0px;
 }
-.navbar-inner > .pull-right {
-  padding-right: 20px;
-}
 
+.mfp-image img{
+  background: white;
+}
 .mfp-figure:after {
   background: white;
 }
@@ -127,8 +80,7 @@ button.thumbnails {
   margin-bottom: 30px;
   padding-top:    10px;
   padding-bottom: 10px;
-  /*text-shadow: 0 1px 0 #fff;*/
-  /*background-color: #f7f5fa;*/
+  text-shadow: 0 1px 0;
   border-radius: 5px;
 }
 
@@ -141,16 +93,14 @@ button.thumbnails {
 .sidebar .nav > li > a:hover,
 .sidebar .nav > li > a:focus {
   text-decoration: none;
-  /*background-color: #e5e3e9;*/
-  /*border-right: 1px solid #dbd8e0;*/
+  border-right: 1px solid;
 }
 .sidebar .nav > .active > a,
 .sidebar .nav > .active:hover > a,
 .sidebar .nav > .active:focus > a {
   font-weight: bold;
-  /*color: #563d7c;*/
-  /*background-color: transparent;*/
-  /*border-right: 1px solid #563d7c;*/
+  background-color: transparent;
+  border-right: 1px solid;
 }
 
 /* Nav: second level (shown on .active) */
@@ -196,9 +146,12 @@ button.thumbnails {
   }
 }
 
-#toc .list-group-item {
-  border: 0;
+#toc {
+  padding: 10px 0px;
+  margin:0;
+  border:0;
 }
+
 
 .panel pre {
   border-radius: 0;

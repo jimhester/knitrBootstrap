@@ -22,15 +22,15 @@
 
 knit_bootstrap =
   function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
-           nav_type=c('offscreen', 'onscreen'),
            thumbsize=c('col-md-3','col-md-1','col-md-2','col-md-4','col-md-5','col-md-6','col-md-7','col-md-8','col-md-9'),
-           show_code=FALSE, show_output=TRUE, show_plot=TRUE,
+           show_code=FALSE, show_output=TRUE, show_figure=TRUE,
            markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
            ..., envir = parent.frame(), text = NULL,
            quiet = FALSE, encoding = getOption('encoding'),
            graphics = getOption("menu.graphics")) {
 
   knitr::render_html()
+  opts_chunk$set(tidy=FALSE, highlight=FALSE)
   md_file =
     knit(input, NULL, text = text, envir = envir,
          encoding = encoding, quiet = quiet)
@@ -38,8 +38,8 @@ knit_bootstrap =
   knit_bootstrap_md(md_file, output, boot_style=boot_style,
                     code_style=code_style, chooser=chooser,
                     markdown_options = markdown_options,
-                    nav_type=nav_type, thumbsize=thumbsize,
-                    show_code=show_code, show_output=show_output, show_plot=show_plot,
+                    thumbsize=thumbsize,
+                    show_code=show_code, show_output=show_output, show_figure=show_figure,
                     ..., graphics=graphics)
   invisible(output)
 }
@@ -65,17 +65,16 @@ knit_bootstrap_Rmd = knit_bootstrap
 knit_bootstrap_md =
 function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
          text = NULL,
-         nav_type=c('offscreen', 'onscreen'),
          thumbsize=c('col-md-3','col-md-1','col-md-2','col-md-4','col-md-5','col-md-6','col-md-7','col-md-8','col-md-9'),
-         show_code=FALSE, show_output=TRUE, show_plot=TRUE,
+         show_code=FALSE, show_output=TRUE, show_figure=TRUE,
          markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
          graphics = getOption("menu.graphics"), ...) {
 
   require(knitr)
   header = create_header(boot_style=boot_style, code_style=code_style,
-                         chooser=chooser, nav_type=nav_type,
+                         chooser=chooser,
                          thumbsize=thumbsize, 
-                         show_code=show_code, show_output=show_output, show_plot=show_plot,
+                         show_code=show_code, show_output=show_output, show_figure=show_figure,
                          graphics=graphics)
 
   require(markdown)
@@ -104,9 +103,8 @@ function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
 
 bootstrap_HTML = function(input, output = NULL, boot_style=NULL,
                           code_style=NULL, chooser=NULL,
-                          nav_type=c('offscreen', 'onscreen'),
                           thumbsize=c('col-md-3','col-md-1','col-md-2','col-md-4','col-md-5','col-md-6','col-md-7','col-md-8','col-md-9'),
-                          show_code=FALSE, show_output=TRUE, show_plot=TRUE,
+                          show_code=FALSE, show_output=TRUE, show_figure=TRUE,
                           graphics = getOption("menu.graphics")) {
   if(is.null(output))
     output <- sub_ext(input, 'html')
@@ -114,8 +112,8 @@ bootstrap_HTML = function(input, output = NULL, boot_style=NULL,
     stop('input cannot be the same as output:', input, ' ', output)
 
   header = create_header(boot_style=boot_style, code_style=code_style,
-                         chooser=chooser, nav_type=nav_type, thumbsize=thumbsize,
-                         show_code=show_code, show_output=show_output, show_plot=show_plot,
+                         chooser=chooser, thumbsize=thumbsize,
+                         show_code=show_code, show_output=show_output, show_figure=show_figure,
                          graphics=graphics, outfile=FALSE)
 
   lines = read_file(input)
@@ -146,7 +144,7 @@ default_code_style='http://yandex.st/highlightjs/7.3/styles/default.min.css'
 nav_pattern='nav = "[^"]+"'
 thumb_pattern='thumbsize = "[^"]+"'
 show_code_pattern='show_code = [^;]+;'
-show_plot_pattern='show_plot = [^;]+;'
+show_figure_pattern='show_figure = [^;]+;'
 show_output_pattern='show_output = [^;]+;'
 
 get_style <- function(style, style_type, title, graphics = getOption("menu.graphics")){
@@ -170,8 +168,6 @@ get_style <- function(style, style_type, title, graphics = getOption("menu.graph
 #' @param chooser a character vector, if contains "boot", adds a bootstrap
 #'        style chooser to the HTML, if contains "code" adds the bootstrap
 #'        code chooser.
-#' @param nav_type either offscreen to use a dynamic offscreen navigation menu, or
-#'        onscreen to use a fixed onscreen navigation menu.
 #' @param thumbsize size of thumbnails in bootstrap columns.
 #' @param show_code show code blocks by default.
 #' @param graphics what graphics to use for the menus, only applicable if
@@ -184,9 +180,8 @@ get_style <- function(style, style_type, title, graphics = getOption("menu.graph
 
 create_header <-
   function(boot_style=NULL, code_style=NULL, chooser=NULL,
-           nav_type=c('offscreen', 'onscreen'),
            thumbsize=c('col-md-3','col-md-1','col-md-2','col-md-4','col-md-5','col-md-6','col-md-7','col-md-8','col-md-9'),
-           show_code=FALSE, show_output=TRUE, show_plot=TRUE,
+           show_code=FALSE, show_output=TRUE, show_figure=TRUE,
            graphics = getOption("menu.graphics"), outfile=NULL){
 
   boot_style=get_style(boot_style, boot_styles, 'Bootstrap Style', graphics)
@@ -204,9 +199,6 @@ create_header <-
     read_package_file('templates/knitr_bootstrap_code_style_toggle.html')
   }
 
-  nav_type= match.arg(nav_type)
-  javascript = sub(nav_pattern, paste('nav = "', nav_type, '"', sep=''), javascript)
-
   thumbsize=match.arg(thumbsize)
   javascript = sub(thumb_pattern, paste('thumbsize = "', thumbsize, '"', sep=''), javascript)
 
@@ -222,8 +214,8 @@ create_header <-
                                                                      'false'),
                                               ';'), javascript)
 
-  if(is.logical(show_plot))
-    javascript = sub(show_plot_pattern, paste('show_plot = ', ifelse(show_plot,
+  if(is.logical(show_figure))
+    javascript = sub(show_figure_pattern, paste('show_figure = ', ifelse(show_figure,
                                                                      'true',
                                                                      'false'),
                                               ';'), javascript)
