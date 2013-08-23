@@ -23,12 +23,12 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 
 <!-- highlight.js -->
-<link rel="stylesheet" href="https://yandex.st/highlightjs/7.3/styles/default.min.css">
+<link href="http://yandex.st/highlightjs/7.3/styles/default.min.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/highlight.min.js"></script>
 <script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
 
 <!-- bootstrap -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+<link href=http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css rel="stylesheet">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
 <!-- tocify -->
@@ -44,9 +44,6 @@ $(function() {
   "use strict";
 
   document.title = $('h1').first().text();
-
-  /* type of toc navigation */
-  var nav = "offscreen";
 
   /* size of thumbnails */
   var thumbsize = "col-md-3";
@@ -72,7 +69,7 @@ $(function() {
   $('table').addClass('table table-striped table-bordered table-hover table-condensed');
 
   /* add toggle panel to rcode blocks */
-  $('div.rcode div').each(function() {
+  $('div.rcode div').not('.rimage').each(function() {
     var button = $('<h5 class="panel-title">+/- </h5>');
 
     if($(this).hasClass('source')){
@@ -107,17 +104,25 @@ $(function() {
   });
 
   /* give images a lightbox and thumbnail classes to allow lightbox and thumbnails TODO: make gallery if graphs are grouped */
-  $('p').each(function(){
-    $(this).find('img').unwrap().wrapAll('<div class="rimage default"></div>');
-  });
   $('div.rimage').each(function(){
-    $(this).addClass("row thumbnails");
-    $(this).children('img').wrap('<a href="#" class="media-object pull-left mfp-image ' + thumbsize + ' thumbnail"></a>');
-    var rcode = $(this).prev('.rcode');
-    rcode.addClass('media');
-    rcode.find('.source').addClass('media-body');
-    var imgs = $(this).children('a').detach();
-    rcode.prepend(imgs);
+    var imgs = $(this).children('img');
+
+    var source = $(this).prev('.source');
+    source.addClass('media-body');
+
+    $(this).add(source).wrapAll('<div class="media" />');
+
+    //remove div
+    $(this).remove();
+
+    //remove images
+    imgs.remove();
+
+    //add images before source
+    source.before(imgs);
+
+    //add wrapping links to images
+    imgs.wrap('<a href="#" class="media-object pull-left mfp-image thumbnail ' + thumbsize + '"></a>');
   });
 
   /* Magnific Popup */
@@ -192,7 +197,7 @@ $(function() {
     return false;
   });
 
-  // global toggles FIXME explicitly toggle all on/off using global variables
+  // global toggles
   $('.toggle-global').click(function(){
     var type = $(this).attr('type');
     if(type == 'all-source'){
@@ -204,7 +209,12 @@ $(function() {
       $('li a[type=output], li a[type=message], li a[type=error]').click();
     }
     else {
-      $('div.' + type).children('pre').slideToggle();
+      if($(this).closest('li').hasClass('active')){
+        $('div.' + type).children('pre').slideUp();
+      }
+      else {
+        $('div.' + type).children('pre').slideDown();
+      }
     }
     $(this).closest('li').toggleClass('active');
     return false;
@@ -213,11 +223,11 @@ $(function() {
   $('.toggle-figure').click(function(){
     var imgs = $('.thumbnail img');
     if(imgs.is(":visible")){
-      imgs.hide(400, 'swing', function(){ $(this).parent().toggle(); });
+      imgs.slideUp(400, function(){ $(this).parent().toggle(); });
     }
     else {
       imgs.parent().show();
-      imgs.show(400, 'swing');
+      imgs.slideDown();
     }
     $(this).closest('li').toggleClass('active');
     return false;
@@ -357,14 +367,12 @@ button.thumbnails {
   margin-bottom: 30px;
   padding-top:    10px;
   padding-bottom: 10px;
-  text-shadow: 0 1px 0;
   border-radius: 5px;
 }
 
 /* All levels of nav */
 .sidebar .nav > li > a {
   display: block;
-  /*color: #716b7a;*/
   padding: 5px 20px;
 }
 .sidebar .nav > li > a:hover,
@@ -436,12 +444,14 @@ button.thumbnails {
   margin: 0;
   padding: 0;
 }
+.panel pre code {
+  border-radius: 0;
+}
 
 </style>
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id='style'>
+<link href=http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css rel="stylesheet" id='style'>
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" title="Default" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/amelia/bootstrap.min.css" title="Amelia" media="screen">
-<link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" title="Bootstrap" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css" title="Cerulean" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/cosmo/bootstrap.min.css" title="Cosmo" media="screen">
 <link rel="alternate stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootswatch/3.0.0/cyborg/bootstrap.min.css" title="Cyborg" media="screen">
@@ -464,7 +474,6 @@ $(function() {
         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">\
            <li class="active"><a class="style-switch" title="Default" href="#"   >Default</a></li> \
            <li><a class="style-switch" title="Amelia" href="#"                   >Amelia</a></li> \
-           <li><a class="style-switch" title="Bootstrap" href="#"                >Bootstrap</a></li> \
            <li><a class="style-switch" title="Cerulean" href="#"                 >Cerulean</a></li> \
            <li><a class="style-switch" title="Cosmo" href="#"                    >Cosmo</a></li> \
            <li><a class="style-switch" title="Cyborg" href="#"                   >Cyborg</a></li> \
@@ -489,33 +498,33 @@ $(function() {
 );
 </script>
 
-<link id="code-style" rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
-<link rel="alternate stylesheet" title="Default-Code" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
-<link rel="alternate stylesheet" title="Dark" href="http://yandex.st/highlightjs/7.3/styles/dark.min.css">
-<link rel="alternate stylesheet" title="FAR" href="http://yandex.st/highlightjs/7.3/styles/far.min.css">
-<link rel="alternate stylesheet" title="IDEA" href="http://yandex.st/highlightjs/7.3/styles/idea.min.css">
-<link rel="alternate stylesheet" title="Sunburst" href="http://yandex.st/highlightjs/7.3/styles/sunburst.min.css">
-<link rel="alternate stylesheet" title="Zenburn" href="http://yandex.st/highlightjs/7.3/styles/zenburn.min.css">
-<link rel="alternate stylesheet" title="Visual Studio" href="http://yandex.st/highlightjs/7.3/styles/vs.min.css">
-<link rel="alternate stylesheet" title="Ascetic" href="http://yandex.st/highlightjs/7.3/styles/ascetic.min.css">
-<link rel="alternate stylesheet" title="Magula" href="http://yandex.st/highlightjs/7.3/styles/magula.min.css">
-<link rel="alternate stylesheet" title="GitHub" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
-<link rel="alternate stylesheet" title="Google Code" href="http://yandex.st/highlightjs/7.3/styles/googlecode.min.css">
-<link rel="alternate stylesheet" title="Brown Paper" href="http://yandex.st/highlightjs/7.3/styles/brown_paper.min.css">
-<link rel="alternate stylesheet" title="School Book" href="http://yandex.st/highlightjs/7.3/styles/school_book.min.css">
-<link rel="alternate stylesheet" title="IR Black" href="http://yandex.st/highlightjs/7.3/styles/ir_black.min.css">
-<link rel="alternate stylesheet" title="Solarized - Dark" href="http://yandex.st/highlightjs/7.3/styles/solarized_dark.min.css">
-<link rel="alternate stylesheet" title="Solarized - Light" href="http://yandex.st/highlightjs/7.3/styles/solarized_light.min.css">
-<link rel="alternate stylesheet" title="Arta" href="http://yandex.st/highlightjs/7.3/styles/arta.min.css">
-<link rel="alternate stylesheet" title="Monokai" href="http://yandex.st/highlightjs/7.3/styles/monokai.min.css">
-<link rel="alternate stylesheet" title="XCode" href="http://yandex.st/highlightjs/7.3/styles/xcode.min.css">
-<link rel="alternate stylesheet" title="Pojoaque" href="http://yandex.st/highlightjs/7.3/styles/pojoaque.min.css">
-<link rel="alternate stylesheet" title="Rainbow" href="http://yandex.st/highlightjs/7.3/styles/rainbow.min.css">
-<link rel="alternate stylesheet" title="Tomorrow" href="http://yandex.st/highlightjs/7.3/styles/tomorrow.min.css">
-<link rel="alternate stylesheet" title="Tomorrow Night" href="http://yandex.st/highlightjs/7.3/styles/tomorrow-night.min.css">
-<link rel="alternate stylesheet" title="Tomorrow Night Bright" href="http://yandex.st/highlightjs/7.3/styles/tomorrow-night-bright.min.css">
-<link rel="alternate stylesheet" title="Tomorrow Night Blue" href="http://yandex.st/highlightjs/7.3/styles/tomorrow-night-blue.min.css">
-<link rel="alternate stylesheet" title="Tomorrow Night Eighties" href="http://yandex.st/highlightjs/7.3/styles/tomorrow-night-eighties.min.css">
+<link href="http://yandex.st/highlightjs/7.3/styles/default.min.css" id="code-style" rel="stylesheet">
+<link title="Default-Code" href="http://yandex.st/highlightjs/7.3/styles/default.min.css" rel="alternate stylesheet">
+<link title="Dark" href="http://yandex.st/highlightjs/7.3/styles/dark.min.css" rel="alternate stylesheet">
+<link title="FAR" href="http://yandex.st/highlightjs/7.3/styles/far.min.css" rel="alternate stylesheet">
+<link title="IDEA" href="http://yandex.st/highlightjs/7.3/styles/idea.min.css" rel="alternate stylesheet">
+<link title="Sunburst" href="http://yandex.st/highlightjs/7.3/styles/sunburst.min.css" rel="alternate stylesheet">
+<link title="Zenburn" href="http://yandex.st/highlightjs/7.3/styles/zenburn.min.css" rel="alternate stylesheet">
+<link title="Visual Studio" href="http://yandex.st/highlightjs/7.3/styles/vs.min.css" rel="alternate stylesheet">
+<link title="Ascetic" href="http://yandex.st/highlightjs/7.3/styles/ascetic.min.css" rel="alternate stylesheet">
+<link title="Magula" href="http://yandex.st/highlightjs/7.3/styles/magula.min.css" rel="alternate stylesheet">
+<link title="GitHub" href="http://yandex.st/highlightjs/7.3/styles/github.min.css" rel="alternate stylesheet">
+<link title="Google Code" href="http://yandex.st/highlightjs/7.3/styles/googlecode.min.css" rel="alternate stylesheet">
+<link title="Brown Paper" href="http://yandex.st/highlightjs/7.3/styles/brown_paper.min.css" rel="alternate stylesheet">
+<link title="School Book" href="http://yandex.st/highlightjs/7.3/styles/school_book.min.css" rel="alternate stylesheet">
+<link title="IR Black" href="http://yandex.st/highlightjs/7.3/styles/ir_black.min.css" rel="alternate stylesheet">
+<link title="Solarized - Dark" href="http://yandex.st/highlightjs/7.3/styles/solarized_dark.min.css" rel="alternate stylesheet">
+<link title="Solarized - Light" href="http://yandex.st/highlightjs/7.3/styles/solarized_light.min.css" rel="alternate stylesheet">
+<link title="Arta" href="http://yandex.st/highlightjs/7.3/styles/arta.min.css" rel="alternate stylesheet">
+<link title="Monokai" href="http://yandex.st/highlightjs/7.3/styles/monokai.min.css" rel="alternate stylesheet">
+<link title="XCode" href="http://yandex.st/highlightjs/7.3/styles/xcode.min.css" rel="alternate stylesheet">
+<link title="Pojoaque" href="http://yandex.st/highlightjs/7.3/styles/pojoaque.min.css" rel="alternate stylesheet">
+<link title="Rainbow" href="http://yandex.st/highlightjs/7.3/styles/rainbow.min.css" rel="alternate stylesheet">
+<link title="Tomorrow" href="http://yandex.st/highlightjs/7.3/styles/tomorrow.min.css" rel="alternate stylesheet">
+<link title="Tomorrow Night" href="http://yandex.st/highlightjs/7.3/styles/tomorrow-night.min.css" rel="alternate stylesheet">
+<link title="Tomorrow Night Bright" href="http://yandex.st/highlightjs/7.3/styles/tomorrow-night-bright.min.css" rel="alternate stylesheet">
+<link title="Tomorrow Night Blue" href="http://yandex.st/highlightjs/7.3/styles/tomorrow-night-blue.min.css" rel="alternate stylesheet">
+<link title="Tomorrow Night Eighties" href="http://yandex.st/highlightjs/7.3/styles/tomorrow-night-eighties.min.css" rel="alternate stylesheet">
 
 <script>
 $(function() {
