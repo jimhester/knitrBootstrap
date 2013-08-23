@@ -5,29 +5,27 @@ HTML=$(RMD:.Rmd=.html)
 CHOOSER=c('boot', 'code')
 BOOT_STYLE=NULL
 CODE_STYLE=NULL
-THUMBSIZE='col-md-3'
+THUMBSIZE=3
 SHOW_CODE=FALSE
 SHOW_OUTPUT=TRUE
 SHOW_FIGURE=TRUE
 
-R_package=inst/templates/R_package
-
-BASE=$(filter-out $(R_package), $(wildcard inst/templates/*)) $(wildcard R/*.R)
+BASE=$(filter-out R_package, $(wildcard inst/templates/*)) $(wildcard R/*.R)
 
 all: $(HTML) install
 
-install: $(R_package)
+install: R_package
 
-$(R_package): $(BASE)
+R_package: $(BASE)
 	Rscript -e 'library(devtools);install(".", quick=T)'
-	touch $(R_package)
+	touch R_package
 
-inst/examples/all.html: $(RMD) $(R_package)
+inst/examples/all.html: $(RMD) R_package
 
-%_inline.html: %.html $(R_package)
+%_inline.html: %.html R_package
 	exec/encode.pl $< > $@
 
-%.html: %.Rmd $(R_package)
+%.html: %.Rmd R_package
 	Rscript -e "\
     setwd('$(dir $<)');\
     require('knitrBootstrap');\

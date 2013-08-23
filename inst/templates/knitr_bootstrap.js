@@ -4,9 +4,6 @@ $(function() {
 
   document.title = $('h1').first().text();
 
-  /* type of toc navigation */
-  var nav = "offscreen";
-
   /* size of thumbnails */
   var thumbsize = "col-md-3";
 
@@ -31,7 +28,7 @@ $(function() {
   $('table').addClass('table table-striped table-bordered table-hover table-condensed');
 
   /* add toggle panel to rcode blocks */
-  $('div.rcode div').each(function() {
+  $('div.rcode div').not('.rimage').each(function() {
     var button = $('<h5 class="panel-title">+/- </h5>');
 
     if($(this).hasClass('source')){
@@ -66,17 +63,25 @@ $(function() {
   });
 
   /* give images a lightbox and thumbnail classes to allow lightbox and thumbnails TODO: make gallery if graphs are grouped */
-  $('p').each(function(){
-    $(this).find('img').unwrap().wrapAll('<div class="rimage default"></div>');
-  });
   $('div.rimage').each(function(){
-    $(this).addClass("row thumbnails");
-    $(this).children('img').wrap('<a href="#" class="media-object pull-left mfp-image ' + thumbsize + ' thumbnail"></a>');
-    var rcode = $(this).prev('.rcode');
-    rcode.addClass('media');
-    rcode.find('div').addClass('media-body');
-    var imgs = $(this).children('a').detach();
-    rcode.prepend(imgs);
+    var imgs = $(this).children('img');
+
+    var source = $(this).prev('.source');
+    source.addClass('media-body');
+
+    $(this).add(source).wrapAll('<div class="media" />');
+
+    //remove div
+    $(this).remove();
+
+    //remove images
+    imgs.remove();
+
+    //add images before source
+    source.before(imgs);
+
+    //add wrapping links to images
+    imgs.wrap('<a href="#" class="media-object pull-left mfp-image thumbnail ' + thumbsize + '"></a>');
   });
 
   /* Magnific Popup */
@@ -151,7 +156,7 @@ $(function() {
     return false;
   });
 
-  // global toggles FIXME explicitly toggle all on/off using global variables
+  // global toggles
   $('.toggle-global').click(function(){
     var type = $(this).attr('type');
     if(type == 'all-source'){
@@ -163,7 +168,12 @@ $(function() {
       $('li a[type=output], li a[type=message], li a[type=error]').click();
     }
     else {
-      $('div.' + type).children('pre').slideToggle();
+      if($(this).closest('li').hasClass('active')){
+        $('div.' + type).children('pre').slideUp();
+      }
+      else {
+        $('div.' + type).children('pre').slideDown();
+      }
     }
     $(this).closest('li').toggleClass('active');
     return false;
@@ -172,11 +182,11 @@ $(function() {
   $('.toggle-figure').click(function(){
     var imgs = $('.thumbnail img');
     if(imgs.is(":visible")){
-      imgs.hide(400, 'swing', function(){ $(this).parent().toggle(); });
+      imgs.slideUp(400, function(){ $(this).parent().toggle(); });
     }
     else {
       imgs.parent().show();
-      imgs.show(400, 'swing');
+      imgs.slideDown();
     }
     $(this).closest('li').toggleClass('active');
     return false;
