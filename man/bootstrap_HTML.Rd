@@ -3,8 +3,7 @@
 \title{Add the knitrBootstrap html header to an HTML file produced by knitr.}
 \usage{
   bootstrap_HTML(input, output = NULL, boot_style = NULL,
-    code_style = NULL, chooser = NULL,
-    thumbsize = c("col-md-3", "col-md-1", "col-md-2", "col-md-4", "col-md-5", "col-md-6", "col-md-7", "col-md-8", "col-md-9"),
+    code_style = NULL, chooser = NULL, thumbsize = 3,
     show_code = FALSE, show_output = TRUE,
     show_figure = TRUE,
     graphics = getOption("menu.graphics"))

@@ -4,8 +4,7 @@
 \title{knit a Rmd file and wrap it in bootstrap styles}
 \usage{
   knit_bootstrap(input, output = NULL, boot_style = NULL,
-    code_style = NULL, chooser = NULL,
-    thumbsize = c("col-md-3", "col-md-1", "col-md-2", "col-md-4", "col-md-5", "col-md-6", "col-md-7", "col-md-8", "col-md-9"),
+    code_style = NULL, chooser = NULL, thumbsize = 3,
     show_code = FALSE, show_output = TRUE,
     show_figure = TRUE,
     markdown_options = c("mathjax", "base64_images", "use_xhtml"),
