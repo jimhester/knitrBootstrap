@@ -41,3 +41,23 @@ inst/examples/all.html: $(RMD) R_package
 
 make clean:
 	rm -f inst/doc/*.html inst/doc/*.md
+
+#from yihui's knitr Makefile
+PKGNAME := $(shell sed -n "s/Package: *\([^ ]*\)/\1/p" DESCRIPTION)
+PKGVERS := $(shell sed -n "s/Version: *\([^ ]*\)/\1/p" DESCRIPTION)
+PKGSRC  := $(shell basename `pwd`)
+
+# convert markdown to R's NEWS format
+news: NEWS.md
+	sed -e 's/^-/  -/' -e 's/^## *//' -e 's/^#/\t\t/' < NEWS.md | fmt -80 > NEWS
+
+docs:
+	Rscript -e 'library(devtools); document()'
+
+build:
+	cd ..;\
+	R CMD build $(PKGSRC)
+
+check: build
+	cd ..;\
+	R CMD check $(PKGNAME)_$(PKGVERS).tar.gz --as-cran

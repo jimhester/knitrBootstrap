@@ -7,3 +7,4 @@ inst/examples/.*\.md
 exec/customize.pl
 Makefile
 R_package
+NEWS.md
