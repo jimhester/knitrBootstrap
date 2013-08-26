@@ -51,7 +51,13 @@ $(function() {
       button.text(button.text() + 'Message');
       button.addClass('message');
       $(this).addClass('panel panel-info');
-    } else if($(this).hasClass('error')){
+    }
+    else if($(this).hasClass('warning')){
+      button.text(button.text() + 'Warning');
+      button.addClass('warning');
+      $(this).addClass('panel panel-warning');
+    }
+    else if($(this).hasClass('error')){
       button.text(button.text() + 'Error');
       button.addClass('error');
       $(this).addClass('panel panel-danger');
@@ -138,6 +144,7 @@ $(function() {
               <li class="dropdown-header">Type</li>\
                 <li><a href="#" type="output" class="toggle-global">Output</a></li>\
                 <li><a href="#" type="message" class="toggle-global">Message</a></li>\
+                <li><a href="#" type="warning" class="toggle-global">Warning</a></li>\
                 <li><a href="#" type="error" class="toggle-global">Error</a></li>\
                 <li><a href="#" type="all-output" class="toggle-global">All</a></li>\
             </ul>\
@@ -165,7 +172,7 @@ $(function() {
       }
     }
     if(type == 'all-output'){
-      $('li a[type=output], li a[type=message], li a[type=error]').click();
+      $('li a[type=output], li a[type=message], li a[type=warning], li a[type=error]').click();
     }
     else {
       if($(this).closest('li').hasClass('active')){
@@ -221,7 +228,7 @@ $(function() {
 
   if(show_output){
     /* toggle output buttons pressed */
-    $('li a[type=output], li a[type=message], li a[type=error], li a[type=all-output]').closest('li').addClass('active');
+    $('li a[type=output], li a[type=message], li a[type=warning], li a[type=error], li a[type=all-output]').closest('li').addClass('active');
   }
   else {
     /* hide output blocks */
