@@ -232,7 +232,7 @@ $(function() {
   }
   else {
     /* hide output blocks */
-    $('div.output').hide();
+    $('div.output pre').hide();
   }
 
   if(show_figure){
