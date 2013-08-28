@@ -111,7 +111,7 @@ function! RMakeHTML_2()
   if g:vimrplugin_openhtml
     let rcmd = rcmd . '; browseURL("' . filename . '.html")'
   endif
-  call SendCmdToR(rcmd)
+  call g:SendCmdToR(rcmd)
 endfunction
 
 "bind RMakeHTML_2 to leader kk
