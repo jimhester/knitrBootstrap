@@ -113,6 +113,13 @@ button.thumbnails {
   font-size: 90%;
 }
 
+.sidebar .nav .nav .nav > li > a {
+  padding-left: 40px;
+}
+.sidebar .nav .nav .nav .nav > li > a {
+  padding-left: 50px;
+}
+
 /* Show and affix the side nav when space allows it */
 @media screen and (min-width: 992px) {
   .sidebar .nav > .active > ul {
