@@ -28,7 +28,7 @@ $(function() {
   $('table').addClass('table table-striped table-bordered table-hover table-condensed');
 
   /* add toggle panel to rcode blocks */
-  $('div.rcode div').not('.rimage').each(function() {
+  $('div.source,div.output,div.message,div.warning,div.error').each(function() {
     var button = $('<h5 class="panel-title">+/- </h5>');
 
     if($(this).hasClass('source')){
