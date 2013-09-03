@@ -1,6 +1,56 @@
 /* run scripts when document is ready */
+
+generate_anchor = function (text) {
+  return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_');
+}
+jQuery.fn.generate_TOC = function () {
+  var base = $(this[0]);
+
+  var selectors = ['h1', 'h2', 'h3', 'h4'];
+
+  var last_ptr = [{}, {}, {}, {}];
+
+  $(selectors.join(',')).each(function () {
+    var heading = $(this);
+    var idx = selectors.indexOf(heading.prop('tagName').toLowerCase());
+    var itr = 0;
+
+    while (itr <= idx) {
+      if (jQuery.isEmptyObject(last_ptr[itr])) {
+        last_ptr[itr] = $('<ul>').addClass('nav');
+        if (itr === 0) {
+          base.append(last_ptr[itr])
+        } else {
+          if(last_ptr[itr-1].children('li').length === 0){
+            last_ptr[itr-1].append(last_ptr[itr]);
+          }
+          else {
+            last_ptr[itr - 1].children('li').last().append(last_ptr[itr]);
+          }
+        }
+      }
+      itr++;
+    }
+    var anchor = generate_anchor(heading.text());
+    heading.attr('id', anchor);
+    var a = $('<a>')
+    .text(heading.text())
+    .attr('href', '#' + anchor);
+
+  var li = $('<li>')
+    .append(a);
+
+  last_ptr[idx].append(li);
+  for (i = idx + 1; i < last_ptr.length; i++) {
+    last_ptr[i] = {};
+  }
+  });
+}
 $(function() {
   "use strict";
+
+  var $window = $(window);
+  var $body = $(document.body);
 
   document.title = $('h1').first().text();
 
@@ -91,6 +141,9 @@ $(function() {
     }
   });
 
+  $('div.chunk').addClass('media');
+
+  $('.rcode > .panel').addClass('media');
   /* Magnific Popup */
   $(".thumbnail").each(function(){
     $(this).magnificPopup({
@@ -194,7 +247,8 @@ $(function() {
     }
     else {
       imgs.parent().show();
-      imgs.slideDown();
+      imgs.show();
+      //imgs.slideDown();
     }
     $(this).closest('li').toggleClass('active');
     return false;
@@ -216,7 +270,7 @@ $(function() {
   $('.contents').addClass('col-md-offset-3');
 
   /* table of contents */
-  $('#toc').tocify({extendPage: false});
+  $('#toc').generate_TOC();
 
   if(show_code){
     /* toggle source buttons pressed */
@@ -248,4 +302,14 @@ $(function() {
   /* remove paragraphs with no content */
   $('p:empty').remove();
 
+  $body.scrollspy({
+    target: '.sidebar',
+  });
+
+  $window.on('load', function () {
+    console.log('harst');
+    $body.scrollspy('refresh');
+  })
+
 });
+

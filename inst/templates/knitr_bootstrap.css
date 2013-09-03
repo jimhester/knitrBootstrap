@@ -124,6 +124,7 @@ button.thumbnails {
   .sidebar.affix-bottom {
     width: 213px;
   }
+  .sidebar.affix-top,
   .sidebar.affix {
     position: fixed; /* Undo the static from mobile first approach */
     top: 30px;
