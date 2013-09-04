@@ -10,7 +10,7 @@ See http://rpubs.com/kohske/R-de-illusion
 from [statmethods.net](http://www.statmethods.net/advgraphs/ggplot2.html)
 
 ## Cafe wall illusion ##
-All the lines are actually parallel
+All the lines are actually parallel.
 
 ```{r illusions_cafe_wall}
 library(grid)
@@ -34,7 +34,7 @@ grid.rect(rs$y, rs$x, 1/ny/2, 1/nx/2, gp = gpar(col = NA, fill = c("black", "whi
 ```
 
 ## Fraser illusion ##
-All the lines are actually parallel
+All the lines are actually parallel.
 
 ```{r illusions_fraser}
 library(plyr)

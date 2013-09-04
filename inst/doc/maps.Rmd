@@ -6,7 +6,7 @@
 # Map plots #
 
 ## USA Arrests ##
-examples from [http://docs.ggplot2.org/current/geom_map.html](http://docs.ggplot2.org/current/geom_map.html)
+Examples from [http://docs.ggplot2.org/current/geom_map.html](http://docs.ggplot2.org/current/geom_map.html).
 ```{r maps_arrests, dev='png', fig.show='hold', warning=FALSE}
 library(ggplot2)
 crimes <- data.frame(state = tolower(rownames(USArrests)), USArrests)
@@ -23,4 +23,4 @@ ggplot(subset(crimesm, state %in% great_lakes_states), aes(map_id = state)) + ge
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 02:44:48 PM
-Last Modified: 2013 Aug 22 03:01:17 PM
+Last Modified: 2013 Sep 04 09:54:11 AM

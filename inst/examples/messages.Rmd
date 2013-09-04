@@ -2,6 +2,7 @@
 %\VignetteEngine{knitr}
 %\VignetteIndexEntry{Messages}
 -->
+# Example messages #
 ```{r messages_print}
 print('this is a print')
 ```
