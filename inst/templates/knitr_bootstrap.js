@@ -72,22 +72,21 @@ $(function() {
   $('div.rimage').each(function(){
     var imgs = $(this).children('img');
 
-    var source = $(this).prev('.source');
-    source.addClass('media-body');
-
-    $(this).add(source).wrapAll('<div class="media" />');
-
-    //remove div
-    $(this).remove();
+    var sibs = $(this).prevAll('div');
+    sibs.addClass('media-body').wrapAll('<div class="media" />');
 
     //remove images
     imgs.remove();
 
-    //add images before source
-    source.before(imgs);
+    //remove div
+    $(this).remove();
+
+    //add images before source block
+    sibs.filter('div.source:first').before(imgs);
 
     //add wrapping links to images
     imgs.wrap('<a href="#" class="media-object pull-left mfp-image thumbnail ' + thumbsize + '"></a>');
+
   });
 
   /* Magnific Popup */
