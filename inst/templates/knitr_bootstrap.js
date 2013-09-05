@@ -1,7 +1,7 @@
 /* run scripts when document is ready */
 
 generate_anchor = function (text) {
-  return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_');
+  return text.replace(/\W/g, '_');
 }
 jQuery.fn.generate_TOC = function () {
   var base = $(this[0]);
