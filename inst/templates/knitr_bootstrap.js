@@ -69,24 +69,26 @@ $(function() {
   });
 
   /* give images a lightbox and thumbnail classes to allow lightbox and thumbnails TODO: make gallery if graphs are grouped */
-  $('div.rimage').each(function(){
-    var imgs = $(this).children('img');
+  $('div.rimage img').each(function(){
 
-    var sibs = $(this).prevAll('div');
-    sibs.addClass('media-body').wrapAll('<div class="media" />');
+    //remove rimage div
+    $(this).unwrap();
 
-    //remove images
-    imgs.remove();
+    var a = $(this).
+      wrap('<a href=# class="media-object pull-left mfp-image thumbnail ' + thumbsize + '"></a>').
+      parent();
 
-    //remove div
-    $(this).remove();
-
-    //add images before source block
-    sibs.filter('div.source:first').before(imgs);
-
-    //add wrapping links to images
-    imgs.wrap('<a href="#" class="media-object pull-left mfp-image thumbnail ' + thumbsize + '"></a>');
-
+    var sibs = a.prevUntil('div.rimage,div.media');
+    console.log(sibs);
+    var div = $('<div class="media" />');
+    if(sibs.length != 0){
+      sibs.addClass('media-body');
+      //need to reverse order as prevUntil puts objects in the order it found them
+      $(sibs.get().reverse()).wrapAll(div).parent().prepend(a);
+    }
+    else {
+      a.wrap(div);
+    }
   });
 
   /* Magnific Popup */
