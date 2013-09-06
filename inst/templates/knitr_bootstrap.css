@@ -56,12 +56,6 @@ button.thumbnails {
   margin-left:0px;
 }
 
-.mfp-image img{
-  background: white;
-}
-.mfp-figure:after {
-  background: white;
-}
 /*
  * Side navigation
  *
@@ -563,3 +557,11 @@ img.mfp-img {
   top: 0;
   right: 0;
   padding-top: 0; }
+
+//Magnific overrides
+.mfp-image img{
+  background: white;
+}
+.mfp-figure:after {
+  background: white;
+}
