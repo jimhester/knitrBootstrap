@@ -16,7 +16,7 @@ A framework to create bootstrap styled HTML reports from knitr Rmarkdown.
 
 ## Features ##
 * Uses bootstrap 3.0, should work for all screen sizes.
-* Automatic table of contents constructed from h1-4 tags using [tocify].
+* Automatic table of contents constructed from h1-4 tags.
 * Images are automatically centered, thumbnailed and lightboxed using [magnific popup].
 * Style with themes from [bootswatch], optionally including a dynamic style switch.
 * Code blocks automatically highlighted using [highlight.js], optionally including a dynamic style switch.
@@ -135,7 +135,6 @@ highlighting.  The knit_bootstrap function has boot_style and code_style
 arguments if you want to use an alternative style by default.
 
 [highlight.js]: https://github.com/isagalaev/highlight.js
-[tocify]: http://gregfranko.com/jquery.tocify.js
 [rstudio/markdown]: https://github.com/rstudio/markdown
 [knitrBootstrap]: https://jimhester.github.io/knitrBootstrap
 [magnific popup]: http://dimsemenov.com/plugins/magnific-popup
