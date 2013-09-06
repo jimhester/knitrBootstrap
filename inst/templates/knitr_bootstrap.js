@@ -1,14 +1,29 @@
-/* run scripts when document is ready */
-
-generate_anchor = function (text) {
-  return text.replace(/\W/g, '_');
-}
+// Function to generate the dynamic table of contents
 jQuery.fn.generate_TOC = function () {
   var base = $(this[0]);
 
   var selectors = ['h1', 'h2', 'h3', 'h4'];
 
   var last_ptr = [{}, {}, {}, {}];
+
+  var anchors = {};
+
+  generate_anchor = function (text) {
+    var test = text.replace(/\W/g, '_');
+
+    while(test in anchors){
+      //if no suffix, add one
+      if(test.match(/_\d+$/) === null){
+        test = test + "_2";
+      }
+      //else generate unique id for duplicates by adding one to the suffix
+      else {
+        test = test.replace(/_(\d+)$/, function(match, number){ var num=+number+1; return("_" + num) });
+      }
+    }
+    anchors[test]=1;
+    return(test);
+  }
 
   $(selectors.join(',')).each(function () {
     var heading = $(this);
@@ -46,6 +61,7 @@ jQuery.fn.generate_TOC = function () {
   }
   });
 }
+/* run scripts when document is ready */
 $(function() {
   "use strict";
 
@@ -113,7 +129,7 @@ $(function() {
       $(this).addClass('panel panel-danger');
     }
     else {
-      console.log($(this));
+      //console.log($(this));
     }
     $(this).prepend($('<div class="panel-heading toggle" />').append(button));
   });
@@ -129,7 +145,6 @@ $(function() {
       parent();
 
     var sibs = a.prevUntil('div.rimage,div.media');
-    console.log(sibs);
     var div = $('<div class="media" />');
     if(sibs.length != 0){
       sibs.addClass('media-body');
@@ -248,7 +263,6 @@ $(function() {
     else {
       imgs.parent().show();
       imgs.show();
-      //imgs.slideDown();
     }
     $(this).closest('li').toggleClass('active');
     return false;
@@ -261,7 +275,7 @@ $(function() {
   var last_p = p.filter(':last');
   p.detach();
   last_p.addClass('muted').attr('id','credit');
-  last_p.append('<p>styled with <a href="https://github.com/jimhester/knitrBootstrap">knitrBootstrap</a></p>');
+  last_p.append('<p>Styled with <a href="https://github.com/jimhester/knitrBootstrap">knitrBootstrap</a></p>');
   last_p.appendTo("body");
   last_p.wrap('<div id="footer">');
 
@@ -306,8 +320,9 @@ $(function() {
     target: '.sidebar',
   });
 
+
+  //TODO refresh on show/hide
   $window.on('load', function () {
-    console.log('harst');
     $body.scrollspy('refresh');
   })
 
