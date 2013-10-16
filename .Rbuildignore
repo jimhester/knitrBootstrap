@@ -1,6 +1,7 @@
 \.gitignore
 ^\.git$
-inst/doc/.*\.md
+vignettes/.*\.md
+.*/figure
 inst/examples/.*\.md
 .*\.png
 .*CanvasMatrix.js

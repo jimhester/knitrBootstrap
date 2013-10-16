@@ -88,6 +88,8 @@ make file_inline.html
 Simply source the following code in RStudio before you knit your reports.
 See [http://www.rstudio.com/ide/docs/authoring/markdown_custom_rendering]() for more information.
 
+*Note* You also need to include render_html() in your Rmd setup chunk.
+
 ```r
 options(rstudio.markdownToHTML =
   function(inputFile, outputFile) {

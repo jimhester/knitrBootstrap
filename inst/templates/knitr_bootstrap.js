@@ -273,11 +273,10 @@ $(function() {
   $('#wrap').append('<div id="push" />');
   var p = $('p:contains("Author:")');
   var last_p = p.filter(':last');
-  p.detach();
-  last_p.addClass('muted').attr('id','credit');
+  last_p.addClass('text-muted').attr('id','credit');
   last_p.append('<p>Styled with <a href="https://github.com/jimhester/knitrBootstrap">knitrBootstrap</a></p>');
+  last_p = last_p.wrap('<div id="footer"><div class="container">').parent().parent();
   last_p.appendTo("body");
-  last_p.wrap('<div id="footer">');
 
   $('.container > .row').prepend('<div class="col-md-3"><div id="toc" class="well sidebar sidenav affix hidden-print"/></div>');
 

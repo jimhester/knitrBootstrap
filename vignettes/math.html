@@ -7,6 +7,9 @@
 
 
 
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 
 <style type="text/css">
@@ -1063,82 +1066,39 @@ $(function() {
 <body>
 <!--
 %\VignetteEngine{knitr}
-%\VignetteIndexEntry{Messages}
+%\VignetteIndexEntry{Math expressions example}
 -->
 
-<h1>Example messages</h1>
+<h1>Math expressions</h1>
 
-<div class="chunk" id="messages_print"><div class="rcode"><div class="source"><pre class="knitr r">print('this is a print')
-</pre></div>
+<p><a href="http://www.mathjax.org/demos/tex-samples">MathJax</a> examples.</p>
 
-<div class="output"><pre class="knitr r">## [1] "this is a print"
-</pre></div>
+<h2>simple</h2>
 
-<p></div></div></p>
+<p>\[\alpha+\beta=\gamma\]</p>
 
-<div class="chunk" id="messages_cat"><div class="rcode"><div class="source"><pre class="knitr r">cat('this is a cat\n')
-</pre></div>
+<h2>The Lorenz Equations</h2>
 
-<div class="output"><pre class="knitr r">## this is a cat
-</pre></div>
+<p>\[\begin{aligned}
+\dot{x} &amp; = \sigma(y-x) \\
+\dot{y} &amp; = \rho x - y - xz \\
+\dot{z} &amp; = -\beta z + xy
+\end{aligned} \]</p>
 
-<p></div></div></p>
+<h2>Coins</h2>
 
-<div class="chunk" id="messages_message"><div class="rcode"><div class="source"><pre class="knitr r">message('this is a message')
-</pre></div>
+<p>The probability of getting \(k\) heads when flipping \(n\) coins is
+\[P(E)   = {n \choose k} p^k (1-p)^{ n-k} \]</p>
 
-<div class="message"><pre class="knitr r">## this is a message
-</pre></div>
+<h2>An Identity of Ramanujan</h2>
 
-<p></div></div></p>
+<p>\[ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
+1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}}
+{1+\frac{e^{-8\pi}} {1+\ldots} } } } \]</p>
 
-<div class="chunk" id="messages_error"><div class="rcode"><div class="source"><pre class="knitr r">stop('this is an error')
-</pre></div>
-
-<div class="error"><pre class="knitr r">## Error: this is an error
-</pre></div>
-
-<p></div></div></p>
-
-<div class="chunk" id="messages_warning"><div class="rcode"><div class="source"><pre class="knitr r">warning('this is a warning')
-</pre></div>
-
-<div class="warning"><pre class="knitr r">## Warning: this is a warning
-</pre></div>
-
-<p></div></div></p>
-
-<div class="chunk" id="messages_all"><div class="rcode"><div class="source"><pre class="knitr r">print('this is a print')
-</pre></div>
-
-<div class="output"><pre class="knitr r">## [1] "this is a print"
-</pre></div>
-
-<div class="source"><pre class="knitr r">cat('this is a cat\n')
-</pre></div>
-
-<div class="output"><pre class="knitr r">## this is a cat
-</pre></div>
-
-<div class="source"><pre class="knitr r">message('this is a message')
-</pre></div>
-
-<div class="message"><pre class="knitr r">## this is a message
-</pre></div>
-
-<div class="source"><pre class="knitr r">warning('this is a warning')
-</pre></div>
-
-<div class="warning"><pre class="knitr r">## Warning: this is a warning
-</pre></div>
-
-<div class="source"><pre class="knitr r">stop('this is an error')
-</pre></div>
-
-<div class="error"><pre class="knitr r">## Error: this is an error
-</pre></div>
-
-<p></div></div></p>
+<p>Author: <a href="http://jimhester.com">Jim Hester</a>
+Created: 2013 Apr 01 03:27:26 PM
+Last Modified: 2013 Sep 04 09:52:49 AM</p>
 
 </body>
 
