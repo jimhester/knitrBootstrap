@@ -49,10 +49,10 @@ PKGSRC  := $(shell basename `pwd`)
 
 # convert markdown to R's NEWS format
 news: NEWS.md
-	sed -e 's/^-/  -/' -e 's/^## *//' -e 's/^#/\t\t/' < NEWS.md | fmt -80 > NEWS
+	sed -e 's/^-/  -/' -e 's/^## *//' -e 's/^#/\t\t/' < NEWS.md | fmt -80 -s > NEWS
 
 docs:
-	Rscript -e 'library(devtools); document()'
+	Rscript -e 'library(devtools);library(methods);library(utils);document()'
 
 build:
 	cd ..;\
