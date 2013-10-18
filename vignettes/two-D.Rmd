@@ -1,5 +1,5 @@
 <!--
-%\VignetteEngine{knitr}
+%\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{2D Graphs}
 %\VignetteDepends{xtable, corrplot, igraph}
 -->
@@ -40,4 +40,4 @@ plot(gu,vertex.label=NA)
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 27 10:54:38 PM
-Last Modified: 2013 Sep 04 09:53:09 AM
+Last Modified: 2013 Oct 16 03:53:30 PM

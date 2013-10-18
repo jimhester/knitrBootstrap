@@ -1,5 +1,5 @@
 <!--
-%\VignetteEngine{knitr}
+%\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{Math expressions example}
 -->
 
@@ -27,4 +27,4 @@ The probability of getting \(k\) heads when flipping \(n\) coins is
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Apr 01 03:27:26 PM
-Last Modified: 2013 Sep 04 09:52:49 AM
+Last Modified: 2013 Oct 16 03:49:22 PM

@@ -1,5 +1,5 @@
 <!--
-%\VignetteEngine{knitr}
+%\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{Map examples}
 %\VignetteDepends{ggplot2, reshape2, maps}
 -->
@@ -23,4 +23,4 @@ ggplot(subset(crimesm, state %in% great_lakes_states), aes(map_id = state)) + ge
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 02:44:48 PM
-Last Modified: 2013 Sep 04 09:54:11 AM
+Last Modified: 2013 Oct 16 03:51:08 PM
