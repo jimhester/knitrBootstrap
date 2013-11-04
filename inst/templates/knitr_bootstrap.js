@@ -82,6 +82,11 @@ $(function() {
   /* included languages */
   var languages = [];
 
+  /* wrap non render_html blocks in divs */
+  $('body pre code').each(function(){
+    console.log($(this));
+    $(this).parent().wrap('<div class="rcode">').wrap('<div class="source">');
+  });
   /* Using render_html, so add in code block */
   $('pre.knitr').each(function(){
     $(this).removeClass('knitr');
