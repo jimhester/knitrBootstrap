@@ -84,7 +84,6 @@ $(function() {
 
   /* wrap non render_html blocks in divs */
   $('body pre code').each(function(){
-    console.log($(this));
     $(this).parent().wrap('<div class="rcode">').wrap('<div class="source">');
   });
   /* Using render_html, so add in code block */
@@ -132,9 +131,6 @@ $(function() {
       button.text(button.text() + 'Error');
       button.addClass('error');
       $(this).addClass('panel panel-danger');
-    }
-    else {
-      //console.log($(this));
     }
     $(this).prepend($('<div class="panel-heading toggle" />').append(button));
   });
@@ -240,12 +236,12 @@ $(function() {
   // global toggles
   $('.toggle-global').click(function(){
     var type = $(this).attr('type');
-    if(type == 'all-source'){
+    if(type === 'all-source'){
       for(var language in languages){
         $('li a[type="source.' + language + '"]').click();
       }
     }
-    if(type == 'all-output'){
+    if(type === 'all-output'){
       $('li a[type=output], li a[type=message], li a[type=warning], li a[type=error]').click();
     }
     else {
@@ -290,23 +286,38 @@ $(function() {
   /* table of contents */
   $('#toc').generate_TOC();
 
-  if(show_code){
-    /* toggle source buttons pressed */
-    $('a.toggle-global.source').closest('li').addClass('active');
-  }
-  else {
-    /* hide code blocks */
-    $('div.source pre').hide();
+  function toggle_block(setting, type){
+    if(setting === 'true'){
+      $('a.toggle-global.' + type).closest('li').addClass('active');
+    }
+    else if(setting.length > 0){ //a list of types to toggle
+      $('a.toggle-global.' + type).each(function(){
+        var has_class = false;
+        for(var i = 0;i < setting.length;i++){
+          var val = setting[i];
+          console.log(val);
+          console.log($(this));
+          if($(this).hasClass(val)){
+            has_class = true;
+          }
+        }
+        console.log(has_class);
+        if(has_class){
+          $(this).closest('li').addClass('active');
+        }
+        else {
+          $('div.' + $(this).attr('type')).children('pre').hide();
+        }
+      });
+    }
+    else {
+      $('div.' + type + ' pre').hide();
+    }
   }
 
-  if(show_output){
-    /* toggle output buttons pressed */
-    $('li a[type=output], li a[type=message], li a[type=warning], li a[type=error], li a[type=all-output]').closest('li').addClass('active');
-  }
-  else {
-    /* hide output blocks */
-    $('div.output pre').hide();
-  }
+  toggle_block(show_code, 'source');
+
+  toggle_block(show_output, 'output');
 
   if(show_figure){
     /* toggle figure button pressed */

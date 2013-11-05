@@ -70,9 +70,9 @@ default_boot_style=boot_styles[1]
 default_code_style=code_styles[1]
 nav_pattern='nav = "[^"]+"'
 thumb_pattern='thumbsize = "[^"]+"'
-show_code_pattern='show_code = [^;]+;'
-show_figure_pattern='show_figure = [^;]+;'
-show_output_pattern='show_output = [^;]+;'
+show_code_pattern='show_code = [^;]+'
+show_figure_pattern='show_figure = [^;]+'
+show_output_pattern='show_output = [^;]+'
 
 
 #' knit a Rmd file and wrap it in bootstrap styles
@@ -233,8 +233,10 @@ get_style <- function(style, style_type, title, graphics = getOption("menu.graph
 #'        style chooser to the HTML, if contains "code" adds the bootstrap
 #'        code chooser.
 #' @param thumbsize size of thumbnails in bootstrap columns.
-#' @param show_code show code blocks by default.
-#' @param show_output show output blocks by default.
+#' @param show_code show code blocks by default, can also be given a character
+#'        vector of languages to show by default.
+#' @param show_output show output blocks by default, can also be given a
+#'        charater vector of which output types to show by default.
 #' @param show_figure show figures by default.
 #' @param graphics what graphics to use for the menus, only applicable if
 #'        code_style or boot_style are true.
@@ -269,23 +271,20 @@ create_header <-
 
   javascript = sub(thumb_pattern, paste('thumbsize = "col-md-', thumbsize, '"', sep=''), javascript)
 
-  if(is.logical(show_code))
-    javascript = sub(show_code_pattern, paste('show_code = ', ifelse(show_code,
-                                                                     'true',
-                                                                     'false'),
-                                              ';'), javascript)
+  option_to_javascript = function(option){
+    if(is.logical(option)){
+      ifelse(option, 'true', 'false')
+    }
+    else {
+      paste0('[', paste0(paste0('\\"', option, '\\"'), collapse=','), ']')
+    }
+  }
 
-  if(is.logical(show_output))
-    javascript = sub(show_output_pattern, paste('show_output = ', ifelse(show_output,
-                                                                     'true',
-                                                                     'false'),
-                                              ';'), javascript)
+  javascript = sub(show_code_pattern, paste0('show_code = ', option_to_javascript(show_code)), javascript)
 
-  if(is.logical(show_figure))
-    javascript = sub(show_figure_pattern, paste('show_figure = ', ifelse(show_figure,
-                                                                     'true',
-                                                                     'false'),
-                                              ';'), javascript)
+  javascript = sub(show_output_pattern, paste0('show_output = ', option_to_javascript(show_output)), javascript)
+
+  javascript = sub(show_figure_pattern, paste0('show_figure = ', option_to_javascript(show_figure)), javascript)
 
   output = paste(includes,
                  '<script defer="defer">', javascript, '</script>',
