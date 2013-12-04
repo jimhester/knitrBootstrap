@@ -8,7 +8,7 @@
 #' knit_bootstrap('file.Rmd')
 #' #Rstudio
 #' #you also have to put render_html() in your rmd setup file, then use the
-#' below code and the knit button 
+#' below code and the knit button
 #' options(rstudio.markdownToHTML =
 #'  function(inputFile, outputFile) {
 #'    require(knitrBootstrap)
@@ -100,7 +100,7 @@ show_output_pattern='show_output = [^;]+;'
 knit_bootstrap =
   function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
            thumbsize=3, show_code=FALSE, show_output=TRUE, show_figure=TRUE,
-           markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
+           markdown_options=getOption("markdown.HTML.options"),
            ..., envir = parent.frame(), text = NULL,
            quiet = FALSE, encoding = getOption('encoding'),
            graphics = getOption("menu.graphics")) {
@@ -110,6 +110,10 @@ knit_bootstrap =
   md_file =
     knit(input, NULL, text = text, envir = envir,
          encoding = encoding, quiet = quiet)
+
+  # determine markdown options
+  if (is.null(markdown_options))
+      markdown_options = c('mathjax', 'base64_images', 'use_xhtml')
 
   knit_bootstrap_md(md_file, output, boot_style=boot_style,
                     code_style=code_style, chooser=chooser,
@@ -143,7 +147,7 @@ knit_bootstrap_md =
 function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
          text = NULL, thumbsize=3, show_code=FALSE,
          show_output=TRUE, show_figure=TRUE,
-         markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
+         markdown_options=getOption("markdown.HTML.options"),
          graphics = getOption("menu.graphics"), ...) {
 
   header = create_header(boot_style=boot_style, code_style=code_style,
@@ -154,6 +158,10 @@ function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
 
   if(is.null(output))
     output <- sub_ext(input, 'html')
+
+  # determine markdown options
+  if (is.null(markdown_options))
+      markdown_options = c('mathjax', 'base64_images', 'use_xhtml')
 
   if (is.null(text)) {
     markdown::markdownToHTML(input, header=header, stylesheet='',
