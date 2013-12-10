@@ -144,10 +144,10 @@ arguments if you want to use an alternative style by default.
 [bootswatch]: http://bootswatch.com
 [devtools]: https://github.com/hadley/devtools
 
-[2d]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/vignettes/two-D.html
-[all]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/examples/all.html
-[cars]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/vignettes/cars.html
-[engines]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/inst/examples/engines.html
-[illusions]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/vignettes/illusions.html
-[maps]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/vignettes/maps.html
-[math]: http://htmlpreview.github.com/?https://github.com/jimhester/knitrBootstrap/blob/master/vignettes/math.html
+[2d]: http://rawgithub.com/jimhester/knitrBootstrap/master/vignettes/two-D.html
+[all]: http://rawgithub.com/jimhester/knitrBootstrap/master/inst/examples/all.html
+[cars]: http://rawgithub.com/jimhester/knitrBootstrap/master/vignettes/cars.html
+[engines]: http://rawgithub.com/jimhester/knitrBootstrap/master/inst/examples/engines.html
+[illusions]: http://rawgithub.com/jimhester/knitrBootstrap/master/vignettes/illusions.html
+[maps]: http://rawgithub.com/jimhester/knitrBootstrap/master/vignettes/maps.html
+[math]: http://rawgithub.com/jimhester/knitrBootstrap/master/vignettes/math.html
