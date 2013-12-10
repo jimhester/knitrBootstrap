@@ -28,5 +28,3 @@ URL: http://jimhester.github.io/knitrBootstrap
 BugReports: https://github.com/jimhester/knitrBootstrap/issues
 VignetteBuilder: knitr
 Packaged: 2013-06-03 13:51:16 UTC; hesterj
-Collate:
-    'knit_bootstrap.R'

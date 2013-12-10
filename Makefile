@@ -17,7 +17,7 @@ all: $(HTML) install
 install: R_package
 
 R_package: $(BASE)
-	Rscript -e 'library(devtools);install(".", quick=T)'
+	Rscript -e 'options(repos=c(CRAN="http://cran.rstudio.com/"));library(devtools);install()'
 	touch R_package
 
 inst/examples/all.html: $(RMD) R_package

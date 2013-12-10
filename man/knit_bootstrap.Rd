@@ -3,14 +3,11 @@
 \alias{knit_bootstrap_Rmd}
 \title{knit a Rmd file and wrap it in bootstrap styles}
 \usage{
-  knit_bootstrap(input, output = NULL, boot_style = NULL,
-    code_style = NULL, chooser = NULL, thumbsize = 3,
-    show_code = FALSE, show_output = TRUE,
-    show_figure = TRUE,
-    markdown_options = c("mathjax", "base64_images", "use_xhtml"),
-    ..., envir = parent.frame(), text = NULL,
-    quiet = FALSE, encoding = getOption("encoding"),
-    graphics = getOption("menu.graphics"))
+knit_bootstrap(input, output = NULL, boot_style = NULL, code_style = NULL,
+  chooser = NULL, thumbsize = 3, show_code = FALSE, show_output = TRUE,
+  show_figure = TRUE, markdown_options = c("mathjax", "base64_images",
+  "use_xhtml"), ..., envir = parent.frame(), text = NULL, quiet = FALSE,
+  encoding = getOption("encoding"), graphics = getOption("menu.graphics"))
 }
 \arguments{
   \item{input}{Rmd input file to knit into HTML}
@@ -52,9 +49,13 @@
   \item{thumbsize}{size of thumbnails in bootstrap
   columns.}
 
-  \item{show_code}{show code blocks by default.}
+  \item{show_code}{show code blocks by default, can also be
+  given a character vector of languages to show by
+  default.}
 
-  \item{show_output}{show output blocks by default.}
+  \item{show_output}{show output blocks by default, can
+  also be given a charater vector of which output types to
+  show by default.}
 
   \item{show_figure}{show figures by default.}
 

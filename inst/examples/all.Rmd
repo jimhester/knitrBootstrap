@@ -3,20 +3,20 @@
 %\VignetteIndexEntry{All examples}
 -->
 # All examples #
-```{r child="../doc/two-D.Rmd"}
+```{r child="../../vignettes/two-D.Rmd"}
 ```
-```{r child="../doc/cars.Rmd"}
+```{r child="../../vignettes/cars.Rmd"}
 ```
 ```{r child="engines.Rmd"}
 ```
-```{r child="../doc/illusions.Rmd"}
+```{r child="../../vignettes/illusions.Rmd"}
 ```
-```{r child="../doc/maps.Rmd"}
+```{r child="../../vignettes/maps.Rmd"}
 ```
-```{r child="../doc/math.Rmd"}
+```{r child="../../vignettes/math.Rmd"}
 ```
 ```{r child="messages.Rmd"}
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 03:22:28 PM
-Last Modified: 2013 Aug 22 03:15:44 PM
+Last Modified: 2013 Dec 10 08:08:37 AM

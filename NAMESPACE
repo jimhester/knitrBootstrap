@@ -1,7 +1,6 @@
 export(bootstrap_HTML)
 export(create_header)
 export(knit_bootstrap)
-export(knit_bootstrap_Rmd)
 export(knit_bootstrap_md)
 import(knitr)
 import(markdown)

@@ -2,11 +2,9 @@
 \alias{bootstrap_HTML}
 \title{Add the knitrBootstrap html header to an HTML file produced by knitr.}
 \usage{
-  bootstrap_HTML(input, output = NULL, boot_style = NULL,
-    code_style = NULL, chooser = NULL, thumbsize = 3,
-    show_code = FALSE, show_output = TRUE,
-    show_figure = TRUE,
-    graphics = getOption("menu.graphics"))
+bootstrap_HTML(input, output = NULL, boot_style = NULL, code_style = NULL,
+  chooser = NULL, thumbsize = 3, show_code = FALSE, show_output = TRUE,
+  show_figure = TRUE, graphics = getOption("menu.graphics"))
 }
 \arguments{
   \item{input}{html filename to be wrapped with Bootstrap.}
@@ -28,9 +26,13 @@
   \item{thumbsize}{size of thumbnails in bootstrap
   columns.}
 
-  \item{show_code}{show code blocks by default.}
+  \item{show_code}{show code blocks by default, can also be
+  given a character vector of languages to show by
+  default.}
 
-  \item{show_output}{show output blocks by default.}
+  \item{show_output}{show output blocks by default, can
+  also be given a charater vector of which output types to
+  show by default.}
 
   \item{show_figure}{show figures by default.}
 

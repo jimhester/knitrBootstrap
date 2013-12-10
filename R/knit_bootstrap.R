@@ -91,7 +91,7 @@ show_output_pattern='show_output = [^;]+'
 #' @param encoding the encoding of the input file; see \code{\link{file}}
 #' @seealso \code{\link{knit_bootstrap_md}} \code{\link{knit}}, \code{\link[markdown]{markdownToHTML}}
 #' @aliases knit_bootstrap knit_bootstrap_Rmd
-#' @export knit_bootstrap knit_bootstrap_Rmd
+#' @export
 #' @examples
 #' writeLines(c("# hello markdown", '```{r hello-random, echo=TRUE}', 'rnorm(5)', '```'), 'test.Rmd')
 #' knit_bootstrap('test.Rmd', boot_style='Amelia', code_style='Dark', chooser=c('boot','code'))
@@ -135,9 +135,9 @@ knit_bootstrap_Rmd = knit_bootstrap
 #' @param markdown_options passed to markdownToHTML, defaults to mathjax,
 #'        base64_images and use_xhtml.
 #' @param ... options passed to \code{\link[markdown]{markdownToHTML}}
-#' @export knit_bootstrap_md
 #' @seealso \code{\link{knit_bootstrap}} \code{\link{knit}},
 #'          \code{\link[markdown]{markdownToHTML}}
+#' @export
 
 knit_bootstrap_md =
 function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
@@ -173,7 +173,7 @@ function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
 #' @param input html filename to be wrapped with Bootstrap.
 #' @param output html filename to output.
 #' @inheritParams create_header
-#' @export bootstrap_HTML
+#' @export
 
 bootstrap_HTML = function(input, output = NULL, boot_style=NULL,
                           code_style=NULL, chooser=NULL, thumbsize=3,
@@ -243,8 +243,7 @@ get_style <- function(style, style_type, title, graphics = getOption("menu.graph
 #' @param outfile if NULL, write the output file in a temporary directory, if a
 #'        character write it to that location, if FALSE, return the header as a
 #'        character.
-
-#' @export create_header
+#' @export
 
 create_header <-
   function(boot_style=NULL, code_style=NULL, chooser=NULL, thumbsize=3,
