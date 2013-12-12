@@ -1,5 +1,5 @@
 <!--
-%\VignetteEngine{knitr}
+%\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{2D Graphs}
 %\VignetteDepends{xtable, corrplot, igraph}
 -->
@@ -60,7 +60,10 @@ corrplot(mcor)
 
 ## Network Graph Example ##
 <div class="chunk" id="2d_network_data"><div class="rcode"><div class="source"><pre class="knitr r">library(igraph)
-# Specify edges for a directed graph
+</pre></div>
+<div class="message"><pre class="knitr r">## Loading required package: methods
+</pre></div>
+<div class="source"><pre class="knitr r"># Specify edges for a directed graph
 gd <-graph(c(1,2, 2,3, 2,4, 1,4, 5,5, 3,6))
 plot(gd)
 </pre></div>
@@ -75,4 +78,4 @@ plot(gu,vertex.label=NA)
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 27 10:54:38 PM
-Last Modified: 2013 Sep 04 09:53:09 AM
+Last Modified: 2013 Oct 16 03:53:30 PM

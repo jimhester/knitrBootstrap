@@ -1,5 +1,5 @@
 <!--
-%\VignetteEngine{knitr}
+%\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{Cars example}
 %\VignetteDepends{ggplot2}
 -->
@@ -84,4 +84,4 @@ Observations (points) are overlayed and jittered.
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2013 Sep 04 09:51:52 AM
+Last Modified: 2013 Oct 16 03:50:50 PM

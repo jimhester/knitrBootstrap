@@ -1,4 +1,4 @@
-RMD=$(wildcard inst/doc/*.Rmd) $(wildcard inst/examples/*.Rmd)
+RMD=$(wildcard vignettes/*.Rmd) $(wildcard inst/examples/*.Rmd)
 
 HTML=$(RMD:.Rmd=.html)
 
@@ -40,7 +40,7 @@ inst/examples/all.html: $(RMD) R_package
     )"
 
 make clean:
-	rm -f inst/doc/*.html inst/doc/*.md
+	rm -f inst/examples/*.{html,md} vignettes/*.{html,md}
 
 #from yihui's knitr Makefile
 PKGNAME := $(shell sed -n "s/Package: *\([^ ]*\)/\1/p" DESCRIPTION)
