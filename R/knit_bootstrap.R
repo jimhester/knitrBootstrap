@@ -324,7 +324,7 @@ read_package_file <- function(path){
 read_file <- function(file){
   if(!file.exists(file))
     stop('file: ', file, ' does not exist')
-  readChar(file, 10e6)
+  paste0(readLines(file), collapse='\n')
 }
 
 # substitute extension, from knitr
