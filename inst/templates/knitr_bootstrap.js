@@ -82,84 +82,13 @@ $(function() {
   /* included languages */
   var languages = [];
 
-  /* wrap non render_html blocks in divs */
-  $('body pre code').each(function(){
-    $(this).parent().wrap('<div class="rcode">').wrap('<div class="source">');
-  });
-  /* Using render_html, so add in code block */
-  $('pre.knitr').each(function(){
-    $(this).removeClass('knitr');
-    if($(this).find('code').length < 1){
-      $(this).wrapInner('<code class=' + $(this).attr('class') + '></code>');
-    }
-  });
-
   /* style tables */
   $('table').addClass('table table-striped table-bordered table-hover table-condensed');
 
-  /* add toggle panel to rcode blocks */
-  $('div.source,div.output,div.message,div.warning,div.error').each(function() {
-    var button = $('<h5 class="panel-title">+/- </h5>');
-
-    if($(this).hasClass('source')){
-      var code_block = $(this).find('code');
-      var lang_type = code_block.attr('class');
-      button.text(button.text() + lang_type + ' Code');
-      button.addClass('source ' + lang_type);
-      languages[lang_type]=0;
-      code_block.each(function(i, e) {
-        hljs.highlightBlock(e);
-      });
-      $(this).addClass('panel panel-primary ' + lang_type);
-    }
-    else if($(this).hasClass('output')){
-      button.text(button.text() + 'Output');
-      button.addClass('output');
-      $(this).addClass('panel panel-success');
-    }
-    else if($(this).hasClass('message')){
-      button.text(button.text() + 'Message');
-      button.addClass('message');
-      $(this).addClass('panel panel-info');
-    }
-    else if($(this).hasClass('warning')){
-      button.text(button.text() + 'Warning');
-      button.addClass('warning');
-      $(this).addClass('panel panel-warning');
-    }
-    else if($(this).hasClass('error')){
-      button.text(button.text() + 'Error');
-      button.addClass('error');
-      $(this).addClass('panel panel-danger');
-    }
-    $(this).prepend($('<div class="panel-heading toggle" />').append(button));
+  $('div pre code').each(function(i, e) {
+    hljs.highlightBlock(e);
   });
 
-  /* give images a lightbox and thumbnail classes to allow lightbox and thumbnails TODO: make gallery if graphs are grouped */
-  $('div.rimage img').each(function(){
-
-    //remove rimage div
-    $(this).unwrap();
-
-    var a = $(this).
-      wrap('<a href=# class="media-object pull-left mfp-image thumbnail ' + thumbsize + '"></a>').
-      parent();
-
-    var sibs = a.prevUntil('div.rimage,div.media');
-    var div = $('<div class="media" />');
-    if(sibs.length != 0){
-      sibs.addClass('media-body');
-      //need to reverse order as prevUntil puts objects in the order it found them
-      $(sibs.get().reverse()).wrapAll(div).parent().prepend(a);
-    }
-    else {
-      a.wrap(div);
-    }
-  });
-
-  $('div.chunk').addClass('media');
-
-  $('.rcode > .panel').addClass('media');
   /* Magnific Popup */
   $(".thumbnail").each(function(){
     $(this).magnificPopup({
@@ -229,6 +158,13 @@ $(function() {
 
   /* onclick toggle next code block */
   $('.toggle').click(function() {
+    var span = $(this).find('span')
+    if(span.hasClass('glyphicon-chevron-down')){
+      span.removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up')
+    }
+    else {
+      span.removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down')
+    }
     $(this).next('pre').slideToggle();
     return false;
   });
@@ -279,9 +215,9 @@ $(function() {
   last_p = last_p.wrap('<div id="footer"><div class="container">').parent().parent();
   last_p.appendTo("body");
 
-  $('.container > .row').prepend('<div class="col-md-3"><div id="toc" class="well sidebar sidenav affix hidden-print"/></div>');
+  $('.container > .row').prepend('<div class="col-sm-3 col-sm-offset-1"><div id="toc" class="well sidebar sidenav affix hidden-print"/></div>');
 
-  $('.contents').addClass('col-md-offset-3');
+  $('.contents').addClass('col-sm-8');
 
   /* table of contents */
   $('#toc').generate_TOC();

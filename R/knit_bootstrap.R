@@ -21,6 +21,74 @@
 #' @docType package
 NULL
 
+panel_types = c('source' = 'panel-primary',
+                'output' = 'panel-success',
+                'message' = 'panel-info',
+                'warning' = 'panel-warning',
+                'error' = 'panel-danger')
+button_types = c('source' = 'btn-primary',
+                'output' = 'btn-success',
+                'message' = 'btn-info',
+                'warning' = 'btn-warning',
+                'error' = 'btn-danger')
+
+generate_attribute = function(index, data){
+  paste0(names(data)[index], '="', paste0(data[[index]], collapse=' '), '"')
+}
+print_attributes = function(attributes){
+  paste0(vapply(seq_along(attributes), FUN.VALUE=character(1), FUN=generate_attribute, USE.NAMES=FALSE, attributes), collapse= ' ')
+}
+tag = function(type, ..., attributes=list()){
+  paste0('<', type, ' ', print_attributes(attributes), '>', paste0(..., collapse='\n'), '</', type,'>')
+}
+bootstrap_chunk_hook = function(x, options){
+  if (knitr:::output_asis(x, options))
+    return(x)
+  tag('div', attributes=list(class=c('container row')), x)
+}
+
+bootstrap_plot_hook = function (x, options) {
+  #tag('div', attributes=list(class='row'),
+      tag('div', attributes=list(class=c('col-xs-6', 'col-md-3')),
+          tag('a', attributes=list(href='#', class='thumbnail'),
+              knitr:::.img.tag(knitr:::.upload.url(x), options$out.width, options$out.height,
+                       knitr:::.img.cap(options), paste(c(options$out.extra, "class=\"plot\""),
+                                                collapse = " "))
+              )
+          )
+      #)
+}
+render_bootstrap = function() {
+  knit_hooks$restore()
+  knitr:::set_html_dev()
+  opts_knit$set(out.format = "html")
+  html.hook = function(name) {
+    force(name)
+    function(x, options) {
+      x = paste(x, collapse = "\n")
+      engine = options$engine
+      paste0(
+          tag('button', attributes=list(type='button', class=c('toggle', 'btn', 'btn-xs', button_types[name])),
+              tag('span', attributes=list(class=c('glyphicon', 'glyphicon-chevron-down'))),
+              paste0(" ", engine, " ", name)
+              ),
+      #tag('div', attributes=list(class=c('panel panel-default')),#, name, panel_types[name])),
+          tag('pre',
+              tag('code', attributes=list(class=c(tolower(engine))), x)
+              )
+          )
+          #))
+    }
+  }
+    h = opts_knit$get("header")
+    z = list()
+    for (i in c("source", "warning", "message", "error")) z[[i]] = html.hook(i)
+    knit_hooks$set(z)
+    knit_hooks$set(inline = function(x) {
+        if (inherits(x, "AsIs")) .inline.hook(format_sci(x, "html")) else tag('code', .inline.hook(format_sci(x, "html")))
+    }, output = html.hook("output"), plot = bootstrap_plot_hook, chunk=bootstrap_chunk_hook)#, chunk = .chunk.hook.html)
+}
+
 boot_styles = c(
   'default'='https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css',
   'amelia'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/amelia/bootstrap.min.css',
@@ -105,7 +173,7 @@ knit_bootstrap =
            quiet = FALSE, encoding = getOption('encoding'),
            graphics = getOption("menu.graphics")) {
 
-  knitr::render_html()
+  render_bootstrap()
   opts_chunk$set(tidy=FALSE, highlight=FALSE)
   md_file =
     knit(input, NULL, text = text, envir = envir,
