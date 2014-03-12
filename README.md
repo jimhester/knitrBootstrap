@@ -40,12 +40,12 @@ All the examples include a css style switch, so you can try out the various styl
 ## Installation ##
 You can install the latest released version from CRAN.
 
-```r
+```s
 install.packages('knitrBootstrap')
 ```
 
 If you want to install the latest development version use the [devtools] package.
-```r
+```s
 library(devtools)
 install_github(username='jimhester', repo='knitrBootstrap')
 ```
@@ -54,7 +54,7 @@ install_github(username='jimhester', repo='knitrBootstrap')
 Reports can be built within [R](#Rfunction), a [Makefile](#makefile), by [RStudio](#rstudio) or with [Vim](#vim).
 
 ### R ###
-```r
+```s
 library(knitrBootstrap)
 #defaults only
 knit_bootstrap('file.Rmd')
@@ -90,7 +90,7 @@ See [http://www.rstudio.com/ide/docs/authoring/markdown_custom_rendering]() for 
 
 *Note* You also need to include render_html() in your Rmd setup chunk.
 
-```r
+```s
 options(rstudio.markdownToHTML =
   function(inputFile, outputFile) {
     require(knitrBootstrap)
