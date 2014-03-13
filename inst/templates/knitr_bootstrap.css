@@ -1,5 +1,5 @@
 /* Knitr_bootstrap styles */
-.header{
+#header{
   display: none !important;
   visibility: hidden !important;
 }
