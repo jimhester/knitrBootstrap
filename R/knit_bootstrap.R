@@ -22,43 +22,151 @@
 NULL
 
 panel_types = c('source' = 'panel-primary',
-                'output' = 'panel-success',
-                'message' = 'panel-info',
-                'warning' = 'panel-warning',
-                'error' = 'panel-danger')
+                 'output' = 'panel-success',
+                 'message' = 'panel-info',
+                 'warning' = 'panel-warning',
+                 'error' = 'panel-danger')
+
 button_types = c('source' = 'btn-primary',
-                'output' = 'btn-success',
-                'message' = 'btn-info',
-                'warning' = 'btn-warning',
-                'error' = 'btn-danger')
+                 'output' = 'btn-success',
+                 'message' = 'btn-info',
+                 'warning' = 'btn-warning',
+                 'error' = 'btn-danger')
 
 generate_attribute = function(index, data){
   paste0(names(data)[index], '="', paste0(data[[index]], collapse=' '), '"')
 }
 print_attributes = function(attributes){
-  paste0(vapply(seq_along(attributes), FUN.VALUE=character(1), FUN=generate_attribute, USE.NAMES=FALSE, attributes), collapse= ' ')
+  paste0(vapply(seq_along(attributes), FUN.VALUE=character(1),
+                FUN=generate_attribute, USE.NAMES=FALSE, attributes), collapse= ' ')
+
 }
-tag = function(type, ..., attributes=list()){
-  paste0('<', type, ' ', print_attributes(attributes), '>', paste0(..., collapse='\n'), '</', type,'>')
+generate_tag_function = function(tag) function(...) tag(tag, list(...)) 
+tags = list(
+            a = function(...) tag("a", list(...)),
+            b = function(...) tag("b", list(...)),
+            button = function(...) tag("button", list(...)),
+            code = function(...) tag("code", list(...)),
+            div = function(...) tag("div", list(...)),
+            img = function(...) tag("img", list(...)),
+            li = function(...) tag("li", list(...)),
+            p = function(...) tag("p", list(...)),
+            pre = function(...) tag("pre", list(...)),
+            span = function(...) tag("span", list(...)),
+            ul = function(...) tag("ul", list(...)),
+            h5 = function(...) tag('h5', list(...))
+            )
+tag = function(type, arg_list){
+  named_idx = nzchar(names(arg_list))
+  named_idx = if(length(named_idx) == 0) FALSE else named_idx
+  paste0('<', type, ' ', print_attributes(arg_list[named_idx]), '>',
+         paste0(unlist(arg_list[!named_idx]), collapse='\n'), '</', type,'>')
 }
 bootstrap_chunk_hook = function(x, options){
   if (knitr:::output_asis(x, options))
     return(x)
-  tag('div', attributes=list(class=c('container row')), x)
+  tags$div(class=c('container', 'row'), x)
 }
 
-bootstrap_plot_hook = function (x, options) {
-  #tag('div', attributes=list(class='row'),
-      tag('div', attributes=list(class=c('col-xs-6', 'col-md-3')),
-          tag('a', attributes=list(href='#', class='thumbnail'),
-              knitr:::.img.tag(knitr:::.upload.url(x), options$out.width, options$out.height,
-                       knitr:::.img.cap(options), paste(c(options$out.extra, "class=\"plot\""),
-                                                collapse = " "))
-              )
-          )
-      #)
+bootstrap_plot_hook = function(x, options) {
+  tags$div(class=c('col-xs-12', 'col-md-6'),
+           tags$a(href='#', class='thumbnail',
+                  knitr:::.img.tag(knitr:::.upload.url(x), options$out.width, options$out.height,
+                                   knitr:::.img.cap(options), paste(c(options$out.extra, "class=\"plot\""),
+                                                                    collapse = " "))
+                  )
+           )
 }
+
+language_link = function(language){
+  tags$li(
+          tags$a(
+                 href="#",
+                 class=c("toggle-global", "source", language),
+                 type=c(paste0(collapse=".", "source", language)),
+                 language
+                 )
+          )
+}
+
+generate_toggle_menu = function(languages){
+  tags$div(class=c("navbar navbar-fixed-bottom navbar-inverse"),
+           tags$div(class=c("container"),
+                    tags$div(class=c("navbar-header"),
+                             tags$button(type=c("button"),
+                                         class="navbar-toggle",
+                                         "data-toggle"="collapse",
+                                         "data-target"="navbar-responsive-collapse",
+                                         tags$span(class=c("icon-bar")),
+                                         tags$span(class=c("icon-bar")),
+                                         tags$span(class=c("icon-bar"))
+                                         )
+                             ),
+                    tags$div(id="bottom-navbar",
+                             class=c("navbar-collapse", "collapse",
+                                     "navbar-responsive-collapse"),
+                             tags$ul(class=c("nav navbar-nav navbar-right"),
+                                     tags$li(class=c("nav"),
+                                             tags$p(class="navbar-text", "Toggle")),
+                                     tags$li(class=c("dropup"),
+                                             tags$a(href=c("#"),
+                                                    class="dropdown-toggle",
+                                                    "data-toggle"="dropdown",
+                                                    "Code ", tags$b(class="caret")),
+                                             tags$ul(class=c("dropdown-menu"),
+                                                     tags$li(class=c("dropdown-header"), "Languages"),
+                                                     paste0(collapse="\n", lapply(languages, language_link)),
+                                                     tags$li(tags$a(href="#", type="all-source", class="toggle-global", "All"))
+                                                     ) ,
+                                             tags$li(class=c("dropup"),
+                                                     tags$a(href=c("#"), class="dropdown-toggle", "data-toggle"="dropdown",
+                                                            "Output", tags$b(class = "caret")) ,
+                                                     tags$ul(class=c("dropdown-menu"),
+                                                             tags$li(class=c("dropdown-header"), "Type"),
+                                                             tags$li(tags$a(href="#", type="output", class="toggle-global", "Output")),
+                                                             tags$li(tags$a(href="#", type="message", class="toggle-global", "Message")),
+                                                             tags$li(tags$a(href="#", type="warning", class="toggle-global", "Warning")),
+                                                             tags$li(tags$a(href="#", type="error", class="toggle-global", "Error")),
+                                                             tags$li(tags$a(href="#", type="all-output", class="toggle-global", "All"))
+                                                             )
+                                                     ),
+                                             tags$li(tags$a(href="#", class="toggle-figure", "Figures"))
+                                             )
+                                     )
+                             )
+                    )
+           )
+}
+generate_button = function(engine, name, x){
+  paste0(
+         tags$button(class=c('toggle', 'btn', 'btn-xs', button_types[name]),
+                     tags$span(class=c('glyphicon', 'glyphicon-chevron-down')),
+                     paste0(" ", engine, " ", name)
+                     )
+         , tags$pre(
+                    tags$code(class=c(tolower(engine)), x)
+                    )
+         )
+}
+generate_panel = function(engine, name, x){
+  tags$div(class=c('panel', panel_types[name]),
+           tags$div(class=c('panel-heading', 'toggle'),
+                    tags$h5(class='panel-title',
+                            tags$span(class=c('glyphicon', 'glyphicon-chevron-down')),
+                            paste0(" ", engine, " ", name)
+                            )
+
+                    )
+,
+                      tags$pre(
+                               tags$code(class=c(tolower(engine)), x)
+                               )
+           )
+}
+
+
 render_bootstrap = function() {
+  languages = list()
   knit_hooks$restore()
   knitr:::set_html_dev()
   opts_knit$set(out.format = "html")
@@ -67,71 +175,97 @@ render_bootstrap = function() {
     function(x, options) {
       x = paste(x, collapse = "\n")
       engine = options$engine
-      paste0(
-          tag('button', attributes=list(type='button', class=c('toggle', 'btn', 'btn-xs', button_types[name])),
-              tag('span', attributes=list(class=c('glyphicon', 'glyphicon-chevron-down'))),
-              paste0(" ", engine, " ", name)
-              ),
-      #tag('div', attributes=list(class=c('panel panel-default')),#, name, panel_types[name])),
-          tag('pre',
-              tag('code', attributes=list(class=c(tolower(engine))), x)
-              )
-          )
-          #))
+      languages[engine]<<-1
+      generate_panel(engine, name, x)
     }
   }
-    h = opts_knit$get("header")
-    z = list()
-    for (i in c("source", "warning", "message", "error")) z[[i]] = html.hook(i)
-    knit_hooks$set(z)
-    knit_hooks$set(inline = function(x) {
-        if (inherits(x, "AsIs")) .inline.hook(format_sci(x, "html")) else tag('code', .inline.hook(format_sci(x, "html")))
-    }, output = html.hook("output"), plot = bootstrap_plot_hook, chunk=bootstrap_chunk_hook)#, chunk = .chunk.hook.html)
+  #we need to access the languages list so define this inside the render_bootstrap function
+  bootstrap_document_hook = function(x, options) {
+    match = m(x[1],'(?s)^([%-].*?\n)([^%\\-\n].*)') 
+    before = if(match[[1]] != FALSE){
+      x[1] = match[[2]]
+      match[[1]]
+    }
+    else {
+      ''
+    }
+    paste0(collapse='\n',
+           before,
+           tags$div(id="wrap",
+                    tags$div(class="container",
+                             tags$div(class="row",
+                                      tags$div(class=c("contents", "col-sm-8"), x)
+                                      )
+                             ),
+                             generate_toggle_menu(names(languages))
+                    ),
+           #footer
+           tags$div(id='push'),
+           tags$div(id='footer',
+                    tags$div(class=c("container"),
+                             tags$p(class=c("text-muted"), id="credit", "Styled with ",
+                                    tags$a( href='https://github.com/jimhester/knitrBootstrap', "knitrBootstrap")
+                                    )
+                             )
+                    )
+           )
+  }
+  h = opts_knit$get("header")
+  z = list()
+  for (i in c("source", "warning", "message", "error")) z[[i]] = html.hook(i)
+  knit_hooks$set(z)
+  knit_hooks$set(inline = function(x) {
+                 if (inherits(x, "AsIs")) .inline.hook(format_sci(x, "html")) else tags$code(.inline.hook(format_sci(x, "html")))
+           },
+           output = html.hook("output"),
+           plot = bootstrap_plot_hook,
+           chunk=bootstrap_chunk_hook,
+           document=bootstrap_document_hook)#, chunk = .chunk.hook.html)
 }
 
 boot_styles = c(
-  'default'='https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css',
-  'amelia'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/amelia/bootstrap.min.css',
-  'cerulean'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css',
-  'cosmo'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/cosmo/bootstrap.min.css',
-  'cyborg'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/cyborg/bootstrap.min.css',
-  'journal'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/journal/bootstrap.min.css',
-  'flatly'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/flatly/bootstrap.min.css',
-  'readable'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/readable/bootstrap.min.css',
-  'simplex'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/simplex/bootstrap.min.css',
-  'slate'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/slate/bootstrap.min.css',
-  'spacelab'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css',
-  'united'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/united/bootstrap.min.css'
-)
+                'default'='https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css',
+                'amelia'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/amelia/bootstrap.min.css',
+                'cerulean'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css',
+                'cosmo'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/cosmo/bootstrap.min.css',
+                'cyborg'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/cyborg/bootstrap.min.css',
+                'journal'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/journal/bootstrap.min.css',
+                'flatly'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/flatly/bootstrap.min.css',
+                'readable'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/readable/bootstrap.min.css',
+                'simplex'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/simplex/bootstrap.min.css',
+                'slate'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/slate/bootstrap.min.css',
+                'spacelab'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css',
+                'united'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/united/bootstrap.min.css'
+                )
 
 code_styles = c(
-  'default'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/default.min.css',
-  'dark'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/dark.min.css',
-  'far'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/far.min.css',
-  'idea'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/idea.min.css',
-  'sunburst'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/sunburst.min.css',
-  'zenburn'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/zenburn.min.css',
-  'visual studio'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/vs.min.css',
-  'ascetic'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/ascetic.min.css',
-  'magula'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/magula.min.css',
-  'github'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/github.min.css',
-  'google code'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/googlecode.min.css',
-  'brown paper'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/brown_paper.min.css',
-  'school book'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/school_book.min.css',
-  'ir black'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/ir_black.min.css',
-  'solarized - dark'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/solarized_dark.min.css',
-  'solarized - light'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/solarized_light.min.css',
-  'arta'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/arta.min.css',
-  'monokai'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/monokai.min.css',
-  'xcode'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/xcode.min.css',
-  'pojoaque'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/pojoaque.min.css',
-  'rainbow'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/rainbow.min.css',
-  'tomorrow'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow.min.css',
-  'tomorrow night'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow-night.min.css',
-  'tomorrow night bright'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow-night-bright.min.css',
-  'tomorrow night blue'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow-night-blue.min.css',
-  'tomorrow night eighties'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow-night-eighties.min.css'
-)
+                'default'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/default.min.css',
+                'dark'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/dark.min.css',
+                'far'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/far.min.css',
+                'idea'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/idea.min.css',
+                'sunburst'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/sunburst.min.css',
+                'zenburn'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/zenburn.min.css',
+                'visual studio'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/vs.min.css',
+                'ascetic'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/ascetic.min.css',
+                'magula'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/magula.min.css',
+                'github'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/github.min.css',
+                'google code'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/googlecode.min.css',
+                'brown paper'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/brown_paper.min.css',
+                'school book'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/school_book.min.css',
+                'ir black'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/ir_black.min.css',
+                'solarized - dark'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/solarized_dark.min.css',
+                'solarized - light'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/solarized_light.min.css',
+                'arta'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/arta.min.css',
+                'monokai'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/monokai.min.css',
+                'xcode'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/xcode.min.css',
+                'pojoaque'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/pojoaque.min.css',
+                'rainbow'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/rainbow.min.css',
+                'tomorrow'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow.min.css',
+                'tomorrow night'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow-night.min.css',
+                'tomorrow night bright'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow-night-bright.min.css',
+                'tomorrow night blue'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow-night-blue.min.css',
+                'tomorrow night eighties'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow-night-eighties.min.css'
+                )
 # note this only works for links with href as the first param
 link_pattern='<link\\s+href='
 default_boot_style=boot_styles[1]
@@ -166,18 +300,17 @@ show_output_pattern='show_output = [^;]+'
 #' if(interactive()) browseURL('test.html')
 
 knit_bootstrap =
-  function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
-           thumbsize=3, show_code=FALSE, show_output=TRUE, show_figure=TRUE,
-           markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
-           ..., envir = parent.frame(), text = NULL,
-           quiet = FALSE, encoding = getOption('encoding'),
-           graphics = getOption("menu.graphics")) {
+function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
+         thumbsize=3, show_code=FALSE, show_output=TRUE, show_figure=TRUE,
+         markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
+         ..., envir = parent.frame(), text = NULL,
+         quiet = FALSE, encoding = getOption('encoding'),
+         graphics = getOption("menu.graphics")) {
 
   render_bootstrap()
   opts_chunk$set(tidy=FALSE, highlight=FALSE)
-  md_file =
-    knit(input, NULL, text = text, envir = envir,
-         encoding = encoding, quiet = quiet)
+  md_file = knit(input, NULL, text = text, envir = envir,
+                 encoding = encoding, quiet = quiet)
 
   knit_bootstrap_md(md_file, output, boot_style=boot_style,
                     code_style=code_style, chooser=chooser,
@@ -197,8 +330,6 @@ knit_bootstrap_Rmd = knit_bootstrap
 #' @param input md input file to be converted to HTML'
 #' @param output HTML output file created, if NULL uses the input filename with
 #'        the extension changed to .html
-#' @param text a character vector as an alternative way to provide the input
-#'   file
 #' @inheritParams create_header
 #' @param markdown_options passed to markdownToHTML, defaults to mathjax,
 #'        base64_images and use_xhtml.
@@ -209,7 +340,7 @@ knit_bootstrap_Rmd = knit_bootstrap
 
 knit_bootstrap_md =
 function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
-         text = NULL, thumbsize=3, show_code=FALSE,
+         thumbsize=3, show_code=FALSE,
          show_output=TRUE, show_figure=TRUE,
          markdown_options=c('mathjax', 'base64_images', 'use_xhtml'),
          graphics = getOption("menu.graphics"), ...) {
@@ -223,15 +354,24 @@ function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
   if(is.null(output))
     output <- sub_ext(input, 'html')
 
-  if (is.null(text)) {
-    markdown::markdownToHTML(input, header=header, stylesheet='',
-      options=markdown_options, output = output, ...)
-  }
-  else {
-    markdown::markdownToHTML(text = input, header=header, stylesheet='',
-           options=markdown_options, output = output, ...)
-  }
+  pandoc(input, output, header)
   invisible(output)
+}
+
+pandoc <- function(input=NULL, output, header, text=NULL) {
+  args <- c("--output", output,
+            "--from", paste0("markdown_github",
+                             "-hard_line_breaks",
+                             "+superscript",
+                             "+tex_math_dollars",
+                             "+raw_html",
+                             "+markdown_in_html_blocks",
+                             "+pandoc_title_block"),
+            "-H" , header,
+            "--smart",
+            input)
+  command <- paste("pandoc", paste(shQuote(args), collapse = " "))
+  system(command)
 }
 
 #' Add the knitrBootstrap html header to an HTML file produced by knitr.
@@ -265,19 +405,18 @@ bootstrap_HTML = function(input, output = NULL, boot_style=NULL,
 
   #add header to file at the end of the header
   lines =
-    sub('</head>', paste(escape(header), '</head>', collapse='\n'), lines)
+  sub('</head>', paste(escape(header), '</head>', collapse='\n'), lines)
 
   #add header before the body if no header found
   if(nchar(lines) == input_length)
     lines =
-      sub('<body>',
-          paste('<head>', escape(header), '</head><body>', collapse='\n')
-          , lines)
+  sub('<body>',
+      paste('<head>', escape(header), '</head><body>', collapse='\n')
+      , lines)
 
   cat(lines, '\n', file=output)
   output
 }
-
 
 get_style <- function(style, style_type, title, graphics = getOption("menu.graphics")){
   style = if(is.null(style)){
@@ -318,67 +457,67 @@ create_header <-
            show_code=FALSE, show_output=TRUE, show_figure=TRUE,
            graphics = getOption("menu.graphics"), outfile=NULL){
 
-  boot_style=get_style(boot_style, boot_styles, 'Bootstrap Style', graphics)
-  code_style=get_style(code_style, code_styles, 'Code Block Style', graphics)
+    boot_style=get_style(boot_style, boot_styles, 'Bootstrap Style', graphics)
+    code_style=get_style(code_style, code_styles, 'Code Block Style', graphics)
 
-  includes = read_package_file('templates/knitr_bootstrap_includes.html')
-  javascript = read_package_file('templates/knitr_bootstrap.js')
-  css = read_package_file('templates/knitr_bootstrap.css')
+    includes = read_package_file('templates/knitr_bootstrap_includes.html')
+    javascript = read_package_file('templates/knitr_bootstrap.js')
+    css = read_package_file('templates/knitr_bootstrap.css')
 
-  chooser = match.arg(chooser, choices=c(NA, 'boot', 'code'), several.ok=TRUE)
-  boot_toggle = if('boot' %in% chooser){
-    read_package_file('templates/knitr_bootstrap_style_toggle.html')
-  }
-  code_toggle = if('code' %in% chooser){
-    read_package_file('templates/knitr_bootstrap_code_style_toggle.html')
-  }
-
-  if(!thumbsize %in% 1:9)
-    stop('thumbsize must be one of ', paste(1:9, collapse=', '))
-
-  javascript = sub(thumb_pattern, paste('thumbsize = "col-md-', thumbsize, '"', sep=''), javascript)
-
-  option_to_javascript = function(option){
-    if(is.logical(option)){
-      ifelse(option, 'true', 'false')
+    chooser = match.arg(chooser, choices=c(NA, 'boot', 'code'), several.ok=TRUE)
+    boot_toggle = if('boot' %in% chooser){
+      read_package_file('templates/knitr_bootstrap_style_toggle.html')
     }
-    else {
-      paste0('[', paste0(paste0('\\"', option, '\\"'), collapse=','), ']')
+    code_toggle = if('code' %in% chooser){
+      read_package_file('templates/knitr_bootstrap_code_style_toggle.html')
     }
-  }
 
-  javascript = sub(show_code_pattern, paste0('show_code = ', option_to_javascript(show_code)), javascript)
+    if(!thumbsize %in% 1:9)
+      stop('thumbsize must be one of ', paste(1:9, collapse=', '))
 
-  javascript = sub(show_output_pattern, paste0('show_output = ', option_to_javascript(show_output)), javascript)
+    javascript = sub(thumb_pattern, paste('thumbsize = "col-md-', thumbsize, '"', sep=''), javascript)
 
-  javascript = sub(show_figure_pattern, paste0('show_figure = ', option_to_javascript(show_figure)), javascript)
+    option_to_javascript = function(option){
+      if(is.logical(option)){
+        ifelse(option, 'true', 'false')
+      }
+      else {
+        paste0('[', paste0(paste0('\\"', option, '\\"'), collapse=','), ']')
+      }
+    }
 
-  output = paste(includes,
-                 '<script defer="defer">', javascript, '</script>',
-                 '<style>', css, '</style>',
-                 boot_toggle,
-                 code_toggle,
-                 sep='\n')
+    javascript = sub(show_code_pattern, paste0('show_code = ', option_to_javascript(show_code)), javascript)
 
-  #update bootstrap style
-  output =
+    javascript = sub(show_output_pattern, paste0('show_output = ', option_to_javascript(show_output)), javascript)
+
+    javascript = sub(show_figure_pattern, paste0('show_figure = ', option_to_javascript(show_figure)), javascript)
+
+    output = paste(includes,
+                   '<script defer="defer">', javascript, '</script>',
+                   '<style>', css, '</style>',
+                   boot_toggle,
+                   code_toggle,
+                   sep='\n')
+
+    #update bootstrap style
+    output =
     gsub(paste('(', link_pattern, ')("', default_boot_style, ')"', sep=''),
          paste('\\1', boot_style, sep=''), output)
 
-  #update code style
-  output =
+    #update code style
+    output =
     gsub(paste('(', link_pattern, ')"(', default_code_style, ')"', sep=''),
          paste('\\1', '"', code_style, '"', sep=''), output)
 
-  if(is.logical(outfile) && outfile == FALSE)
-    return(output)
+    if(is.logical(outfile) && outfile == FALSE)
+      return(output)
 
-  if(is.null(outfile))
-    outfile = paste(tempdir(), 'knitr_bootstrap_full.html', sep='/')
+    if(is.null(outfile))
+      outfile = paste(tempdir(), 'knitr_bootstrap_full.html', sep='/')
 
-  cat(output, '\n', file=outfile)
-  invisible(outfile)
-}
+    cat(output, '\n', file=outfile)
+    invisible(outfile)
+  }
 
 append_files <- function(files){
   paste(mapply(read_package_file, files), collapse='\n')
@@ -404,3 +543,26 @@ sub_ext = function(x, ext) {
 
 #escape already escape strings
 escape = function(string) gsub("([\"$`\\])", "\\\\\\1", string)
+
+#simplified match function from perlrer
+m = function(data, pattern){
+  #check arguments
+
+  process_matches = function(res, data){
+    starts = attr(res, 'capture.start')
+    if(is.null(starts)){
+      return(res != -1)
+    }
+    lengths = attr(res, 'capture.length')
+    names = attr(res, 'capture.names')
+    ret = list()
+    for(itr in seq_len(ncol(starts))){
+      ret[[itr]] = unname(ifelse(starts[,itr] == -1, "FALSE",
+                          substring(data, starts[,itr], starts[,itr] + lengths[,itr] - 1)))
+    }
+    names(ret) = ifelse(names == "", 1:ncol(starts), names)
+    ret
+  }
+
+  process_matches(regexpr(pattern=pattern, data, perl=T), data)
+}

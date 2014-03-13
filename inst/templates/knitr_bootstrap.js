@@ -68,7 +68,7 @@ $(function() {
   var $window = $(window);
   var $body = $(document.body);
 
-  document.title = $('h1').first().text();
+  //document.title = $('h1').first().text();
 
   /* size of thumbnails */
   var thumbsize = "col-md-3";
@@ -101,60 +101,6 @@ $(function() {
       }
     });
   });
-
-  /* add bootstrap classes */
-  $('body').wrapInner('<div class="container"><div class="row"><div class="contents">');
-
-  var create_language_links = function(){
-    var text='';
-    var language;
-    for(language in languages){
-      if(languages.hasOwnProperty(language)){
-        text += '<li><a href=# class="toggle-global source ' + language + '" type="source.' + language + '">' + language + '</a></li>\n';
-      }
-    }
-    return text;
-  }
-
-  var navbar =
-  '<div class="navbar navbar-fixed-bottom navbar-inverse">\
-    <div class="container">\
-      <div class="navbar-header">\
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">\
-          <span class="icon-bar"></span>\
-          <span class="icon-bar"></span>\
-          <span class="icon-bar"></span>\
-        </button>\
-      </div>\
-      <div id="bottom-navbar" class="navbar-collapse collapse navbar-responsive-collapse">\
-        <ul class="nav navbar-nav navbar-right">\
-          <li class="nav"><p class="navbar-text">Toggle</p></li>\
-          <li class="dropup">\
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Code <b class="caret"></b></a>\
-            <ul class="dropdown-menu">\
-              <li class="dropdown-header">Languages</li>'
-              + create_language_links() +
-              '<li><a href="#" type="all-source" class="toggle-global">All</a></li>\
-            </ul>\
-          </li>\
-          <li class="dropup">\
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Output <b class="caret"></b></a>\
-            <ul class="dropdown-menu">\
-              <li class="dropdown-header">Type</li>\
-                <li><a href="#" type="output" class="toggle-global">Output</a></li>\
-                <li><a href="#" type="message" class="toggle-global">Message</a></li>\
-                <li><a href="#" type="warning" class="toggle-global">Warning</a></li>\
-                <li><a href="#" type="error" class="toggle-global">Error</a></li>\
-                <li><a href="#" type="all-output" class="toggle-global">All</a></li>\
-            </ul>\
-          </li>\
-          <li><a href="#" class="toggle-figure">Figures</a></li>\
-        </ul>\
-      </div><!-- /.nav-collapse -->\
-    </div><!-- /.container -->\
-  </div>';
-  /* add navbar */
-  $('.container').append(navbar);
 
   /* onclick toggle next code block */
   $('.toggle').click(function() {
@@ -205,19 +151,8 @@ $(function() {
     return false;
   });
 
-  /* add footer */
-  $('body').wrapInner('<div id="wrap" />');
-  $('#wrap').append('<div id="push" />');
-  var p = $('p:contains("Author:")');
-  var last_p = p.filter(':last');
-  last_p.addClass('text-muted').attr('id','credit');
-  last_p.append('<p>Styled with <a href="https://github.com/jimhester/knitrBootstrap">knitrBootstrap</a></p>');
-  last_p = last_p.wrap('<div id="footer"><div class="container">').parent().parent();
-  last_p.appendTo("body");
 
-  $('.container > .row').prepend('<div class="col-sm-3 col-sm-offset-1"><div id="toc" class="well sidebar sidenav affix hidden-print"/></div>');
-
-  $('.contents').addClass('col-sm-8');
+  $('.container > .row').append('<div class="col-sm-3 col-sm-offset-1"><div id="toc" class="well sidebar sidenav affix hidden-print"/></div>');
 
   /* table of contents */
   $('#toc').generate_TOC();

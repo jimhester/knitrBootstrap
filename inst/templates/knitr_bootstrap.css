@@ -1,4 +1,8 @@
 /* Knitr_bootstrap styles */
+.header{
+  display: none !important;
+  visibility: hidden !important;
+}
 #wrap .container-fluid {
   padding: 0;
   overflow: hidden;
