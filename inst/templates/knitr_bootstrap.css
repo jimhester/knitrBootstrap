@@ -1,5 +1,5 @@
 /* Knitr_bootstrap styles */
-#header{
+#header {
   display: none !important;
   visibility: hidden !important;
 }
@@ -158,10 +158,7 @@ button.thumbnails {
 
 
 .panel pre {
-  border-radius: 0;
-  border: 0;
   margin: 0;
-  padding: 0;
 }
 .panel pre code {
   border-radius: 0;

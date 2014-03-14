@@ -49,6 +49,16 @@ If you want to install the latest development version use the [devtools] package
 library(devtools)
 install_github(username='jimhester', repo='knitrBootstrap')
 ```
+## Options ##
+
+Knitr bootstrap has a number of additional chunk options which can be used to modify the bootstrap output.
+
+ - bootstrap.thumbnail - (TRUE) - Thumbnail and lightbox images.
+ - bootstrap.panel - (FALSE) - Use panels rather than buttons to toggle blocks.
+ - bootstrap.hide - (FALSE) - Code and Output from this chunk starts as hidden.
+ <!--- bootstrap.show.code - (TRUE) - Code from this chunk starts as shown.-->
+ <!--- bootstrap.show.output - (TRUE) - Output from this chunk starts as shown.-->
+
 ## Usage ##
 
 Reports can be built within [R](#Rfunction), a [Makefile](#makefile), by [RStudio](#rstudio) or with [Vim](#vim).

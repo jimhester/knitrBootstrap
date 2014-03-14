@@ -65,17 +65,32 @@ tag = function(type, arg_list){
 bootstrap_chunk_hook = function(x, options){
   if (knitr:::output_asis(x, options))
     return(x)
-  tags$div(class=c('container', 'row'), x)
+  tags$div(class=c('row'), x)
 }
 
+`%n%` = function(x, y) if(is.null(x)) y else x
+
 bootstrap_plot_hook = function(x, options) {
+  fig = knitr:::.img.tag(knitr:::.upload.url(x), options$out.width, options$out.height,
+                         knitr:::.img.cap(options), paste(c(options$out.extra, "class=\"plot\""),
+                                                          collapse = " "))
+  thumbnail = options$bootstrap.thumbnail = options$bootstrap.thumbnail %n% TRUE
+  if(!thumbnail){
+    return(tags$div(class=c('row', 'text-center'), fig))
+  }
+  fig = tags$a(href='#', class='thumbnail', fig)
+  if(options$fig.show == 'hold'){
   tags$div(class=c('col-xs-12', 'col-md-6'),
-           tags$a(href='#', class='thumbnail',
-                  knitr:::.img.tag(knitr:::.upload.url(x), options$out.width, options$out.height,
-                                   knitr:::.img.cap(options), paste(c(options$out.extra, "class=\"plot\""),
-                                                                    collapse = " "))
-                  )
-           )
+      fig
+      )
+  }
+  else{ #only one figure from this code block so center it
+    tags$div(class=c('row'),
+      tags$div(class=c('col-xs-12', 'col-md-offset-3', 'col-md-6'),
+               fig
+               )
+      )
+  }
 }
 
 language_link = function(language){
@@ -83,20 +98,62 @@ language_link = function(language){
           tags$a(
                  href="#",
                  class=c("toggle-global", "source", language),
-                 type=c(paste0(collapse=".", "source", language)),
+                 type=c(paste(sep=".", "source", language)),
                  language
                  )
           )
 }
+output_link = function(type){
+  tags$li(
+          tags$a(
+                 href="#",
+                 class=c("toggle-global",type),
+                 type=type,
+                 type
+                 )
+          )
+}
 
-generate_toggle_menu = function(languages){
+output_toggle_menu = function(types){
+  if(length(types) == 0){
+    return('')
+  }
+  tags$li(class=c("dropup"),
+          tags$a(href=c("#"), class="dropdown-toggle", "data-toggle"="dropdown",
+                 "Output", tags$b(class = "caret")) ,
+          tags$ul(class=c("dropdown-menu"),
+                  tags$li(class=c("dropdown-header"), "Type"),
+                  paste0(collapse="\n", lapply(types, output_link)),
+                  tags$li(tags$a(href="#", type="all-output", class="toggle-global", "All"))
+                  )
+          )
+}
+
+source_toggle_menu = function(languages){
+  if(is.null(languages) || length(languages) == 0){
+    return('')
+  }
+  tags$li(class=c("dropup"),
+          tags$a(href=c("#"),
+                 class="dropdown-toggle",
+                 "data-toggle"="dropdown",
+                 "Code ", tags$b(class="caret")),
+          tags$ul(class=c("dropdown-menu"),
+                  tags$li(class=c("dropdown-header"), "Languages"),
+                  paste0(collapse="\n", lapply(languages, language_link)),
+                  tags$li(tags$a(href="#", type="all-source", class="toggle-global", "All"))
+                  )
+          )
+}
+
+toggle_menu = function(languages, types){
   tags$div(class=c("navbar navbar-fixed-bottom navbar-inverse"),
            tags$div(class=c("container"),
                     tags$div(class=c("navbar-header"),
                              tags$button(type=c("button"),
                                          class="navbar-toggle",
                                          "data-toggle"="collapse",
-                                         "data-target"="navbar-responsive-collapse",
+                                         "data-target"=".navbar-responsive-collapse",
                                          tags$span(class=c("icon-bar")),
                                          tags$span(class=c("icon-bar")),
                                          tags$span(class=c("icon-bar"))
@@ -108,65 +165,37 @@ generate_toggle_menu = function(languages){
                              tags$ul(class=c("nav navbar-nav navbar-right"),
                                      tags$li(class=c("nav"),
                                              tags$p(class="navbar-text", "Toggle")),
-                                     tags$li(class=c("dropup"),
-                                             tags$a(href=c("#"),
-                                                    class="dropdown-toggle",
-                                                    "data-toggle"="dropdown",
-                                                    "Code ", tags$b(class="caret")),
-                                             tags$ul(class=c("dropdown-menu"),
-                                                     tags$li(class=c("dropdown-header"), "Languages"),
-                                                     paste0(collapse="\n", lapply(languages, language_link)),
-                                                     tags$li(tags$a(href="#", type="all-source", class="toggle-global", "All"))
-                                                     ) ,
-                                             tags$li(class=c("dropup"),
-                                                     tags$a(href=c("#"), class="dropdown-toggle", "data-toggle"="dropdown",
-                                                            "Output", tags$b(class = "caret")) ,
-                                                     tags$ul(class=c("dropdown-menu"),
-                                                             tags$li(class=c("dropdown-header"), "Type"),
-                                                             tags$li(tags$a(href="#", type="output", class="toggle-global", "Output")),
-                                                             tags$li(tags$a(href="#", type="message", class="toggle-global", "Message")),
-                                                             tags$li(tags$a(href="#", type="warning", class="toggle-global", "Warning")),
-                                                             tags$li(tags$a(href="#", type="error", class="toggle-global", "Error")),
-                                                             tags$li(tags$a(href="#", type="all-output", class="toggle-global", "All"))
-                                                             )
-                                                     ),
-                                             tags$li(tags$a(href="#", class="toggle-figure", "Figures"))
-                                             )
+                                     source_toggle_menu(languages),
+                                     output_toggle_menu(types),
+                                     tags$li(tags$a(href="#", class="toggle-figure", "Figures"))
                                      )
                              )
                     )
            )
 }
-generate_button = function(engine, name, x){
+generate_button = function(engine, name, x, hide){
+  glyph = if(hide) 'glyphicon-chevron-up' else 'glyphicon-chevron-down'
+  hidden = if(hide) 'display:none' else ''
+  text = paste(tags$span(class=c('glyphicon', glyph)), engine, name)
   paste0(
-         tags$button(class=c('toggle', 'btn', 'btn-xs', button_types[name]),
-                     tags$span(class=c('glyphicon', 'glyphicon-chevron-down')),
-                     paste0(" ", engine, " ", name)
-                     )
-         , tags$pre(
-                    tags$code(class=c(tolower(engine)), x)
-                    )
+         tags$button(class=c(name, engine, 'toggle', 'btn', 'btn-xs', button_types[name]), text),
+         tags$pre(style=hidden, tags$code(class=c(name, tolower(engine)), x))
          )
 }
-generate_panel = function(engine, name, x){
+generate_panel = function(engine, name, x, hide){
+  glyph = if(hide) 'glyphicon-chevron-up' else 'glyphicon-chevron-down'
+  hidden = if(hide) 'display:none' else ''
+  text = tags$h5(class='panel-title', tags$span(class=c('glyphicon', glyph)), paste("", engine, name))
   tags$div(class=c('panel', panel_types[name]),
-           tags$div(class=c('panel-heading', 'toggle'),
-                    tags$h5(class='panel-title',
-                            tags$span(class=c('glyphicon', 'glyphicon-chevron-down')),
-                            paste0(" ", engine, " ", name)
-                            )
-
-                    )
-,
-                      tags$pre(
-                               tags$code(class=c(tolower(engine)), x)
-                               )
+           tags$div(class=c(name, engine, 'panel-heading', 'toggle'), text),
+           tags$pre(style=hidden, tags$code(class=c(name, tolower(engine)), x))
            )
 }
 
 
 render_bootstrap = function() {
   languages = list()
+  types = list()
   knit_hooks$restore()
   knitr:::set_html_dev()
   opts_knit$set(out.format = "html")
@@ -176,12 +205,16 @@ render_bootstrap = function() {
       x = paste(x, collapse = "\n")
       engine = options$engine
       languages[engine]<<-1
-      generate_panel(engine, name, x)
+      types[name]<<-1
+      button_or_panel = options
+      panel = options$bootstrap.panel = options$bootstrap.panel %n% FALSE
+      hide = options$bootstrap.hide = options$bootstrap.hide %n% FALSE
+      if(panel) generate_panel(engine, name, x, hide) else generate_button(engine, name, x, hide)
     }
   }
   #we need to access the languages list so define this inside the render_bootstrap function
   bootstrap_document_hook = function(x, options) {
-    match = m(x[1],'(?s)^([%-].*?\n)([^%\\-\n].*)') 
+    match = m(x[1],'(?s)^([%].*?\n)([^%\n].*)')
     before = if(match[[1]] != FALSE){
       x[1] = match[[2]]
       match[[1]]
@@ -194,10 +227,10 @@ render_bootstrap = function() {
            tags$div(id="wrap",
                     tags$div(class="container",
                              tags$div(class="row",
-                                      tags$div(class=c("contents", "col-sm-8"), x)
+                                      tags$div(class=c("contents", "col-md-10"), x)
                                       )
                              ),
-                             generate_toggle_menu(names(languages))
+                             toggle_menu(names(languages), names(types)[ names(types) != 'source' ])
                     ),
            #footer
            tags$div(id='push'),
@@ -368,6 +401,7 @@ pandoc <- function(input=NULL, output, header, text=NULL) {
                              "+markdown_in_html_blocks",
                              "+pandoc_title_block"),
             "-H" , header,
+            "--toc",
             "--smart",
             input)
   command <- paste("pandoc", paste(shQuote(args), collapse = " "))

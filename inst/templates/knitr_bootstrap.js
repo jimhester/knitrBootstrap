@@ -25,7 +25,8 @@ jQuery.fn.generate_TOC = function () {
     return(test);
   }
 
-  $(selectors.join(',')).each(function () {
+  $(selectors.join(',')).filter(function(index) { return $(this).parent().attr("id") != 'header'; }).each(function () {
+
     var heading = $(this);
     var idx = selectors.indexOf(heading.prop('tagName').toLowerCase());
     var itr = 0;
@@ -68,24 +69,15 @@ $(function() {
   var $window = $(window);
   var $body = $(document.body);
 
-  //document.title = $('h1').first().text();
-
   /* size of thumbnails */
-  var thumbsize = "col-md-3";
 
-  var show_code = false;
-
-  var show_output = true;
-
-  var show_figure = true;
-
-  /* included languages */
-  var languages = [];
+  var hidden_types = ['source']
+  var output_types = ['output', 'message', 'warning', 'error']
 
   /* style tables */
   $('table').addClass('table table-striped table-bordered table-hover table-condensed');
 
-  $('div pre code').each(function(i, e) {
+  $('pre code').each(function(i, e) {
     hljs.highlightBlock(e);
   });
 
@@ -102,102 +94,86 @@ $(function() {
     });
   });
 
+  function toggle_block(obj, show) {
+    var span = obj.find('span');
+    if(show === true){
+      span.removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+      obj.next('pre').slideDown();
+    }
+    else {
+      span.removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+      obj.next('pre').slideUp();
+    }
+  }
+
+  function toggle_thumbnails(imgs, show){
+    if(show === true){
+      imgs.parent().show();
+      imgs.show();
+    }
+    else {
+      img.slideUp(400, function(){ img.parent().hide(); });
+    }
+  }
+
+  function global_toggle(obj){
+    var type = obj.attr('type');
+    var show = !obj.parent('li').hasClass('active');
+    if(show === true){
+      obj.parent('li').addClass('active');
+    }
+    else{
+      obj.parent('li').removeClass('active');
+    }
+    if(type == 'figure'){
+      toggle_thumbnails($('.thumbnail img'), show);
+    }
+    else {
+      $('.toggle.' + type).each(function() { toggle_block($(this), show); });
+    }
+  }
+
   /* onclick toggle next code block */
   $('.toggle').click(function() {
     var span = $(this).find('span')
-    if(span.hasClass('glyphicon-chevron-down')){
-      span.removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up')
-    }
-    else {
-      span.removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down')
-    }
-    $(this).next('pre').slideToggle();
-    return false;
-  });
+    console.log(span.hasClass('glyphicon-chevron-down'))
+    toggle_block($(this), !span.hasClass('glyphicon-chevron-down'))
+    return false
+  })
 
   // global toggles
   $('.toggle-global').click(function(){
     var type = $(this).attr('type');
     if(type === 'all-source'){
-      for(var language in languages){
-        $('li a[type="source.' + language + '"]').click();
+        $('li a.source').each(function() {
+          global_toggle($(this));
+        });
       }
-    }
-    if(type === 'all-output'){
-      $('li a[type=output], li a[type=message], li a[type=warning], li a[type=error]').click();
-    }
-    else {
-      if($(this).closest('li').hasClass('active')){
-        $('div.' + type).children('pre').slideUp();
-      }
-      else {
-        $('div.' + type).children('pre').slideDown();
-      }
-    }
-    $(this).closest('li').toggleClass('active');
-    return false;
-  });
-  // global toggles figure, this is more complicated than just slideToggle because you have to hide the parent div as well
-  $('.toggle-figure').click(function(){
-    var imgs = $('.thumbnail img');
-    if(imgs.is(":visible")){
-      imgs.slideUp(400, function(){ $(this).parent().toggle(); });
-    }
-    else {
-      imgs.parent().show();
-      imgs.show();
-    }
-    $(this).closest('li').toggleClass('active');
-    return false;
-  });
-
-
-  $('.container > .row').append('<div class="col-sm-3 col-sm-offset-1"><div id="toc" class="well sidebar sidenav affix hidden-print"/></div>');
-
-  /* table of contents */
-  $('#toc').generate_TOC();
-
-  function toggle_block(setting, type){
-    if(setting === 'true'){
-      $('a.toggle-global.' + type).closest('li').addClass('active');
-    }
-    else if(setting.length > 0){ //a list of types to toggle
-      $('a.toggle-global.' + type).each(function(){
-        var has_class = false;
-        for(var i = 0;i < setting.length;i++){
-          var val = setting[i];
-          console.log(val);
-          console.log($(this));
-          if($(this).hasClass(val)){
-            has_class = true;
-          }
-        }
-        console.log(has_class);
-        if(has_class){
-          $(this).closest('li').addClass('active');
-        }
-        else {
-          $('div.' + $(this).attr('type')).children('pre').hide();
-        }
+    else if(type === 'all-output'){
+      $.each(output_types, function(i, val){
+        console.log(val);
+        global_toggle($('li a.' + val));
       });
     }
     else {
-      $('div.' + type + ' pre').hide();
+      global_toggle($(this));
     }
+    return false;
+  });
+  /* from http://stackoverflow.com/questions/12805825/can-you-specify-a-data-target-for-bootstrap-which-refers-to-a-sibling-dom-elem */
+  $('body').on('click.collapse-next.data-api', '[data-toggle=collapse-next]', function (e) {
+    var $target = $(this).next('pre');
+    $target.data('collapse') ? $target.collapse('toggle') : $target.collapse();
+  });
+  /* table of contents */
+  if($(['h1', 'h2', 'h3', 'h4'].join(',')).length > 0){
+    $('.container > .row').append('<div class="col-md-2"><div id="toc" class="well sidebar sidenav affix hidden-print"/></div>');
+    $('#toc').generate_TOC();
   }
 
-  toggle_block(show_code, 'source');
-
-  toggle_block(show_output, 'output');
-
-  if(show_figure){
-    /* toggle figure button pressed */
-    $('li a.toggle-figure').closest('li').addClass('active');
-  }
-  else {
-    /* hide figures */
-    $('.thumbnail').hide();
-  }
+  $.each(hidden_types, function(i, type) {
+    $('li[type=' + type + ']').each(function(){ global_toggle($(this)); });
+  });
 
   /* remove paragraphs with no content */
   $('p:empty').remove();
@@ -205,7 +181,6 @@ $(function() {
   $body.scrollspy({
     target: '.sidebar',
   });
-
 
   //TODO refresh on show/hide
   $window.on('load', function () {

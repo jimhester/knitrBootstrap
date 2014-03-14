@@ -1,8 +1,20 @@
+# knitrBootstap 1.0.0
+
+## Features
+  - rewrote javascript DOM manipulation in R to allow more flexible options
+  - Images from code blocks where fig.hold!='hold' are centered
+  - Images can be excluded from thumbnails using bootstrap.thumbnail #26
+  - Can delimit code blocks using panels or buttons
+  - Specify show/hide status per chunk using knitr options. #2
+
+## Fixes
+  - Explicitly include R hljs highlighting because of a chrome issue with yandex
+  - Images are being stacked in current implementation #36
+
 # knitrBootstrap 0.9.0
 
 ## Features
-  - Remove tocify dependency, as there were outstanding bugs, and it only took
-    about 30 lines of code to replace.
+  - Remove tocify dependency
   - Move vignettes to vignettes/ from inst/doc
 
 ## Fixes
