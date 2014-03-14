@@ -160,11 +160,6 @@ $(function() {
     }
     return false;
   });
-  /* from http://stackoverflow.com/questions/12805825/can-you-specify-a-data-target-for-bootstrap-which-refers-to-a-sibling-dom-elem */
-  $('body').on('click.collapse-next.data-api', '[data-toggle=collapse-next]', function (e) {
-    var $target = $(this).next('pre');
-    $target.data('collapse') ? $target.collapse('toggle') : $target.collapse();
-  });
   /* table of contents */
   if($(['h1', 'h2', 'h3', 'h4'].join(',')).length > 0){
     $('.container > .row').append('<div class="col-md-2"><div id="toc" class="well sidebar sidenav affix hidden-print"/></div>');
