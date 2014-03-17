@@ -148,8 +148,8 @@ source_toggle_menu = function(languages){
 }
 
 toggle_menu = function(languages, types){
-  style_chooser = opts_knit$get('bootstrap.style.chooser') %n% FALSE
-  code_style_chooser = opts_knit$get('bootstrap.code.style.chooser') %n% FALSE
+  style_chooser = knitr::opts_knit$get('bootstrap.style.chooser') %n% FALSE
+  code_style_chooser = knitr::opts_knit$get('bootstrap.code.style.chooser') %n% FALSE
   paste0(collapse='\n',
          tags$div(class=c("navbar navbar-fixed-bottom navbar-inverse"),
                   tags$div(class=c("container"),
@@ -224,13 +224,15 @@ generate_panel = function(engine, name, x, hide){
            )
 }
 
-
 render_bootstrap = function() {
-  languages = list()
-  types = list()
   knit_hooks$restore()
   knitr:::set_html_dev()
-  opts_knit$set(out.format = "html")
+  knitr::opts_knit$set(out.format = "html")
+  knit_hooks$set(render_bootstrap_hooks())
+}
+render_bootstrap_hooks = function() {
+  languages = list()
+  types = list()
   html.hook = function(name) {
     force(name)
     function(x, options) {
@@ -244,17 +246,20 @@ render_bootstrap = function() {
       if(panel) generate_panel(engine, name, x, hide) else generate_button(engine, name, x, hide)
     }
   }
-  h = opts_knit$get("header")
+  h = knitr::opts_knit$get("header")
   z = list()
   for (i in c("source", "warning", "message", "error")) z[[i]] = html.hook(i)
-  knit_hooks$set(z)
-  knit_hooks$set(inline = function(x) {
-                 if (inherits(x, "AsIs")) .inline.hook(format_sci(x, "html")) else tags$code(.inline.hook(format_sci(x, "html")))
-           },
-           output = html.hook("output"),
-           plot = bootstrap_plot_hook,
-           chunk=bootstrap_chunk_hook,
-           document=generate_document_hook(languages, types))
+  c(z,
+    list(
+       'inline' = function(x) {
+         if (inherits(x, "AsIs")) .inline.hook(format_sci(x, "html")) else tags$code(.inline.hook(format_sci(x, "html")))
+       },
+       'output' = html.hook("output"),
+       'plot' = bootstrap_plot_hook,
+       'chunk' = bootstrap_chunk_hook,
+       'document' = generate_document_hook(languages, types)
+    )
+  )
 }
 
 generate_document_hook = function(languages, types) {
@@ -284,6 +289,29 @@ generate_document_hook = function(languages, types) {
   }
 }
 
+bootstrap_pandoc_options = paste0('markdown',
+                                  "-hard_line_breaks",
+                                  "+superscript",
+                                  "+tex_math_dollars",
+                                  "+raw_html",
+                                  "+markdown_in_html_blocks",
+                                  #"+pandoc_title_block",
+                                  "-implicit_figures", collapse="")
+
+bootstrap_document = function(self_contained=TRUE, ...){
+  print(list(...))
+  print(self_contained)
+  library(rmarkdown)
+  header = create_header()
+  output_format(knitr = knitr_options(
+                                      opts_knit=list('upload.fun' = knitr::image_uri),
+                                      opts_chunk = list(dev = 'png'),
+                                      knit_hooks=render_bootstrap_hooks()),
+                pandoc = pandoc_options(to = "html",
+                                        from = bootstrap_pandoc_options,
+                                        args=list(H=header)), #self contained breaks on bootswatch css //urls, if(self_contained) '--self-contained' else '')), 
+                clean_supporting=self_contained)
+}
 generate_footer = function(){
   tags$div(class=c("container"),
            tags$p(class=c("text-muted"), id="credit", "Styled with ",
@@ -427,6 +455,8 @@ function(input, output = NULL, boot_style=NULL, code_style=NULL, chooser=NULL,
 }
 
 pandoc <- function(input=NULL, output, header, text=NULL) {
+  if (Sys.which("pandoc") == "")
+    stop("Please install pandoc first: http://johnmacfarlane.net/pandoc/")
   args <- c("--output", output,
             "--from", paste0("markdown_github",
                              "-hard_line_breaks",
@@ -436,7 +466,7 @@ pandoc <- function(input=NULL, output, header, text=NULL) {
                              "+markdown_in_html_blocks",
                              "+pandoc_title_block"),
             "-H" , header,
-            #"--toc",
+            #"--toc", #currently still using custom toc
             "--smart",
             input)
   command <- paste("pandoc", paste(shQuote(args), collapse = " "))
