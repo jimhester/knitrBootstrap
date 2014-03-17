@@ -54,7 +54,8 @@ tags = list(
             pre = function(...) tag("pre", list(...)),
             span = function(...) tag("span", list(...)),
             ul = function(...) tag("ul", list(...)),
-            h5 = function(...) tag('h5', list(...))
+            h5 = function(...) tag('h5', list(...)),
+            link = function(...) tag('link', list(...))
             )
 tag = function(type, arg_list){
   named_idx = nzchar(names(arg_list))
@@ -147,31 +148,62 @@ source_toggle_menu = function(languages){
 }
 
 toggle_menu = function(languages, types){
-  tags$div(class=c("navbar navbar-fixed-bottom navbar-inverse"),
-           tags$div(class=c("container"),
-                    tags$div(class=c("navbar-header"),
-                             tags$button(type=c("button"),
-                                         class="navbar-toggle",
-                                         "data-toggle"="collapse",
-                                         "data-target"=".navbar-responsive-collapse",
-                                         tags$span(class=c("icon-bar")),
-                                         tags$span(class=c("icon-bar")),
-                                         tags$span(class=c("icon-bar"))
-                                         )
-                             ),
-                    tags$div(id="bottom-navbar",
-                             class=c("navbar-collapse", "collapse",
-                                     "navbar-responsive-collapse"),
-                             tags$ul(class=c("nav navbar-nav navbar-right"),
-                                     tags$li(class=c("nav"),
-                                             tags$p(class="navbar-text", "Toggle")),
-                                     source_toggle_menu(languages),
-                                     output_toggle_menu(types),
-                                     tags$li(tags$a(href="#", class="toggle-figure", "Figures"))
-                                     )
-                             )
-                    )
-           )
+  style_chooser = opts_knit$get('bootstrap.style.chooser') %n% FALSE
+  code_style_chooser = opts_knit$get('bootstrap.code.style.chooser') %n% FALSE
+  paste0(collapse='\n',
+         tags$div(class=c("navbar navbar-fixed-bottom navbar-inverse"),
+                  tags$div(class=c("container"),
+                           tags$div(class=c("navbar-header"),
+                                    tags$button(type=c("button"),
+                                                class="navbar-toggle",
+                                                "data-toggle"="collapse",
+                                                "data-target"=".navbar-responsive-collapse",
+                                                tags$span(class=c("icon-bar")),
+                                                tags$span(class=c("icon-bar")),
+                                                tags$span(class=c("icon-bar"))
+                                                )
+                                    ),
+                           tags$div(id="bottom-navbar",
+                                    class=c("navbar-collapse", "collapse",
+                                            "navbar-responsive-collapse"),
+                                    tags$ul(class=c("nav navbar-nav navbar-right"),
+                                            tags$li(class=c("nav"),
+                                                    tags$p(class="navbar-text", "Toggle")),
+                                            source_toggle_menu(languages),
+                                            output_toggle_menu(types),
+                                            tags$li(tags$a(href="#", class="toggle-figure", "Figures"))
+                                            ),
+                                    if(style_chooser) generate_style_toggle('Bootstrap Styles', 'style-switch', names(boot_styles)),
+                                    if(code_style_chooser) generate_style_toggle('Code Styles', 'code-style-switch', names(code_styles))
+                                    )
+                           )
+                  )
+         ,if(style_chooser) generate_style_links(boot_styles)
+         ,if(code_style_chooser) generate_style_links(code_styles)
+         )
+}
+generate_style_class = function(class, type){
+  tags$li(tags$a(class=type, title=class, href='#', class))
+}
+generate_style_links = function(data){
+  paste0(collapse='\n',
+         lapply(names(data),
+                function(class){
+                  tags$link(rel='alternate stylesheet', type='text/css', href=data[class], title=class, media='screen')
+                }))
+}
+generate_style_toggle = function(title, type, values) {
+  tags$ul(class='nav navbar-nav navbar-left',
+          tags$li(class=c("dropup"),
+                  tags$a(href=c("#"),
+                         class="dropdown-toggle",
+                         "data-toggle"="dropdown",
+                         paste(title, " ", tags$b(class="caret"))),
+                  tags$ul(class=c("dropdown-menu"),
+                          lapply(values, generate_style_class, type=type)
+                          )
+                  )
+          )
 }
 generate_button = function(engine, name, x, hide){
   glyph = if(hide) 'glyphicon-chevron-up' else 'glyphicon-chevron-down'
@@ -212,8 +244,21 @@ render_bootstrap = function() {
       if(panel) generate_panel(engine, name, x, hide) else generate_button(engine, name, x, hide)
     }
   }
-  #we need to access the languages list so define this inside the render_bootstrap function
-  bootstrap_document_hook = function(x, options) {
+  h = opts_knit$get("header")
+  z = list()
+  for (i in c("source", "warning", "message", "error")) z[[i]] = html.hook(i)
+  knit_hooks$set(z)
+  knit_hooks$set(inline = function(x) {
+                 if (inherits(x, "AsIs")) .inline.hook(format_sci(x, "html")) else tags$code(.inline.hook(format_sci(x, "html")))
+           },
+           output = html.hook("output"),
+           plot = bootstrap_plot_hook,
+           chunk=bootstrap_chunk_hook,
+           document=generate_document_hook(languages, types))
+}
+
+generate_document_hook = function(languages, types) {
+  function(x, options) {
     match = m(x[1],'(?s)^([%].*?\n)([^%\n].*)')
     before = if(match[[1]] != FALSE){
       x[1] = match[[2]]
@@ -230,74 +275,64 @@ render_bootstrap = function() {
                                       tags$div(class=c("contents", "col-md-10"), x)
                                       )
                              ),
-                             toggle_menu(names(languages), names(types)[ names(types) != 'source' ])
+                    toggle_menu(names(languages), names(types)[ names(types) != 'source' ])
                     ),
            #footer
            tags$div(id='push'),
-           tags$div(id='footer',
-                    tags$div(class=c("container"),
-                             tags$p(class=c("text-muted"), id="credit", "Styled with ",
-                                    tags$a( href='https://github.com/jimhester/knitrBootstrap', "knitrBootstrap")
-                                    )
-                             )
-                    )
+           tags$div(id='footer', generate_footer())
            )
   }
-  h = opts_knit$get("header")
-  z = list()
-  for (i in c("source", "warning", "message", "error")) z[[i]] = html.hook(i)
-  knit_hooks$set(z)
-  knit_hooks$set(inline = function(x) {
-                 if (inherits(x, "AsIs")) .inline.hook(format_sci(x, "html")) else tags$code(.inline.hook(format_sci(x, "html")))
-           },
-           output = html.hook("output"),
-           plot = bootstrap_plot_hook,
-           chunk=bootstrap_chunk_hook,
-           document=bootstrap_document_hook)#, chunk = .chunk.hook.html)
 }
 
+generate_footer = function(){
+  tags$div(class=c("container"),
+           tags$p(class=c("text-muted"), id="credit", "Styled with ",
+                  tags$a( href='https://github.com/jimhester/knitrBootstrap', "knitrBootstrap")
+                  )
+           )
+}
 boot_styles = c(
-                'default'='https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css',
-                'amelia'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/amelia/bootstrap.min.css',
-                'cerulean'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css',
-                'cosmo'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/cosmo/bootstrap.min.css',
-                'cyborg'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/cyborg/bootstrap.min.css',
-                'journal'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/journal/bootstrap.min.css',
-                'flatly'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/flatly/bootstrap.min.css',
-                'readable'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/readable/bootstrap.min.css',
-                'simplex'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/simplex/bootstrap.min.css',
-                'slate'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/slate/bootstrap.min.css',
-                'spacelab'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css',
-                'united'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/united/bootstrap.min.css'
+                'Default'='https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css',
+                'Amelia'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/amelia/bootstrap.min.css',
+                'Cerulean'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css',
+                'Cosmo'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/cosmo/bootstrap.min.css',
+                'Cyborg'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/cyborg/bootstrap.min.css',
+                'Journal'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/journal/bootstrap.min.css',
+                'Flatly'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/flatly/bootstrap.min.css',
+                'Readable'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/readable/bootstrap.min.css',
+                'Simplex'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/simplex/bootstrap.min.css',
+                'Slate'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/slate/bootstrap.min.css',
+                'Spacelab'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css',
+                'United'='https://netdna.bootstrapcdn.com/bootswatch/3.0.0/united/bootstrap.min.css'
                 )
 
 code_styles = c(
-                'default'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/default.min.css',
-                'dark'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/dark.min.css',
-                'far'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/far.min.css',
-                'idea'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/idea.min.css',
-                'sunburst'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/sunburst.min.css',
-                'zenburn'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/zenburn.min.css',
-                'visual studio'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/vs.min.css',
-                'ascetic'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/ascetic.min.css',
-                'magula'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/magula.min.css',
-                'github'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/github.min.css',
-                'google code'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/googlecode.min.css',
-                'brown paper'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/brown_paper.min.css',
-                'school book'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/school_book.min.css',
-                'ir black'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/ir_black.min.css',
-                'solarized - dark'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/solarized_dark.min.css',
-                'solarized - light'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/solarized_light.min.css',
-                'arta'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/arta.min.css',
-                'monokai'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/monokai.min.css',
-                'xcode'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/xcode.min.css',
-                'pojoaque'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/pojoaque.min.css',
-                'rainbow'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/rainbow.min.css',
-                'tomorrow'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow.min.css',
-                'tomorrow night'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow-night.min.css',
-                'tomorrow night bright'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow-night-bright.min.css',
-                'tomorrow night blue'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow-night-blue.min.css',
-                'tomorrow night eighties'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow-night-eighties.min.css'
+                'HighlightJs'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/default.min.css',
+                'Dark'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/dark.min.css',
+                'Far'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/far.min.css',
+                'Idea'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/idea.min.css',
+                'Sunburst'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/sunburst.min.css',
+                'Zenburn'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/zenburn.min.css',
+                'Visual Studio'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/vs.min.css',
+                'Ascetic'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/ascetic.min.css',
+                'Magula'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/magula.min.css',
+                'Github'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/github.min.css',
+                'Google Code'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/googlecode.min.css',
+                'Brown Paper'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/brown_paper.min.css',
+                'School Book'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/school_book.min.css',
+                'IR Black'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/ir_black.min.css',
+                'Solarized - Dark'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/solarized_dark.min.css',
+                'Solarized - Light'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/solarized_light.min.css',
+                'Arta'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/arta.min.css',
+                'Monokai'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/monokai.min.css',
+                'Xcode'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/xcode.min.css',
+                'Pojoaque'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/pojoaque.min.css',
+                'Rainbow'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/rainbow.min.css',
+                'Tomorrow'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow.min.css',
+                'Tomorrow Night'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow-night.min.css',
+                'Tomorrow Night Bright'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow-night-bright.min.css',
+                'Tomorrow Night Blue'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow-night-blue.min.css',
+                'Tomorrow Night Eighties'='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/tomorrow-night-eighties.min.css'
                 )
 # note this only works for links with href as the first param
 link_pattern='<link\\s+href='
@@ -401,7 +436,7 @@ pandoc <- function(input=NULL, output, header, text=NULL) {
                              "+markdown_in_html_blocks",
                              "+pandoc_title_block"),
             "-H" , header,
-            "--toc",
+            #"--toc",
             "--smart",
             input)
   command <- paste("pandoc", paste(shQuote(args), collapse = " "))
@@ -460,7 +495,7 @@ get_style <- function(style, style_type, title, graphics = getOption("menu.graph
     style_type[menu(names(style_type), graphics, title)]
   }
   else {
-    style_type[match.arg(tolower(style), names(style_type))]
+    style_type[pmatch(tolower(style), tolower(names(style_type)))]
   }
   return(style)
 }

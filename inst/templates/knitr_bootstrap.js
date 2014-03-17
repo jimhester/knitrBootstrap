@@ -177,6 +177,23 @@ $(function() {
     target: '.sidebar',
   });
 
+  /* style switch */
+  $('.style-switch').click(function(){
+    var css = $('link[title=' + $(this).attr('title') + ']');
+    $('#style[rel=stylesheet]').attr('href', css.attr('href'));
+    $('.style-switch').closest('li').removeClass('active');
+    $(this).closest('li').addClass('active');
+    return false;
+  });
+  /* code style switch */ //TODO use same function for both of these?
+  $('.code-style-switch').click(function(){
+    var css = $('link[title="' + $(this).attr('title') + '"]');
+    $('#code-style[rel=stylesheet]').attr('href', css.attr('href'));
+    $('.code-style-switch').closest('li').removeClass('active');
+    $(this).closest('li').addClass('active');
+    return false;
+  });
+
   //TODO refresh on show/hide
   $window.on('load', function () {
     $body.scrollspy('refresh');
