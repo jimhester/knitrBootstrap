@@ -114,46 +114,37 @@ the command line.  If you have a file file.Rmd and you want to create file.html 
 make file.html
 
 #with bootstrap style chooser
-make CHOOSER=c('boot') file.html
+THEME_CHOOSER=TRUE
+HIGHLIGHT_CHOOSER=TRUE
+make THEME_CHOOSER=TRUE file.html
 
 #with code style chooser
-make CHOOSER=c('code') file.html
+make HIGHLIGHT_CHOOSER=TRUE file.html
 
 #with both
-make CHOOSER=c('boot', 'code') file.html
+make HIGHLIGHT_CHOOSER=TRUE THEME_CHOOSER=TRUE file.html
 
 #standalone
-make file.html
 make file_inline.html
 ```
 
 ### RStudio ###
-
-Simply source the following code in RStudio before you knit your reports.
-See [http://www.rstudio.com/ide/docs/authoring/markdown_custom_rendering]() for more information.
-
-*Note* You also need to include render_html() in your Rmd setup chunk.
-
-```s
-options(rstudio.markdownToHTML =
-  function(inputFile, outputFile) {
-    require(knitrBootstrap)
-    knit_bootstrap_md(input=inputFile, output=outputFile)
-  }
-)
-```
+Very current versions of RStudio use the `render` function when you press the
+"Knit" button.  In order to output using knitrBootstrap use the
+[YAML front-matter](#yaml-frontmatter) in your document.
 
 ### Vim ###
-
-Using the [Vim-R-Plugin](https://github.com/vim-scripts/Vim-R-plugin) put the following function in your .vimrc to create the file directly with knitr and the markdown package
+Using the [Vim-R-Plugin](https://github.com/vim-scripts/Vim-R-plugin) put the
+following function in your .vimrc to create the file directly with knitr and
+the markdown package
 
 ```vim
 function! RMakeHTML_2()
   update
   call RSetWD()
   let filename = expand("%:r:t")
-  let rcmd = "require('knitrBootstrap');
-    \knit_bootstrap(\"" . filename . ".Rmd\")"
+  let rcmd = "require('knitrBootstrap');\
+    render(\"" . filename . ".Rmd\", knitrBootstrap::bootstrap_document)"
   if g:vimrplugin_openhtml
     let rcmd = rcmd . '; browseURL("' . filename . '.html")'
   endif
@@ -163,22 +154,6 @@ endfunction
 "bind RMakeHTML_2 to leader kk
 nnoremap <silent> <Leader>kk :call RMakeHTML_2()<CR>
 ```
-
-### Pandoc ###
-Pandoc can use the same files, but some things do not quite work due to
-markdown conversion differences between the markdown package and pandoc.  Use
-at your own risk!
-
-If your markdown filename is example.md you can use the header html
-```console
-pandoc -H knitr_bootstrap.html example.md -o example.html
-```
-
-## Styles ##
-
-All of the examples include style toggles for both bootstrap and the code
-highlighting.  The knit_bootstrap function has boot_style and code_style
-arguments if you want to use an alternative style by default.
 
 [highlight.js]: https://github.com/isagalaev/highlight.js
 [rstudio/markdown]: https://github.com/rstudio/markdown
