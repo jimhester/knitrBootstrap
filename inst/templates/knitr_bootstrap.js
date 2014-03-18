@@ -177,19 +177,19 @@ $(function() {
     target: '.sidebar',
   });
 
-  /* style switch */
-  $('.style-switch').click(function(){
+  /* theme switch */
+  $('.theme-switch').click(function(){
     var css = $('link[title=' + $(this).attr('title') + ']');
-    $('#style[rel=stylesheet]').attr('href', css.attr('href'));
-    $('.style-switch').closest('li').removeClass('active');
+    $('#theme[rel=stylesheet]').attr('href', css.attr('href'));
+    $('.theme-switch').closest('li').removeClass('active');
     $(this).closest('li').addClass('active');
     return false;
   });
   /* code style switch */ //TODO use same function for both of these?
-  $('.code-style-switch').click(function(){
+  $('.highlight-switch').click(function(){
     var css = $('link[title="' + $(this).attr('title') + '"]');
-    $('#code-style[rel=stylesheet]').attr('href', css.attr('href'));
-    $('.code-style-switch').closest('li').removeClass('active');
+    $('#highlight[rel=stylesheet]').attr('href', css.attr('href'));
+    $('.highlight-switch').closest('li').removeClass('active');
     $(this).closest('li').addClass('active');
     return false;
   });

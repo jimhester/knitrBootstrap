@@ -6,6 +6,7 @@ A framework to create bootstrap styled HTML reports from knitr Rmarkdown.
 * [Features](#features)
 * [Examples](#examples)
 * [Installation](#installation)
+* [Options](#options)
 * [Usage](#usage)
   * [R](#Rfunction)
   * [Makefile](#makefile)
@@ -47,19 +48,52 @@ install.packages('knitrBootstrap')
 If you want to install the latest development version use the [devtools] package.
 ```s
 library(devtools)
-install_github(username='jimhester', repo='knitrBootstrap')
+install_github('jimhester/knitrBootstrap')
 ```
 ## Options ##
 
-Knitr bootstrap has a number of additional chunk options which can be used to modify the bootstrap output.
+Knitr bootstrap extends knitr with a number of additional options.  See [Knitr
+Options](http://http://yihui.name/knitr/options) for more about how to set the
+two different types of options.
 
+### Package Options ###
+ - bootstrap.title - (NULL) Set the title for the html document
+ - bootstrap.theme.chooser - (FALSE) - Add a bootstrap style chooser to the page.
+ - bootstrap.highlight.chooser - (FALSE) - Add a code style chooser to the page.
+ - bootstrap.theme - (Default) - Set the default bootstrap style.
+ - bootstrap.highlight - (Default) - Set the default code style.
+
+### Chunk Options ###
  - bootstrap.thumbnail - (TRUE) - Thumbnail and lightbox images.
+ - bootstrap.thumbnail.size - ('col-md-6') - Thumbnail size in bootstrap columns. (There are 12 total columns, so 6 would be 50% of the layout width)
  - bootstrap.panel - (FALSE) - Use panels rather than buttons to toggle blocks.
  - bootstrap.hide - (FALSE) - Code and Output from this chunk starts as hidden.
- <!--- bootstrap.show.code - (TRUE) - Code from this chunk starts as shown.-->
- <!--- bootstrap.show.output - (TRUE) - Output from this chunk starts as shown.-->
+ - bootstrap.show.code - (TRUE) - Code from this chunk starts as shown.
+ - bootstrap.show.output - (TRUE) - Output from this chunk starts as shown.
+ - bootstrap.theme - (TRUE) - Output from this chunk starts as shown.
 
 ## Usage ##
+
+Knitr Bootstrap includes a `knitrBootstrap::bootstrap_document` custom
+rendering function for use with the
+[Rmarkdown](http://http://rmarkdown.rstudio.com/) package.
+
+### Render Function ###
+```s
+library(knitrBootstrap)
+library(rmarkdown)
+render('file.Rmd', knitrBootstrap::bootstrap_document)
+```
+
+### YAML frontmatter ###
+You can also specify the bootstrap_document function as an output type along
+with the options in the YAML front-matter directly in your Rmd file.
+```s
+---
+title: "Test file"
+output: knitrBootstrap::bootstrap_document
+---
+```
 
 Reports can be built within [R](#Rfunction), a [Makefile](#makefile), by [RStudio](#rstudio) or with [Vim](#vim).
 
