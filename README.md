@@ -8,11 +8,11 @@ A framework to create bootstrap styled HTML reports from knitr Rmarkdown.
 * [Installation](#installation)
 * [Options](#options)
 * [Usage](#usage)
-  * [R](#Rfunction)
-  * [Makefile](#makefile)
+  * [Render Function](#render-function)
+  * [YAML Front-matter](#yaml-front-matter)
   * [RStudio](#rstudio)
   * [Vim](#vim)
-  * [Pandoc](#pandoc)
+  * [Makefile](#makefile)
 * [Styles](#styles)
 
 ## Features ##
@@ -85,7 +85,7 @@ library(rmarkdown)
 render('file.Rmd', knitrBootstrap::bootstrap_document)
 ```
 
-### YAML frontmatter ###
+### YAML Front-matter ###
 You can also specify the bootstrap_document function as an output type along
 with the options in the YAML front-matter directly in your Rmd file.
 ```s
@@ -93,39 +93,6 @@ with the options in the YAML front-matter directly in your Rmd file.
 title: "Test file"
 output: knitrBootstrap::bootstrap_document
 ---
-```
-
-Reports can be built within [R](#Rfunction), a [Makefile](#makefile), by [RStudio](#rstudio) or with [Vim](#vim).
-
-### R ###
-```s
-library(knitrBootstrap)
-#defaults only
-knit_bootstrap('file.Rmd')
-```
-
-### Makefile ###
-
-You can use the included Makefile to generate html reports from Rmd files from
-the command line.  If you have a file file.Rmd and you want to create file.html use
-
-```bash
-#standard
-make file.html
-
-#with bootstrap style chooser
-THEME_CHOOSER=TRUE
-HIGHLIGHT_CHOOSER=TRUE
-make THEME_CHOOSER=TRUE file.html
-
-#with code style chooser
-make HIGHLIGHT_CHOOSER=TRUE file.html
-
-#with both
-make HIGHLIGHT_CHOOSER=TRUE THEME_CHOOSER=TRUE file.html
-
-#standalone
-make file_inline.html
 ```
 
 ### RStudio ###
@@ -153,6 +120,30 @@ endfunction
 
 "bind RMakeHTML_2 to leader kk
 nnoremap <silent> <Leader>kk :call RMakeHTML_2()<CR>
+```
+
+### Makefile ###
+
+You can use the included Makefile to generate html reports from Rmd files from
+the command line.  If you have a file file.Rmd and you want to create file.html use
+
+```bash
+#standard
+make file.html
+
+#with bootstrap style chooser
+THEME_CHOOSER=TRUE
+HIGHLIGHT_CHOOSER=TRUE
+make THEME_CHOOSER=TRUE file.html
+
+#with code style chooser
+make HIGHLIGHT_CHOOSER=TRUE file.html
+
+#with both
+make HIGHLIGHT_CHOOSER=TRUE THEME_CHOOSER=TRUE file.html
+
+#standalone
+make file_inline.html
 ```
 
 [highlight.js]: https://github.com/isagalaev/highlight.js
