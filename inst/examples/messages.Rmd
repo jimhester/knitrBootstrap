@@ -12,13 +12,13 @@ cat('this is a cat\n')
 ```{r messages_message}
 message('this is a message')
 ```
-```{r messages_error}
+```{r messages_error, error=TRUE}
 stop('this is an error')
 ```
 ```{r messages_warning}
 warning('this is a warning')
 ```
-```{r messages_all}
+```{r messages_all, error=TRUE}
 print('this is a print')
 cat('this is a cat\n')
 message('this is a message')

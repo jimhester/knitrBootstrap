@@ -23,4 +23,4 @@ ggplot(subset(crimesm, state %in% great_lakes_states), aes(map_id = state)) + ge
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 02:44:48 PM
-Last Modified: 2013 Oct 16 03:51:08 PM
+Last Modified: 2014 Mar 05 02:16:35 PM

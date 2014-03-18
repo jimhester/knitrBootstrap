@@ -57,4 +57,4 @@ qplot(gear, mpg, data=mtcars, geom=c("boxplot", "jitter"),
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2013 Oct 16 03:50:50 PM
+Last Modified: 2014 Mar 18 11:55:56 AM
