@@ -7,6 +7,8 @@ A framework to create bootstrap styled HTML reports from knitr Rmarkdown.
 * [Examples](#examples)
 * [Installation](#installation)
 * [Options](#options)
+* [Bootstrap Themes](#bootstrap-themes)
+* [Highlight Themes](#highlight-themes)
 * [Usage](#usage)
   * [Render Function](#render-function)
   * [YAML Front-matter](#yaml-front-matter)
@@ -52,8 +54,8 @@ install_github('jimhester/knitrBootstrap')
 ```
 ## Options ##
 
-Knitr bootstrap extends knitr with a number of additional options.  See [Knitr
-Options](http://http://yihui.name/knitr/options) for more about how to set the
+Knitr bootstrap extends knitr with a number of additional options.  See
+[Knitr Options](http://http://yihui.name/knitr/options) for more about how to set the
 two different types of options.
 
 ### Package Options ###
@@ -72,6 +74,49 @@ two different types of options.
  - bootstrap.show.output - (TRUE) - Output from this chunk starts as shown.
  - bootstrap.theme - (TRUE) - Output from this chunk starts as shown.
 
+## Bootstrap Themes ##
+- [Themes](http://bootswatch.com/themes)
+- [Default](http://bootswatch.com/default)
+- [Amelia](http://bootswatch.com/amelia)
+- [Cerulean](http://bootswatch.com/cerulean)
+- [Cosmo](http://bootswatch.com/cosmo)
+- [Cyborg](http://bootswatch.com/cyborg)
+- [Journal](http://bootswatch.com/journal)
+- [Flatly](http://bootswatch.com/flatly)
+- [Readable](http://bootswatch.com/readable)
+- [Simplex](http://bootswatch.com/simplex)
+- [Slate](http://bootswatch.com/slate)
+- [Spacelab](http://bootswatch.com/spacelab)
+- [United](http://bootswatch.com/united)
+
+## Highlight Themes ##
+[Highlight Live Test](http://highlightjs.org/static/test.html)
+- HighlightJs
+- Dark
+- Far
+- Idea
+- Sunburst
+- Zenburn
+- Visual Studio
+- Ascetic
+- Magula
+- Github
+- Google Code
+- Brown Paper
+- School Book
+- IR Black
+- Solarized - Dark
+- Solarized - Light
+- Arta
+- Monokai
+- Xcode
+- Pojoaque
+- Rainbow
+- Tomorrow
+- Tomorrow Night
+- Tomorrow Night Bright
+- Tomorrow Night Blue
+- Tomorrow Night Eighties
 ## Usage ##
 
 Knitr Bootstrap includes a `knitrBootstrap::bootstrap_document` custom
@@ -87,13 +132,21 @@ render('file.Rmd', knitrBootstrap::bootstrap_document)
 
 ### YAML Front-matter ###
 You can also specify the bootstrap_document function as an output type along
-with the options in the YAML front-matter directly in your Rmd file.
+with the options in the YAML front-matter directly in your Rmd file.  All of
+the global [Package Options](#package-options) can be specified in the front
+matter.
+
 ```s
 ---
-title: "Test file"
-output: knitrBootstrap::bootstrap_document
+output: knitrBootstrap::bootstrap_document:
+  title: "Test file"
+  theme: amelia
+  highlight: sunburst
+  theme.chooser: TRUE
+  highlight.chooser: TRUE
 ---
 ```
+
 
 ### RStudio ###
 Very current versions of RStudio use the `render` function when you press the
