@@ -1,44 +1,44 @@
 # Knitr Bootstrap #
-A framework to create bootstrap styled HTML reports from knitr Rmarkdown.
+A framework to create bootstrap styled HTML reports from [knitr] Rmarkdown.
 
 ## Table of Contents
 
-* [Features](#features)
-* [Examples](#examples)
-* [Installation](#installation)
-* [Options](#options)
-* [Bootstrap Themes](#bootstrap-themes)
-* [Highlight Themes](#highlight-themes)
-* [Usage](#usage)
-  * [Render Function](#render-function)
-  * [YAML Front-matter](#yaml-front-matter)
-  * [RStudio](#rstudio)
-  * [Vim](#vim)
-  * [Makefile](#makefile)
-* [Styles](#styles)
+- [Features](#features)
+- [Examples](#examples)
+- [Installation](#installation)
+- [Options](#options)
+- [Bootstrap Themes](#bootstrap-themes)
+- [Highlight Themes](#highlight-themes)
+- [Usage](#usage)
+  - [Render Function](#render-function)
+  - [YAML Front-matter](#yaml-front-matter)
+  - [RStudio](#rstudio)
+  - [Vim](#vim)
+  - [Makefile](#makefile)
+- [Styles](#styles)
 
 ## Features ##
-* Uses bootstrap 3.0, should work for all screen sizes.
-* Automatic table of contents constructed from h1-4 tags.
-* Images are automatically centered, thumbnailed and lightboxed using [magnific popup].
-* Style with themes from [bootswatch], optionally including a dynamic style switch.
-* Code blocks automatically highlighted using [highlight.js], optionally including a dynamic style switch.
-* Code/Output block and plot visibility can be toggled with a mouse click
-  * Globally
-  * Per language
-* Create completely offline reports, including all css, javascript and images
-* Mathematical equations using [mathjax], note this does not work offline
+- Uses bootstrap 3.0, should work for all screen sizes.
+- Automatic table of contents constructed from h1-4 tags.
+- Images are automatically centered, thumbnailed and lightboxed using [magnific popup].
+- Style with themes from [bootswatch], optionally including a dynamic style switch.
+- Code blocks automatically highlighted using [highlight.js], optionally including a dynamic style switch.
+- Code/Output block and plot visibility can be toggled with a mouse click
+  - Globally
+  - Per language
+- Create completely offline reports, including all css, javascript and images
+- Mathematical equations using [mathjax], note this does not work offline
 
 ## Examples ##
 All the examples include a css style switch, so you can try out the various styles from [bootswatch].
 
-* [2d] - examples of miscellaneous 2d
-* [cars] - using ggplot2 and the cars dataset
-* [engines] - using other language engines
-* [illusions] - examples of interesting optical illusions
-* [maps] - examples of map plots, and holding plots until end of the block
-* [math] - examples of MathJax formulas
-* [all] - All examples together
+- [2d] - examples of miscellaneous 2d
+- [cars] - using ggplot2 and the cars dataset
+- [engines] - using other language engines
+- [illusions] - examples of interesting optical illusions
+- [maps] - examples of map plots, and holding plots until end of the block
+- [math] - examples of MathJax formulas
+- [all] - All examples together
 
 ## Installation ##
 You can install the latest released version from CRAN.
@@ -54,25 +54,25 @@ install_github('jimhester/knitrBootstrap')
 ```
 ## Options ##
 
-Knitr bootstrap extends knitr with a number of additional options.  See
+Knitr bootstrap extends [knitr] with a number of additional options.  See
 [Knitr Options](http://http://yihui.name/knitr/options) for more about how to set the
 two different types of options.
 
 ### Package Options ###
- - bootstrap.title - (NULL) Set the title for the html document
- - bootstrap.theme.chooser - (FALSE) - Add a bootstrap style chooser to the page.
- - bootstrap.highlight.chooser - (FALSE) - Add a code style chooser to the page.
- - bootstrap.theme - (Default) - Set the default bootstrap style.
- - bootstrap.highlight - (Default) - Set the default code style.
+- `bootstrap.title` - (`NULL`) Set the title for the html document
+- `bootstrap.theme.chooser` - (`FALSE`) - Add a bootstrap style chooser to the page.
+- `bootstrap.highlight.chooser` - (`FALSE`) - Add a code style chooser to the page.
+- `bootstrap.theme` - (`Default`) - Set the default bootstrap style.
+- `bootstrap.highlight` - (`Default`) - Set the default code style.
 
 ### Chunk Options ###
- - bootstrap.thumbnail - (TRUE) - Thumbnail and lightbox images.
- - bootstrap.thumbnail.size - ('col-md-6') - Thumbnail size in bootstrap columns. (There are 12 total columns, so 6 would be 50% of the layout width)
- - bootstrap.panel - (FALSE) - Use panels rather than buttons to toggle blocks.
- - bootstrap.hide - (FALSE) - Code and Output from this chunk starts as hidden.
- - bootstrap.show.code - (TRUE) - Code from this chunk starts as shown.
- - bootstrap.show.output - (TRUE) - Output from this chunk starts as shown.
- - bootstrap.theme - (TRUE) - Output from this chunk starts as shown.
+- `bootstrap.thumbnail` - (`TRUE`) - Thumbnail and lightbox images.
+- `bootstrap.thumbnail.size` - (`'col-md-6'`) - Thumbnail size in bootstrap columns. (see [Bootstrap Grid System](http://getbootstrap.com/css/#grid))
+- `bootstrap.panel` - (`FALSE`) - Use panels rather than buttons to toggle blocks.
+- `bootstrap.hide` - (`FALSE`) - Code and Output from this chunk starts as hidden.
+- `bootstrap.show.code` - (`TRUE`) - Code from this chunk starts as shown.
+- `bootstrap.show.output` - (`TRUE`) - Output from this chunk starts as shown.
+- `bootstrap.theme` - (`TRUE`) - Output from this chunk starts as shown.
 
 ## Bootstrap Themes ##
 - [Themes](http://bootswatch.com/themes)
@@ -117,6 +117,7 @@ two different types of options.
 - Tomorrow Night Bright
 - Tomorrow Night Blue
 - Tomorrow Night Eighties
+
 ## Usage ##
 
 Knitr Bootstrap includes a `knitrBootstrap::bootstrap_document` custom
@@ -155,7 +156,7 @@ Very current versions of RStudio use the `render` function when you press the
 
 ### Vim ###
 Using the [Vim-R-Plugin](https://github.com/vim-scripts/Vim-R-plugin) put the
-following function in your .vimrc to create the file directly with knitr and
+following function in your .vimrc to create the file directly with [knitr] and
 the markdown package
 
 ```vim
@@ -185,8 +186,6 @@ the command line.  If you have a file file.Rmd and you want to create file.html 
 make file.html
 
 #with bootstrap style chooser
-THEME_CHOOSER=TRUE
-HIGHLIGHT_CHOOSER=TRUE
 make THEME_CHOOSER=TRUE file.html
 
 #with code style chooser
@@ -206,6 +205,7 @@ make file_inline.html
 [mathjax]: http://mathjax.org
 [bootswatch]: http://bootswatch.com
 [devtools]: https://github.com/hadley/devtools
+[knitr]: https://github.com/yihui/knitr
 
 [2d]: http://rawgithub.com/jimhester/knitrBootstrap/master/vignettes/two-D.html
 [all]: http://rawgithub.com/jimhester/knitrBootstrap/master/inst/examples/all.html
