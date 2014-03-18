@@ -6,16 +6,15 @@ A framework to create bootstrap styled HTML reports from [knitr] Rmarkdown.
 - [Features](#features)
 - [Examples](#examples)
 - [Installation](#installation)
-- [Options](#options)
-- [Bootstrap Themes](#bootstrap-themes)
-- [Highlight Themes](#highlight-themes)
 - [Usage](#usage)
   - [Render Function](#render-function)
   - [YAML Front-matter](#yaml-front-matter)
   - [RStudio](#rstudio)
   - [Vim](#vim)
   - [Makefile](#makefile)
-- [Styles](#styles)
+- [Options](#options)
+- [Bootstrap Themes](#bootstrap-themes)
+- [Highlight Themes](#highlight-themes)
 
 ## Features ##
 - Uses bootstrap 3.0, should work for all screen sizes.
@@ -41,17 +40,98 @@ All the examples include a css style switch, so you can try out the various styl
 - [all] - All examples together
 
 ## Installation ##
-You can install the latest released version from CRAN.
-
-```s
-install.packages('knitrBootstrap')
-```
-
 If you want to install the latest development version use the [devtools] package.
 ```s
 library(devtools)
 install_github('jimhester/knitrBootstrap')
 ```
+
+You can install the latest released version from CRAN.  Typically lags behind
+latest by a good amount.
+```s
+install.packages('knitrBootstrap')
+```
+
+## Usage ##
+
+Knitr Bootstrap includes a `knitrBootstrap::bootstrap_document` custom
+rendering function for use with the
+[Rmarkdown](http://http://rmarkdown.rstudio.com/) package.
+
+### RStudio ###
+Very current versions of RStudio use the `render` function when you press the
+"Knit" button.  In order to output using knitrBootstrap use the
+[YAML front-matter](#yaml-frontmatter) in your document.
+
+### YAML Front-matter ###
+You can also specify the bootstrap_document function as an output type along
+with the options in the YAML front-matter directly in your Rmd file.  All of
+the global [Package Options](#package-options) can be specified in the front
+matter.
+
+```s
+---
+output: knitrBootstrap::bootstrap_document:
+  title: "Test file"
+  theme: amelia
+  highlight: sunburst
+  theme.chooser: TRUE
+  highlight.chooser: TRUE
+---
+```
+
+### Render Function ###
+You can also simply call the render function by itself.
+```s
+library(knitrBootstrap)
+library(rmarkdown)
+render('file.Rmd', knitrBootstrap::bootstrap_document)
+```
+
+### Vim ###
+Using the [Vim-R-Plugin](https://github.com/vim-scripts/Vim-R-plugin) put the
+following function in your .vimrc to create the file directly with [knitr] and
+the markdown package
+
+```vim
+function! RMakeHTML_2()
+  update
+  call RSetWD()
+  let filename = expand("%:r:t")
+  let rcmd = "require('knitrBootstrap');\
+    render(\"" . filename . ".Rmd\", knitrBootstrap::bootstrap_document)"
+  if g:vimrplugin_openhtml
+    let rcmd = rcmd . '; browseURL("' . filename . '.html")'
+  endif
+  call g:SendCmdToR(rcmd)
+endfunction
+
+"bind RMakeHTML_2 to leader kk
+nnoremap <silent> <Leader>kk :call RMakeHTML_2()<CR>
+```
+
+### Makefile ###
+
+You can use the included Makefile to generate html reports from Rmd files from
+the command line.  If you have a file file.Rmd and you want to create file.html use
+
+```bash
+#standard
+make file.html
+
+#with bootstrap style chooser
+make THEME_CHOOSER=TRUE file.html
+
+#with code style chooser
+make HIGHLIGHT_CHOOSER=TRUE file.html
+
+#with both
+make HIGHLIGHT_CHOOSER=TRUE THEME_CHOOSER=TRUE file.html
+
+#standalone
+make file_inline.html
+```
+
 ## Options ##
 
 Knitr bootstrap extends [knitr] with a number of additional options.  See
@@ -117,86 +197,6 @@ two different types of options.
 - Tomorrow Night Bright
 - Tomorrow Night Blue
 - Tomorrow Night Eighties
-
-## Usage ##
-
-Knitr Bootstrap includes a `knitrBootstrap::bootstrap_document` custom
-rendering function for use with the
-[Rmarkdown](http://http://rmarkdown.rstudio.com/) package.
-
-### Render Function ###
-```s
-library(knitrBootstrap)
-library(rmarkdown)
-render('file.Rmd', knitrBootstrap::bootstrap_document)
-```
-
-### YAML Front-matter ###
-You can also specify the bootstrap_document function as an output type along
-with the options in the YAML front-matter directly in your Rmd file.  All of
-the global [Package Options](#package-options) can be specified in the front
-matter.
-
-```s
----
-output: knitrBootstrap::bootstrap_document:
-  title: "Test file"
-  theme: amelia
-  highlight: sunburst
-  theme.chooser: TRUE
-  highlight.chooser: TRUE
----
-```
-
-
-### RStudio ###
-Very current versions of RStudio use the `render` function when you press the
-"Knit" button.  In order to output using knitrBootstrap use the
-[YAML front-matter](#yaml-frontmatter) in your document.
-
-### Vim ###
-Using the [Vim-R-Plugin](https://github.com/vim-scripts/Vim-R-plugin) put the
-following function in your .vimrc to create the file directly with [knitr] and
-the markdown package
-
-```vim
-function! RMakeHTML_2()
-  update
-  call RSetWD()
-  let filename = expand("%:r:t")
-  let rcmd = "require('knitrBootstrap');\
-    render(\"" . filename . ".Rmd\", knitrBootstrap::bootstrap_document)"
-  if g:vimrplugin_openhtml
-    let rcmd = rcmd . '; browseURL("' . filename . '.html")'
-  endif
-  call g:SendCmdToR(rcmd)
-endfunction
-
-"bind RMakeHTML_2 to leader kk
-nnoremap <silent> <Leader>kk :call RMakeHTML_2()<CR>
-```
-
-### Makefile ###
-
-You can use the included Makefile to generate html reports from Rmd files from
-the command line.  If you have a file file.Rmd and you want to create file.html use
-
-```bash
-#standard
-make file.html
-
-#with bootstrap style chooser
-make THEME_CHOOSER=TRUE file.html
-
-#with code style chooser
-make HIGHLIGHT_CHOOSER=TRUE file.html
-
-#with both
-make HIGHLIGHT_CHOOSER=TRUE THEME_CHOOSER=TRUE file.html
-
-#standalone
-make file_inline.html
-```
 
 [highlight.js]: https://github.com/isagalaev/highlight.js
 [rstudio/markdown]: https://github.com/rstudio/markdown
