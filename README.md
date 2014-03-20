@@ -40,9 +40,10 @@ All the examples include a css style switch, so you can try out the various styl
 - [all] - All examples together
 
 ## Installation ##
-If you want to install the latest development version use the [devtools] package.
+If you want to install the latest development version use the [devtools] package to install the [rmarkdown] prerequisite and this package.
 ```s
 library(devtools)
+install_github('rstudio/rmarkdown')
 install_github('jimhester/knitrBootstrap')
 ```
 
@@ -56,7 +57,7 @@ install.packages('knitrBootstrap')
 
 Knitr Bootstrap includes a `knitrBootstrap::bootstrap_document` custom
 rendering function for use with the
-[Rmarkdown](http://http://rmarkdown.rstudio.com/) package.
+[Rmarkdown](http://rmarkdown.rstudio.com/) package.
 
 ### RStudio ###
 Very current versions of RStudio use the `render` function when you press the
@@ -71,12 +72,13 @@ matter.
 
 ```s
 ---
-output: knitrBootstrap::bootstrap_document:
-  title: "Test file"
-  theme: amelia
-  highlight: sunburst
-  theme.chooser: TRUE
-  highlight.chooser: TRUE
+output:
+  knitrBootstrap::bootstrap_document:
+    title: "Test file"
+    theme: amelia
+    highlight: sunburst
+    theme.chooser: TRUE
+    highlight.chooser: TRUE
 ---
 ```
 
