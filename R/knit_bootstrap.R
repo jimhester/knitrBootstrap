@@ -329,7 +329,6 @@ calc_offset = function(size){
 }
 bootstrap_plot_hook = function(x, options) {
   fig = hook_plot_md(x, options)
-  str(options)
   thumbnail = options[['bootstrap.thumbnail']] = options[['bootstrap.thumbnail']] %n% TRUE
   thumbnail_size = options['bootstrap.thumbnail.size'] = options[['bootstrap.thumbnail.size']] %n% 'col-md-6'
   if(!thumbnail){
