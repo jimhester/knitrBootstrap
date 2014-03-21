@@ -87,7 +87,7 @@ You can also simply call the render function by itself.
 ```s
 library(knitrBootstrap)
 library(rmarkdown)
-render('file.Rmd', knitrBootstrap::bootstrap_document)
+render('file.Rmd', knitrBootstrap::bootstrap_document())
 ```
 
 ### Vim ###
@@ -137,7 +137,7 @@ make file_inline.html
 ## Options ##
 
 Knitr bootstrap extends [knitr] with a number of additional options.  See
-[Knitr Options](http://http://yihui.name/knitr/options) for more about how to set the
+[Knitr Options](http://yihui.name/knitr/options) for more about how to set the
 two different types of options.
 
 ### Package Options ###
@@ -154,7 +154,6 @@ two different types of options.
 - `bootstrap.hide` - (`FALSE`) - Code and Output from this chunk starts as hidden.
 - `bootstrap.show.code` - (`TRUE`) - Code from this chunk starts as shown.
 - `bootstrap.show.output` - (`TRUE`) - Output from this chunk starts as shown.
-- `bootstrap.theme` - (`TRUE`) - Output from this chunk starts as shown.
 
 ## Bootstrap Themes ##
 - [Themes](http://bootswatch.com/themes)
