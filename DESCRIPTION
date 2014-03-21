@@ -7,7 +7,7 @@ Title: Knitr Bootstrap framework.
 Description: A framework to create Bootstrap 3 HTML reports from knitr
     Rmarkdown.
 Depends:
-    R (>= 3.0.0),
+    R (>= 3.0.0)
 Imports:
     knitr (>= 1.4.1),
     rmarkdown,
@@ -23,7 +23,7 @@ Suggests:
     maptools,
     plyr,
     reshape2,
-    xtable,
+    xtable
 License: MIT + file LICENSE
 URL: https://github.com/jimhester/
 BugReports: https://github.com/jimhester/knitrBootstrap/issues
