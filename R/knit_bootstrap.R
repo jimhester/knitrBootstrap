@@ -219,7 +219,7 @@ bootstrap_document = function(title=NULL, theme='default', highlight='highlightj
                 pandoc = pandoc_options(to = "html",
                                         from = bootstrap_pandoc_options,
                                         args=c('-H', header)),
-                clean_supporting=TRUE)
+                clean_supporting=FALSE)
   #pandoc --self-contained breaks on bootswatch css `//` urls, if(self_contained) '--self-contained' else '')), 
 }
 append_files = function(files){
@@ -314,8 +314,8 @@ tag = function(type, arg_list){
          paste0(unlist(arg_list[!named_idx]), collapse='\n'), '</', type,'>')
 }
 bootstrap_chunk_hook = function(x, options){
-  if (knitr:::output_asis(x, options))
-    return(x)
+  #if (knitr:::output_asis(x, options))
+    #return(x)
   tags$div(class=c('row'), x)
 }
 
@@ -509,7 +509,6 @@ generate_document_hook = function(languages, types) {
              #footer
              tags$div(id='push'),
              tags$div(id='footer', generate_footer()),
-
              style_links(options)
              )
     }
@@ -527,8 +526,8 @@ style_link = function(type, styles, default){
   tags$link(rel='stylesheet', id=type, href=styles[match], media='screen')
 }
 style_links = function(options){
-  default_theme = knitr::opts_knit$get('bootstrap.style') %n% 'Default'
-  default_highlight = knitr::opts_knit$get('bootstrap.code.style') %n% 'HighlightJs'
+  default_theme = knitr::opts_knit$get('bootstrap.theme') %n% 'Default'
+  default_highlight = knitr::opts_knit$get('bootstrap.highlight') %n% 'HighlightJs'
   paste0(collapse='\n',
          style_link('theme', themes, default_theme),
          style_link('highlight', highlights, default_highlight)
@@ -574,8 +573,14 @@ render_bootstrap_hooks = function() {
       types[name]<<-1
       button_or_panel = options
       panel = options$bootstrap.panel = options$bootstrap.panel %n% FALSE
-      hide = options$bootstrap.hide = options$bootstrap.hide %n% FALSE
-      if(panel) generate_panel(engine, name, x, hide) else generate_button(engine, name, x, hide)
+      show = switch(name,
+                    source = (options[['bootstrap.show.code']] = options[['bootstrap.show.code']] %n% TRUE),
+                    output = (options[['bootstrap.show.output']] = options[['bootstrap.show.output']] %n% TRUE),
+                    message = (options[['bootstrap.show.message']] = options[['bootstrap.show.message']] %n% TRUE),
+                    warning = (options[['bootstrap.show.warning']] = options[['bootstrap.show.warning']] %n% TRUE),
+                    error = (options[['bootstrap.show.error']] = options[['bootstrap.show.error']] %n% TRUE),
+                    TRUE)
+      if(panel) generate_panel(engine, name, x, !show) else generate_button(engine, name, x, !show)
     }
   }
   h = knitr::opts_knit$get("header")

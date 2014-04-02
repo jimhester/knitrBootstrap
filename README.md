@@ -151,9 +151,11 @@ two different types of options.
 - `bootstrap.thumbnail` - (`TRUE`) - Thumbnail and lightbox images.
 - `bootstrap.thumbnail.size` - (`'col-md-6'`) - Thumbnail size in bootstrap columns. (see [Bootstrap Grid System](http://getbootstrap.com/css/#grid))
 - `bootstrap.panel` - (`FALSE`) - Use panels rather than buttons to toggle blocks.
-- `bootstrap.hide` - (`FALSE`) - Code and Output from this chunk starts as hidden.
 - `bootstrap.show.code` - (`TRUE`) - Code from this chunk starts as shown.
 - `bootstrap.show.output` - (`TRUE`) - Output from this chunk starts as shown.
+- `bootstrap.show.message` - (`TRUE`) - message from this chunk starts as shown.
+- `bootstrap.show.warning` - (`TRUE`) - warning from this chunk starts as shown.
+- `bootstrap.show.error` - (`TRUE`) - error from this chunk starts as shown.
 
 ## Bootstrap Themes ##
 - [Themes](http://bootswatch.com/themes)
