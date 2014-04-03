@@ -212,6 +212,7 @@ two different types of options.
 [devtools]: https://github.com/hadley/devtools
 [knitr]: https://github.com/yihui/knitr
 [knitrdev]: https://github.com/yihui/knitr
+[rmarkdown]: https://github.com/rstudio/rmarkdown
 
 [2d]: http://rawgithub.com/jimhester/knitrBootstrap/master/vignettes/two-D.html
 [all]: http://rawgithub.com/jimhester/knitrBootstrap/master/inst/examples/all.html
