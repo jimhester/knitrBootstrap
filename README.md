@@ -40,10 +40,12 @@ All the examples include a css style switch, so you can try out the various styl
 - [all] - All examples together
 
 ## Installation ##
-If you want to install the latest development version use the [devtools] package to install the [rmarkdown] prerequisite and this package.
+If you want to install the latest development version use the [devtools] package to install the [rmarkdown] and [knitrdev] (development versions) prerequisites and this package.
 ```s
 library(devtools)
 install_github('rstudio/rmarkdown')
+install.packages('knitr', repos = c('http://rforge.net', 'http://cran.rstudio.org'),
+                 type = 'source')
 install_github('jimhester/knitrBootstrap')
 ```
 
@@ -209,6 +211,7 @@ two different types of options.
 [bootswatch]: http://bootswatch.com
 [devtools]: https://github.com/hadley/devtools
 [knitr]: https://github.com/yihui/knitr
+[knitrdev]: https://github.com/yihui/knitr
 
 [2d]: http://rawgithub.com/jimhester/knitrBootstrap/master/vignettes/two-D.html
 [all]: http://rawgithub.com/jimhester/knitrBootstrap/master/inst/examples/all.html
