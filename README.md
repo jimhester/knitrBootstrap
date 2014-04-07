@@ -147,7 +147,8 @@ two different types of options.
 - `bootstrap.theme.chooser` - (`FALSE`) - Add a bootstrap style chooser to the page.
 - `bootstrap.highlight.chooser` - (`FALSE`) - Add a code style chooser to the page.
 - `bootstrap.theme` - (`Default`) - Set the default bootstrap style.
-- `bootstrap.highlight` - (`Default`) - Set the default code style.
+- `bootstrap.highlight` - (`HighlightJS`) - Set the default code style.
+- `bootstrap.menu` - (`TRUE`) - Whether to include the bottom navbar.
 
 ### Chunk Options ###
 - `bootstrap.thumbnail` - (`TRUE`) - Thumbnail and lightbox images.

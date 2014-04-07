@@ -504,7 +504,7 @@ generate_document_hook = function(languages, types) {
                                         tags$div(class=c("contents", "col-md-10"), x)
                                         )
                                ),
-                      toggle_menu(names(languages), names(types)[ names(types) != 'source' ])
+                      if (opts_knit$get('bootstrap.menu') %n% TRUE) toggle_menu(names(languages), names(types)[ names(types) != 'source' ])
                       ),
              #footer
              tags$div(id='push'),
