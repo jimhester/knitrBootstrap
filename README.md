@@ -89,7 +89,7 @@ You can also simply call the render function by itself.
 ```s
 library(knitrBootstrap)
 library(rmarkdown)
-render('file.Rmd', knitrBootstrap::bootstrap_document())
+render('file.Rmd', 'knitrBootstrap::bootstrap_document')
 ```
 
 ### Vim ###
