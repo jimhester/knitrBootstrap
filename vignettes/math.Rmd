@@ -1,5 +1,12 @@
+---
+output:
+  knitrBootstrap::bootstrap_document:
+    theme.chooser: TRUE
+    highlight.chooser: TRUE
+---
+
 <!--
-%\VignetteEngine{knitr::knitr}
+%\VignetteEngine{knitr::rmarkdown}
 %\VignetteIndexEntry{Math expressions example}
 -->
 
@@ -27,4 +34,4 @@ $$ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Apr 01 03:27:26 PM
-Last Modified: 2014 Mar 18 11:51:39 AM
+Last Modified: 2014 Apr 17 04:53:48 PM

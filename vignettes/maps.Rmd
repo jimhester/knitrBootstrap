@@ -1,5 +1,12 @@
+---
+output:
+  knitrBootstrap::bootstrap_document:
+    theme.chooser: TRUE
+    highlight.chooser: TRUE
+---
+
 <!--
-%\VignetteEngine{knitr::knitr}
+%\VignetteEngine{knitr::rmarkdown}
 %\VignetteIndexEntry{Map examples}
 %\VignetteDepends{ggplot2, reshape2, maps}
 -->
@@ -23,4 +30,4 @@ ggplot(subset(crimesm, state %in% great_lakes_states), aes(map_id = state)) + ge
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 28 02:44:48 PM
-Last Modified: 2014 Mar 05 02:16:35 PM
+Last Modified: 2014 Apr 17 04:53:36 PM
