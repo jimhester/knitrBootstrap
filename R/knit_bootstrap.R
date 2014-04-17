@@ -219,7 +219,7 @@ bootstrap_document = function(title=NULL, theme='default', highlight='highlightj
                 pandoc = pandoc_options(to = "html",
                                         from = bootstrap_pandoc_options,
                                         args=c('-H', header)),
-                clean_supporting=FALSE)
+                clean_supporting=TRUE)
   #pandoc --self-contained breaks on bootswatch css `//` urls, if(self_contained) '--self-contained' else '')), 
 }
 append_files = function(files){
