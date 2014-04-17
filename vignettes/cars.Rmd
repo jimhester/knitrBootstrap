@@ -1,8 +1,15 @@
+---
+output:
+  knitrBootstrap::bootstrap_document:
+    theme.chooser: TRUE
+    highlight.chooser: TRUE
+---
+
 <!--
-%\VignetteEngine{knitr::knitr}
+%\VignetteEngine{knitr::rmarkdown}
 %\VignetteIndexEntry{Cars example}
-%\VignetteDepends{ggplot2}
 -->
+
 # Cars example #
 From [statmethods.net](http://www.statmethods.net/advgraphs/ggplot2.html).
 
@@ -57,4 +64,4 @@ qplot(gear, mpg, data=mtcars, geom=c("boxplot", "jitter"),
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2014 Mar 18 11:55:56 AM
+Last Modified: 2014 Apr 17 04:53:11 PM
