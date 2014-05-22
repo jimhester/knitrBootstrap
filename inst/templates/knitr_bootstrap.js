@@ -108,11 +108,11 @@ $(function() {
 
   function toggle_thumbnails(imgs, show){
     if(show === true){
-      imgs.parent().show();
-      imgs.show();
+      imgs.parents().show()
+      imgs.slideDown();
     }
     else {
-      img.slideUp(400, function(){ img.parent().hide(); });
+      imgs.slideUp(400, function(){ $(this).parent().hide(); });
     }
   }
 
@@ -135,9 +135,8 @@ $(function() {
 
   /* onclick toggle next code block */
   $('.toggle').click(function() {
-    var span = $(this).find('span')
-    console.log(span.hasClass('glyphicon-chevron-down'))
-    toggle_block($(this), !span.hasClass('glyphicon-chevron-down'))
+    var span = $(this).find('span');
+    toggle_block($(this), !span.hasClass('glyphicon-chevron-down'));
     return false
   })
 
@@ -156,6 +155,7 @@ $(function() {
       });
     }
     else {
+      console.log($(this));
       global_toggle($(this));
     }
     return false;
