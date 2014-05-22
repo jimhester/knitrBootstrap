@@ -149,6 +149,7 @@ two different types of options.
 - `bootstrap.theme` - (`Default`) - Set the default bootstrap style.
 - `bootstrap.highlight` - (`HighlightJS`) - Set the default code style.
 - `bootstrap.menu` - (`TRUE`) - Whether to include the bottom navbar.
+- `clean_supporting` - (`TRUE`) - Clean the intermediate supporting documents. (this is only an option for the bootstap_document function)
 
 ### Chunk Options ###
 - `bootstrap.thumbnail` - (`TRUE`) - Thumbnail and lightbox images.
@@ -159,6 +160,7 @@ two different types of options.
 - `bootstrap.show.message` - (`TRUE`) - message from this chunk starts as shown.
 - `bootstrap.show.warning` - (`TRUE`) - warning from this chunk starts as shown.
 - `bootstrap.show.error` - (`TRUE`) - error from this chunk starts as shown.
+- `bootstrap.class` - (`'row'`) - Bootstrap class to apply to the div containing the chunk.
 
 ## Bootstrap Themes ##
 - [Themes](http://bootswatch.com/themes)

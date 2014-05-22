@@ -204,7 +204,7 @@ pandoc = function(input=NULL, output, header) {
 #' to include.
 #' @seealso \code{\link[rmarkdown]{render}}
 #' @export
-bootstrap_document = function(title=NULL, theme='default', highlight='highlightjs', theme.chooser=FALSE, highlight.chooser=FALSE){
+bootstrap_document = function(title=NULL, theme='default', highlight='highlightjs', theme.chooser=FALSE, highlight.chooser=FALSE, menu=TRUE, clean_supporting=TRUE){
   header = create_header()
   output_format(knitr = knitr_options(
                                       opts_knit=list('upload.fun' = knitr::image_uri,
@@ -212,14 +212,15 @@ bootstrap_document = function(title=NULL, theme='default', highlight='highlightj
                                                      'bootstrap.theme'=theme,
                                                      'bootstrap.highlight'=highlight,
                                                      'bootstrap.theme.chooser'=theme.chooser,
-                                                     'bootstrap.highlight.chooser'=highlight.chooser
+                                                     'bootstrap.highlight.chooser'=highlight.chooser,
+                                                     'bootstrap.menu'=menu
                                                      ),
                                       opts_chunk = list(tidy=FALSE, highlight=FALSE),
                                       knit_hooks=render_bootstrap_hooks()),
                 pandoc = pandoc_options(to = "html",
                                         from = bootstrap_pandoc_options,
                                         args=c('-H', header)),
-                clean_supporting=TRUE)
+                clean_supporting=clean_supporting)
   #pandoc --self-contained breaks on bootswatch css `//` urls, if(self_contained) '--self-contained' else '')), 
 }
 append_files = function(files){
@@ -316,7 +317,8 @@ tag = function(type, arg_list){
 bootstrap_chunk_hook = function(x, options){
   #if (knitr:::output_asis(x, options))
     #return(x)
-  tags$div(class=c('row'), x)
+  class = options[['bootstrap.class']] = options[['bootstrap.class']] %n% "row"
+  tags$div(class=class, x)
 }
 
 `%n%` = function(x, y) if(is.null(x)) y else x
@@ -428,7 +430,7 @@ toggle_menu = function(languages, types){
                                                     tags$p(class="navbar-text", "Toggle")),
                                             source_toggle_menu(languages),
                                             output_toggle_menu(types),
-                                            tags$li(tags$a(href="#", class="toggle-figure", "Figures"))
+                                            tags$li(class='active', tags$a(href="#", type='figure', class="toggle-global", "Figures"))
                                             ),
                                     if(theme_chooser) generate_style_toggle('Bootstrap theme', 'theme-switch', names(themes), default_theme),
                                     if(highlight_chooser) generate_style_toggle('Code highlighting', 'highlight-switch', names(highlights), default_highlight)
@@ -500,9 +502,8 @@ generate_document_hook = function(languages, types) {
              if(!is.null(title)) tags$title(title) else '',
              tags$div(id="wrap",
                       tags$div(class="container",
-                               tags$div(class="row",
-                                        tags$div(class=c("contents", "col-md-10"), x)
-                                        )
+                               tags$div(class="row row-offcanvas row-offcanvas-right",
+                                        tags$div(class=c("contents", "col-xs-12", "col-md-10"), x)
                                ),
                       if (opts_knit$get('bootstrap.menu') %n% TRUE) toggle_menu(names(languages), names(types)[ names(types) != 'source' ])
                       ),
@@ -510,7 +511,7 @@ generate_document_hook = function(languages, types) {
              tags$div(id='push'),
              tags$div(id='footer', generate_footer()),
              style_links(options)
-             )
+             ))
     }
     else {
       x

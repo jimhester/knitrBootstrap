@@ -159,8 +159,14 @@ button.thumbnails {
 
 .panel pre {
   margin: 0;
+  padding: 0;
+  border: 0;
 }
-.panel pre code {
+button + pre {
+  margin: 0;
+  padding: 0;
+}
+pre code {
   border-radius: 0;
 }
 /* Magnific Popup CSS */
@@ -566,4 +572,52 @@ img.mfp-img {
 }
 .mfp-figure:after {
   background: white;
+}
+
+/*
+ * Off Canvas navbar toggle right
+ * --------------------------------------------------
+ */
+
+@media screen and (max-width: 768px) {
+  .row-offcanvas .collapsing {
+  -webkit-transition: none 0;
+    -moz-transition: none 0;
+    transition: none 0;
+  }
+ .row-offcanvas .navbar {
+  position: absolute;
+  z-index: 2;
+    right:0;
+    height:100%;
+    width:55px;
+    border:0;
+    background-color:transparent;
+  }
+  .row-offcanvas .navbar-toggle {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  .row-offcanvas {
+    position: relative;
+  }
+  .row-offcanvas-right.active .navbar {
+  position: absolute;
+  z-index: 2;
+    right: -28.4%;
+    width:40%;
+    background-color:#eee;
+    border:0 solid #ddd;
+    border-left-width:1px;
+  }
+  .row-offcanvas-right.active {
+    left: -30%;
+  }
+  .row-offcanvas-right.active .navbar-collapse {
+    position: relative;
+    width: 100%;
+  }
+  .row-offcanvas .content {
+  /*width:calc(100% - 60px);*/
+  }
 }
