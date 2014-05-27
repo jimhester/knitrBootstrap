@@ -105,7 +105,6 @@ knit_bootstrap_Rmd = knit_bootstrap
 #'          \code{\link[markdown]{markdownToHTML}}
 #' @export
 knit_bootstrap_md = function(input, output = NULL) {
-
   header = create_header()
 
   if(is.null(output))
@@ -150,20 +149,26 @@ bootstrap_HTML = function(input, output = NULL) {
   output
 }
 
-create_header = function(){
+create_header = function(custom.header=NULL) {
 
     includes = read_package_file('templates/knitr_bootstrap_includes.html')
     javascript = read_package_file('templates/knitr_bootstrap.js')
     css = read_package_file('templates/knitr_bootstrap.css')
 
-    output = paste0(collapse='\n',
-                    includes,
+    output = paste(includes,
                    '<script defer="defer">', javascript, '</script>',
-                   '<style>', css, '</style>',
+                   '<style>', css, '</style>\n',
                    sep='\n')
 
+    if (!is.null(custom.header)) {
+        output = paste0(output,
+                        readChar(custom.header, file.info(custom.header)$size),
+                        '\n')
+    }
+
+
     outfile = paste(tempdir(), 'knitr_bootstrap_full.html', sep='/')
-    cat(output, '\n', file=outfile)
+    cat(output, file=outfile)
     invisible(outfile)
   }
 
@@ -202,10 +207,15 @@ pandoc = function(input=NULL, output, header) {
 #' to include.
 #' @param highlight.chooser Adds a dynamic highlight chooser to the page, pass `TRUE`
 #' to include.
+#' @param custom.header HTML file containing any extra header logic such as
+#' external script or CSS includes.
 #' @seealso \code{\link[rmarkdown]{render}}
 #' @export
-bootstrap_document = function(title=NULL, theme='default', highlight='highlightjs', theme.chooser=FALSE, highlight.chooser=FALSE, menu=TRUE, clean_supporting=TRUE){
-  header = create_header()
+bootstrap_document = function(title=NULL, theme='default', highlight='highlightjs', theme.chooser=FALSE,
+                              highlight.chooser=FALSE, menu=TRUE, custom.header=NULL, clean_supporting=TRUE){
+  # Generate header
+  header = create_header(custom.header)
+
   output_format(knitr = knitr_options(
                                       opts_knit=list('upload.fun' = knitr::image_uri,
                                                      'bootstrap.title'=title,
@@ -213,7 +223,8 @@ bootstrap_document = function(title=NULL, theme='default', highlight='highlightj
                                                      'bootstrap.highlight'=highlight,
                                                      'bootstrap.theme.chooser'=theme.chooser,
                                                      'bootstrap.highlight.chooser'=highlight.chooser,
-                                                     'bootstrap.menu'=menu
+                                                     'bootstrap.menu'=menu,
+                                                     'custom.header'=custom.header
                                                      ),
                                       opts_chunk = list(tidy=FALSE, highlight=FALSE),
                                       knit_hooks=render_bootstrap_hooks()),
@@ -221,7 +232,7 @@ bootstrap_document = function(title=NULL, theme='default', highlight='highlightj
                                         from = bootstrap_pandoc_options,
                                         args=c('-H', header)),
                 clean_supporting=clean_supporting)
-  #pandoc --self-contained breaks on bootswatch css `//` urls, if(self_contained) '--self-contained' else '')), 
+  #pandoc --self-contained breaks on bootswatch css `//` urls, if(self_contained) '--self-contained' else '')),
 }
 append_files = function(files){
 paste(mapply(read_package_file, files), collapse='\n')
@@ -291,7 +302,7 @@ print_attributes = function(attributes){
                 FUN=generate_attribute, USE.NAMES=FALSE, attributes), collapse= ' ')
 
 }
-generate_tag_function = function(tag) function(...) tag(tag, list(...)) 
+generate_tag_function = function(tag) function(...) tag(tag, list(...))
 tags = list(
             a = function(...) tag("a", list(...)),
             b = function(...) tag("b", list(...)),
