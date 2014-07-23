@@ -363,7 +363,7 @@ bootstrap_plot_hook = function(x, options) {
 }
 
 language_link = function(language){
-  tags$li(
+  tags$li(class='active',
           tags$a(
                  href="#",
                  class=c("toggle-global", "source", language),
@@ -373,7 +373,7 @@ language_link = function(language){
           )
 }
 output_link = function(type){
-  tags$li(
+  tags$li(class='active',
           tags$a(
                  href="#",
                  class=c("toggle-global",type),
