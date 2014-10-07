@@ -162,8 +162,10 @@ bootstrap_chunk_hook = function(x, options){
 calc_offset = function(size) {
   res = strsplit(size, "-")[[1]]
   num_size = as.numeric(res[3])
-  offset = paste0(res[1], 'offset-', (12 - (num_size + (num_size %% 2)))/2)
+  offset = paste0(paste0(res[1:2], collapse = "-"), '-offset-', (12 - (num_size + (num_size %% 2)))/2)
+  offset
 }
+
 bootstrap_plot_hook = function(x, options) {
   fig = hook_plot_md(x, options)
   thumbnail = options[['bootstrap.thumbnail']] = options[['bootstrap.thumbnail']] %||% TRUE
