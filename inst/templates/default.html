@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"$if(lang)$ lang="$lang$" xml:lang="$lang$"$endif$>
+
+  <head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="pandoc" />
+
+    $for(author-meta)$
+    <meta name="author" content="$author-meta$" />
+    $endfor$
+
+    $if(date-meta)$
+    <meta name="date" content="$date-meta$" />
+    $endif$
+
+    <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
+
+    $for(header-includes)$
+    $header-includes$
+    $endfor$
+
+    $for(css)$
+    <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
+    $endfor$
+
+  </head>
+
+  <body data-spy="scroll" data-target="#toc">
+    <div id="wrapper" class="container">
+      <div class="row">
+        <div class="contents col-xs-12 $if(toc)$col-md-10$else$col-md-12$endif$">
+
+          $for(include-before)$
+          $include-before$
+          $endfor$
+
+          $if(title)$
+          <div id="$idprefix$header">
+            <h1 class="title">$title$</h1>
+            $if(subtitle)$
+            <h1 class="subtitle">$subtitle$</h1>
+            $endif$
+            $for(author)$
+            $if(author.name)$
+            <h4 class="author"><em>$author.name$</em></h4>
+            $if(author.affiliation)$
+            <address class="author_afil">
+              $author.affiliation$<br>$endif$
+              $if(author.email)$
+              <a class="author_email" href="mailto:#">$author.email$</a>
+            </address>
+            $endif$
+            $else$
+            <h4 class="author"><em>$author$</em></h4>
+            $endif$
+            $endfor$
+            $if(date)$
+              <h4 class="date"><em>$date$</em></h4>
+            $endif$
+          </div>
+          $endif$
+          $for(include-after)$
+          $include-after$
+          $endfor$
+
+          $body$
+
+          <p class="text-muted" id="credit">
+            Styled with <a href="https://github.com/jimhester/knitrBootstrap">knitrBootstrap</a>
+          </p>
+
+        </div>
+
+        $if(toc)$
+        <div  class="col-md-2">
+          <div class="sidebar affix">
+            <div id="toc" class="sidenav">
+              $toc$
+            </div>
+          </div>
+        </div>
+        $endif$
+
+      </div>
+    </div>
+
+    $if(mathjax-url)$
+    <!-- dynamically load mathjax for compatibility with self-contained -->
+    <script>
+      (function () {
+          var script = document.createElement("script");
+          script.type = "text/javascript";
+          script.src  = "$mathjax-url$";
+          document.getElementsByTagName("head")[0].appendChild(script);
+      })();
+    </script>
+    $endif$
+  </body>
+</html>
