@@ -34,10 +34,14 @@ button span {
 }
 /* remove the border and margin for pre blocks */
 pre {
+  padding: 0;
   border: 0;
   margin: 0;
-  padding: 0;
   border-radius: 0;
+}
+
+pre code {
+  padding: 9.5px;
 }
 
 /* Magnific overrides to give transparent images a white background */

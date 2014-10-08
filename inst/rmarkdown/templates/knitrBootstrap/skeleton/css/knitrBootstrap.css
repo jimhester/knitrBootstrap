@@ -182,14 +182,13 @@ button.thumbnails {
 }
 
 .panel pre {
-  margin: 0;
   padding: 0;
   border: 0;
 }
 button + pre {
-  margin: 0;
   padding: 0;
 }
+
 pre code {
   border-radius: 0;
 }

@@ -40,6 +40,8 @@ simple_document = function(css = NULL, theme = NULL, highlight = NULL, ...){
   highlight = highlight %||% 'default'
 
   results = rmarkdown::html_document(
+    highlight = NULL,
+    theme = NULL,
     extra_dependencies=list(
       rmarkdown:::html_dependency_jquery(),
       html_dependency_bootstrap3(theme),
@@ -48,7 +50,9 @@ simple_document = function(css = NULL, theme = NULL, highlight = NULL, ...){
       html_dependency_simple()
       ),
     template=system.file(package='knitrBootstrap', 'templates/default.html'),
-    theme=NULL, self_contained=FALSE, ...)
+    pandoc_args = '--no-wrap',
+    self_contained = FALSE,
+    ...)
 
   results$knitr = list(
     opts_chunk = list(tidy=FALSE, highlight=FALSE),
