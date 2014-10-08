@@ -1,8 +1,7 @@
 ---
 output:
-  knitrBootstrap::bootstrap_document:
-    theme.chooser: TRUE
-    highlight.chooser: TRUE
+  knitrBootstrap::simple_document:
+    toc: TRUE
 ---
 
 <!--
@@ -34,4 +33,4 @@ $$ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Apr 01 03:27:26 PM
-Last Modified: 2014 Apr 17 04:53:48 PM
+Last Modified: 2014 Oct 07 02:45:53 PM

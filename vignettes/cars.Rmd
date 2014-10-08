@@ -1,8 +1,8 @@
 ---
 output:
-  knitrBootstrap::bootstrap_document:
-    theme.chooser: TRUE
-    highlight.chooser: TRUE
+  knitrBootstrap::simple_document:
+    toc: TRUE
+    keep_md: TRUE
 ---
 
 <!--
@@ -15,6 +15,7 @@ From [statmethods.net](http://www.statmethods.net/advgraphs/ggplot2.html).
 
 ```{r cars_setup}
 # ggplot2 examples
+
 library(ggplot2)
 #use color brewer as default discrete colors
 scale_colour_discrete <- function(...) scale_color_brewer(palette="Set1", ...)
@@ -49,9 +50,9 @@ qplot(hp, mpg, data=mtcars, shape=am, color=am,
 Separate for each number of cylinders.
 ```{r cars_regressions, dev='png', warning=FALSE}
 qplot(wt, mpg, data=mtcars, geom=c("point", "smooth"),
-   method="lm", formula=y~x, color=cyl,
-   main="Regression of MPG on Weight",
-   xlab="Weight", ylab="Miles per Gallon")
+  method="lm", formula=y~x, color=cyl,
+  main="Regression of MPG on Weight",
+  xlab="Weight", ylab="Miles per Gallon")
 ```
 
 ## Boxplots of mpg by number of gears ##
@@ -64,4 +65,4 @@ qplot(gear, mpg, data=mtcars, geom=c("boxplot", "jitter"),
 
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 20 10:57:07 AM
-Last Modified: 2014 Apr 17 04:53:11 PM
+Last Modified: 2014 Oct 08 08:23:25 AM

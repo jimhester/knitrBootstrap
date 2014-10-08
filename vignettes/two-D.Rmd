@@ -1,10 +1,8 @@
 ---
-output:
-  knitrBootstrap::bootstrap_document:
-    theme.chooser: TRUE
-    highlight.chooser: TRUE
+output: 
+  knitrBootstrap::simple_document:
+    toc: TRUE
 ---
-
 <!--
 %\VignetteEngine{knitr::rmarkdown}
 %\VignetteIndexEntry{2D Graphs}
@@ -47,4 +45,4 @@ plot(gu,vertex.label=NA)
 ```
 Author: [Jim Hester](http://jimhester.com)
 Created: 2013 Mar 27 10:54:38 PM
-Last Modified: 2014 Apr 17 04:53:58 PM
+Last Modified: 2014 Oct 07 02:46:07 PM

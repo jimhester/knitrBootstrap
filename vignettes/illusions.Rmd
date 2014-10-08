@@ -1,8 +1,7 @@
 ---
 output:
-  knitrBootstrap::bootstrap_document:
-    theme.chooser: TRUE
-    highlight.chooser: TRUE
+  knitrBootstrap::simple_document:
+    toc: TRUE
 ---
 
 <!--

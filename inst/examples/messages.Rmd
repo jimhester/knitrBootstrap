@@ -1,3 +1,9 @@
+---
+output:
+  knitrBootstrap::simple_document:
+    theme.chooser: TRUE
+    highlight.chooser: TRUE
+---
 <!--
 %\VignetteEngine{knitr}
 %\VignetteIndexEntry{Messages}
