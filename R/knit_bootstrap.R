@@ -50,7 +50,7 @@ simple_document = function(css = NULL, theme = NULL, highlight = NULL, ...){
       html_dependency_simple()
       ),
     template=system.file(package='knitrBootstrap', 'templates/default.html'),
-    pandoc_args = '--no-wrap',
+    pandoc_args = c('--no-wrap', '--variable',  'mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'),
     self_contained = FALSE,
     ...)
 
@@ -68,6 +68,8 @@ bootstrap_document = function(css = NULL, theme = NULL, highlight = NULL, ...){
   highlight = highlight %||% 'default'
 
   results = rmarkdown::html_document(
+    highlight = NULL,
+    theme = NULL,
     extra_dependencies=list(rmarkdown:::html_dependency_jquery(),
       html_dependency_bootstrap3(theme),
       html_dependency_hljs(highlight),
@@ -75,7 +77,8 @@ bootstrap_document = function(css = NULL, theme = NULL, highlight = NULL, ...){
       html_dependency_knitrBootstrap()
      ),
     template=system.file(package='knitrBootstrap', 'templates/default.html'),
-      theme=NULL, self_contained=FALSE, ...)
+    pandoc_args = c('--no-wrap', '--variable',  'mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'),
+      self_contained=FALSE, ...)
 
   results$knitr = list(
                        opts_chunk = list(tidy=FALSE, highlight=FALSE),
