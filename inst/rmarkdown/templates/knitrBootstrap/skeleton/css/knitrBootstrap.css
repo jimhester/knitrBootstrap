@@ -1,3 +1,6 @@
+body {
+  position: relative;
+}
 /* Knitr_bootstrap styles */
 #header {
   display: none !important;
@@ -15,170 +18,102 @@
   text-transform: capitalize;
 }
 
-/* Sticky footer styles */
-* {
-  margin:0;
-}
-html,
-body {
-    height: 100%;
-    padding:0 !important;
-    /* The html and body elements cannot have any padding or margin. */
-    /*overflow-x: hidden;*/
-}
-
-/* Wrapper for page content to push down footer */
-#wrap {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    /* Negative indent footer by it's height */
-    margin: 0 auto -120px;
-}
-
-/* Set the fixed height of the footer here */
-#push,
-#footer {
-    height: 120px;
-}
-
-#footer {
-  text-align: center;
-}
-
-/* Top level subheader elements.  These are the first nested items underneath a header element. */
-.header li {
-  font-size: 20px;
-}
-
-/* Makes the font smaller for all subheader elements. */
-.sub-header li {
-    font-size: 12px;
-}
-
 button.thumbnails {
   margin-left:0px;
 }
 
-#toc {
-  position: fixed;
-  overflow-y: auto;
-}
-
-/*!
- * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
- * Code licensed under the Apache License v2.0.
- * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+/*
+ * Side navigation
+ *
+ * Scrollspy and affixed enhanced navigation to highlight sections and secondary
+ * sections of docs content.
  */
 
-/* Toggle Styles */
-
-#wrapper {
-    padding-left: 0;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+/* By default it's not affixed in mobile views, so undo that */
+.sidebar.affix {
+  position: static;
 }
 
-#wrapper.toggled {
-    padding-right: 250px;
+/* First level of nav */
+.sidenav {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding-top:    10px;
+  padding-bottom: 10px;
+  border-radius: 5px;
 }
 
-#sidebar-wrapper {
-  z-index: 1000;
-  position: fixed;
-  right: 250px;
-  width: 0;
-  height: 100%;
-  margin-right: -250px;
-  overflow-y: auto;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-}
-
-#wrapper.toggled #sidebar-wrapper {
-    width: 250px;
-}
-
-#page-content-wrapper {
-    width: 100%;
-    padding: 15px;
-}
-
-#wrapper.toggled #page-content-wrapper {
-    position: absolute;
-    margin-left: -250px;
-}
-
-/* Sidebar Styles */
-
-
-.sidebar-nav ul {
+.sidenav ul{
   list-style: none;
 }
 
-.sidebar-nav > ul {
-  margin: 0;
-  padding: 0;
+/* All levels of nav */
+.sidebar ul > li > a {
+  display: block;
+  padding: 5px 20px;
+}
+.sidebar ul > li > a:hover,
+.sidebar ul > li > a:focus {
+  text-decoration: none;
+  border-left: 1px solid;
+}
+.sidebar ul > .active > a,
+.sidebar ul > .active:hover > a,
+.sidebar ul > .active:focus > a {
+  font-weight: bold;
+  background-color: transparent;
+  border-left: 1px solid;
 }
 
-.sidebar-nav > ul li {
-  text-indent: 20px;
+/* Nav: second level (shown on .active) */
+.sidebar ul ul {
+  display: none; /* Hide by default, but at >768px, show it */
+  margin-bottom: 8px;
+}
+.sidebar ul ul > li > a {
+  padding-top:    3px;
+  padding-bottom: 3px;
+  padding-left: 30px;
+  font-size: 90%;
 }
 
-.sidebar-nav > ul li li {
-    text-indent: 10px;
+.sidebar ul ul ul > li > a {
+  padding-left: 40px;
+}
+.sidebar ul ul ul ul > li > a {
+  padding-left: 50px;
 }
 
-.sidebar-nav > ul li a {
+/* Show and affix the side nav when space allows it */
+@media screen and (min-width: 992px) {
+  .sidebar ul > .active > ul {
     display: block;
-    text-decoration: none;
+  }
+  /* Widen the fixed sidebar */
+  .sidebar.affix,
+  .sidebar.affix-bottom {
+    width: 213px;
+  }
+  .sidebar.affix-top,
+  .sidebar.affix {
+    position: fixed; /* Undo the static from mobile first approach */
+    top: 30px;
+  }
+  .sidebar.affix-bottom {
+    position: absolute; /* Undo the static from mobile first approach */
+  }
+  .sidebar.affix-bottom .sidenav,
+  .sidebar.affix .sidenav {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }
-
-.sidebar-nav > ul li:hover {
-    text-decoration: none;
-    background-color: transparent;
-}
-
-.sidebar-nav > ul li:active,
-.sidebar-nav > ul li:focus {
-    text-decoration: none;
-    background-color: transparent;
-}
-
-
-@media(min-width:768px) {
-    #wrapper {
-        padding-right: 250px;
-    }
-
-    #wrapper.toggled {
-        padding-right: 0;
-    }
-
-    #sidebar-wrapper {
-        width: 250px;
-        padding: 19px;
-    }
-
-    #wrapper.toggled #sidebar-wrapper {
-        width: 0;
-    }
-
-    #page-content-wrapper {
-        padding: 20px;
-    }
-
-    #wrapper.toggled #page-content-wrapper {
-        position: relative;
-        margin-left: 0;
-    }
+@media screen and (min-width: 1200px) {
+  /* Widen the fixed sidebar again */
+  .sidebar.affix-bottom,
+  .sidebar.affix {
+    width: 263px;
+  }
 }
 
 .panel pre {
@@ -595,52 +530,4 @@ img.mfp-img {
 }
 .mfp-figure:after {
   background: white;
-}
-
-/*
- * Off Canvas navbar toggle right
- * --------------------------------------------------
- */
-
-@media screen and (max-width: 768px) {
-  .row-offcanvas .collapsing {
-  -webkit-transition: none 0;
-    -moz-transition: none 0;
-    transition: none 0;
-  }
- .row-offcanvas .navbar {
-  position: absolute;
-  z-index: 2;
-    right:0;
-    height:100%;
-    width:55px;
-    border:0;
-    background-color:transparent;
-  }
-  .row-offcanvas .navbar-toggle {
-    margin-right: 5px;
-    margin-left: 5px;
-  }
-  .row-offcanvas {
-    position: relative;
-  }
-  .row-offcanvas-right.active .navbar {
-  position: absolute;
-  z-index: 2;
-    right: -28.4%;
-    width:40%;
-    background-color:#eee;
-    border:0 solid #ddd;
-    border-left-width:1px;
-  }
-  .row-offcanvas-right.active {
-    left: -30%;
-  }
-  .row-offcanvas-right.active .navbar-collapse {
-    position: relative;
-    width: 100%;
-  }
-  .row-offcanvas .content {
-  /*width:calc(100% - 60px);*/
-  }
 }

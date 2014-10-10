@@ -10,11 +10,16 @@ $(function() {
   var hidden_types = ['source']
   var output_types = ['output', 'message', 'warning', 'error']
 
+  /* add nav class to ul in toc */
+  $('#toc ul').each(function() {
+    $(this).addClass("nav")
+  });
+
   /* style tables */
   $('table').addClass('table table-striped table-bordered table-hover table-condensed');
 
   $('pre code').each(function(i, e) {
-    //hljs.highlightBlock(e);
+    hljs.highlightBlock(e);
   });
 
   /* Magnific Popup */
