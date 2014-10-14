@@ -2,6 +2,9 @@
 $(function() {
   "use strict";
 
+  /* add well class to toc */
+  $('#toc').addClass("well");
+  
   /* add nav class to ul in toc */
   $('#toc ul').each(function() {
     $(this).addClass("nav")
