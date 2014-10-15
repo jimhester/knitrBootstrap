@@ -49,7 +49,7 @@ simple_document = function(css = NULL, theme = NULL, highlight = NULL, ...){
       html_dependency_magnific_popup(),
       html_dependency_simple()
       ),
-    template=system.file(package='knitrBootstrap', 'templates/default.html'),
+    template=system.file(package='knitrBootstrap', 'rmarkdown/rmd/default.html'),
     pandoc_args = c('--no-wrap', '--variable',  'mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'),
     self_contained = FALSE,
     ...)
@@ -76,7 +76,7 @@ bootstrap_document = function(css = NULL, theme = NULL, highlight = NULL, ...){
       html_dependency_magnific_popup(),
       html_dependency_knitrBootstrap()
      ),
-    template=system.file(package='knitrBootstrap', 'templates/default.html'),
+    template=system.file(package='knitrBootstrap', 'rmarkdown/rmd/default.html'),
     pandoc_args = c('--no-wrap', '--variable',  'mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'),
       self_contained=FALSE, ...)
 

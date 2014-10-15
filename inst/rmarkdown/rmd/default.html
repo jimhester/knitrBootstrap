@@ -28,17 +28,14 @@
 
   </head>
 
-  <body>
-    <div class="container">
+  <body data-spy="scroll" data-target="#toc">
+    <div id="wrapper" class="container">
       <div class="row">
         <div class="contents col-xs-12 $if(toc)$col-md-10$else$col-md-12$endif$">
 
           $for(include-before)$
           $include-before$
           $endfor$
-
-
-          $body$
 
           $if(title)$
           <div id="$idprefix$header">
@@ -69,9 +66,7 @@
           $include-after$
           $endfor$
 
-          $if(bootstrap.menu)$
-          $bootstrap.menu$
-          $endif$
+$body$
 
           <p class="text-muted" id="credit">
             Styled with <a href="https://github.com/jimhester/knitrBootstrap">knitrBootstrap</a>
@@ -80,9 +75,11 @@
         </div>
 
         $if(toc)$
-        <div class="col-md-2">
-          <div id="toc" class="well sidebar">
-            $toc$
+        <div  class="col-md-2">
+          <div class="hidden-print hidden-xs hidden-sm sidebar affix">
+            <div id="toc" class="sidenav well">
+              $toc$
+            </div>
           </div>
         </div>
         $endif$
