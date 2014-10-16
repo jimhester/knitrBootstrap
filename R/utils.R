@@ -4,7 +4,7 @@ tags = list(
             a = function(...) tag("a", list(...)),
             b = function(...) tag("b", list(...)),
             button = function(...) tag("button", list(...)),
-            code = function(...) tag("code", list(...)),
+            code = function(...) tag("code", list(...), add_newline = FALSE),
             div = function(...) tag("div", list(...)),
             img = function(...) tag("img", list(...)),
             li = function(...) tag("li", list(...)),
@@ -17,11 +17,13 @@ tags = list(
             title = function(...) tag('title', list(...))
             )
 
-tag = function(type, arg_list){
+tag = function(type, arg_list, add_newline = TRUE){
   named_idx = nzchar(names(arg_list))
   named_idx = if(length(named_idx) == 0) FALSE else named_idx
+
+  newline = if (add_newline) { "\n" } else { "" }
   paste0('<', type, ' ', print_attributes(arg_list[named_idx]), '>',
-         paste0(unlist(arg_list[!named_idx]), collapse='\n'), '</', type,'>')
+         paste0(unlist(arg_list[!named_idx]), collapse='\n'), '</', type,'>', newline)
 }
 
 
