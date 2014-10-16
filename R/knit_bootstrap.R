@@ -491,6 +491,7 @@ generate_button = function(engine, name, x, hide){
   hidden = if(hide) 'display:none' else ''
   text = paste(tags$span(class=c('glyphicon', glyph)), engine, name)
   paste0(
+         '\n',
          tags$button(class=c(name, engine, 'toggle', 'btn', 'btn-xs', button_types[name]), text),
          tags$pre(style=hidden, tags$code(class=c(name, tolower(engine)), x))
          )
