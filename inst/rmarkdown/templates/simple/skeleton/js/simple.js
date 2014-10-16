@@ -12,6 +12,9 @@ $(function() {
     hljs.highlightBlock(e);
   });
 
+  /* style tables */
+  $('table').addClass('table table-striped table-bordered table-hover table-condensed');
+
   /* Code block toggles */
   $('.panel button').click(function(e){
       // ensure that we are clicking only on the parent
