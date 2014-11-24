@@ -137,6 +137,7 @@ two different types of options.
 ### Chunk Options ###
 - `bootstrap.thumbnail` - (`TRUE`) - Thumbnail and lightbox images.
 - `bootstrap.thumbnail.size` - (`'col-md-6'`) - Thumbnail size in bootstrap columns. (see [Bootstrap Grid System](http://getbootstrap.com/css/#grid))
+- `bootstrap.type` - (`'simple'`) - Type of label for code blocks.  (`'simple'`, `'panel'`, `'button'`)
 - `bootstrap.panel` - (`FALSE`) - Use panels rather than buttons to toggle blocks.
 - `bootstrap.show.code` - (`TRUE`) - Code from this chunk starts as shown.
 - `bootstrap.show.output` - (`TRUE`) - Output from this chunk starts as shown.

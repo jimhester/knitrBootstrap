@@ -49,7 +49,7 @@ simple_document <- function(css = NULL, theme = NULL, highlight = NULL, ...){
       html_dependency_magnific_popup(),
       html_dependency_simple()
       ),
-    template <-
+    template =
       system.file(
         package="knitrBootstrap", "rmarkdown/rmd/default.html"),
         pandoc_args = c(
@@ -183,10 +183,11 @@ generate_button <- function(engine, name, x, hide){
          tags$pre(style = hidden, tags$code(class = c(name, tolower(engine)), x))
          )
 }
+
 generate_panel <- function(engine, name, x, hide){
   glyph <- if (hide) "glyphicon-chevron-up" else "glyphicon-chevron-down"
   hidden <- if (hide) "display:none" else ""
-  text <- tags$h5(class="panel-title", tags$span(class=c("glyphicon", glyph)), paste("", engine, name))
+  text <- tags$h5(class="panel-title", paste0(tags$span(class=c("glyphicon", glyph)), paste(collapse=" ", engine, name)))
   tags$div(class=c("panel", panel_types[name]),
            tags$div(class=c(name, engine, "panel-heading", "toggle"), text),
            tags$pre(style=hidden, tags$code(class=c(name, tolower(engine)), x))
@@ -204,14 +205,13 @@ generate_simple_panel <- function(engine, name, x, show){
 render_bootstrap_hooks <- function() {
   languages <- list()
   types <- list()
-  html.hook <- function(name) {
+  html_hook <- function(name) {
     force(name)
     function(x, options) {
       x <- paste(x, collapse = "\n")
       engine <- options$engine
       languages[engine] <<- 1
       types[name] <<- 1
-      panel <- options$bootstrap.panel <- options$bootstrap.panel %||% FALSE
       show <- switch(name,
                     source = (options[["bootstrap.show.code"]] <- options[["bootstrap.show.code"]] %||% TRUE),
                     output = (options[["bootstrap.show.output"]] <- options[["bootstrap.show.output"]] %||% TRUE),
@@ -219,25 +219,27 @@ render_bootstrap_hooks <- function() {
                     warning = (options[["bootstrap.show.warning"]] <- options[["bootstrap.show.warning"]] %||% TRUE),
                     error = (options[["bootstrap.show.error"]] <- options[["bootstrap.show.error"]] %||% TRUE),
                     TRUE)
-      if(panel) generate_panel(engine, name, x, !show) else generate_button(engine, name, x, !show)
+      type <- options$bootstrap.type <- options$bootstrap.type %||% "simple"
+      switch(type,
+        simple = generate_simple_panel(engine, name, x, !show),
+        panel = generate_panel(engine, name, x, !show),
+        button = generate_button(engine, name, x, !show),
+        stop("invalid option for `bootstrap.type`")
+        )
     }
   }
-  z <- list()
-  for (i in c("source", "warning", "message", "error")) z[[i]] <- html.hook(i)
-  c(z,
-    list(
-       "output" = html.hook("output"),
-       "plot" = bootstrap_plot_hook,
-       "chunk" = bootstrap_chunk_hook
+  c(
+    sapply(c("source", "warning", "message", "error", "output"), html_hook),
+    plot = bootstrap_plot_hook,
+    chunk = bootstrap_chunk_hook,
+    NULL
     )
-  )
 }
 
 simple_hooks <- function() {
   html_hook <- function(name) {
     force(name)
     function(x, options) {
-      engine <- options$engine
       x <- paste(x, collapse = "\n")
       show <- switch(name,
                     source = (options[["bootstrap.show.code"]] <- options[["bootstrap.show.code"]] %||% TRUE),
@@ -246,11 +248,11 @@ simple_hooks <- function() {
                     warning = (options[["bootstrap.show.warning"]] <- options[["bootstrap.show.warning"]] %||% TRUE),
                     error = (options[["bootstrap.show.error"]] <- options[["bootstrap.show.error"]] %||% TRUE),
                     TRUE)
-      generate_simple_panel(engine, name, x, show)
+      generate_code_block(engine, name, x, !show)
     }
   }
   c(
-    sapply(c("source", "warning", "message", "error", "output"), html_hook),
+    vapply(c("source", "warning", "message", "error", "output"), html_hook, character(1)),
     plot = bootstrap_plot_hook,
     chunk = bootstrap_chunk_hook,
     NULL
