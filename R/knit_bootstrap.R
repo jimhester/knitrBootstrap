@@ -209,13 +209,23 @@ pandoc = function(input=NULL, output, header) {
 #' to include.
 #' @param custom.header HTML file containing any extra header logic such as
 #' external script or CSS includes.
+#' @param custom.before.body HTML file containing any extra header logic inserted
+#' before body tag.
+#' @param custom.after.body HTML file containing any extra header logic inserted
+#' after body tag.
 #' @seealso \code{\link[rmarkdown]{render}}
 #' @export
 bootstrap_document = function(title=NULL, theme='default', highlight='highlightjs', theme.chooser=FALSE,
-                              highlight.chooser=FALSE, menu=TRUE, custom.header=NULL, clean_supporting=TRUE){
+                              highlight.chooser=FALSE, menu=TRUE, custom.header=NULL, clean_supporting=TRUE,
+                              custom.before.body=NULL, custom.after.body=NULL){
   # Generate header
   header = create_header(custom.header)
 
+  pandoc_args = c('-H', header)
+  if (!is.null(custom.before.body))
+    pandoc_args = c(pandoc_args, "-B", custom.before.body)
+  if (!is.null(custom.after.body))
+    pandoc_args = c(pandoc_args, "-A", custom.after.body)
   output_format(knitr = knitr_options(
                                       opts_knit=list('upload.fun' = knitr::image_uri,
                                                      'bootstrap.title'=title,
@@ -224,13 +234,15 @@ bootstrap_document = function(title=NULL, theme='default', highlight='highlightj
                                                      'bootstrap.theme.chooser'=theme.chooser,
                                                      'bootstrap.highlight.chooser'=highlight.chooser,
                                                      'bootstrap.menu'=menu,
-                                                     'custom.header'=custom.header
+                                                     'custom.header'=custom.header,
+                                                     'custom.before.body'=custom.before.body,
+                                                     'custom.after.body'=custom.after.body
                                                      ),
                                       opts_chunk = list(tidy=FALSE, highlight=FALSE),
                                       knit_hooks=render_bootstrap_hooks()),
                 pandoc = pandoc_options(to = "html",
                                         from = bootstrap_pandoc_options,
-                                        args=c('-H', header)),
+                                        args = pandoc_args),
                 clean_supporting=clean_supporting)
   #pandoc --self-contained breaks on bootswatch css `//` urls, if(self_contained) '--self-contained' else '')),
 }
