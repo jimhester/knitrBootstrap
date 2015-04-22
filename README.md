@@ -18,19 +18,12 @@ A framework to create bootstrap styled HTML reports from [knitr] Rmarkdown.
 
 ## Features ##
 - Uses bootstrap 3.0, should work for all screen sizes.
-- Automatic table of contents constructed from h1-4 tags.
 - Images are automatically centered, thumbnailed and lightboxed using [magnific popup].
-- Style with themes from [bootswatch], optionally including a dynamic style switch.
-- Code blocks automatically highlighted using [highlight.js], optionally including a dynamic style switch.
-- Code/Output block and plot visibility can be toggled with a mouse click
-  - Globally
-  - Per language
-- Create completely offline reports, including all css, javascript and images
-- Mathematical equations using [mathjax], note this does not work offline
+- Style with themes from [bootswatch].
+- Code blocks automatically highlighted using [highlight.js].
+- Code/Output block visibility can be toggled with a mouse click
 
 ## Examples ##
-All the examples include a css style switch, so you can try out the various styles from [bootswatch].
-
 - [2d] - examples of miscellaneous 2d
 - [cars] - using ggplot2 and the cars dataset
 - [engines] - using other language engines
@@ -74,13 +67,12 @@ matter.
 
 ```s
 ---
+title: "Test file"
 output:
   knitrBootstrap::bootstrap_document:
-    title: "Test file"
+    toc: true
     theme: amelia
     highlight: sunburst
-    theme.chooser: TRUE
-    highlight.chooser: TRUE
 ---
 ```
 
@@ -89,7 +81,7 @@ You can also simply call the render function by itself.
 ```s
 library(knitrBootstrap)
 library(rmarkdown)
-render('file.Rmd', 'knitrBootstrap::bootstrap_document')
+render('file.Rmd' 'knitrBootstrap::bootstrap_document')
 ```
 
 ### Vim ###
@@ -142,19 +134,10 @@ Knitr bootstrap extends [knitr] with a number of additional options.  See
 [Knitr Options](http://yihui.name/knitr/options) for more about how to set the
 two different types of options.
 
-### Package Options ###
-- `bootstrap.title` - (`NULL`) Set the title for the html document
-- `bootstrap.theme.chooser` - (`FALSE`) - Add a bootstrap style chooser to the page.
-- `bootstrap.highlight.chooser` - (`FALSE`) - Add a code style chooser to the page.
-- `bootstrap.theme` - (`Default`) - Set the default bootstrap style.
-- `bootstrap.highlight` - (`HighlightJS`) - Set the default code style.
-- `bootstrap.menu` - (`TRUE`) - Whether to include the bottom navbar.
-- `custom.header` - (`NULL`) - External HTML header contents to include in header block.
-- `clean_supporting` - (`TRUE`) - Clean the intermediate supporting documents. (this is only an option for the bootstap_document function)
-
 ### Chunk Options ###
 - `bootstrap.thumbnail` - (`TRUE`) - Thumbnail and lightbox images.
 - `bootstrap.thumbnail.size` - (`'col-md-6'`) - Thumbnail size in bootstrap columns. (see [Bootstrap Grid System](http://getbootstrap.com/css/#grid))
+- `bootstrap.type` - (`'simple'`) - Type of label for code blocks.  (`'simple'`, `'panel'`, `'button'`)
 - `bootstrap.panel` - (`FALSE`) - Use panels rather than buttons to toggle blocks.
 - `bootstrap.show.code` - (`TRUE`) - Code from this chunk starts as shown.
 - `bootstrap.show.output` - (`TRUE`) - Output from this chunk starts as shown.

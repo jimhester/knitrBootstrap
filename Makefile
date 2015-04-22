@@ -25,13 +25,7 @@ inst/examples/all.html: $(RMD) R_package
     setwd('$(dir $<)');\
     library('knitrBootstrap');\
     library('rmarkdown');\
-    render('$(notdir $<)',\
-    bootstrap_document(\
-    theme.chooser=$(THEME_CHOOSER),\
-    highlight.chooser=$(HIGHLIGHT_CHOOSER),\
-    theme=$(THEME),\
-    highlight=$(HIGHLIGHT)\
-    ))"
+    render('$(notdir $<)')"
 
 make clean:
 	rm -f inst/examples/*.{html,md} vignettes/*.{html,md}
