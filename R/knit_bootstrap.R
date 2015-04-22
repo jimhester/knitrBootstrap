@@ -248,11 +248,11 @@ simple_hooks <- function() {
                     warning = (options[["bootstrap.show.warning"]] <- options[["bootstrap.show.warning"]] %||% TRUE),
                     error = (options[["bootstrap.show.error"]] <- options[["bootstrap.show.error"]] %||% TRUE),
                     TRUE)
-      generate_code_block(engine, name, x, !show)
+      generate_simple_panel(engine, name, x, !show)
     }
   }
   c(
-    vapply(c("source", "warning", "message", "error", "output"), html_hook, character(1)),
+    sapply(c("source", "warning", "message", "error", "output"), html_hook),
     plot = bootstrap_plot_hook,
     chunk = bootstrap_chunk_hook,
     NULL
