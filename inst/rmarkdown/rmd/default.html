@@ -38,10 +38,10 @@
           $endfor$
 
           $if(title)$
-          <div id="$idprefix$header">
+          <div class="page-header">
             <h1 class="title">$title$</h1>
             $if(subtitle)$
-            <h1 class="subtitle">$subtitle$</h1>
+            <h3 class="subtitle"><em>$subtitle$</em></h3>
             $endif$
             $for(author)$
             $if(author.name)$
