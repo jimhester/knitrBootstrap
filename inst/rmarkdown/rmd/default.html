@@ -38,11 +38,8 @@
           $endfor$
 
           $if(title)$
-          <div id="$idprefix$header">
-            <h1 class="title">$title$</h1>
-            $if(subtitle)$
-            <h1 class="subtitle">$subtitle$</h1>
-            $endif$
+          <div class="page-header">
+            <h1>$title$$if(subtitle)$ <small>$subtitle$</small>$endif$</h1>
             $for(author)$
             $if(author.name)$
             <h4 class="author"><em>$author.name$</em></h4>
