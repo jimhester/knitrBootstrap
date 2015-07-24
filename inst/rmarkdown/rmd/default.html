@@ -39,7 +39,10 @@
 
           $if(title)$
           <div class="page-header">
-            <h1>$title$$if(subtitle)$ <small>$subtitle$</small>$endif$</h1>
+            <h1 class="title">$title$</h1>
+            $if(subtitle)$
+            <h3 class="subtitle"><em>$subtitle$</em></h3>
+            $endif$
             $for(author)$
             $if(author.name)$
             <h4 class="author"><em>$author.name$</em></h4>
