@@ -52,11 +52,7 @@ simple_document <- function(css = NULL, theme = NULL, highlight = NULL, ...){
     template =
       system.file(
         package="knitrBootstrap", "rmarkdown/rmd/default.html"),
-        pandoc_args = c(
-                        "--no-wrap",
-                        "--variable",
-                        "mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-                        ),
+        pandoc_args = check_pandoc_args(pandoc_args),
         self_contained = FALSE, ...)
 
   results$knitr <- list(
@@ -68,7 +64,7 @@ simple_document <- function(css = NULL, theme = NULL, highlight = NULL, ...){
 }
 
 #" @export
-bootstrap_document <- function(css = NULL, theme = NULL, highlight = NULL, ...){
+bootstrap_document <- function(css = NULL, theme = NULL, highlight = NULL, pandoc_args, ...){
   theme <- theme %||% "default"
   highlight <- highlight %||% "default"
 
@@ -82,11 +78,7 @@ bootstrap_document <- function(css = NULL, theme = NULL, highlight = NULL, ...){
       html_dependency_knitrBootstrap()
      ),
     template=system.file(package="knitrBootstrap", "rmarkdown/rmd/default.html"),
-        pandoc_args = c(
-                        "--no-wrap",
-                        "--variable",
-                        "mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-                        ),
+        pandoc_args = check_pandoc_args(pandoc_args),
       self_contained=FALSE, ...)
 
   results$knitr <- list(
