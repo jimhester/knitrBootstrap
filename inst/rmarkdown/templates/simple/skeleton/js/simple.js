@@ -34,6 +34,7 @@ $(function() {
         type: 'image',
         items: {
           src: $(this).find('img').attr('src'),
+          title: $(this).parents('.figure').find('.caption').html()
         }
     });
   });
