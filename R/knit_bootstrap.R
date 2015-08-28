@@ -156,24 +156,34 @@ calc_offset <- function(size) {
 }
 
 bootstrap_plot_hook <- function(x, options) {
-  fig <- hook_plot_md(x, options)
   thumbnail <- options[["bootstrap.thumbnail"]] <- options[["bootstrap.thumbnail"]] %||% TRUE
-  thumbnail_size <- options["bootstrap.thumbnail.size"] <- options[["bootstrap.thumbnail.size"]] %||% "col-md-6"
   if (!thumbnail) {
+    fig <- hook_plot_md(x, options)
+    if(options$fig.show != "hold"){
+      fig <- paste0("\n\n", fig, "\n\n")
+    }
     return(tags$div(class = c("row", "text-center"), fig))
   }
-  fig <- tags$a(href = "#", class = "thumbnail", fig)
-  if (options$fig.show == "hold"){
-  tags$div(class = thumbnail_size,
-      fig
-      )
-  } else { #only one figure from this code block so center it
-    tags$div(class = c("row"),
-      tags$div(class = c(calc_offset(thumbnail_size), thumbnail_size),
-               fig
-               )
-      )
+  thumbnail_plot_hook(x, options)
+}
+
+thumbnail_plot_hook <- function(x, options){
+  thumbnail_size <- options["bootstrap.thumbnail.size"] <- options[["bootstrap.thumbnail.size"]] %||% "col-md-6"
+  src <- opts_knit$get('upload.fun')(x)
+  caption <- options$fig.cap %||% ""
+  img <- tags$img(src=src, alt=caption)
+  if(caption != "" && options$fig.show != "hold"){
+    caption <- tags$p(caption)
   }
+  fig <- tags$a(href = "#", class = "thumbnail", img)
+  if (options$fig.show == "hold"){
+    fig <- tags$div(class=thumbnail_size, fig) 
+  } else{ #only one figure from this code block so center it
+    fig <- tags$div(class = c("figure", calc_offset(thumbnail_size), 
+                              thumbnail_size), fig, caption)
+    fig <- tags$div(class = c("row"), fig)
+  }
+  fig
 }
 
 generate_button <- function(engine, name, x, hide){
