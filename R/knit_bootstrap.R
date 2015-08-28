@@ -173,7 +173,7 @@ thumbnail_plot_hook <- function(x, options){
   caption <- options$fig.cap %||% ""
   img <- tags$img(src=src, alt=caption)
   if(caption != "" && options$fig.show != "hold"){
-    caption <- tags$p(caption)
+    caption <- tags$p(class="caption", caption)
   }
   fig <- tags$a(href = "#", class = "thumbnail", img)
   if (options$fig.show == "hold"){
