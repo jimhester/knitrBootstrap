@@ -250,7 +250,7 @@ simple_hooks <- function() {
                     warning = (options[["bootstrap.show.warning"]] <- options[["bootstrap.show.warning"]] %||% TRUE),
                     error = (options[["bootstrap.show.error"]] <- options[["bootstrap.show.error"]] %||% TRUE),
                     TRUE)
-      generate_simple_panel(engine, name, x, !show)
+      generate_simple_panel(options$engine, name, x, !show)
     }
   }
   c(
