@@ -230,7 +230,7 @@ bootstrap_document = function(title=NULL, theme='default', highlight='highlightj
                                       knit_hooks=render_bootstrap_hooks()),
                 pandoc = pandoc_options(to = "html",
                                         from = bootstrap_pandoc_options,
-                                        args=c('-H', header)),
+                                        args=c('-H', header, '--self-contained')),
                 clean_supporting=clean_supporting)
   #pandoc --self-contained breaks on bootswatch css `//` urls, if(self_contained) '--self-contained' else '')),
 }
