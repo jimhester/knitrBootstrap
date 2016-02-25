@@ -209,6 +209,7 @@ generate_panel <- function(engine, name, x, hide){
 generate_simple_panel <- function(engine, name, x, show){
   tags$div(class=c("panel", panel_types[name]),
            tags$button(class=c("btn", "btn-default", "btn-xs", button_types[name]),
+                       'data-toggle'="tooltip", title=paste(engine, name, collapse=" "),
                        tags$span(class=c("glyphicon", "glyphicon-chevron-left"))),
            tags$pre(tags$code(class=c(name, tolower(engine)), x))
            )
