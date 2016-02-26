@@ -52,6 +52,7 @@ simple_document <- function(css = NULL, theme = NULL, highlight = NULL, pandoc_a
       html_dependency_bootstrap3(theme),
       html_dependency_hljs(highlight),
       html_dependency_magnific_popup(),
+      html_dependency_navigation(),
       html_dependency_simple()
       ),
     template =
@@ -85,6 +86,7 @@ bootstrap_document <- function(css = NULL, theme = NULL, highlight = NULL, pando
       html_dependency_bootstrap3(theme),
       html_dependency_hljs(highlight),
       html_dependency_magnific_popup(),
+      html_dependency_navigation(),
       html_dependency_knitrBootstrap()
      ),
     template=system.file(package="knitrBootstrap", "rmarkdown/rmd/default.html"),
@@ -141,6 +143,12 @@ html_dependency_magnific_popup <- function() {
                             stylesheet="magnific-popup.css")
 }
 
+html_dependency_navigation <- function(){
+  htmltools::htmlDependency(name = "Navigation",
+                            version = "1.0",
+                            src = system.file(package="rmarkdown", "rmd/h/navigation-1.0/"),
+                            script = "tabsets.js")
+}
 
 bootstrap_chunk_hook <- function(x, options){
   class <- options[["bootstrap.class"]] <- options[["bootstrap.class"]] %||% "row"
