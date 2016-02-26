@@ -144,7 +144,7 @@ html_dependency_magnific_popup <- function() {
 
 bootstrap_chunk_hook <- function(x, options){
   class <- options[["bootstrap.class"]] <- options[["bootstrap.class"]] %||% "row"
-  tags$div(class=class, x)
+  tags$div(class="container-fluid", tags$div(class=class, x))
 }
 
 # there are 12 columns, odd numbers cannot be centered in the columns
