@@ -10,7 +10,7 @@ Depends:
     R (>= 3.0.0)
 Imports:
     knitr (>= 1.5.25),
-    rmarkdown,
+    rmarkdown (>= 0.9.5),
     markdown
 Suggests:
     testthat,
