@@ -39,6 +39,9 @@ $(function() {
     });
   });
   
+  /* Rmarkdown's tabbed navigation */
+  window.buildTabsets("toc");
+  
   /* Activate tooltips */
   $('[data-toggle="tooltip"]').tooltip();
 
