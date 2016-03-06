@@ -152,7 +152,11 @@ html_dependency_navigation <- function(){
 
 bootstrap_chunk_hook <- function(x, options){
   class <- options[["bootstrap.class"]] <- options[["bootstrap.class"]] %||% "row"
-  tags$div(class="container-fluid", tags$div(class=class, x))
+  label <- ""
+  if(!grepl("^unnamed-chunk", options$label)){
+    label <- tags$a(name=paste0('#', options[["label"]]))
+  }
+  tags$div(class="container-fluid", tags$div(class=class, label, x))
 }
 
 # there are 12 columns, odd numbers cannot be centered in the columns
