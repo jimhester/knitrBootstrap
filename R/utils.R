@@ -47,10 +47,13 @@ check_pandoc_args <- function(args){
   args
 }
 
-add_anchor <- function(label, suffix="", named_only=TRUE){
+add_anchor <- function(label, suffix, named_only=TRUE){
   if(!grepl("^unnamed-chunk", label) || !named_only){
-    tags$a(name=paste(paste0('#', label), suffix, sep='_'))
+    if(!missing(suffix)){
+      label <- paste(label, suffix, sep='_')
+    }
   } else{
-    ""
+    label <- ""
   }
+  label
 }

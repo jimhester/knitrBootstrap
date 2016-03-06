@@ -152,7 +152,7 @@ html_dependency_navigation <- function(){
 
 bootstrap_chunk_hook <- function(x, options){
   class <- options[["bootstrap.class"]] <- options[["bootstrap.class"]] %||% "row"
-  tags$div(class="container-fluid", tags$div(class=class, add_anchor(options[["label"]]), x))
+  tags$div(class="container-fluid", tags$div(class=class, id=add_anchor(options[["label"]]), x))
 }
 
 # there are 12 columns, odd numbers cannot be centered in the columns
@@ -181,14 +181,14 @@ thumbnail_plot_hook <- function(x, options){
   caption <- options$fig.cap %||% ""
   img <- tags$img(src=src, alt=caption)
   if(caption != "" && options$fig.show != "hold"){
-    caption <- tags$p(class="caption", add_anchor(options[["label"]], suffix='figure'), caption)
+    caption <- tags$p(class="caption", caption)
   }
   fig <- tags$a(href = "#", class = "thumbnail", img)
   if (options$fig.show == "hold"){
     fig <- tags$div(class=thumbnail_size, fig) 
   } else{ #only one figure from this code block so center it
     fig <- tags$div(class = c("figure", calc_offset(thumbnail_size), 
-                              thumbnail_size), fig, caption)
+                              thumbnail_size), id=add_anchor(options[["label"]], suffix='figure'), fig, caption)
     fig <- tags$div(class = c("row"), fig)
   }
   fig
