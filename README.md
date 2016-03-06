@@ -9,6 +9,7 @@ A framework to create bootstrap styled HTML reports from [knitr] Rmarkdown.
 - [Usage](#usage)
   - [Render Function](#render-function)
   - [YAML Front-matter](#yaml-front-matter)
+  - [Chunk References](#chunk-references)
   - [RStudio](#rstudio)
   - [Vim](#vim)
   - [Makefile](#makefile)
