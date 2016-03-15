@@ -188,7 +188,7 @@ thumbnail_plot_hook <- function(x, options){
     fig <- tags$div(class=thumbnail_size, fig) 
   } else{ #only one figure from this code block so center it
     fig <- tags$div(class = c("figure", calc_offset(thumbnail_size), 
-                              thumbnail_size), id=add_anchor(options[["label"]], suffix='figure'), fig, caption)
+                              thumbnail_size), id=add_anchor(options[["label"]], prefix=knitr::opts_chunk$get('fig.lp')), fig, caption)
     fig <- tags$div(class = c("row"), fig)
   }
   fig
