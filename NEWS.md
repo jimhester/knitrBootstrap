@@ -6,6 +6,7 @@
   - Images can be excluded from thumbnails using bootstrap.thumbnail #26
   - Can delimit code blocks using panels or buttons
   - Specify show/hide status per chunk using knitr options. #2
+  - Can reference named code chunks in the text via their labels.
 
 ## Fixes
   - Explicitly include R hljs highlighting because of a chrome issue with yandex

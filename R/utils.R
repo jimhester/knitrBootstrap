@@ -46,3 +46,14 @@ check_pandoc_args <- function(args){
   }
   args
 }
+
+add_anchor <- function(label, prefix, named_only=TRUE){
+  if(!grepl("^unnamed-chunk", label) || !named_only){
+    if(!missing(prefix)){
+      label <- paste0(prefix, label)
+    }
+  } else{
+    label <- ""
+  }
+  label
+}
