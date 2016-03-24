@@ -4,7 +4,7 @@ $(function() {
 
   /* add nav class to ul in toc */
   $('#toc ul').each(function() {
-    $(this).addClass("nav")
+    $(this).addClass("nav");
   });
 
   /* hljs */
@@ -18,8 +18,8 @@ $(function() {
   /* Code block toggles */
   $('.panel button').click(function(e){
       // ensure that we are clicking only on the parent
-      $(this).siblings('pre').toggle()
-      var span = $(this).children('span')
+      $(this).siblings('pre').toggle();
+      var span = $(this).children('span');
       span.toggleClass('glyphicon-chevron-left');
       span.toggleClass('glyphicon-chevron-right');
       $(this).parent('.panel').toggleClass('collapsed');

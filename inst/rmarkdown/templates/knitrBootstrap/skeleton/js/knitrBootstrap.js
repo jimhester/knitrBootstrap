@@ -7,12 +7,12 @@ $(function() {
 
   /* size of thumbnails */
 
-  var hidden_types = ['source']
-  var output_types = ['output', 'message', 'warning', 'error']
+  var hidden_types = ['source'];
+  var output_types = ['output', 'message', 'warning', 'error'];
 
   /* add nav class to ul in toc */
   $('#toc ul').each(function() {
-    $(this).addClass("nav")
+    $(this).addClass("nav");
   });
 
   /* style tables */
@@ -52,8 +52,8 @@ $(function() {
   $('.toggle').click(function() {
     var span = $(this).find('span');
     toggle_block($(this), !span.hasClass('glyphicon-chevron-down'));
-    return false
-  })
+    return false;
+  });
 
 });
 
