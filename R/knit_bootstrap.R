@@ -39,7 +39,6 @@ simple_document <- function(css = NULL, theme = NULL, highlight = NULL, pandoc_a
   theme <- theme %||% "default"
   highlight <- highlight %||% "default"
    pandoc_args <- pandoc_args %||% c(
-                        "--no-wrap",
                         "--variable",
                         "mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
                   )
@@ -74,7 +73,6 @@ bootstrap_document <- function(css = NULL, theme = NULL, highlight = NULL, pando
   theme <- theme %||% "default"
   highlight <- highlight %||% "default"
   pandoc_args <- pandoc_args %||% c(
-                        "--no-wrap",
                         "--variable",
                         "mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
                   )
