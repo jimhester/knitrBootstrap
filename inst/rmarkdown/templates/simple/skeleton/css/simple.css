@@ -55,6 +55,7 @@ pre code {
 #toc {
   position: fixed;
   overflow-y: auto;
+  max-height: 85vh;
 }
 
 /*
@@ -67,6 +68,7 @@ pre code {
 /* By default it's not affixed in mobile views, so undo that */
 .sidebar.affix {
   position: static;
+  height: 90vh;
 }
 
 /* First level of nav */
