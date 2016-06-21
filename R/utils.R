@@ -38,8 +38,8 @@ print_attributes = function(attributes) {
 }
 
 check_pandoc_args <- function(args){
-  if(!"--no-wrap" %in% args){
-    args <- c(args, "--no-wrap")
+  if(!"--wrap" %in% args){
+    args <- c(args, "--wrap=none")
   }
   if(!any(grepl("mathjax-url:", args))){
     args <- c(args, "--variable", "mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
