@@ -143,8 +143,8 @@ html_dependency_magnific_popup <- function() {
 
 html_dependency_navigation <- function(){
   htmltools::htmlDependency(name = "Navigation",
-                            version = "1.0",
-                            src = system.file(package="rmarkdown", "rmd/h/navigation-1.0/"),
+                            version = "1.1",
+                            src = system.file(package="rmarkdown", "rmd/h/navigation-1.1/"),
                             script = "tabsets.js")
 }
 
