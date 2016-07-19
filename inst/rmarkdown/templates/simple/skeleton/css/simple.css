@@ -152,3 +152,38 @@ pre code {
     width: 263px;
   }
 }
+
+#toc::-webkit-scrollbar {
+  width: 3px;
+}
+#toc::-webkit-scrollbar:hover {
+  width: 5px;
+}
+#toc::-webkit-scrollbar:active {
+  width: 5px;
+}
+#toc::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+}
+#toc::-webkit-scrollbar-thumb {
+  background: #428bca;
+  border: 0 none #ffffff;
+  border-radius: 15px;
+}
+#toc::-webkit-scrollbar-thumb:hover {
+  background: #2a6496;
+  width: 5px;
+}
+#toc::-webkit-scrollbar-thumb:active {
+  background: #2a6496;
+  width: 5px;
+}
+#toc::-webkit-scrollbar-track {
+  background: transparent;
+  border: 0 none #ffffff;
+  border-radius: 15px;
+}
+#toc::-webkit-scrollbar-corner {
+  background: transparent;
+}
