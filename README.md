@@ -17,11 +17,11 @@ A framework to create bootstrap styled HTML reports from [knitr] Rmarkdown.
 - [Highlight Themes](#highlight-themes)
 
 ## Features ##
-- Uses bootstrap 3.0, should work for all screen sizes.
+- Uses bootstrap 3.3.7, should work for all screen sizes.
 - Automatic table of contents constructed from h1-4 tags.
 - Images are automatically centered, thumbnailed and lightboxed using [magnific popup].
 - Style with themes from [bootswatch], optionally including a dynamic style switch.
-- Code blocks automatically highlighted using [highlight.js], optionally including a dynamic style switch.
+- Code blocks automatically highlighted using [highlight.js](v9.9.0), optionally including a dynamic style switch.
 - Code/Output block and plot visibility can be toggled with a mouse click
   - Globally
   - Per language
@@ -164,48 +164,102 @@ two different types of options.
 - `bootstrap.class` - (`'row'`) - Bootstrap class to apply to the div containing the chunk.
 
 ## Bootstrap Themes ##
-- [Themes](http://bootswatch.com/themes)
 - [Default](http://bootswatch.com/default)
-- [Amelia](http://bootswatch.com/amelia)
 - [Cerulean](http://bootswatch.com/cerulean)
 - [Cosmo](http://bootswatch.com/cosmo)
 - [Cyborg](http://bootswatch.com/cyborg)
-- [Journal](http://bootswatch.com/journal)
+- [Darkly](http://bootswatch.com/darkly)
 - [Flatly](http://bootswatch.com/flatly)
+- [Journal](http://bootswatch.com/journal)
+- [Lumen](http://bootswatch.com/lumen)
+- [Paper](http://bootswatch.com/paper)
 - [Readable](http://bootswatch.com/readable)
 - [Simplex](http://bootswatch.com/simplex)
 - [Slate](http://bootswatch.com/slate)
 - [Spacelab](http://bootswatch.com/spacelab)
+- [Superhero](http://bootswatch.com/superhero)
 - [United](http://bootswatch.com/united)
+- [Yeti](http://bootswatch.com/yeti)
 
 ## Highlight Themes ##
-[Highlight Live Test](http://highlightjs.org/static/test.html)
-- HighlightJs
-- Dark
-- Far
-- Idea
-- Sunburst
-- Zenburn
-- Visual Studio
-- Ascetic
-- Magula
-- Github
-- Google Code
-- Brown Paper
-- School Book
-- IR Black
-- Solarized - Dark
-- Solarized - Light
-- Arta
-- Monokai
-- Xcode
-- Pojoaque
-- Rainbow
-- Tomorrow
-- Tomorrow Night
-- Tomorrow Night Bright
-- Tomorrow Night Blue
-- Tomorrow Night Eighties
+[Highlight Live Test](http://highlightjs.org/static/test.html)  
+- Agate  
+- Arduino Light  
+- Arta  
+- Ascetic    
+- Atelier Cave Dark  
+- Atelier Cave Light  
+- Atelier Dune Dark  
+- Atelier Dune Light  
+- Atelier Estuary Dark  
+- Atelier Estuary Light  
+- Atelier Forest Dark  
+- Atelier Forest Light  
+- Atelier Heath Dark  
+- Atelier Heath Light  
+- Atelier Lakeside Dark  
+- Atelier Lakeside Light  
+- Atelier Plateau Dark  
+- Atelier Plateau Light  
+- Atelier Savanna Dark  
+- Atelier Savanna Light  
+- Atelier Seaside Dark  
+- Atelier Seaside Light  
+- Atelier Sulphurpool Dark  
+- Atelier Sulphurpool Light  
+- Atome One Dark  
+- Atome One Light  
+- Brown Paper  
+- Brown Paper SQ  
+- Codepen Embed  
+- Color Brewer  
+- Darcula  
+- Dark  
+- Darkula  
+- Default  
+- Docco  
+- Dracula  
+- Far  
+- Foundation  
+- Github Gist  
+- Github  
+- Google Code  
+- Grayscale  
+- Gruvbox Dark  
+- Gruvbox Light  
+- Hopscotch  
+- Hybrid  
+- Idea  
+- Ir Black  
+- Kimbie Dark  
+- Kimbie Light  
+- Magula  
+- Mono Blue  
+- Monokai Sublime  
+- Monokai  
+- Obsidian  
+- Ocean  
+- Paraiso Dark  
+- Paraiso Light  
+- Pojoaque  
+- Purebasic  
+- Qtcreator Dark   
+- Qtcreater Light  
+- Railscasts  
+- Rainbow  
+- School Book  
+- Solarized Dark  
+- Solarized Light  
+- Sunburst  
+- Tomorrow Night Blue  
+- Tomorrow Night Bright  
+- Tomorrow Night Eighties  
+- Tomorrow Night  
+- Tomorrow  
+- Vs  
+- Xcode  
+- Xt256  
+- Zenburn  
 
 [highlight.js]: https://github.com/isagalaev/highlight.js
 [rstudio/markdown]: https://github.com/rstudio/markdown
