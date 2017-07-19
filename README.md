@@ -164,9 +164,8 @@ two different types of options.
 - `bootstrap.class` - (`'row'`) - Bootstrap class to apply to the div containing the chunk.
 
 ## Bootstrap Themes ##
-- [Themes](http://bootswatch.com/themes)
+- [Themes](http://bootswatch.com)
 - [Default](http://bootswatch.com/default)
-- [Amelia](http://bootswatch.com/amelia)
 - [Cerulean](http://bootswatch.com/cerulean)
 - [Cosmo](http://bootswatch.com/cosmo)
 - [Cyborg](http://bootswatch.com/cyborg)

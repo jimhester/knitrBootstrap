@@ -9,3 +9,4 @@ exec/customize.pl
 Makefile
 R_package
 NEWS.md
+^cran-comments\.md$

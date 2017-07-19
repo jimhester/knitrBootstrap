@@ -2,7 +2,7 @@
 #'   Rmarkdown.
 #' Knitr Bootstrap includes a \code{\link{bootstrap_document}} custom
 #' rendering function for use with the rmarkdown
-#' \url{http://http://rmarkdown.rstudio.com/}) package.
+#' \url{http://rmarkdown.rstudio.com/}) package.
 #'
 #' You can also specify the options in your YAML front-matter, see the
 #' rmarkdown documentation for examples.
@@ -209,6 +209,8 @@ pandoc = function(input=NULL, output, header) {
 #' to include.
 #' @param custom.header HTML file containing any extra header logic such as
 #' external script or CSS includes.
+#' @param menu Whether to show the menu or not.
+#' @param clean_supporting Whether to clean supporting files or not.
 #' @seealso \code{\link[rmarkdown]{render}}
 #' @export
 bootstrap_document = function(title=NULL, theme='default', highlight='highlightjs', theme.chooser=FALSE,
@@ -569,7 +571,7 @@ bootstrap_pandoc_options = paste0('markdown',
 #' @export
 render_bootstrap = function() {
   knit_hooks$restore()
-  knitr:::set_html_dev()
+  (get("knitr", "set_html_dev"))()
   knitr::opts_knit$set(out.format = "html")
   knit_hooks$set(render_bootstrap_hooks())
 }

@@ -1,9 +1,8 @@
 Package: knitrBootstrap
-Version: 1.0.0
-Date: 2014-3-17
+Version: 1.0.1
 Maintainer: Jim Hester <james.f.hester@gmail.com>
 Author: Jim Hester
-Title: Knitr Bootstrap framework.
+Title: Knitr Bootstrap Framework
 Description: A framework to create Bootstrap 3 HTML reports from knitr
     Rmarkdown.
 Depends:
@@ -25,7 +24,7 @@ Suggests:
     reshape2,
     xtable
 License: MIT + file LICENSE
-URL: https://github.com/jimhester/
+URL: https://github.com/jimhester/knitrBootstrap#readme
 BugReports: https://github.com/jimhester/knitrBootstrap/issues
 VignetteBuilder: knitr
-Packaged: 2013-06-03 13:51:16 UTC; hesterj
+RoxygenNote: 6.0.1
