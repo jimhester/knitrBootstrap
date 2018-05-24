@@ -1,10 +1,10 @@
 Package: knitrBootstrap
-Version: 1.0.1
+Version: 1.0.2
 Maintainer: Jim Hester <james.f.hester@gmail.com>
 Author: Jim Hester
-Title: Knitr Bootstrap Framework
-Description: A framework to create Bootstrap 3 HTML reports from knitr
-    Rmarkdown.
+Title: 'knitr' Bootstrap Framework
+Description: A framework to create Bootstrap <http://getbootstrap.com/> HTML reports from 'knitr'
+    'rmarkdown'.
 Depends:
     R (>= 3.0.0)
 Imports:

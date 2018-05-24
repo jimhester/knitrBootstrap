@@ -1,3 +1,6 @@
+# knitrBootstap 1.0.2
+  - Fix for vignette which failed with upcoming ggplot2 release.
+
 # knitrBootstap 1.0.1
   - Fix for failing vignette on Solaris due to lack on igraph on that platform.
 

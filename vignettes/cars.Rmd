@@ -48,10 +48,10 @@ qplot(hp, mpg, data=mtcars, shape=am, color=am,
 ## Regressions of mpg on weight ##
 Separate for each number of cylinders.
 ```{r cars_regressions, dev='png', warning=FALSE}
-qplot(wt, mpg, data=mtcars, geom=c("point", "smooth"),
-   method="lm", formula=y~x, color=cyl,
-   main="Regression of MPG on Weight",
-   xlab="Weight", ylab="Miles per Gallon")
+ggplot(mtcars, aes(wt, mpg, color = cyl)) +
+  geom_point() +
+  geom_smooth(method = "lm", formula = y~x) +
+  labs(title = "Regression of MPG on Weight", x = "Weight", y = "Miles per Gallon")
 ```
 
 ## Boxplots of mpg by number of gears ##
