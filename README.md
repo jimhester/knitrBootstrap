@@ -171,7 +171,6 @@ two different types of options.
 - [Cyborg](http://bootswatch.com/cyborg)
 - [Journal](http://bootswatch.com/journal)
 - [Flatly](http://bootswatch.com/flatly)
-- [Readable](http://bootswatch.com/readable)
 - [Simplex](http://bootswatch.com/simplex)
 - [Slate](http://bootswatch.com/slate)
 - [Spacelab](http://bootswatch.com/spacelab)
