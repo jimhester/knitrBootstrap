@@ -9,3 +9,4 @@ exec/customize.pl
 Makefile
 R_package
 ^cran-comments\.md$
+^CRAN-RELEASE$
