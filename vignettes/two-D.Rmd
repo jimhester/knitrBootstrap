@@ -25,7 +25,7 @@ library(xtable)
 print(xtable(mcor), type='html', comment=F)
 ```
 # 2d graphs #
-These 2d examples are both from Winsong Chang's excellent [R Graphics Cookbook](http://www.amazon.com/R-Graphics-Cookbook-Winston-Chang/dp/1449316956).
+These 2d examples are both from Winston Chang's excellent [R Graphics Cookbook](http://www.amazon.com/R-Graphics-Cookbook-Winston-Chang/dp/1449316956).
 
 ## Correlation Matrix Example ##
 
