@@ -1,3 +1,8 @@
+# knitrBootstrap 1.0.3
+
+# knitrBootstap 1.0.3
+  - Remove maptools soft dependency
+
 # knitrBootstap 1.0.2
   - Fix for vignette which failed with upcoming ggplot2 release.
 

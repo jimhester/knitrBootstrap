@@ -1,5 +1,5 @@
 Package: knitrBootstrap
-Version: 1.0.2
+Version: 1.0.3
 Maintainer: Jim Hester <james.f.hester@gmail.com>
 Author: Jim Hester
 Title: 'knitr' Bootstrap Framework
@@ -19,7 +19,6 @@ Suggests:
     igraph,
     maps,
     mapproj,
-    maptools,
     plyr,
     reshape2,
     xtable
